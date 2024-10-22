@@ -289,7 +289,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         let channel = liveChannel.channel()
         self.channel = channel
         
-        statusListenerLoop = Task { [weak self] in
+        statusListenerLoop = Task { @MainActor [weak self] in
             for try await status in channel.statusStream() {
                 guard let self else { return }
                 self.internalState = switch status {

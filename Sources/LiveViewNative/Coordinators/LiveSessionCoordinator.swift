@@ -118,8 +118,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         try await prev.last?.coordinator.disconnect()
                         let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(
                             .some([
-                                "_format": .str(string: Self.platform),
-                                "_interface": Self.platformParams
+                                "_format": .str(string: LiveSessionParameters.platform),
+                                "_interface": .object(object: LiveSessionParameters.platformParams)
                             ]),
                             next.last!.url.absoluteString
                         )
@@ -130,8 +130,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         try await prev.last?.coordinator.disconnect()
                         let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(
                             .some([
-                                "_format": .str(string: Self.platform),
-                                "_interface": Self.platformParams
+                                "_format": .str(string: LiveSessionParameters.platform),
+                                "_interface": .object(object: LiveSessionParameters.platformParams)
                             ]),
                             next.last!.url.absoluteString
                         )
@@ -195,7 +195,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(
             .some([
                 "_format": .str(string: LiveSessionParameters.platform),
-                "_interface": LiveSessionParameters.platformParams
+                "_interface": .object(object: LiveSessionParameters.platformParams)
             ]),
             nil
         )
@@ -203,7 +203,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.rootLayout = self.liveSocket!.deadRender()
         let styleURLs = self.liveSocket!.styleUrls()
         
-        self.stylesheet = try! await withThrowingTaskGroup(of: Stylesheet<R>.self) { group in
+        self.stylesheet = try! await withThrowingTaskGroup(of: Stylesheet<R>.self) { @Sendable group in
             for style in styleURLs {
                 guard let url = await URL(string: style, relativeTo: self.url)
                 else { continue }
@@ -216,7 +216,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
             
             return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
-                return result.merge(with: next)
+                return await result.merge(with: next)
             }
         }
         
@@ -233,7 +233,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     func bindLiveReloadListener() {
         let eventListener = self.liveReloadChannel!.channel().eventStream()
         self.liveReloadListener = eventListener
-        self.liveReloadListenerLoop = Task { [weak self] in
+        self.liveReloadListenerLoop = Task { @MainActor [weak self] in
             for try await event in eventListener {
                 guard let self else { return }
                 switch event.event {
@@ -349,8 +349,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
 @MainActor
 enum LiveSessionParameters {
     static var platform: String { "swiftui" }
-    static var platformParams: LiveViewNativeCore.Json {
-        .object(object: [
+    static var platformParams: [String:LiveViewNativeCore.Json] {
+        [
             "app_version": .str(string: getAppVersion()),
             "app_build": .str(string: getAppBuild()),
             "bundle_id": .str(string: getBundleID()),
@@ -359,7 +359,7 @@ enum LiveSessionParameters {
             "target": .str(string: getTarget()),
             "l10n": getLocalization(),
             "i18n": getInternationalization()
-        ])
+        ]
     }
 
     private static func getAppVersion() -> String {
@@ -454,11 +454,11 @@ enum LiveSessionParameters {
         /// Create a nested structure of query items.
         ///
         /// `_root[key][nested_key]=value`
-        func queryParameters(for object: [String:Any]) -> [(name: String, value: String?)] {
+        func queryParameters(for object: [String:Json]) -> [(name: String, value: String?)] {
             object.reduce(into: [(name: String, value: String?)]()) { (result, pair) in
                 if let value = pair.value as? String {
                     result.append((name: "[\(pair.key)]", value: value))
-                } else if let nested = pair.value as? [String:Any] {
+                } else if case let .object(nested) = pair.value {
                     result.append(contentsOf: queryParameters(for: nested).map {
                         return (name: "[\(pair.key)]\($0.name)", value: $0.value)
                     })
