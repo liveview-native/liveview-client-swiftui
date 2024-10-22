@@ -64,6 +64,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     }
 
     @_spi(LiveForm) public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
+        let pushEventImpl = pushEventImpl!
         self.changeEvent = element.attributeValue(for: .init(name: "phx-change")).flatMap({ event in
             { value in
                 Task {
@@ -161,7 +162,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         _ = try await pushEventImpl("form", event, try buildFormQuery(), nil)
     }
 
-    public var debugDescription: String {
+    public nonisolated var debugDescription: String {
         return "FormModel(element: #\(elementID), id: \(ObjectIdentifier(self))"
     }
 
