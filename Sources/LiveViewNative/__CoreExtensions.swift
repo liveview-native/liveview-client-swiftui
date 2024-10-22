@@ -8,6 +8,19 @@
 import LiveViewNativeCore
 import Foundation
 
+extension LiveViewNativeCore.ChannelStatus: @unchecked Sendable {}
+extension LiveViewNativeCore.PhoenixEvent: @unchecked Sendable {}
+extension LiveViewNativeCore.Event: @unchecked Sendable {}
+extension LiveViewNativeCore.Json: @unchecked Sendable {}
+extension LiveViewNativeCore.Payload: @unchecked Sendable {}
+extension LiveViewNativeCore.EventPayload: @unchecked Sendable {}
+
+extension LiveViewNativeCore.LiveChannel: @unchecked Sendable {}
+extension LiveViewNativeCore.LiveSocket: @unchecked Sendable {}
+
+extension LiveViewNativeCore.Events: @unchecked Sendable {}
+extension LiveViewNativeCore.ChannelStatuses: @unchecked Sendable {}
+
 extension Node: Identifiable {
     public var id: NodeRef {
         self.id()
@@ -767,6 +780,11 @@ private extension __JsonEncoder {
 
             // We can pop because the closure encoded something.
             return self.storage.popReference()
+        @unknown default:
+            try with(path: codingPath + (additionalKey.map({ [$0] }) ?? [])) {
+                try date.encode(to: self)
+            }
+            return self.storage.popReference()
         }
     }
 
@@ -814,6 +832,23 @@ private extension __JsonEncoder {
             }
 
             // We can pop because the closure encoded something.
+            return self.storage.popReference()
+        @unknown default:
+            let depth = self.storage.count
+            do {
+                try with(path: codingPath + (additionalKey.map({ [$0] }) ?? [])) {
+                    try data.encode(to: self)
+                }
+            } catch {
+                // If the value pushed a container before throwing, pop it back off to restore state.
+                // This shouldn't be possible for Data (which encodes as an array of bytes), but it can't hurt to catch a failure.
+                if self.storage.count > depth {
+                    let _ = self.storage.popReference()
+                }
+
+                throw error
+            }
+
             return self.storage.popReference()
         }
     }
@@ -1220,6 +1255,10 @@ extension __JsonDecoder {
             return try with(value: value, path: codingPath + (additionalKey.map({ [$0] }) ?? [])) {
                 try closure(self)
             }
+        @unknown default:
+            return try with(value: value, path: codingPath + (additionalKey.map({ [$0] }) ?? [])) {
+                try Date(from: self)
+            }
         }
     }
     
@@ -1242,6 +1281,10 @@ extension __JsonDecoder {
         case .custom(let closure):
             return try with(value: value, path: codingPath + (additionalKey.map({ [$0] }) ?? [])) {
                 try closure(self)
+            }
+        @unknown default:
+            return try with(value: value, path: codingPath + (additionalKey.map({ [$0] }) ?? [])) {
+                try Data(from: self)
             }
         }
     }
