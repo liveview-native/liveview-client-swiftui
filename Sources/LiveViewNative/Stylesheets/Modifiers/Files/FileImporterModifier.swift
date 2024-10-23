@@ -70,34 +70,31 @@ struct _FileImporterModifier<R: RootRegistry>: ViewModifier {
             guard let liveChannel = context.coordinator.liveChannel
             else { return }
             
-            do {
-                let files = try result.get().map({ url in
-                    LiveFile(
-                        try Data(contentsOf: url),
-                        UTType(filenameExtension: url.pathExtension)!.preferredMIMEType!,
-                        url.lastPathComponent,
-                        id
-                    )
-                })
-                Task {
-                    do {
-                        for file in files {
-                            print(try await liveChannel.validateUpload(file))
-                        }
-                    } catch {
-                        logger.log(level: .error, "\(error.localizedDescription)")
-                    }
-                }
-                self.formModel?.fileUploads.append(
-                    contentsOf: files.map({ file in
-                        {
-                            try await liveChannel.uploadFile(file)
-                            print("upload complete")
-                        }
+            Task {
+                do {
+                    let files = try result.get().map({ url in
+                        LiveFile(
+                            try Data(contentsOf: url),
+                            UTType(filenameExtension: url.pathExtension)!.preferredMIMEType!,
+                            url.lastPathComponent,
+                            id
+                        )
                     })
-                )
-            } catch {
-                logger.log(level: .error, "\(error.localizedDescription)")
+                    for file in files {
+                        let replyPayload = try await liveChannel.validateUpload(file)
+                        try await context.coordinator.handleEventReplyPayload(replyPayload)
+                    }
+                    self.formModel?.fileUploads.append(
+                        contentsOf: files.map({ file in
+                            {
+                                try await liveChannel.uploadFile(file)
+                                print("upload complete")
+                            }
+                        })
+                    )
+                } catch {
+                    logger.log(level: .error, "\(error.localizedDescription)")
+                }
             }
         }
         #else

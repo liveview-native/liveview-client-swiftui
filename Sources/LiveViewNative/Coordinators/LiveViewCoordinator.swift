@@ -111,34 +111,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         let replyPayload = try await channel.call(event: .user(user: event), payload: payload, timeout: PUSH_TIMEOUT)
         
-        switch replyPayload {
-        case let .jsonPayload(json):
-            switch json {
-            case let .object(object):
-                if case let .object(diff) = object["diff"] {
-                    try self.handleDiff(payload: .object(object: diff), baseURL: self.url)
-                    if case let .object(reply) = diff["r"] {
-                        return reply
-                    }
-                } else if case let .object(redirectObject) = object["live_redirect"],
-                          let redirect = LiveRedirect(from: redirectObject, relativeTo: self.url)
-                {
-                    try await session.redirect(redirect)
-                } else if case let .object(redirectObject) = object["redirect"],
-                          case let .str(destinationString) = redirectObject["to"],
-                          let destination = URL(string: destinationString, relativeTo: self.url)
-                {
-                    try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
-                } else {
-                    return nil
-                }
-            default:
-                fatalError("unsupported message type \(replyPayload)")
-            }
-        default:
-            fatalError("unsupported message type \(replyPayload)")
-        }
-        return nil
+        return try await handleEventReplyPayload(replyPayload)
     }
 
     /// Creates a publisher that can be used to listen for server-sent LiveView events.
@@ -203,6 +176,37 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private func handleDiff(payload: LiveViewNativeCore.Json, baseURL: URL) throws {
         handleEvents(payload)
         try self.document?.mergeFragmentJson(String(data: try JSONEncoder().encode(payload), encoding: .utf8)!)
+    }
+    
+    func handleEventReplyPayload(_ replyPayload: LiveViewNativeCore.Payload) async throws -> [String:Any]? {
+        switch replyPayload {
+        case let .jsonPayload(json):
+            switch json {
+            case let .object(object):
+                if case let .object(diff) = object["diff"] {
+                    try self.handleDiff(payload: .object(object: diff), baseURL: self.url)
+                    if case let .object(reply) = diff["r"] {
+                        return reply
+                    }
+                } else if case let .object(redirectObject) = object["live_redirect"],
+                          let redirect = LiveRedirect(from: redirectObject, relativeTo: self.url)
+                {
+                    try await session.redirect(redirect)
+                } else if case let .object(redirectObject) = object["redirect"],
+                          case let .str(destinationString) = redirectObject["to"],
+                          let destination = URL(string: destinationString, relativeTo: self.url)
+                {
+                    try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
+                } else {
+                    return nil
+                }
+            default:
+                fatalError("unsupported message type \(replyPayload)")
+            }
+        default:
+            fatalError("unsupported message type \(replyPayload)")
+        }
+        return nil
     }
 
     private func handleEvents(_ json: LiveViewNativeCore.Json) {
