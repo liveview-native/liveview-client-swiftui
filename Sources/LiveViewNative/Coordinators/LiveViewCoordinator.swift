@@ -36,7 +36,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     var url: URL
 
-    private weak var liveChannel: LiveViewNativeCore.LiveChannel?
+    private(set) var liveChannel: LiveViewNativeCore.LiveChannel?
     private weak var channel: LiveViewNativeCore.Channel?
 
     @Published var document: LiveViewNativeCore.Document?
