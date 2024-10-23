@@ -74,15 +74,15 @@ struct _FileImporterModifier<R: RootRegistry>: ViewModifier {
                 let files = try result.get().map({ url in
                     LiveFile(
                         try Data(contentsOf: url),
-                        url.pathExtension,
-                        url.deletingPathExtension().lastPathComponent,
+                        UTType(filenameExtension: url.pathExtension)!.preferredMIMEType!,
+                        url.lastPathComponent,
                         id
                     )
                 })
                 Task {
                     do {
                         for file in files {
-                            try await liveChannel.validateUpload(file)
+                            print(try await liveChannel.validateUpload(file))
                         }
                     } catch {
                         logger.log(level: .error, "\(error.localizedDescription)")
