@@ -266,6 +266,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 
                 self.navigationPath = [self.navigationPath.first!]
             }
+            try await self.liveReloadChannel?.channel().leave()
+            self.liveReloadChannel = nil
             try await self.socket?.disconnect()
             self.socket = nil
             self.state = .disconnected
