@@ -59,11 +59,14 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// A publisher that emits a value before sending the form submission event.
     var formWillSubmit = PassthroughSubject<(), Never>()
     
+    var fileUploads: [() async throws -> ()] = []
+    
     init(elementID: String) {
         self.elementID = elementID
     }
 
     @_spi(LiveForm) @preconcurrency public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
+        self.fileUploads.removeAll()
         let pushEventImpl = pushEventImpl!
         self.changeEvent = element.attributeValue(for: .init(name: "phx-change")).flatMap({ event in
             { value in
@@ -95,6 +98,11 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
     public func sendSubmitEvent() async throws {
         formWillSubmit.send(())
+        for fileUpload in fileUploads {
+            print("Upload...")
+            try await fileUpload()
+        }
+        print("All uploads done")
         if let submitEvent = submitEvent {
             try await pushFormEvent(submitEvent)
         } else if let submitAction {

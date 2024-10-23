@@ -50,6 +50,8 @@ extension LiveViewNativeCore.LiveSocket: @unchecked Sendable {}
 extension LiveViewNativeCore.Events: @unchecked Sendable {}
 extension LiveViewNativeCore.ChannelStatuses: @unchecked Sendable {}
 
+extension LiveViewNativeCore.LiveFile: @unchecked Sendable {}
+
 extension Node: Identifiable {
     public var id: NodeRef {
         self.nodeId()
