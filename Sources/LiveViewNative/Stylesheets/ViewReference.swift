@@ -232,7 +232,9 @@ private enum FromNodeValue {
 }
 
 /// A builder for `ToolbarContent`.
+@MainActor
 struct ToolbarTreeBuilder<R: RootRegistry> {
+    @MainActor
     func fromNodes<Nodes>(_ e: Nodes, context c: LiveContextStorage<R>) -> some ToolbarContent
         where Nodes: RandomAccessCollection, Nodes.Index == Int, Nodes.Element == Node
     {
@@ -262,19 +264,21 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
             return ToolbarContentBuilder.buildBlock(f(.e(ToolbarError.badChildCount(e.count)), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         }
     }
-    
+
     // alias for typing
+    @MainActor
     @inline(__always)
     fileprivate func f(_ n: FromNodeValue?, _ c: LiveContextStorage<R>) -> some ToolbarContent {
         return n.flatMap({ fromNode($0, context: c) })
     }
     
+    @MainActor
     @ToolbarContentBuilder
     fileprivate func fromNode(_ node: FromNodeValue, context: LiveContextStorage<R>) -> some ToolbarContent {
         // ToolbarTreeBuilder.fromNode may not be called with a root or leaf node
         switch node {
         case let .n(node):
-            if case .element(let element) = node.data {
+            if case .nodeElement(let element) = node.data() {
                 Self.lookup(ElementNode(node: node, data: element))
             }
         case let .e(error):
@@ -284,6 +288,7 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
         }
     }
     
+    @MainActor
     @ToolbarContentBuilder
     static func lookup(_ node: ElementNode) -> some ToolbarContent {
         switch node.tag {
@@ -302,7 +307,9 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
 }
 
 /// A builder for `CustomizableToolbarContent`.
+@MainActor
 struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
+    @MainActor
     func fromNodes<Nodes>(_ e: Nodes, context c: LiveContextStorage<R>) -> some CustomizableToolbarContent
         where Nodes: RandomAccessCollection, Nodes.Index == Int, Nodes.Element == Node
     {
@@ -332,19 +339,21 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
             return ToolbarContentBuilder.buildBlock(f(.e(ToolbarError.badChildCount(e.count)), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         }
     }
-    
+
     // alias for typing
+    @MainActor
     @inline(__always)
     fileprivate func f(_ n: FromNodeValue?, _ c: LiveContextStorage<R>) -> some CustomizableToolbarContent {
         return n.flatMap({ fromNode($0, context: c) })
     }
     
+    @MainActor
     @ToolbarContentBuilder
     fileprivate func fromNode(_ node: FromNodeValue, context: LiveContextStorage<R>) -> some CustomizableToolbarContent {
         // CustomizableToolbarTreeBuilder.fromNode may not be called with a root or leaf node
         switch node {
         case let .n(node):
-            if case .element(let element) = node.data {
+            if case .nodeElement(let element) = node.data() {
                 Self.lookup(ElementNode(node: node, data: element))
             }
         case let .e(error):
@@ -354,6 +363,7 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
         }
     }
     
+    @MainActor
     @ToolbarContentBuilder
     static func lookup(_ node: ElementNode) -> some CustomizableToolbarContent {
         switch node.tag {

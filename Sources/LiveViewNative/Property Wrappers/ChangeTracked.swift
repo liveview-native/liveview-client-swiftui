@@ -30,7 +30,8 @@ import Combine
 /// def handle_event("update-value", new_value, socket), do: ...
 /// ```
 @propertyWrapper
-public struct ChangeTracked<Value: Encodable & Equatable>: DynamicProperty {
+@MainActor
+public struct ChangeTracked<Value: Encodable & Equatable>: @preconcurrency DynamicProperty, Sendable {
     @StateObject private var localValue: LocalValue
     @ObservedElement var element
     @Environment(\.coordinatorEnvironment) var coordinator
@@ -181,7 +182,7 @@ extension ChangeTracked where Value: FormValue {
                             guard let self,
                                   self.sendChangeEvent
                             else { return }
-                            try await pushChangeEvent(to: changeTracked)
+                            try await self.pushChangeEvent(to: changeTracked)
                         }
                     }
                 })
@@ -212,10 +213,6 @@ extension ChangeTracked where Value: FormValue {
             }
             try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: encodedValue]), options: .fragmentsAllowed))
         }
-    }
-    
-    func pushChangeEvent() async throws {
-        try await (self.localValue as? FormLocalValue)?.pushChangeEvent(to: self)
     }
 }
 
