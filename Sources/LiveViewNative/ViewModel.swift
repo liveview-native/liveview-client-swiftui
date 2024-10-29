@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import SwiftUI
 import LiveViewNativeCore
+import UniformTypeIdentifiers
 
 /// The working-copy data model for a ``LiveView``.
 ///
@@ -35,6 +36,15 @@ public class LiveViewModel: ObservableObject {
     func clearForms() {
         self.forms.removeAll()
     }
+    
+    func fileUpload(id: String) -> FormModel.FileUpload? {
+        for (_, form) in forms {
+            guard let file = form.fileUploads.first(where: { $0.id == id })
+            else { continue }
+            return file
+        }
+        return nil
+    }
 }
 
 /// A form model stores the working copy of the data for a specific `<form>` element.
@@ -59,7 +69,12 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// A publisher that emits a value before sending the form submission event.
     var formWillSubmit = PassthroughSubject<(), Never>()
     
-    var fileUploads: [() async throws -> ()] = []
+    var fileUploads: [FileUpload] = []
+    struct FileUpload {
+        let id: String
+        let data: Data
+        let upload: () async throws -> ()
+    }
     
     init(elementID: String) {
         self.elementID = elementID
@@ -99,10 +114,8 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     public func sendSubmitEvent() async throws {
         formWillSubmit.send(())
         for fileUpload in fileUploads {
-            print("Upload...")
-            try await fileUpload()
+            try await fileUpload.upload()
         }
-        print("All uploads done")
         if let submitEvent = submitEvent {
             try await pushFormEvent(submitEvent)
         } else if let submitAction {
@@ -229,6 +242,44 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         data = [:]
     }
 
+    public func queueFileUpload(
+        id: String,
+        url: URL,
+        coordinator: LiveViewCoordinator<some RootRegistry>
+    ) async throws {
+        return try await queueFileUpload(
+            id: id,
+            contents: try Data(contentsOf: url),
+            fileType: UTType(filenameExtension: url.pathExtension)!,
+            name: url.lastPathComponent,
+            coordinator: coordinator
+        )
+    }
+    
+    public func queueFileUpload(
+        id: String,
+        contents: Data,
+        fileType: UTType,
+        name: String,
+        coordinator: LiveViewCoordinator<some RootRegistry>
+    ) async throws {
+        guard let liveChannel = coordinator.liveChannel
+        else { return }
+        
+        let file = LiveFile(
+            contents,
+            fileType.preferredMIMEType!,
+            name,
+            id
+        )
+        let replyPayload = try await liveChannel.validateUpload(file)
+        try await coordinator.handleEventReplyPayload(replyPayload)
+        self.fileUploads.append(.init(
+            id: id,
+            data: contents,
+            upload: { try await liveChannel.uploadFile(file) }
+        ))
+    }
 }
 
 private extension URLComponents {

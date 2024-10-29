@@ -76,6 +76,12 @@ struct ImageView<Root: RootRegistry>: View {
     @LiveElementIgnored
     @ClassModifiers<Root> private var modifiers
     let overrideImage: SwiftUI.Image?
+    
+    @LiveAttribute("data-phx-upload-ref")
+    private var phxUploadRef: String?
+    
+    @LiveElementIgnored
+    @EnvironmentObject private var liveViewModel: LiveViewModel
 
     init() {
         self.overrideImage = nil
@@ -106,6 +112,10 @@ struct ImageView<Root: RootRegistry>: View {
     var image: SwiftUI.Image? {
         if let overrideImage {
             return overrideImage
+        } else if let phxUploadRef,
+                  let image = liveViewModel.fileUpload(id: phxUploadRef).flatMap({ UIImage(data: $0.data) })
+        {
+            return SwiftUI.Image(uiImage: image)
         } else if let systemName {
             return SwiftUI.Image(systemName: systemName, variableValue: variableValue)
         } else if let name {
