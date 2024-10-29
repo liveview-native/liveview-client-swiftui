@@ -67,31 +67,11 @@ struct _FileImporterModifier<R: RootRegistry>: ViewModifier {
         ) { result in
             let id = id.resolve(on: element, in: context)
             
-            guard let liveChannel = context.coordinator.liveChannel
-            else { return }
-            
             Task {
                 do {
-                    let files = try result.get().map({ url in
-                        LiveFile(
-                            try Data(contentsOf: url),
-                            UTType(filenameExtension: url.pathExtension)!.preferredMIMEType!,
-                            url.lastPathComponent,
-                            id
-                        )
-                    })
-                    for file in files {
-                        let replyPayload = try await liveChannel.validateUpload(file)
-                        try await context.coordinator.handleEventReplyPayload(replyPayload)
+                    for url in try result.get() {
+                        try await formModel?.queueFileUpload(id: id, url: url, coordinator: context.coordinator)
                     }
-                    self.formModel?.fileUploads.append(
-                        contentsOf: files.map({ file in
-                            {
-                                try await liveChannel.uploadFile(file)
-                                print("upload complete")
-                            }
-                        })
-                    )
                 } catch {
                     logger.log(level: .error, "\(error.localizedDescription)")
                 }
