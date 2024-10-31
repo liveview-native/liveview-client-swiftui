@@ -50,7 +50,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     var socket: LiveViewNativeCore.Socket?
 
     private var liveReloadChannel: LiveViewNativeCore.LiveChannel?
-    private var liveReloadListener: AsyncThrowingStream<LiveViewNativeCore.EventPayload, any Error>?
+    private var liveReloadListener: Channel.EventStream?
     private var liveReloadListenerLoop: Task<(), any Error>?
     
     private var cancellables = Set<AnyCancellable>()

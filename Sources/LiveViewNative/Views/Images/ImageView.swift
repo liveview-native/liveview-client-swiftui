@@ -108,14 +108,28 @@ struct ImageView<Root: RootRegistry>: View {
             }
         })
     }
+    
+    var fileUploadImage: SwiftUI.Image? {
+        guard let phxUploadRef
+        else { return nil }
+        #if os(macOS)
+        return liveViewModel
+            .fileUpload(id: phxUploadRef)
+            .flatMap({ NSImage(data: $0.data) })
+            .flatMap(Image.init(nsImage:))
+        #else
+        return liveViewModel
+            .fileUpload(id: phxUploadRef)
+            .flatMap({ UIImage(data: $0.data) })
+            .flatMap(Image.init(uiImage:))
+        #endif
+    }
 
     var image: SwiftUI.Image? {
         if let overrideImage {
             return overrideImage
-        } else if let phxUploadRef,
-                  let image = liveViewModel.fileUpload(id: phxUploadRef).flatMap({ UIImage(data: $0.data) })
-        {
-            return SwiftUI.Image(uiImage: image)
+        } else if let fileUploadImage {
+            return fileUploadImage
         } else if let systemName {
             return SwiftUI.Image(systemName: systemName, variableValue: variableValue)
         } else if let name {
