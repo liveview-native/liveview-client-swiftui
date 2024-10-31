@@ -37,7 +37,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     var url: URL
 
     private(set) var liveChannel: LiveViewNativeCore.LiveChannel?
-    private weak var channel: LiveViewNativeCore.Channel?
+    private var channel: LiveViewNativeCore.Channel?
 
     @Published var document: LiveViewNativeCore.Document?
     private var elementChangedSubjects = [NodeRef:ObjectWillChangePublisher]()
@@ -54,8 +54,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
-    private var eventListener: AsyncThrowingStream<LiveViewNativeCore.EventPayload, any Error>?
+    private var eventListener: Channel.EventStream?
     private var eventListenerLoop: Task<(), any Error>?
+    private var statusListener: Channel.StatusStream?
     private var statusListenerLoop: Task<(), any Error>?
 
     private(set) internal var liveViewModel = LiveViewModel()
@@ -293,10 +294,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         let channel = liveChannel.channel()
         self.channel = channel
         
+        let statusListener = channel.statusStream()
+        self.statusListener = statusListener
         statusListenerLoop = Task { @MainActor [weak self] in
-            for try await status in channel.statusStream() {
-                guard let self else { return }
-                self.internalState = switch status {
+            for try await status in statusListener {
+                self?.internalState = switch status {
                 case .joined:
                     .connected
                 case .joining, .waitingForSocketToConnect, .waitingToJoin:

@@ -30,18 +30,52 @@ extension Node: Identifiable {
 }
 
 extension Channel {
-    func eventStream() -> AsyncThrowingStream<EventPayload, any Error> {
-        let events = self.events()
-        return AsyncThrowingStream(unfolding: {
-            return try await events.event()
-        })
+    struct EventStream: AsyncSequence {
+        let events: Events
+        
+        init(for channel: Channel) {
+            self.events = channel.events()
+        }
+        
+        func makeAsyncIterator() -> AsyncIterator {
+            .init(events: events)
+        }
+        
+        struct AsyncIterator: AsyncIteratorProtocol {
+            let events: Events
+            
+            func next() async throws -> EventPayload? {
+                try await events.event()
+            }
+        }
     }
     
-    func statusStream() -> AsyncThrowingStream<ChannelStatus, any Error> {
-        let statuses = self.statuses()
-        return AsyncThrowingStream(unfolding: {
-            return try await statuses.status()
-        })
+    func eventStream() -> EventStream {
+        return EventStream(for: self)
+    }
+    
+    final class StatusStream: AsyncSequence {
+        let statuses: ChannelStatuses
+        
+        init(for channel: Channel) {
+            self.statuses = channel.statuses()
+        }
+        
+        func makeAsyncIterator() -> AsyncIterator {
+            .init(statuses: statuses)
+        }
+        
+        struct AsyncIterator: AsyncIteratorProtocol {
+            let statuses: ChannelStatuses
+            
+            func next() async throws -> ChannelStatus? {
+                try await statuses.status()
+            }
+        }
+    }
+    
+    func statusStream() -> StatusStream {
+        StatusStream(for: self)
     }
 }
 

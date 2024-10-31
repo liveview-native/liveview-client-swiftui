@@ -140,7 +140,7 @@ extension ObservedElement {
             observeChildren: Bool
         ) {
             guard cancellable == nil || (observeChildren && self.observedChildIDs != self.resolvedChildIDs) else { return }
-            self.resolvedElement = context.document[id].asElement()
+            self.resolvedElement = context.document?[id].asElement()
             self.resolvedChildren = Array(self.resolvedElement.children())
             self._resolvedChildIDs = nil
             
@@ -161,7 +161,7 @@ extension ObservedElement {
             cancellable = self.elementChangedPublisher
                 .sink { [weak self] _ in
                     guard let self else { return }
-                    self.resolvedElement = context.document[id].asElement()
+                    self.resolvedElement = context.document?[id].asElement()
                     self.resolvedChildren = Array(self.resolvedElement.children())
                     self._resolvedChildIDs = nil
                     self.objectWillChange.send()
