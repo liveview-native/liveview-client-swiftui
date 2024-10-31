@@ -118,7 +118,16 @@ extension PointerStyle: ParseableModifierValue {
 extension HorizontalDirection.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
-            Array<Self.Element>.parser(in: context).map({ Self.init($0) })
+            // this fails to compile in release mode in Xcode 16:
+            // Array<Self.Element>.parser(in: context).map({ Self.init($0) })
+            ListLiteral {
+                ImplicitStaticMember([
+                    "all": Self.all,
+                    "leading": Self.leading,
+                    "trailing": Self.trailing,
+                ])
+            }
+            .map(Self.init(_:))
             ImplicitStaticMember([
                 "all": Self.all,
                 "leading": Self.leading,
@@ -132,7 +141,16 @@ extension HorizontalDirection.Set: ParseableModifierValue {
 extension VerticalDirection.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
-            Array<Self.Element>.parser(in: context).map({ Self.init($0) })
+            // this fails to compile in release mode in Xcode 16:
+            // Array<Self.Element>.parser(in: context).map({ Self.init($0) })
+            ListLiteral {
+                ImplicitStaticMember([
+                    "all": Self.all,
+                    "up": Self.up,
+                    "down": Self.down,
+                ])
+            }
+            .map(Self.init(_:))
             ImplicitStaticMember([
                 "all": Self.all,
                 "up": Self.up,
@@ -147,7 +165,16 @@ extension VerticalDirection.Set: ParseableModifierValue {
 extension FrameResizeDirection.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
-            Array<Self.Element>.parser(in: context).map({ Self.init($0) })
+            // this fails to compile in release mode in Xcode 16:
+            // Array<Self.Element>.parser(in: context).map({ Self.init($0) })
+            ListLiteral {
+                ImplicitStaticMember([
+                    "all": Self.all,
+                    "inward": Self.inward,
+                    "outward": Self.outward,
+                ])
+            }
+            .map(Self.init(_:))
             ImplicitStaticMember([
                 "all": Self.all,
                 "inward": Self.inward,
