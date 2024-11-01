@@ -22,7 +22,8 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   use LiveViewNative.Component<%= if @live_form? do %>
 
-  import LiveViewNative.LiveForm.Component
+  import LiveViewNative.LiveForm.Component<%= if @test? do %>
+  @external_resource "priv/templates/lvn.swiftui.gen/core_components.ex"<% end %>
 
   @doc """
   Renders an input with label and error messages.
@@ -85,20 +86,28 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   slot :inner_block
 
   def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
-    assigns
-    |> assign(field: nil, id: assigns.id || field.id)
-    |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
-    |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
-    |> assign_new(:value, fn -> field.value end)
-    |> assign(
-      :rest,
-      Map.put(assigns.rest, :style, [
-        Map.get(assigns.rest, :style, ""),
-        (if assigns.readonly or Map.get(assigns.rest, :disabled, false), do: "disabled(true)", else: ""),
-        (if assigns.autocomplete == "off", do: "textInputAutocapitalization(.never) autocorrectionDisabled()", else: "")
-      ] |> Enum.join(" "))
-    )
-    |> input()
+    assigns =
+      assigns
+      |> assign(field: nil, id: assigns.id || field.id)
+      |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
+      |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
+      |> assign_new(:value, fn -> field.value end)
+
+    styles =
+      [{:readonly, assigns.readonly} , {:autocomplete, assigns.autocomplete}]
+      |> Enum.reduce([], fn
+        {:readyonly, true}, styles -> ["disabled(true)" | styles]
+        {:autocomplete, "off"}, styles -> ["textInputAutocapitalization(.never)", "autocorrectionDisabled()" | styles]
+        _, styles -> styles
+      end)
+
+    style =
+      Map.get(assigns.rest, :style, "")
+      |> String.split(";")
+      |> Kernel.++(Enum.reverse(styles))
+      |> Enum.join(";")
+
+    input(put_in(assigns, [:rest, :style], style))
   end
 
   def input(%{type: "hidden"} = assigns) do
@@ -373,8 +382,8 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   ## Examples
 
       <.simple_form for={@form} phx-change="validate" phx-submit="save">
-        <.input field={@form[:email]} label="Email"/>
-        <.input field={@form[:username]} label="Username" />
+        <.input type="TextField" field={@form[:email]} label="Email"/>
+        <.input type="TextField" field={@form[:username]} label="Username" />
         <:actions>
           <.button type="submit">Save</.button>
         </:actions>

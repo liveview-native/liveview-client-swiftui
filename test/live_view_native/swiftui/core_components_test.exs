@@ -3,6 +3,7 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
 
   import LiveViewNativeTest.CoreComponents.SwiftUI
 
+  import LiveViewNative.LiveForm.Component
   import LiveViewNative.Component, only: [sigil_LVN: 2]
   import LiveViewNative.Template.Parser, only: [parse_document!: 1]
 
@@ -64,7 +65,30 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
   end
 
   describe "simple_form/1" do
+    test "can render form with an input" do
+      params = %{"email" => "test@example.com"}
+      form = to_form(params, as: "user")
 
+      assigns = %{form: form}
+
+      template = ~LVN"""
+        <.simple_form for={@form}>
+          <.input field={@form[:email]} label="Email"/>
+        </.simple_form>
+        """
+
+      assert t2h(template) ==
+        ~X"""
+        <LiveForm>
+          <Form>
+            <VStack alignment="leading">
+              <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+            </VStack>
+            <Section/>
+          </Form>
+        </LiveForm>
+        """
+    end
   end
 
   describe "button/1" do

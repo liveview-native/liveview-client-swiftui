@@ -117,6 +117,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
       context: context,
       assigns: %{
         app_namespace: inspect(context.base_module),
+        test?: false,
         gettext: true,
         version: version,
         live_form?: live_form_opt? && live_form_app?
