@@ -65,6 +65,27 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
   end
 
   describe "simple_form/1" do
+    test "can render empty form" do
+      params = %{}
+      form = to_form(params, as: "user")
+
+      assigns = %{form: form}
+
+      template = ~LVN"""
+        <.simple_form for={@form}>
+        </.simple_form>
+        """
+
+      assert t2h(template) ==
+        ~X"""
+        <LiveForm>
+          <Form>
+            <Section/>
+          </Form>
+        </LiveForm>
+        """
+    end
+
     test "can render form with an input" do
       params = %{"email" => "test@example.com"}
       form = to_form(params, as: "user")
@@ -92,7 +113,21 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
   end
 
   describe "button/1" do
+    test "will render a button" do
+      assigns = %{}
 
+      template = ~LVN"""
+      <.button>Send!</.button>
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <Button>
+          Send!
+        </Button>
+        """
+
+    end
   end
 
   describe "table" do
@@ -100,7 +135,46 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
   end
 
   describe "list/1" do
+    test "will render a list" do
+      assigns = %{}
 
+      template = ~LVN"""
+      <.list>
+        <:item :for={item <- [%{title: "Foo"}, %{title: "Bar"}]} title={item.title}>
+          <Text><%= item.title %></Text>
+        </:item>
+      </.list>
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <List>
+          <LabeledContent>
+            <Text template="label">Foo</Text>
+            <Text>Foo</Text>
+          </LabeledContent>
+          <LabeledContent>
+            <Text template="label">Bar</Text>
+            <Text>Bar</Text>
+          </LabeledContent>
+        </List>
+        """
+    end
+  end
+
+  describe "icon/1" do
+    test "renders an image tag as a system icon" do
+      assigns = %{}
+
+      template = ~LVN"""
+        <.icon name="star"/>
+        """
+
+      assert t2h(template) ==
+        ~X"""
+        <Image systemName="star"/>
+        """
+    end
   end
 
   describe "image/1" do
