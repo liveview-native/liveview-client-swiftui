@@ -56,6 +56,8 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       {:floki, ">= 0.30.0", only: :test},
       {:live_view_native, "~> 0.3.1"},
       {:live_view_native_stylesheet, "~> 0.3.1", only: :test},
+      {:live_view_native_live_form, "~> 0.3.1", only: :test},
+      {:gettext, "~> 0.20", only: :test},
       {:live_view_native_test, github: "liveview-native/live_view_native_test", branch: "main", only: :test},
       {:nimble_parsec, "~> 1.3"}
     ]
