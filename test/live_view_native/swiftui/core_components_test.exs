@@ -41,10 +41,245 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
   defp normalize_attribute_order(value), do: value
 
   describe "input/1" do
+    test "hidden" do
+      assigns = %{}
 
+      template = ~LVN"""
+      <.input type="hidden" value="123" name="test-name" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+       <LiveHiddenField name="test-name" value="123" />
+      """
+    end
+
+    test "TextFieldLink" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="TextFieldLink" value="123" name="test-name" prompt="test-prompt" label="test-label" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <LabeledContent>
+            <Text template="label">test-label</Text>
+            <TextFieldLink name="test-name" value="123" prompt="test-prompt">
+              test-label
+            </TextFieldLink>
+          </LabeledContent>
+        </VStack>
+        """
+    end
+
+    test "DatePicker" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="DatePicker" value="123" name="test-name" label="test-label" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <DatePicker name="test-name" selection="123">
+            test-label
+          </DatePicker>
+        </VStack>
+        """
+    end
+
+    test "MultiDatePicker" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="MultiDatePicker" value="123" name="test-name" label="test-label" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <LabeledContent>
+            <Text template="label">test-label</Text>
+            <MultiDatePicker name="test-name" selection="123">test-label</MultiDatePicker>
+          </LabeledContent>
+        </VStack>
+        """
+    end
+
+    test "Picker" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="Picker" value="123" name="test-name" label="test-label" options={[{"a", "b"}]} />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <Picker name="test-name" selection="123">
+            <Text template="label">test-label</Text>
+            <Text tag="b">
+              a
+            </Text>
+          </Picker>
+        </VStack>
+        """
+    end
+
+    test "Slider" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="Slider" value="123" name="test-name" label="test-label" min={1} max={200} />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <LabeledContent>
+            <Text template="label">test-label</Text>
+            <Slider name="test-name" value="123" lowerBound="1" upperBound="200">test-label</Slider>
+          </LabeledContent>
+        </VStack>
+        """
+    end
+
+    test "Stepper" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="Stepper" value="123" name="test-name" label="test-label" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <LabeledContent>
+            <Text template="label">test-label</Text>
+            <Stepper name="test-name" value="123"></Stepper>
+          </LabeledContent>
+        </VStack>
+        """
+    end
+
+    test "TextEditor" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="TextEditor" value="123" name="test-name" label="test-label" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <LabeledContent>
+            <Text template="label">test-label</Text>
+            <TextEditor name="test-name" text="123" />
+          </LabeledContent>
+        </VStack>
+        """
+    end
+
+    test "TextField" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="TextField" value="123" name="test-name" prompt="test-prompt" label="test-label" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <TextField name="test-name" text="123" prompt="test-prompt">test-label</TextField>
+        </VStack>
+        """
+    end
+
+    test "TextField with placeholder" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="TextField" value="123" name="test-name" prompt="test-prompt" placeholder="test-placeholder" label="test-label" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <TextField name="test-name" text="123" prompt="test-prompt">test-placeholder</TextField>
+        </VStack>
+        """
+    end
+
+    test "SecureField" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="SecureField" value="123" name="test-name" prompt="test-prompt" label="test-label" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <SecureField name="test-name" text="123" prompt="test-prompt">test-label</SecureField>
+        </VStack>
+        """
+    end
+
+    test "SecureField with placeholder" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="SecureField" value="123" name="test-name" prompt="test-prompt" placeholder="test-placeholder" label="test-label" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <SecureField name="test-name" text="123" prompt="test-prompt">test-placeholder</SecureField>
+        </VStack>
+        """
+    end
+
+    test "Toggle" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.input type="Toggle" checked={true} name="test-name" label="test-label" />
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <VStack alignment="leading">
+          <LabeledContent>
+            <Text template="label">test-label</Text>
+            <Toggle name="test-name" isOn="true"></Toggle>
+          </LabeledContent>
+        </VStack>
+        """
+    end
   end
 
   describe "error/1" do
+    test "renders the error message" do
+      assigns = %{}
+
+      template = ~LVN"""
+      <.error>
+        <Text>Error!</Text>
+      </.error>
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <Group style="font(.caption); foregroundStyle(.red)">
+          <Text>Error!</Text>
+        </Group>
+        """
+
+    end
 
   end
 
