@@ -380,8 +380,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert parse(input) == output
 
-      input = ~s{rotationEffect(gesture_state(:rotate, .rotation, defaultValue: .zero))}
-      output = {:rotationEffect, [], [{:__gesture_state__, [], [:rotate, {:., [], [nil, :rotation]}, [defaultValue: {:., [], [nil, :zero]}]]}]}
+      _input = ~s{rotationEffect(gesture_state(:rotate, .rotation, defaultValue: .zero))}
+      _output = {:rotationEffect, [], [{:__gesture_state__, [], [:rotate, {:., [], [nil, :rotation]}, [defaultValue: {:., [], [nil, :zero]}]]}]}
     end
   end
 
