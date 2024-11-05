@@ -276,7 +276,7 @@ private class FormStateData<Value: FormValue>: ObservableObject {
         // When the element updates from the server, sync the new value into the form.
         elementCancellable = element.projectedValue
             .receive(on: DispatchQueue.main)
-            .sink { [weak formModel] _ in
+            .sink { [weak formModel, weak self] _ in
                 // ignore server updates if the field is focused.
                 guard !isFocused.wrappedValue && !isEditing.wrappedValue else { return }
                 formModel?.setServerValue(
@@ -285,6 +285,7 @@ private class FormStateData<Value: FormValue>: ObservableObject {
                         ?? defaultValue,
                     forName: elementName
                 )
+                self?.objectWillChange.send()
             }
         
         // Remove all focus from form fields when the form is submitted.
