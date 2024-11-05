@@ -65,6 +65,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         self.session = session
         self.url = url
     }
+    
+    deinit {
+        self.eventListenerLoop?.cancel()
+        self.statusListenerLoop?.cancel()
+    }
 
     /// Pushes a LiveView event with the given name and payload to the server.
     ///
