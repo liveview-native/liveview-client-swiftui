@@ -144,30 +144,38 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
         
         init() {}
         
+        deinit {
+            self.handlerTask?.cancel()
+        }
+        
         func update(coordinator: CoordinatorEnvironment?, debounce: Double?, throttle: Double?) {
             guard handlerTask == nil || debounce != self.debounce || throttle != self.throttle
             else { return }
             handlerTask?.cancel()
             self.debounce = debounce
             self.throttle = throttle
+            let pushEvent = coordinator?.pushEvent
             if let debounce = debounce {
-                handlerTask = Task { [weak didSendSubject] in
+                handlerTask = Task { [weak channel, weak didSendSubject, pushEvent] in
+                    guard let channel else { return }
                     for await event in channel.debounce(for: .milliseconds(debounce)) {
-                        _ = try await coordinator?.pushEvent(event.type, event.event, event.payload, event.target)
+                        _ = try await pushEvent?(event.type, event.event, event.payload, event.target)
                         didSendSubject?.send()
                     }
                 }
             } else if let throttle = throttle {
-                handlerTask = Task { @MainActor [weak didSendSubject] in
-                    for await event in channel.throttle(for: .milliseconds(throttle)) {
-                        _ = try await coordinator?.pushEvent(event.type, event.event, event.payload, event.target)
+                handlerTask = Task { @MainActor [weak channel, weak didSendSubject, pushEvent] in
+                    guard let channel else { return }
+                    for await event in channel._throttle(for: .milliseconds(throttle)) {
+                        _ = try await pushEvent?(event.type, event.event, event.payload, event.target)
                         didSendSubject?.send()
                     }
                 }
             } else {
-                handlerTask = Task { @MainActor [weak didSendSubject] in
+                handlerTask = Task { @MainActor [weak channel, weak didSendSubject, pushEvent] in
+                    guard let channel else { return }
                     for await event in channel {
-                        _ = try await coordinator?.pushEvent(event.type, event.event, event.payload, event.target)
+                        _ = try await pushEvent?(event.type, event.event, event.payload, event.target)
                         didSendSubject?.send()
                     }
                 }
