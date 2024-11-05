@@ -68,6 +68,9 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         let generated = """
         import SwiftUI
         import LiveViewNativeStylesheet
+        import OSLog
+        
+        private let logger = Logger(subsystem: "LiveViewNative", category: "BuiltinRegistry") 
         
         // This switch can't be inlined into BuiltinRegistry.lookup because it results in that method's return type
         // being a massive pile of nested _ConditionalContents. Instead, lift it out into a separate View type
@@ -82,7 +85,8 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         \(Self.additionalViews.map(additionalViewCase(name:initializer:)).joined(separator: "\n"))
                 default:
                     // log here that view type cannot be found
-                    EmptyView()
+                    let _ = logger.error("'<\\(name)>' is not a known element.")
+                    Group<R>()
                 }
             }
         }
