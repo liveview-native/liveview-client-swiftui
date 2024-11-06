@@ -2,14 +2,14 @@
 
 ```mermaid
 flowchart TD
-    LV[<a href='https://github.com/liveview-native/liveview-client-swiftui/blob/main/Sources/LiveViewNative/LiveView.swift'>LiveView</a>]
+    LV[<a href='https://github.com/liveview-native/liveview-client-swiftui/blob/main/Sources/LiveViewNative/Live/LiveView.swift'>LiveView</a>]
     LV --> LSC[<a href='https://github.com/liveview-native/liveview-client-swiftui/blob/main/Sources/LiveViewNative/Coordinators/LiveSessionCoordinator.swift'>LiveSessionCoordinator</a>]
     LSC --> |/route1| LVC1[<a href='https://github.com/liveview-native/liveview-client-swiftui/blob/main/Sources/LiveViewNative/Coordinators/LiveViewCoordinator.swift'>LiveViewCoordinator</a> 1]
     LSC --> |/route2| LVC2[<a href='https://github.com/liveview-native/liveview-client-swiftui/blob/main/Sources/LiveViewNative/Coordinators/LiveViewCoordinator.swift'>LiveViewCoordinator</a> 2]
     LSC --> |/route3| LVC3[<a href='https://github.com/liveview-native/liveview-client-swiftui/blob/main/Sources/LiveViewNative/Coordinators/LiveViewCoordinator.swift'>LiveViewCoordinator</a> 3]
 ```
 
-## [`LiveView`](https://github.com/liveview-native/liveview-client-swiftui/blob/main/Sources/LiveViewNative/LiveView.swift)
+## [`LiveView`](https://github.com/liveview-native/liveview-client-swiftui/blob/main/Sources/LiveViewNative/Live/LiveView.swift)
 The `LiveView` struct is a SwiftUI View that connects to a Phoenix LiveView application. This View can be included anywhere in a SwiftUI View hierarchy.
 
 ## [`LiveSessionCoordinator`](https://github.com/liveview-native/liveview-client-swiftui/blob/main/Sources/LiveViewNative/Coordinators/LiveSessionCoordinator.swift)
