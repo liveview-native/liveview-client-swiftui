@@ -109,16 +109,6 @@ let package = Package(
             ),
             dependencies: []
         ),
-
-        // Unfortunately, this tool cannot be a plugin due to limitations on network access.
-        // Once SwiftPM supports plugins with network access, this can become a plugin again.
-        .executableTarget(
-            name: "TutorialRepoGenerator",
-            dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "Markdown", package: "swift-markdown"),
-            ]
-        ),
         
         .macro(
             name: "LiveViewNativeMacros",

@@ -31,9 +31,9 @@ final class MacroTests: XCTestCase {
             struct TestModifier {
                 let width: Double?
                 let height: Double?
-
+            
                 static let name = "test"
-
+            
                 #if os(iOS) || os(macOS)
                 init(_ width: Double?, height: Double?) {
                     self.width = width
@@ -44,13 +44,13 @@ final class MacroTests: XCTestCase {
 
             extension TestModifier: ParseableExpressionProtocol {
              typealias _ParserType = StandardExpressionParser<Self>
-             struct ExpressionArgumentsBody: Parser {
+                @MainActor  struct ExpressionArgumentsBody: @preconcurrency Parser {
                     let context: ParseableModifierContext
                     func parse(_ input: inout Substring.UTF8View) throws -> TestModifier {
-                        try "[" .utf8.parse(&input)
+                        try "[".utf8.parse(&input)
                         try Whitespace().parse(&input)
                         let copy = input
-                        var clauseFailures = [([String], ModifierParseError.ErrorType)] ()
+                        var clauseFailures = [([String], ModifierParseError.ErrorType)]()
                         #if os(iOS) || os(macOS)
                         do {
                         let width: Double? = try Parse(input: Substring.UTF8View.self) {
@@ -61,18 +61,21 @@ final class MacroTests: XCTestCase {
                             Whitespace()
                         }
                         .parse(&input)
-                        try Whitespace().parse(&input)
-                        try "," .utf8.parse(&input)
-                        try Whitespace().parse(&input)
-                        try "[" .utf8.parse(&input)
-                        var failures = [ModifierParseError.ErrorType] ()
+                        var failures = [ModifierParseError.ErrorType]()
                         var height: Double?
+                        try Whitespace().parse(&input)
+                        if input.first == ",".utf8.first || input.first == "[".utf8.first {
+                        if input.first == ",".utf8.first {
+                            try ",".utf8.parse(&input)
+                        }
+                        try Whitespace().parse(&input)
+                        try "[".utf8.parse(&input)
                         while !input.isEmpty {
                             try Whitespace().parse(&input)
-                            let name = try Identifier().parse(&input)
-                            try ":" .utf8.parse(&input)
+                            let __name = try Identifier().parse(&input)
+                            try ":".utf8.parse(&input)
                             try Whitespace().parse(&input)
-                            switch name {
+                            switch __name {
                             case "height":
                                 let labelledArgumentCopy = input
             do {
@@ -86,20 +89,20 @@ final class MacroTests: XCTestCase {
             }
                             default:
                                 _ = try _AnyNodeParser.AnyArgument(context: context).parse(&input)
-            failures.append(.unknownArgument(name))
+            failures.append(.unknownArgument(__name))
                             }
                             try Whitespace().parse(&input)
-                            guard input.first == "," .utf8.first else {
+                            guard input.first == ",".utf8.first else {
                                 break
                             }
-                            try "," .utf8.parse(&input)
+                            try ",".utf8.parse(&input)
                         }
-                        try "]" .utf8.parse(&input)
+                        try "]".utf8.parse(&input)
                         guard failures.isEmpty else {
                             throw ModifierParseError(error: .multipleErrors(failures), metadata: context.metadata)
-                        }
+                        }}
                         try Whitespace().parse(&input)
-                        try "]" .utf8.parse(&input)
+                        try "]".utf8.parse(&input)
                         return Output(width, height: height)} catch let error as ModifierParseError {
                             clauseFailures.append((
                                 ["_", "height"],
@@ -143,13 +146,13 @@ final class MacroTests: XCTestCase {
 
             extension Padding: ParseableExpressionProtocol {
              typealias _ParserType = StandardExpressionParser<Self>
-             struct ExpressionArgumentsBody: Parser {
+                @MainActor  struct ExpressionArgumentsBody: @preconcurrency Parser {
                     let context: ParseableModifierContext
                     func parse(_ input: inout Substring.UTF8View) throws -> Padding {
-                        try "[" .utf8.parse(&input)
+                        try "[".utf8.parse(&input)
                         try Whitespace().parse(&input)
                         let copy = input
-                        var clauseFailures = [([String], ModifierParseError.ErrorType)] ()
+                        var clauseFailures = [([String], ModifierParseError.ErrorType)]()
                         do {
                         let edges: Edge.Set  = try OneOf(input: Substring.UTF8View.self, output: Edge.Set.self) {
                             Parse {
@@ -164,7 +167,7 @@ final class MacroTests: XCTestCase {
                         let length: AttributeReference<CGFloat?>?  = try OneOf(input: Substring.UTF8View.self, output: AttributeReference<CGFloat?>?.self) {
                             Parse {
                                 Whitespace()
-                                "," .utf8
+                                ",".utf8
                                 Whitespace()
                                 AttributeReference<CGFloat?>? .parser(in: context)
                                 Whitespace()
@@ -172,7 +175,7 @@ final class MacroTests: XCTestCase {
                             Always(.init(storage: .constant(nil)))
                         } .parse(&input)
                         try Whitespace().parse(&input)
-                        try "]" .utf8.parse(&input)
+                        try "]".utf8.parse(&input)
                         return Output(edges, length)} catch let error as ModifierParseError {
                             clauseFailures.append((
                                 ["_", "_"],
