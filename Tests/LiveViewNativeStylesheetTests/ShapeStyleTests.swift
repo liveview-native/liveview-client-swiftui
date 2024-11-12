@@ -11,6 +11,7 @@ import SwiftUI
 @testable import LiveViewNative
 
 extension XCTestCase {
+    @MainActor
     func testParserEqual<T>(
         _ ast: String,
         _ value: T
@@ -20,6 +21,8 @@ extension XCTestCase {
             value
         )
     }
+    
+    @MainActor
     func testParser<T>(
         _ ast: String,
         as t: T.Type = T.self
@@ -29,6 +32,7 @@ extension XCTestCase {
 }
 
 extension XCTestCase {
+    @MainActor
     func testParserShapeStyle<T>(
         _ ast: String,
         _ value: T
@@ -37,6 +41,7 @@ extension XCTestCase {
         testParser(ast, as: AnyShapeStyle.Resolvable.self)
     }
     
+    @MainActor
     @_disfavoredOverload
     func testParserShapeStyle<T>(
         _ ast: String,
@@ -46,6 +51,7 @@ extension XCTestCase {
     }
 }
 
+@MainActor
 final class ShapeStyleTests: XCTestCase {
     func testColor() {
         // static members
