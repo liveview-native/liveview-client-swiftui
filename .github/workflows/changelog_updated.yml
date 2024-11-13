@@ -2,10 +2,12 @@ name: Changelog Updated
 
 on:
   pull_request:
+    branches:
+      - main
 
 - name: Checkout
   uses: actions/checkout@v3
   with:
-     fetch-depth: 2
+    fetch-depth: 2
 - name: Check if CHANGELOG.md was changed
   run: ! git diff --name-only --exit-code HEAD^1 HEAD CHANGELOG.md
