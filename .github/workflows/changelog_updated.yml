@@ -15,4 +15,4 @@ jobs:
         with:
           fetch-depth: 2
       - name: Check if CHANGELOG.md was changed
-        run: ! git diff --name-only --exit-code HEAD^1 HEAD CHANGELOG.md
+        run: "! git diff --name-only --exit-code HEAD^1 HEAD CHANGELOG.md"
