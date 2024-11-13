@@ -324,6 +324,7 @@ struct _AnyGesture: ParseableModifierValue {
     }
     #endif
     
+    @MainActor
     @ParseableExpression
     struct LongPress {
         static let name = "LongPressGesture"
