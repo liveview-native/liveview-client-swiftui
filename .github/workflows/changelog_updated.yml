@@ -5,9 +5,14 @@ on:
     branches:
       - main
 
-- name: Checkout
-  uses: actions/checkout@v3
-  with:
-    fetch-depth: 2
-- name: Check if CHANGELOG.md was changed
-  run: ! git diff --name-only --exit-code HEAD^1 HEAD CHANGELOG.md
+jobs:
+  changelog_updated:
+    name: Changelog Updated
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Check if CHANGELOG.md was changed
+        run: ! git diff --name-only --exit-code HEAD^1 HEAD CHANGELOG.md
