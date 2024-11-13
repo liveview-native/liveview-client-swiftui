@@ -187,7 +187,7 @@ final class ShapeStyleTests: XCTestCase {
             #"{:., [], [nil, :background]}"#,
             AnyShapeStyle.Resolvable(.background)
         )
-        #if !os(watchOS)
+        #if !os(watchOS) && !os(tvOS)
         testParserShapeStyle(
             #"{:., [], [nil, :selection]}"#,
             AnyShapeStyle.Resolvable(.selection)
