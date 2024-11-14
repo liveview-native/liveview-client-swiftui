@@ -58,7 +58,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       {:live_view_native_stylesheet, "~> 0.3.1", only: :test},
       {:live_view_native_live_form, github: "liveview-native/liveview-native-live-form", only: :test},
       {:gettext, "~> 0.20", only: :test},
-      {:live_view_native_test, github: "liveview-native/live_view_native_test", branch: "main", only: :test},
+      {:live_view_native_test, github: "liveview-native/live_view_native_test_endpoint", ref: "539ae931fa3936f3ee2f73ffa11f7100fe6554db", only: :test},
       {:nimble_parsec, "~> 1.3"}
     ]
   end

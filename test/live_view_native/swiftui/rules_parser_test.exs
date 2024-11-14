@@ -78,14 +78,14 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "parses atoms as an argument value" do
       input = "background(content: :star_red)"
-      output = {:background, [], [[content: :star_red]]}
+      output = {:background, [], [{:content, :star_red}]}
 
       assert parse(input) == output
     end
 
     test "parses string wrapped atoms as an argument value" do
       input = "background(content: :\"star-red\")"
-      output = {:background, [], [[content: :"star-red"]]}
+      output = {:background, [], [{:content, :"star-red"}]}
 
       assert parse(input) == output
     end
@@ -109,7 +109,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     test "parses chained IMEs" do
       input = "font(color: Color.red)"
 
-      output = {:font, [], [[color: {:., [], [:Color, :red]}]]}
+      output = {:font, [], [{:color, {:., [], [:Color, :red]}}]}
 
       assert parse(input) == output
 
@@ -117,14 +117,14 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       output =
         {:font, [],
-         [[color: {:., [], [:Color, {:., [], [:red, {:shadow, [], [{:., [], [nil, :thick]}]}]}]}]]}
+         [{:color, {:., [], [:Color, {:., [], [:red, {:shadow, [], [{:., [], [nil, :thick]}]}]}]}}]}
 
       assert parse(input) == output
 
       input = "foregroundStyle(Color(.displayP3, red: 0.4627, green: 0.8392, blue: 1.0).opacity(0.25))"
 
       output =
-        {:foregroundStyle, [], [{:., [], [{:Color, [], [{:., [], [nil, :displayP3]}, [red: 0.4627, green: 0.8392, blue: 1.0]]}, {:opacity, [], [0.25]}]}]}
+        {:foregroundStyle, [], [{:., [], [{:Color, [], [{:., [], [nil, :displayP3]}, {:red, 0.4627}, {:green, 0.8392}, {:blue, 1.0}]}, {:opacity, [], [0.25]}]}]}
 
       assert parse(input) == output
     end
@@ -177,11 +177,11 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       output =
         {:color, [],
          [
-           [
-             color:
+           {
+             :color,
                {:., [],
                 [nil, {:., [], [:foo, {:., [], [:bar, {:., [], [{:baz, [], [1, 2]}, :qux]}]}]}]}
-           ]
+           }
          ]}
 
       assert parse(input) == output
@@ -226,7 +226,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "parses key/value pairs" do
       input = ~s|foo(bar: "baz", qux: .quux)|
-      output = {:foo, [], [[bar: "baz", qux: {:., [], [nil, :quux]}]]}
+      output = {:foo, [], [{:bar, "baz"}, {:qux, {:., [], [nil, :quux]}}]}
 
       assert parse(input) == output
     end
@@ -362,21 +362,21 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
   describe "helper functions" do
     test "event" do
       input = ~s{searchable(change: event("search-event", throttle: 10_000))}
-      output = {:searchable, [], [[change: {:__event__, [], ["search-event", [throttle: 10_000]]}]]}
+      output = {:searchable, [], [{:change, {:__event__, [], ["search-event", [throttle: 10_000]]}}]}
 
       assert parse(input) == output
     end
 
     test "event with no arguments" do
       input = ~s{searchable(change: event("search-event"))}
-      output = {:searchable, [], [[change: {:__event__, [], ["search-event"]}]]}
+      output = {:searchable, [], [{:change, {:__event__, [], ["search-event"]}}]}
 
       assert parse(input) == output
     end
 
     test "gesture" do
       input = ~s{offset(x: gesture_state(:drag, .translation.width))}
-      output = {:offset, [], [[x: {:__gesture_state__, [], [:drag, {:., [], [nil, {:., [], [:translation, :width]}]}]}]]}
+      output = {:offset, [], [{:x, {:__gesture_state__, [], [:drag, {:., [], [nil, {:., [], [:translation, :width]}]}]}}]}
 
       assert parse(input) == output
 
