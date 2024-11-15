@@ -154,7 +154,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
 
   def event_to_ast(rest, [opts, name], context, {line, _}, _byte_offset) do
     annotations = context_to_annotation(context.context, line)
-    {rest, [{:__event__, annotations, [name, opts]}], context}
+    {rest, [{:__event__, annotations, [name] ++ List.wrap(opts)}], context}
   end
 
   def add_annotations(rest, parts, context, {line, _}, _byte_offset) do

@@ -124,7 +124,12 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       input = "foregroundStyle(Color(.displayP3, red: 0.4627, green: 0.8392, blue: 1.0).opacity(0.25))"
 
       output =
-        {:foregroundStyle, [], [{:., [], [{:Color, [], [{:., [], [nil, :displayP3]}, {:red, 0.4627}, {:green, 0.8392}, {:blue, 1.0}]}, {:opacity, [], [0.25]}]}]}
+        {:foregroundStyle, [], [{:., [], [{:Color, [], [
+          {:., [], [nil, :displayP3]},
+          {:red, 0.4627},
+          {:green, 0.8392},
+          {:blue, 1.0}
+        ]}, {:opacity, [], [0.25]}]}]}
 
       assert parse(input) == output
     end
@@ -147,15 +152,15 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
 
       input = ~s/Gradient(colors: [0, 1, 2])/
-      output = {:Gradient, [], [[colors: [0, 1, 2]]]}
+      output = {:Gradient, [], [{:colors, [0, 1, 2]}]}
       assert parse(input) == output
 
       input = ~s/Gradient(colors: [Color.red, Color.blue])/
-      output = {:Gradient, [], [[colors: [{:., [], [:Color, :red]}, {:., [], [:Color, :blue]}]]]}
+      output = {:Gradient, [], [{:colors, [{:., [], [:Color, :red]}, {:., [], [:Color, :blue]}]}]}
       assert parse(input) == output
 
       input = ~s/Gradient(colors: ["red", "blue"])/
-      output = {:Gradient, [], [[colors: ["red", "blue"]]]}
+      output = {:Gradient, [], [{:colors, ["red", "blue"]}]}
       assert parse(input) == output
     end
 
@@ -362,7 +367,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
   describe "helper functions" do
     test "event" do
       input = ~s{searchable(change: event("search-event", throttle: 10_000))}
-      output = {:searchable, [], [{:change, {:__event__, [], ["search-event", [throttle: 10_000]]}}]}
+      output = {:searchable, [], [{:change, {:__event__, [], ["search-event", {:throttle, 10_000}]}}]}
 
       assert parse(input) == output
     end
@@ -569,8 +574,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert String.trim(error.description) == error_prefix
     end
 
-    test "invalid keyword pair: invalid value" do
-      input = "abc(def: 11, b: [lineWidth: 1lineWidth])"
+    test "invalid number" do
+      input = "abc(def: 11, b: 1lineWidth)"
 
       error =
         assert_raise SyntaxError, fn ->
@@ -581,8 +586,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         """
         Unsupported input:
           |
-        1 | abc(def: 11, b: [lineWidth: 1lineWidth])
-          |                              ^^^^^^^^^
+        1 | abc(def: 11, b: 1lineWidth)
+          |                  ^^^^^^^^^
           |
 
         Invalid suffix on number
@@ -592,8 +597,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert String.trim(error.description) == error_prefix
     end
 
-    test "invalid keyword pair: invalid value (2)" do
-      input = "abc(def: 11, b: [lineWidth: :1])"
+    test "invalid atom" do
+      input = "abc(def: 11, b: :1)"
 
       error =
         assert_raise SyntaxError, fn ->
@@ -604,8 +609,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         """
         Unsupported input:
           |
-        1 | abc(def: 11, b: [lineWidth: :1])
-          |                              ^
+        1 | abc(def: 11, b: :1)
+          |                  ^
           |
 
         Expected an atom, but got ‘1’
