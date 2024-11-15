@@ -23,6 +23,10 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
     |> parse_sorted!()
   end
 
+  def trim(str) when is_binary(str), do: String.trim(str)
+  def trim(list) when is_list(list), do: Enum.map(list, &trim/1)
+  def trim(tuple) when is_tuple(tuple), do: tuple |> Tuple.to_list() |> trim() |> List.to_tuple()
+
   @doc """
   Parses LVN templates into Floki format with sorted attributes.
   """
@@ -30,6 +34,7 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
     value
     |> parse_document!()
     |> Enum.map(&normalize_attribute_order/1)
+    |> trim()
   end
 
   defp normalize_attribute_order({node_type, attributes, content}),
@@ -315,7 +320,6 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
         ~X"""
         <LiveForm>
           <Form>
-            <Section/>
           </Form>
         </LiveForm>
         """
@@ -340,7 +344,176 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
             <VStack alignment="leading">
               <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
             </VStack>
-            <Section/>
+          </Form>
+        </LiveForm>
+        """
+    end
+
+    test "can render multiple sections in order" do
+      params = %{"email" => "test@example.com", "first_name" => "Gloria", "last_name" => "Fuertes", "more_info" => "More info here"}
+      form = to_form(params, as: "user")
+
+      assigns = %{form: form}
+
+      template = ~LVN"""
+      <.simple_form for={@form}>
+        <:section header="Name">
+          <.input field={@form[:first_name]} label="First name"/>
+          <.input field={@form[:last_name]} label="Last name"/>
+        </:section>
+        <:section footer="We will contact you here.">
+          <.input field={@form[:email]} label="Email"/>
+        </:section>
+        <:section header="Extra info" footer="We will use this for..." is_expanded="false">
+          <.input field={@form[:more_info]} label="More info"/>
+        </:section>
+      </.simple_form>
+      """
+
+      assert t2h(template) ==
+        trim(~X"""
+        <LiveForm>
+          <Form>
+            <Section isExpanded="true">
+              <Text template="header">Name</Text>
+              <VStack alignment="leading">
+                <TextField id="user_first_name" name="user[first_name]" style="" text="Gloria">First name</TextField>
+              </VStack>
+              <VStack alignment="leading">
+                <TextField id="user_last_name" name="user[last_name]" style="" text="Fuertes">Last name</TextField>
+              </VStack>
+            </Section>
+            <Section isExpanded="true">
+              <VStack alignment="leading">
+                <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+              </VStack>
+              <Text template="footer">We will contact you here.</Text>
+            </Section>
+            <Section isExpanded="false">
+              <Text template="header">Extra info</Text>
+              <VStack alignment="leading">
+                <TextField id="user_more_info" name="user[more_info]" style="" text="More info here">More info</TextField>
+              </VStack>
+              <Text template="footer">We will use this for...</Text>
+            </Section>
+          </Form>
+        </LiveForm>
+        """)
+    end
+
+    test "can give a isExpanded value to Section" do
+      params = %{"email" => "test@example.com"}
+      form = to_form(params, as: "user")
+
+      assigns = %{expand?: false, form: form}
+
+      template = ~LVN"""
+      <.simple_form for={@form}>
+        <:section is_expanded={@expand?}>
+          <.input field={@form[:email]} label="Email"/>
+        </:section>
+      </.simple_form>
+      """
+
+      assert t2h(template) ==
+        trim(~X"""
+        <LiveForm>
+          <Form>
+            <Section isExpanded="false">
+              <VStack alignment="leading">
+                <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+              </VStack>
+            </Section>
+          </Form>
+        </LiveForm>
+        """)
+    end
+
+    test "can render sectionn with footer" do
+      params = %{"email" => "test@example.com"}
+      form = to_form(params, as: "user")
+
+      assigns = %{form: form}
+
+      template = ~LVN"""
+      <.simple_form for={@form}>
+        <:section footer="A footer">
+          <.input field={@form[:email]} label="Email"/>
+        </:section>
+      </.simple_form>
+      """
+
+      assert t2h(template) ==
+        trim(~X"""
+        <LiveForm>
+          <Form>
+            <Section isExpanded="true">
+              <VStack alignment="leading">
+                <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+              </VStack>
+              <Text template="footer">
+                A footer
+              </Text>
+            </Section>
+          </Form>
+        </LiveForm>
+        """)
+    end
+
+    test "can render section with header" do
+      params = %{"email" => "test@example.com"}
+      form = to_form(params, as: "user")
+
+      assigns = %{form: form}
+
+      template = ~LVN"""
+      <.simple_form for={@form}>
+        <:section header="A header">
+          <.input field={@form[:email]} label="Email"/>
+        </:section>
+      </.simple_form>
+      """
+
+      assert t2h(template) ==
+        trim(~X"""
+        <LiveForm>
+          <Form>
+            <Section isExpanded="true">
+              <Text template="header">
+                A header
+              </Text>
+              <VStack alignment="leading">
+                <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+              </VStack>
+            </Section>
+          </Form>
+        </LiveForm>
+        """)
+    end
+
+    test "can render section without attributes" do
+      params = %{"email" => "test@example.com"}
+      form = to_form(params, as: "user")
+
+      assigns = %{form: form}
+
+      template = ~LVN"""
+      <.simple_form for={@form}>
+        <:section>
+          <.input field={@form[:email]} label="Email"/>
+        </:section>
+      </.simple_form>
+      """
+
+      assert t2h(template) ==
+        ~X"""
+        <LiveForm>
+          <Form>
+            <Section isExpanded="true">
+              <VStack alignment="leading">
+                <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+              </VStack>
+            </Section>
           </Form>
         </LiveForm>
         """
