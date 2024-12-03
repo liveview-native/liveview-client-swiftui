@@ -6,7 +6,8 @@ defmodule LiveViewNative.SwiftUI do
     component: LiveViewNative.SwiftUI.Component,
     module_suffix: :SwiftUI,
     template_engine: LiveViewNative.Engine,
-    stylesheet_rules_parser: LiveViewNative.SwiftUI.RulesParser
+    stylesheet_rules_parser: LiveViewNative.SwiftUI.RulesParser,
+    client: LiveViewNative.SwiftUI.Client
 
   def normalize_os_version(os_version),
     do: normalize_version(os_version)

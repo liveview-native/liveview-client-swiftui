@@ -17,7 +17,7 @@ config :mime, :types, %{
   "text/swiftui" => ["swiftui"]
 }
 
-config :live_view_native_test,
+config :live_view_native_test_endpoint,
   formats: [:swiftui],
   otp_app: :live_view_native_swiftui,
   routes: [
