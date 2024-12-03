@@ -1,1 +1,1 @@
-<WatchOSContainer><%= @inner_content %></WatchOSContainer>
+<WatchOSContainer>{@inner_content}</WatchOSContainer>

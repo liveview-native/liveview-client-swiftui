@@ -2,7 +2,7 @@ defmodule LiveViewNative.SwiftUI.InlineRenderTest do
   use ExUnit.Case, async: false
 
   import Phoenix.ConnTest
-  import Phoenix.LiveViewTest
+  require Phoenix.LiveViewTest
   import LiveViewNativeTest
 
   @endpoint LiveViewNativeTest.Endpoint
@@ -12,14 +12,14 @@ defmodule LiveViewNative.SwiftUI.InlineRenderTest do
   end
 
   test "can render the override html format", %{conn: conn} do
-    {:ok, lv, _body} = native(conn, "/inline", :swiftui)
+    {:ok, lv, _body} = live(conn, "/inline", _format: :swiftui)
 
-    assert lv |> element("text") |> render() =~ "Inline SwiftUI Render 100"
+    assert lv |> element("Text") |> render() =~ "Inline SwiftUI Render 100"
   end
 
   test "can render the swiftui format with watchos target", %{conn: conn} do
-    {:ok, lv, _body} = native(conn, "/inline", :swiftui, %{"target" => "watchos"})
+    {:ok, lv, _body} = live(conn, "/inline", _format: :swiftui, _interface: %{"target" => "watchos"})
 
-    assert lv |> element("text") |> render() =~ "WatchOS Target Inline SwiftUI Render 100"
+    assert lv |> element("Text") |> render() =~ "WatchOS Target Inline SwiftUI Render 100"
   end
 end

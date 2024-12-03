@@ -1,1 +1,1 @@
-<Text>Template SwiftUI Render <%= @count %></Text>
+<Text>Template SwiftUI Render {@count}</Text>

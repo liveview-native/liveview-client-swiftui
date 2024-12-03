@@ -5,13 +5,13 @@ defmodule LiveViewNativeTest.SwiftUI.InlineLive.SwiftUI do
 
   def render(assigns, %{"target" => "watchos"}) do
     ~LVN"""
-    <Text>WatchOS Target Inline SwiftUI Render <%= @count %></Text>
+    <Text>WatchOS Target Inline SwiftUI Render {@count}</Text>
     """
   end
 
   def render(assigns, _interface) do
     ~LVN"""
-    <Text>Inline SwiftUI Render <%= @count %></Text>
+    <Text>Inline SwiftUI Render {@count}</Text>
     """
   end
 end
