@@ -9,11 +9,13 @@ import SwiftUI
 import LiveViewNativeCore
 import Combine
 
-private struct FormModelKey: EnvironmentKey {
+@MainActor
+private struct FormModelKey: @preconcurrency EnvironmentKey {
     static let defaultValue: FormModel? = nil
 }
 
-private struct ModifierChangeTrackingContextKey: EnvironmentKey {
+@MainActor
+private struct ModifierChangeTrackingContextKey: @preconcurrency EnvironmentKey {
     static let defaultValue: ModifierChangeTrackingContext? = nil
 }
 
@@ -39,11 +41,13 @@ final class ModifierChangeTrackingContext {
     }
 }
 
-private struct ElementKey: EnvironmentKey {
+@MainActor
+private struct ElementKey: @preconcurrency EnvironmentKey {
     static let defaultValue: ElementNode? = nil
 }
 
-private struct LiveContextStorageKey: EnvironmentKey {
+@MainActor
+private struct LiveContextStorageKey: @preconcurrency EnvironmentKey {
     static var defaultValue: Any? = nil
 }
 
@@ -78,7 +82,8 @@ struct CoordinatorEnvironment {
         self.storage = .init(coordinator, document: document)
     }
     
-    fileprivate struct Key: EnvironmentKey {
+    @MainActor
+    fileprivate struct Key: @preconcurrency EnvironmentKey {
         static var defaultValue: CoordinatorEnvironment? = nil
     }
 }

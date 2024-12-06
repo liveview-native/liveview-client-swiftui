@@ -65,8 +65,9 @@ import AsyncAlgorithms
 ///- ``wrappedValue``
 ///### Supporting Types
 ///- ``EventHandler``
+@MainActor
 @propertyWrapper
-public struct Event: DynamicProperty, Decodable {
+public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable {
     @ObservedElement private var element: ElementNode
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @StateObject var handler = Handler()
@@ -123,8 +124,16 @@ public struct Event: DynamicProperty, Decodable {
         }
     }
     
+    @MainActor
     final class Handler: ObservableObject {
-        let channel = AsyncChannel<(String, String, Any, Int?)>()
+        let channel = AsyncChannel<EventPayload>()
+        
+        struct EventPayload: @unchecked Sendable {
+            let type: String
+            let event: String
+            let payload: Any
+            let target: Int?
+        }
         
         private var handlerTask: Task<(), Error>?
         
@@ -144,21 +153,21 @@ public struct Event: DynamicProperty, Decodable {
             if let debounce = debounce {
                 handlerTask = Task { [weak didSendSubject] in
                     for await event in channel.debounce(for: .milliseconds(debounce)) {
-                        _ = try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        _ = try await coordinator?.pushEvent(event.type, event.event, event.payload, event.target)
                         didSendSubject?.send()
                     }
                 }
             } else if let throttle = throttle {
-                handlerTask = Task { [weak didSendSubject] in
+                handlerTask = Task { @MainActor [weak didSendSubject] in
                     for await event in channel.throttle(for: .milliseconds(throttle)) {
-                        _ = try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        _ = try await coordinator?.pushEvent(event.type, event.event, event.payload, event.target)
                         didSendSubject?.send()
                     }
                 }
             } else {
-                handlerTask = Task { [weak didSendSubject] in
+                handlerTask = Task { @MainActor [weak didSendSubject] in
                     for await event in channel {
-                        _ = try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        _ = try await coordinator?.pushEvent(event.type, event.event, event.payload, event.target)
                         didSendSubject?.send()
                     }
                 }
@@ -327,7 +336,12 @@ public struct Event: DynamicProperty, Decodable {
             guard let event else {
                 return
             }
-            await owner.handler.channel.send((owner.type, event, owner.params ?? value, owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init)))
+            await owner.handler.channel.send(.init(
+                type: owner.type,
+                event: event,
+                payload: owner.params ?? value,
+                target: owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init)
+            ))
         }
         
         public func callAsFunction<R: RootRegistry>(value: Any = [String:String](), in context: LiveContext<R>) async throws {
@@ -340,7 +354,12 @@ public struct Event: DynamicProperty, Decodable {
                 debounce: owner.debounce,
                 throttle: owner.throttle
             )
-            await handler.channel.send((owner.type, event, owner.params ?? value, owner.target))
+            await handler.channel.send(.init(
+                type: owner.type,
+                event: event,
+                payload: owner.params ?? value,
+                target: owner.target
+            ))
         }
     }
 }

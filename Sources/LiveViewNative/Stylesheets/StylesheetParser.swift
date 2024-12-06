@@ -5,7 +5,8 @@ import OSLog
 
 private let logger = Logger(subsystem: "LiveViewNative", category: "Stylesheet")
 
-struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
+@MainActor
+struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: @preconcurrency Parser {
     let context: ParseableModifierContext
 
     func parse(_ input: inout Substring.UTF8View) throws -> Dictionary<String, Array<M>> {
@@ -52,7 +53,8 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
         return classes
     }
     
-    struct RecoverableModifier: Parser {
+    @MainActor
+    struct RecoverableModifier: @preconcurrency Parser {
         let className: String
         let context: ParseableModifierContext
         

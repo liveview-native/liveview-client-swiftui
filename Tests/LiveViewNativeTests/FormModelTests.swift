@@ -9,10 +9,13 @@ import XCTest
 import LiveViewNativeCore
 @_spi(LiveForm) @testable import LiveViewNative
 
+@MainActor
 class FormModelTests: XCTestCase {
     func testFormChangeEvent() async throws {
         let expectation = XCTestExpectation(description: "Send a form change event.")
         
+        @Sendable
+        @MainActor
         func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws -> [String:Any]? {
             XCTAssertEqual(type, "form")
             XCTAssertEqual(event, "validate")

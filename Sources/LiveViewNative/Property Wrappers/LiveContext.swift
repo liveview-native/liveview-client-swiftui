@@ -20,6 +20,7 @@ import LiveViewNativeCore
 ///     }
 /// }
 /// ```
+@MainActor
 @propertyWrapper
 public struct LiveContext<R: RootRegistry>: DynamicProperty {
     @Environment(\.anyLiveContextStorage) private var anyStorage

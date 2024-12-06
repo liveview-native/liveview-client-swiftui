@@ -65,28 +65,30 @@ import LiveViewNativeCore
 /// ```
 @_documentation(visibility: public)
 public extension SwiftUI.Color {
+    @MainActor
     struct Resolvable: ParseableModifierValue {
+        @MainActor
         enum Storage {
             case reference(AttributeName)
             case constant(SwiftUI.Color)
             case named(AttributeReference<String>)
             case components(
-                colorSpace: AttributeReference<Color.RGBColorSpace> = .init(storage: .constant(.sRGB)),
+                colorSpace: AttributeReference<Color.RGBColorSpace>?,
                 red: AttributeReference<Double>,
                 green: AttributeReference<Double>,
                 blue: AttributeReference<Double>,
-                opacity: AttributeReference<Double> = .init(storage: .constant(1))
+                opacity: AttributeReference<Double>?
             )
             case monochrome(
-                colorSpace: AttributeReference<Color.RGBColorSpace> = .init(storage: .constant(.sRGB)),
+                colorSpace: AttributeReference<Color.RGBColorSpace>?,
                 white: AttributeReference<Double>,
-                opacity: AttributeReference<Double> = .init(storage: .constant(1))
+                opacity: AttributeReference<Double>?
             )
             case hsb(
                 hue: AttributeReference<Double>,
                 saturation: AttributeReference<Double>,
                 brightness: AttributeReference<Double>,
-                opacity: AttributeReference<Double> = .init(storage: .constant(1))
+                opacity: AttributeReference<Double>?
             )
         }
         
@@ -113,24 +115,24 @@ public extension SwiftUI.Color {
                 SwiftUI.Color.init(name.resolve(on: element, in: context), bundle: nil)
             case let .components(colorSpace, red, green, blue, opacity):
                 SwiftUI.Color(
-                    colorSpace.resolve(on: element, in: context),
+                    colorSpace?.resolve(on: element, in: context) ?? .sRGB,
                     red: red.resolve(on: element, in: context),
                     green: green.resolve(on: element, in: context),
                     blue: blue.resolve(on: element, in: context),
-                    opacity: opacity.resolve(on: element, in: context)
+                    opacity: opacity?.resolve(on: element, in: context) ?? 1
                 )
             case let .monochrome(colorSpace, white, opacity):
                 SwiftUI.Color(
-                    colorSpace.resolve(on: element, in: context),
+                    colorSpace?.resolve(on: element, in: context) ?? .sRGB,
                     white: white.resolve(on: element, in: context),
-                    opacity: opacity.resolve(on: element, in: context)
+                    opacity: opacity?.resolve(on: element, in: context) ?? 1
                 )
             case let .hsb(hue, saturation, brightness, opacity):
                 SwiftUI.Color(
                     hue: hue.resolve(on: element, in: context),
                     saturation: saturation.resolve(on: element, in: context),
                     brightness: brightness.resolve(on: element, in: context),
-                    opacity: opacity.resolve(on: element, in: context)
+                    opacity: opacity?.resolve(on: element, in: context) ?? 1
                 )
             }
             return modifiers.reduce(into: base) {
@@ -148,24 +150,24 @@ public extension SwiftUI.Color {
                 SwiftUI.Color.init(name.constant(default: ""), bundle: nil)
             case let .components(colorSpace, red, green, blue, opacity):
                 SwiftUI.Color(
-                    colorSpace.constant(default: .sRGB),
+                    colorSpace?.constant(default: .sRGB) ?? .sRGB,
                     red: red.constant(default: 0),
                     green: green.constant(default: 0),
                     blue: blue.constant(default: 0),
-                    opacity: opacity.constant(default: 1)
+                    opacity: opacity?.constant(default: 1) ?? 1
                 )
             case let .monochrome(colorSpace, white, opacity):
                 SwiftUI.Color(
-                    colorSpace.constant(default: .sRGB),
+                    colorSpace?.constant(default: .sRGB) ?? .sRGB,
                     white: white.constant(default: 0),
-                    opacity: opacity.constant(default: 1)
+                    opacity: opacity?.constant(default: 1) ?? 1
                 )
             case let .hsb(hue, saturation, brightness, opacity):
                 SwiftUI.Color(
                     hue: hue.constant(default: 0),
                     saturation: saturation.constant(default: 0),
                     brightness: brightness.constant(default: 0),
-                    opacity: opacity.constant(default: 1)
+                    opacity: opacity?.constant(default: 1) ?? 1
                 )
             }
         }
@@ -175,6 +177,7 @@ public extension SwiftUI.Color {
                 .map(\.base)
         }
         
+        @MainActor
         @ParseableExpression
         struct CustomColor {
             static let name = "Color"
@@ -261,7 +264,8 @@ public extension SwiftUI.Color {
     }
 }
 
-struct _ColorParser<Members: Parser>: Parser where Members.Input == Substring.UTF8View {
+@MainActor
+struct _ColorParser<Members: Parser>: @preconcurrency Parser where Members.Input == Substring.UTF8View {
     let context: ParseableModifierContext
     @ParserBuilder<Substring.UTF8View> let members: Members
     
@@ -321,15 +325,18 @@ struct _ColorParser<Members: Parser>: Parser where Members.Input == Substring.UT
         }
     }
     
+    @MainActor
     private enum AnyColorModifier {
         case colorModifier(ColorModifier)
         case member(Members.Output)
     }
 }
 
+@MainActor
 enum ColorModifier {
     case opacity(Opacity)
     
+    @MainActor
     @ParseableExpression
     struct Opacity {
         static let name = "opacity"

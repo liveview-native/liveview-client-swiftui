@@ -19,7 +19,7 @@ public enum ParseableExpressionMacro: ExtensionMacro {
         }).flatMap({ [$0] }) ?? []
         let signatures = declaration.memberBlock.members
             .compactMap({ member -> (FunctionParameterListSyntax, availability: AvailabilityArgumentListSyntax?, ifConfig: ExprSyntax?)? in
-                let ifConfig: IfConfigClauseSyntax? = member.decl.as(IfConfigDeclSyntax.self)?.clauses.first?.as(IfConfigClauseSyntax.self)
+                let ifConfig: IfConfigClauseSyntax? = member.decl.as(IfConfigDeclSyntax.self)?.clauses.first
                 guard let decl: InitializerDeclSyntax = member.decl.as(InitializerDeclSyntax.self)
                         ?? ifConfig?.elements?.as(MemberBlockItemListSyntax.self)?.first?.decl.as(InitializerDeclSyntax.self),
                       diagnoseParameters(decl.signature.parameterClause.parameters, in: context)
@@ -33,7 +33,7 @@ public enum ParseableExpressionMacro: ExtensionMacro {
         return [
             try ExtensionDeclSyntax.init("extension \(type.trimmed): ParseableExpressionProtocol") {
                 try TypeAliasDeclSyntax("\(accessLevel) typealias _ParserType = StandardExpressionParser<Self>")
-                try StructDeclSyntax("\(accessLevel) struct ExpressionArgumentsBody: Parser") {
+                try StructDeclSyntax("@MainActor \(accessLevel) struct ExpressionArgumentsBody: @preconcurrency Parser") {
                     VariableDeclSyntax(.let, name: "context", type: TypeAnnotationSyntax(type: TypeSyntax("ParseableModifierContext")))
                     try FunctionDeclSyntax("func parse(_ input: inout Substring.UTF8View) throws -> \(type.trimmed)") {
                         #"try "[".utf8.parse(&input)"#

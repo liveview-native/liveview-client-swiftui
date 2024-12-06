@@ -8,7 +8,7 @@
 import Foundation
 
 /// A formatter that parses ISO8601 dates as produced by Elixir's `DateTime`.
-fileprivate let dateTimeFormatter: ISO8601DateFormatter = {
+nonisolated(unsafe) fileprivate let dateTimeFormatter: ISO8601DateFormatter = {
     let formatter = ISO8601DateFormatter()
     formatter.formatOptions = [.withFullDate, .withFullTime, .withFractionalSeconds]
     return formatter

@@ -51,7 +51,7 @@ final class LiveViewNativeMacrosTests: XCTestCase {
                     typealias Registries = AVKitRegistry<Self>
                 }
             
-                return AnyView(LiveView<__macro_local_8RegistryfMu_>(.localhost, configuration: .init()))
+                return AnyView(LiveView(registry: __macro_local_8RegistryfMu_.self, .localhost, configuration: .init()))
             }()
             """,
             macros: testMacros
@@ -74,7 +74,7 @@ final class LiveViewNativeMacrosTests: XCTestCase {
                             ChartsRegistry<Self>>
                 }
             
-                return AnyView(LiveView<__macro_local_8RegistryfMu_>(
+                return AnyView(LiveView(registry: __macro_local_8RegistryfMu_.self,
                 .automatic(development: .localhost(port: 5000), production: .custom(URL(string: "example.com")!))))
             }()
             """,
@@ -90,7 +90,7 @@ final class LiveViewNativeMacrosTests: XCTestCase {
                     typealias Registries = _MultiRegistry<AVKitRegistry<Self>, _MultiRegistry<ChartsRegistry<Self>, PhotoKitRegistry<Self>>>
                 }
             
-                return AnyView(LiveView<__macro_local_8RegistryfMu_>(.localhost, configuration: .init()))
+                return AnyView(LiveView(registry: __macro_local_8RegistryfMu_.self, .localhost, configuration: .init()))
             }()
             """,
             macros: testMacros

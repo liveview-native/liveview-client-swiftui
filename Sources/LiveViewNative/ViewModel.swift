@@ -13,6 +13,7 @@ import LiveViewNativeCore
 /// The working-copy data model for a ``LiveView``.
 ///
 /// In a view in the LiveView tree, a model can be obtained using `@EnvironmentObject`.
+@MainActor
 public class LiveViewModel: ObservableObject {
     private var forms = [String: FormModel]()
     
@@ -39,11 +40,12 @@ public class LiveViewModel: ObservableObject {
 /// A form model stores the working copy of the data for a specific `<form>` element.
 ///
 /// To obtain a form model, use ``LiveViewModel/getForm(elementID:)`` or the `\.formModel` environment key.
+@MainActor
 public class FormModel: ObservableObject, CustomDebugStringConvertible {
     let elementID: String
-    @_spi(LiveForm) public var pushEventImpl: ((String, String, Any, Int?) async throws -> [String:Any]?)!
+    @_spi(LiveForm) public var pushEventImpl: (@MainActor (String, String, Any, Int?) async throws -> [String:Any]?)!
     
-    var changeEvent: ((Any) -> ())?
+    var changeEvent: ((Any) async throws -> ())?
     var submitEvent: String?
     /// An action called when no `phx-submit` event is present.
     ///
@@ -61,10 +63,13 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         self.elementID = elementID
     }
     
-    @_spi(LiveForm) public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
+    @_spi(LiveForm) @preconcurrency public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
+        let pushEventImpl = pushEventImpl!
         self.changeEvent = element.attributeValue(for: .init(name: "phx-change")).flatMap({ event in
             { value in
-                Task { [weak self] in try await self?.pushEventImpl("form", event, value, nil) }
+                Task {
+                    _ = try await pushEventImpl("form", event, value, nil)
+                }
             }
         })
         self.submitEvent = element.attributeValue(for: .init(name: "phx-submit"))
@@ -76,7 +81,6 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// This method has no effect if the `<form>` does not have a `phx-change` event configured.
     ///
     /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
-    @MainActor
     public func sendChangeEvent(_ value: any FormValue, for name: String, event: Event?) async throws {
         guard let event = sendChangeEventForFormElement(value, for: name, event?.wrappedValue.callAsFunction)
                 ?? sendChangeEventForForm(for: name, changeEvent) else { return }
@@ -89,7 +93,6 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// This method has no effect if the `<form>` does not have a `phx-submit` event configured.
     ///
     /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
-    @MainActor
     public func sendSubmitEvent() async throws {
         formWillSubmit.send(())
         if let submitEvent = submitEvent {
@@ -153,13 +156,12 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         return components
     }
     
-    @MainActor
     private func pushFormEvent(_ event: String) async throws {
         // the `form` event type expects a URL encoded payload (e.g., `a=b&c=d`)
         _ = try await pushEventImpl("form", event, try buildFormQuery(), nil)
     }
     
-    public var debugDescription: String {
+    nonisolated public var debugDescription: String {
         return "FormModel(element: #\(elementID), id: \(ObjectIdentifier(self))"
     }
     

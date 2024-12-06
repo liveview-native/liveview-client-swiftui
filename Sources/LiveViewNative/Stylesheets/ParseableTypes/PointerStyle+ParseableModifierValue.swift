@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 
 #if os(macOS) || os(visionOS)
 @available(macOS 15, visionOS 2, *)
-extension PointerStyle: @retroactive ParseableModifierValue {
+extension PointerStyle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
@@ -144,7 +144,7 @@ extension VerticalDirection.Set: ParseableModifierValue {
 
 #if os(macOS)
 @available(macOS 15.0, *)
-extension FrameResizeDirection.Set: @retroactive ParseableModifierValue {
+extension FrameResizeDirection.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             Array<Self.Element>.parser(in: context).map({ Self.init($0) })

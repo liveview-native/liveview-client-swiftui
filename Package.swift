@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -29,10 +29,10 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "0.1.0"),
         .package(url: "https://github.com/liveview-native/liveview-native-core-swift.git", exact: "0.2.1"),
         
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.2"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.2.0"),
         
-        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "509.0.2"),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.1"),
         
         .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.13.0"),
     ],
@@ -108,16 +108,6 @@ let package = Package(
                 ]
             ),
             dependencies: []
-        ),
-
-        // Unfortunately, this tool cannot be a plugin due to limitations on network access.
-        // Once SwiftPM supports plugins with network access, this can become a plugin again.
-        .executableTarget(
-            name: "TutorialRepoGenerator",
-            dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "Markdown", package: "swift-markdown"),
-            ]
         ),
         
         .macro(

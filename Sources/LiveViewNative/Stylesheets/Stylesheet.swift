@@ -8,7 +8,8 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "Stylesheet")
 /// A type that stores a map between classes and an array of modifiers.
 ///
 /// The raw content of the stylesheet is retained so it can re-parsed in a different context.
-public struct Stylesheet<R: RootRegistry> {
+@MainActor
+public struct Stylesheet<R: RootRegistry>: Sendable {
     let content: [String]
     let classes: [String:[BuiltinRegistry<R>.BuiltinModifier]]
     
@@ -45,7 +46,7 @@ actor StylesheetCache {
     }
 }
 
-extension Stylesheet: AttributeDecodable {
+extension Stylesheet: @preconcurrency AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
