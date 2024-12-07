@@ -120,12 +120,12 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
-        <Text template="label"><%%= @label %></Text>
+        <Text template="label">{@label}</Text>
         <TextFieldLink id={@id} name={@name} value={@value} prompt={@prompt} {@rest}>
-          <%%= @label %>
+          {@label}
         </TextFieldLink>
       </LabeledContent>
-      <.error :for={msg <- @errors}><%%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </VStack>
     """
   end
@@ -134,9 +134,9 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     ~LVN"""
     <VStack alignment="leading">
       <DatePicker id={@id} name={@name} selection={@value} {@rest}>
-        <%%= @label %>
+        {@label}
       </DatePicker>
-      <.error :for={msg <- @errors}><%%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </VStack>
     """
   end
@@ -145,10 +145,10 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
-        <Text template="label"><%%= @label %></Text>
-        <MultiDatePicker id={@id} name={@name} selection={@value} {@rest}><%%= @label %></MultiDatePicker>
+        <Text template="label">{@label}</Text>
+        <MultiDatePicker id={@id} name={@name} selection={@value} {@rest}>{@label}</MultiDatePicker>
       </LabeledContent>
-      <.error :for={msg <- @errors}><%%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </VStack>
     """
   end
@@ -157,15 +157,15 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     ~LVN"""
     <VStack alignment="leading">
       <Picker id={@id} name={@name} selection={@value} {@rest}>
-        <Text template="label"><%%= @label %></Text>
+        <Text template="label">{@label}</Text>
         <Text
           :for={{name, value} <- @options}
           tag={value}
         >
-          <%%= name %>
+          {name}
         </Text>
       </Picker>
-      <.error :for={msg <- @errors}><%%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </VStack>
     """
   end
@@ -174,10 +174,10 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
-        <Text template="label"><%%= @label %></Text>
-        <Slider id={@id} name={@name} value={@value} lowerBound={@min} upperBound={@max} {@rest}><%%= @label %></Slider>
+        <Text template="label">{@label}</Text>
+        <Slider id={@id} name={@name} value={@value} lowerBound={@min} upperBound={@max} {@rest}>{@label}</Slider>
       </LabeledContent>
-      <.error :for={msg <- @errors}><%%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </VStack>
     """
   end
@@ -186,10 +186,10 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
-        <Text template="label"><%%= @label %></Text>
+        <Text template="label">{@label}</Text>
         <Stepper id={@id} name={@name} value={@value} {@rest}></Stepper>
       </LabeledContent>
-      <.error :for={msg <- @errors}><%%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </VStack>
     """
   end
@@ -198,10 +198,10 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
-        <Text template="label"><%%= @label %></Text>
+        <Text template="label">{@label}</Text>
         <TextEditor id={@id} name={@name} text={@value} {@rest} />
       </LabeledContent>
-      <.error :for={msg <- @errors}><%%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </VStack>
     """
   end
@@ -210,7 +210,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     ~LVN"""
     <VStack alignment="leading">
       <TextField id={@id} name={@name} text={@value} prompt={@prompt} {@rest}><%%= @placeholder || @label %></TextField>
-      <.error :for={msg <- @errors}><%%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </VStack>
     """
   end
@@ -219,7 +219,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     ~LVN"""
     <VStack alignment="leading">
       <SecureField id={@id} name={@name} text={@value} prompt={@prompt} {@rest}><%%= @placeholder || @label %></SecureField>
-      <.error :for={msg <- @errors}><%%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </VStack>
     """
   end
@@ -228,10 +228,10 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
-        <Text template="label"><%%= @label %></Text>
+        <Text template="label">{@label}</Text>
         <Toggle id={@id} name={@name} isOn={Map.get(assigns, :checked, Map.get(assigns, :value))} {@rest}></Toggle>
       </LabeledContent>
-      <.error :for={msg <- @errors}><%%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </VStack>
     """
   end
@@ -351,7 +351,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
       id={@id}
       {@rest}
     >
-      <Text template="message"><%%= msg %></Text>
+      <Text template="message">{msg}</Text>
       <Button template="actions" phx-click="lv:clear-flash" phx-value-key={@kind}>OK</Button>
     </VStack>
     """
