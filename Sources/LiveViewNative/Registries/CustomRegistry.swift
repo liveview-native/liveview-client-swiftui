@@ -71,6 +71,7 @@ public macro Addon() = #externalMacro(module: "LiveViewNativeMacros", type: "Add
 /// ### Supporting Types
 /// - ``EmptyRegistry``
 /// - ``ViewModifierBuilder``
+@MainActor
 public protocol CustomRegistry<Root> {
     /// The root custom registry type that the live view coordinator and context use.
     ///

@@ -56,6 +56,7 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
         .map(Self.init)
     }
     
+    @MainActor
     public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Value {
         switch storage {
         case .constant(let value):
