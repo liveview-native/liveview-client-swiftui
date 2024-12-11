@@ -36,17 +36,38 @@ struct NavigationLink<Root: RootRegistry>: View {
     @Environment(\._anyNavigationTransition)
     private var anyNavigationTransition: Any?
     
+    @LiveAttribute("phx-replace")
+    private var replace: Bool = false
+    
     @ViewBuilder
     public var body: some View {
         if let url = destination.flatMap({ URL(string: $0, relativeTo: $liveElement.context.coordinator.url) })?.appending(path: "").absoluteURL {
-            SwiftUI.NavigationLink(
-                value: LiveNavigationEntry(
-                    url: url,
-                    coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url),
-                    navigationTransition: anyNavigationTransition
-                )
-            ) {
-                $liveElement.children()
+            if replace {
+                SwiftUI.Button {
+                    withAnimation {
+                        _ = Task { @MainActor in
+                            try await $liveElement.context.coordinator.session.redirect(
+                                .init(
+                                    kind: .replace,
+                                    to: url,
+                                    mode: .replaceTop
+                                )
+                            )
+                        }
+                    }
+                } label: {
+                    $liveElement.children()
+                }
+            } else {
+                SwiftUI.NavigationLink(
+                    value: LiveNavigationEntry(
+                        url: url,
+                        coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url),
+                        navigationTransition: anyNavigationTransition
+                    )
+                ) {
+                    $liveElement.children()
+                }
             }
         } else {
             $liveElement.children()
