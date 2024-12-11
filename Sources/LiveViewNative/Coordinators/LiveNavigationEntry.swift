@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 public struct LiveNavigationEntry<R: RootRegistry>: Hashable {
     public let url: URL
     public let coordinator: LiveViewCoordinator<R>
     let navigationTransition: Any?
+    let pendingView: (any View)?
     
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.url == rhs.url && lhs.coordinator === rhs.coordinator

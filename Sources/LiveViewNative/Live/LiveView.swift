@@ -241,7 +241,7 @@ struct PhxMain<R: RootRegistry>: View {
     @EnvironmentObject private var session: LiveSessionCoordinator<R>
     
     var body: some View {
-        NavStackEntryView(.init(url: context.coordinator.url, coordinator: context.coordinator, navigationTransition: nil))
+        NavStackEntryView(.init(url: context.coordinator.url, coordinator: context.coordinator, navigationTransition: nil, pendingView: nil))
     }
 }
 

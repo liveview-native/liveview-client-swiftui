@@ -21,9 +21,34 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "NavigationLi
 /// </NavigationLink>
 /// ```
 ///
+/// Use the `phx-replace` attribute to do a replace navigation instead of a push.
+/// This will replace the current route with the destination.
+///
+/// ```html
+/// <NavigationLink phx-replace destination={"/products/#{@product.id}"}>
+///     <Text>More Information</Text>
+/// </NavigationLink>
+/// ```
+///
+/// Provide a `destination` template View to customize the View used when transitioning between pages.
+/// This is often used to set the navigation title before transitioning to reduce visual hitches.
+/// If no destination template is provided, the app will use its global connecting phase view.
+///
+/// ```html
+/// <NavigationLink destination={"/products/#{@product.id}"}>
+///     <Text>More Information</Text>
+///
+///     <ProgressView
+///         template="destination"
+///         style='navigationTitle(attr("title"));'
+///         title={@product.title}
+///     />
+/// </NavigationLink>
+/// ```
+///
 /// ## Attributes
 /// - ``destination``
-/// - ``disabled``
+/// - ``replace``
 @_documentation(visibility: public)
 @available(iOS 16.0, *)
 @LiveElement
@@ -32,28 +57,43 @@ struct NavigationLink<Root: RootRegistry>: View {
     @_documentation(visibility: public)
     private var destination: String?
     
+    @LiveAttribute("phx-replace")
+    private var replace: Bool = false
+    
     @LiveElementIgnored
     @Environment(\._anyNavigationTransition)
     private var anyNavigationTransition: Any?
     
-    @LiveAttribute("phx-replace")
-    private var replace: Bool = false
+    @LiveElementIgnored
+    @Environment(\.anyLiveContextStorage)
+    private var anyLiveContextStorage: Any?
+    
+    @LiveElementIgnored
+    @Environment(\.coordinatorEnvironment)
+    private var coordinatorEnvironment: CoordinatorEnvironment?
     
     @ViewBuilder
     public var body: some View {
         if let url = destination.flatMap({ URL(string: $0, relativeTo: $liveElement.context.coordinator.url) })?.appending(path: "").absoluteURL {
+            let pendingView: (some View)? = if $liveElement.hasTemplate("destination") {
+                $liveElement.children(in: "destination")
+                    .environment(\.anyLiveContextStorage, anyLiveContextStorage)
+                    .environment(\.coordinatorEnvironment, coordinatorEnvironment)
+            } else {
+                nil
+            }
             if replace {
                 SwiftUI.Button {
-                    withAnimation {
-                        _ = Task { @MainActor in
-                            try await $liveElement.context.coordinator.session.redirect(
-                                .init(
-                                    kind: .replace,
-                                    to: url,
-                                    mode: .replaceTop
-                                )
-                            )
-                        }
+                    Task { @MainActor in
+                        try await $liveElement.context.coordinator.session.redirect(
+                            .init(
+                                kind: .replace,
+                                to: url,
+                                mode: .replaceTop
+                            ),
+                            navigationTransition: anyNavigationTransition,
+                            pendingView: pendingView
+                        )
                     }
                 } label: {
                     $liveElement.children()
@@ -63,7 +103,8 @@ struct NavigationLink<Root: RootRegistry>: View {
                     value: LiveNavigationEntry(
                         url: url,
                         coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url),
-                        navigationTransition: anyNavigationTransition
+                        navigationTransition: anyNavigationTransition,
+                        pendingView: pendingView
                     )
                 ) {
                     $liveElement.children()
