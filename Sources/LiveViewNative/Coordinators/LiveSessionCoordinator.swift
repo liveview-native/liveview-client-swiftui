@@ -110,7 +110,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             delegateQueue: nil
         )
         
-        self.navigationPath = [.init(url: url, coordinator: .init(session: self, url: self.url), navigationTransition: nil)]
+        self.navigationPath = [.init(url: url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
         
         self.mergedEventSubjects = self.navigationPath.first!.coordinator.eventSubject.compactMap({ [weak self] value in
             self.map({ ($0.navigationPath.first!.coordinator, value) })
@@ -212,7 +212,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 self.navigationPath[self.navigationPath.endIndex - 1] = .init(
                     url: responseURL,
                     coordinator: self.navigationPath.last!.coordinator,
-                    navigationTransition: nil
+                    navigationTransition: nil,
+                    pendingView: nil
                 )
                 url = responseURL
             } else {
@@ -308,7 +309,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         if let url {
             await self.disconnect(preserveNavigationPath: false)
             self.url = url
-            self.navigationPath = [.init(url: self.url, coordinator: self.navigationPath.first!.coordinator, navigationTransition: nil)]
+            self.navigationPath = [.init(url: self.url, coordinator: self.navigationPath.first!.coordinator, navigationTransition: nil, pendingView: nil)]
         } else {
             await self.disconnect(preserveNavigationPath: true)
         }
@@ -524,11 +525,15 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
-    func redirect(_ redirect: LiveRedirect) async throws {
+    func redirect(
+        _ redirect: LiveRedirect,
+        navigationTransition: Any? = nil,
+        pendingView: (any View)? = nil
+    ) async throws {
         switch redirect.mode {
         case .replaceTop:
             let coordinator = LiveViewCoordinator(session: self, url: redirect.to)
-            let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator, navigationTransition: nil)
+            let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator, navigationTransition: navigationTransition, pendingView: pendingView)
             switch redirect.kind {
             case .push:
                 navigationPath.append(entry)
@@ -547,7 +552,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             // patch is like `replaceTop`, but it does not disconnect.
             let coordinator = navigationPath.last!.coordinator
             coordinator.url = redirect.to
-            let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator, navigationTransition: nil)
+            let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator, navigationTransition: navigationTransition, pendingView: pendingView)
             switch redirect.kind {
             case .push:
                 navigationPath.append(entry)

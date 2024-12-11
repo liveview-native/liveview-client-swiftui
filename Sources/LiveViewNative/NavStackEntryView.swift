@@ -55,8 +55,19 @@ struct NavStackEntryView<R: RootRegistry>: View {
                         .transition(coordinator.session.configuration.transition ?? .identity)
                         .id(ObjectIdentifier(document))
                 } else {
-                    buildPhaseView(phase)
-                    .transition(coordinator.session.configuration.transition ?? .identity)
+                    switch phase {
+                    case .connecting:
+                        if let pendingView = entry.pendingView {
+                            AnyView(pendingView)
+                                .transition(coordinator.session.configuration.transition ?? .identity)
+                        } else {
+                            buildPhaseView(phase)
+                                .transition(coordinator.session.configuration.transition ?? .identity)
+                        }
+                    default:
+                        buildPhaseView(phase)
+                            .transition(coordinator.session.configuration.transition ?? .identity)
+                    }
                 }
             }
         }
