@@ -11,6 +11,20 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftParser
 
+@propertyWrapper
+struct DecodableIgnored<Value>: Decodable {
+    var storage: Value!
+
+    init() {}
+    
+    init(from decoder: Decoder) throws {}
+
+    var wrappedValue: Value {
+        get { storage }
+        set { storage = newValue }
+    }
+}
+
 extension ModifierGenerator {
     struct DocumentationExtensions: ParsableCommand {
         static let configuration = CommandConfiguration(abstract: "Output a list of the names of all available modifiers.")
@@ -27,15 +41,18 @@ extension ModifierGenerator {
         )
         private var output: URL
         
-        private static let typeVisitor = EnumTypeVisitor(typeNames: ModifierGenerator.requiredTypes)
+        @DecodableIgnored
+        private var typeVisitor: EnumTypeVisitor
         
-        func run() throws {
+        mutating func run() async throws {
+            typeVisitor = EnumTypeVisitor(typeNames: ModifierGenerator.requiredTypes)
+            
             let source = try String(contentsOf: interface, encoding: .utf8)
             let sourceFile = Parser.parse(source: source)
             
             let (modifiers, _) = ModifierGenerator.modifiers(from: sourceFile)
             
-            Self.typeVisitor.walk(sourceFile)
+            typeVisitor.walk(sourceFile)
             
             for (name, (signatures, _, _)) in modifiers {
                 let firstSignatureDescription = signatureDescription(for: signatures.first!, on: name)
@@ -145,7 +162,7 @@ extension ModifierGenerator {
                 } else if parameter.type.isTextReference {
                     value = #":\#(displayName)"#
                     templates.append(#"<Text template="\#(displayName)">...</Text>"#)
-                } else if let enumType = Self.typeVisitor.types[parameter.type.nestedTypeName]?.first {
+                } else if let enumType = typeVisitor.types[parameter.type.nestedTypeName]?.first {
                     value = ".\(enumType.0)"
                 } else {
                     value = parameter.type.exampleValue

@@ -21,7 +21,8 @@ import LiveViewNativeStylesheet
 /// - `sticky(horizontal: Bool, vertical: Bool)`
 @_documentation(visibility: public)
 @available(iOS 18.0, watchOS 11.0, tvOS 18.0, macOS 15.0, visionOS 2.0, *)
-struct AnyPresentationSizing: PresentationSizing, ParseableModifierValue {
+@MainActor
+struct AnyPresentationSizing: @preconcurrency PresentationSizing, ParseableModifierValue {
     let value: any PresentationSizing
     
     func proposedSize(for root: PresentationSizingRoot, context: PresentationSizingContext) -> ProposedViewSize {

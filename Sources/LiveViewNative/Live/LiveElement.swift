@@ -77,7 +77,9 @@ public protocol _LiveElementTrackedContent {
     init(from element: ElementNode) throws
 }
 
-@propertyWrapper public struct _LiveElementTracked<R: RootRegistry, T: _LiveElementTrackedContent>: DynamicProperty {
+@MainActor
+@propertyWrapper
+public struct _LiveElementTracked<R: RootRegistry, T: _LiveElementTrackedContent>: @preconcurrency DynamicProperty {
     /// The ``ElementNode`` used to build a live element.
     @ObservedElement public var element
     /// The ``LiveContext`` for a live element.
@@ -114,6 +116,7 @@ public extension _LiveElementTracked {
     /// You can provide a custom `predicate` to filter different elements.
     ///
     /// - Parameter predicate: The filter used to select child nodes for render.
+    @MainActor
     func children(_ predicate: (Node) -> Bool = { node in
         !node.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
     }) -> some View {
@@ -124,6 +127,7 @@ public extension _LiveElementTracked {
     ///
     /// - Parameter template: The ``Template`` used to filter child elements. A String literal can be provided for simple template values.
     /// - Parameter includeDefault: Whether elements without a `template` attribute should be included in the filter. Defaults to `false`.
+    @MainActor
     func children(in template: Template, default includeDefault: Bool = false) -> some View {
         children {
             $0.attributes.contains(where: {
@@ -136,6 +140,7 @@ public extension _LiveElementTracked {
     ///
     /// - Parameter template: The ``Template`` used to filter child elements. A String literal can be provided for simple template values.
     /// - Parameter includeDefault: Whether elements without a `template` attribute should be included in the filter. Defaults to `false`.
+    @MainActor
     func hasTemplate(_ template: Template, default includeDefault: Bool = false) -> Bool {
         _element.children.contains(where: {
             for attribute in $0.attributes {
@@ -149,15 +154,18 @@ public extension _LiveElementTracked {
         })
     }
     
+    @MainActor
     func hasTemplate(_ name: String, value: String) -> Bool {
         hasTemplate(.init(name, value: value))
     }
     
     /// Array containing children of the ``ElementNode``.
+    @MainActor
     var childNodes: [LiveViewNativeCore.Node] {
         _element.children
     }
     
+    @MainActor
     func childNodes(in template: Template, default includeDefault: Bool = false) -> [LiveViewNativeCore.Node] {
         _element.children.filter {
             $0.attributes.contains(where: {

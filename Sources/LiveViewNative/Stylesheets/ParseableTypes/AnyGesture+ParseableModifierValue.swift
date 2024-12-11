@@ -208,6 +208,7 @@ struct _AnyGesture: ParseableModifierValue {
             case .onEnded(let onEnded):
                 return AnyGesture<Any>(gesture.onEnded({ value in
                     Task {
+                        @MainActor
                         func sendEventValue(_ eventValue: [String:Any]) async throws {
                             let eventValue = eventValue.merging(element.buildPhxValuePayload(), uniquingKeysWith: { $1 })
                             try await onEnded.action(value: eventValue, in: context)
@@ -311,6 +312,7 @@ struct _AnyGesture: ParseableModifierValue {
     }
     
     #if !os(tvOS)
+    @MainActor
     @ParseableExpression
     struct Drag {
         static let name = "DragGesture"
@@ -322,6 +324,7 @@ struct _AnyGesture: ParseableModifierValue {
     }
     #endif
     
+    @MainActor
     @ParseableExpression
     struct LongPress {
         static let name = "LongPressGesture"
@@ -339,6 +342,7 @@ struct _AnyGesture: ParseableModifierValue {
     }
     
     #if os(iOS) || os(macOS) || os(visionOS)
+    @MainActor
     @ParseableExpression
     struct Magnify {
         static let name = "MagnifyGesture"
@@ -353,6 +357,7 @@ struct _AnyGesture: ParseableModifierValue {
         }
     }
     
+    @MainActor
     @ParseableExpression
     struct Rotate {
         static let name = "RotateGesture"
@@ -369,6 +374,7 @@ struct _AnyGesture: ParseableModifierValue {
     #endif
     
     #if !os(tvOS)
+    @MainActor
     @ParseableExpression
     struct SpatialTap {
         static let name = "SpatialTapGesture"
@@ -380,6 +386,7 @@ struct _AnyGesture: ParseableModifierValue {
     }
     #endif
     
+    @MainActor
     @ParseableExpression
     struct Tap {
         static let name = "TapGesture"
@@ -392,7 +399,8 @@ struct _AnyGesture: ParseableModifierValue {
 }
 
 extension EnvironmentValues {
-    private enum GestureStateKey: EnvironmentKey {
+    @MainActor
+    private enum GestureStateKey: @preconcurrency EnvironmentKey {
         static let defaultValue: GestureState<[String:Any]> = .init(initialValue: [:])
     }
     

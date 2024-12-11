@@ -3,6 +3,7 @@ import SwiftUI
 @testable import LiveViewNativeStylesheet
 @testable import LiveViewNative
 
+@MainActor
 final class LiveViewNativeStylesheetTests: XCTestCase {
     func testAlignment() throws {
         XCTAssertEqual(try Alignment.parser(in: .init()).parse("{:., [], [nil, :topLeading]}"), Alignment.topLeading)

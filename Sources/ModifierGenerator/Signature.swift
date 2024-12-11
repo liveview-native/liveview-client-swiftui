@@ -86,7 +86,7 @@ struct Signature {
                 \#(platformAvailability)
                 \#(boundParameters.isEmpty ? "" : "indirect") case _\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(FunctionParameterListSyntax(boundParameters.map({
                     if availability.isEmpty {
-                        return $0
+                        return $0.with(\.defaultValue, nil)
                     } else {
                         return $0
                             .with(\.type, $0.type.is(OptionalTypeSyntax.self) ? TypeSyntax("Any?") : TypeSyntax("Any"))
@@ -323,10 +323,11 @@ extension FunctionParameterSyntax {
         }
 
         // Types that support `attr` should be wrapped in an `AttributeReference`.
-        if let typeName = (self.type.as(MemberTypeSyntax.self)?.name
+        let typeName = self.type.as(MemberTypeSyntax.self)?.name
             ?? self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name
             ?? self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self)?.name
-            ?? self.type.as(IdentifierTypeSyntax.self)?.name)?.text,
+            ?? self.type.as(IdentifierTypeSyntax.self)?.name
+        if let typeName = typeName?.text,
             [
                 // Primitives
                 "String",
@@ -348,7 +349,7 @@ extension FunctionParameterSyntax {
         {
             self = self
                 .with(\.type, TypeSyntax("AttributeReference<\(self.type.trimmed)>\(raw: self.type.is(OptionalTypeSyntax.self) ? "?" : "")"))
-                .with(\.defaultValue, self.defaultValue?.as(InitializerClauseSyntax.self).flatMap({ InitializerClauseSyntax.init(equal: .equalToken(leadingTrivia: .space, trailingTrivia: .space), value: ExprSyntax(".init(storage: .constant(\($0.value)))")) }))
+                .with(\.defaultValue, self.defaultValue.flatMap({ InitializerClauseSyntax.init(equal: .equalToken(leadingTrivia: .space, trailingTrivia: .space), value: ExprSyntax(".init(storage: .constant(\($0.value)))")) }))
         }
 
         self = self

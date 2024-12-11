@@ -10,6 +10,7 @@ import SwiftUI
 import LiveViewNativeCore
 import LiveViewNativeStylesheet
 
+@MainActor
 struct ViewTreeBuilder<R: RootRegistry> {
     func fromNodes(_ nodes: NodeChildrenSequence, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
         let context = LiveContextStorage(coordinator: coordinator, url: url)
@@ -119,9 +120,10 @@ extension CodingUserInfoKey {
     static var modifierAnimationScale: Self { .init(rawValue: "modifierAnimationScale")! }
 }
 
+@MainActor
 @propertyWrapper
 @LiveElement
-struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
+struct ClassModifiers<Root: RootRegistry>: @preconcurrency DynamicProperty {
     @LiveAttribute(.init(name: "class")) private var `class`: String?
     @LiveAttribute(.init(name: "style")) private var style: String?
     
@@ -218,7 +220,8 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
 }
 
 extension EnvironmentValues {
-    private enum StylesheetKey: EnvironmentKey {
+    private enum StylesheetKey: @preconcurrency EnvironmentKey {
+        @MainActor
         static let defaultValue: Any = Stylesheet<EmptyRegistry>(content: [], classes: [:])
     }
     
@@ -303,6 +306,7 @@ enum ForEachElement: Identifiable {
     }
 }
 // not fileprivate because List needs to use it so it has access to ForEach modifiers
+@MainActor
 func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveContextStorage<R>) -> some DynamicViewContent {
     let elements = nodes.map { (node) -> ForEachElement in
         if let element = node.asElement(),

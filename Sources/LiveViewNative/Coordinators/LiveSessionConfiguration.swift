@@ -51,10 +51,10 @@ public struct LiveSessionConfiguration {
         self.reconnectBehavior = reconnectBehavior
     }
     
-    public struct ReconnectBehavior {
-        let delay: ((_ tries: Int) -> TimeInterval)?
+    public struct ReconnectBehavior: Sendable {
+        let delay: (@Sendable (_ tries: Int) -> TimeInterval)?
         
-        public init(_ delay: @escaping (_ tries: Int) -> TimeInterval) {
+        public init(_ delay: @escaping @Sendable (_ tries: Int) -> TimeInterval) {
             self.delay = delay
         }
         

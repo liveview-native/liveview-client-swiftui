@@ -28,6 +28,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "TabView")
 /// ## Bindings
 /// * ``selection``
 @_documentation(visibility: public)
+@MainActor
 @LiveElement
 struct TabView<Root: RootRegistry>: View {
     /// Synchronizes the selected tab with the server.
@@ -67,6 +68,7 @@ struct TabView<Root: RootRegistry>: View {
 
 /// A builder for `TabContent`.
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+@MainActor
 struct TabTreeBuilder<Root: RootRegistry, TabValue: Hashable> {
     func fromNodes<Nodes>(_ nodes: Nodes, context: LiveContextStorage<Root>) -> some TabContent<TabValue>
         where Nodes: RandomAccessCollection, Nodes.Index == Int, Nodes.Element == Node
@@ -95,6 +97,7 @@ struct TabTreeBuilder<Root: RootRegistry, TabValue: Hashable> {
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+@MainActor
 struct Tab<Root: RootRegistry, TabValue: Hashable>: TabContent {
     @ObservedElement private var element: ElementNode
     @LiveContext<Root> private var context
