@@ -21,6 +21,14 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "NavigationLi
 /// </NavigationLink>
 /// ```
 ///
+/// Use the `data-phx-link` attribute to switch between `redirect` and `patch` modes.
+///
+/// ```html
+/// <NavigationLink data-phx-link="patch" destination={"/?id={@product.id}"}>
+///     <Text><%= @product.name %></Text>
+/// </NavigationLink>
+/// ```
+///
 /// Use the `data-phx-link-state` attribute to do a `replace` navigation instead of a `push`.
 /// This will replace the current route with the destination.
 ///
