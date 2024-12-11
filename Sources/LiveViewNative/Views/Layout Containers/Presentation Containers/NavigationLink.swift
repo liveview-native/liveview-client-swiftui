@@ -21,11 +21,11 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "NavigationLi
 /// </NavigationLink>
 /// ```
 ///
-/// Use the `phx-replace` attribute to do a replace navigation instead of a push.
+/// Use the `data-phx-link-state` attribute to do a `replace` navigation instead of a `push`.
 /// This will replace the current route with the destination.
 ///
 /// ```html
-/// <NavigationLink phx-replace destination={"/products/#{@product.id}"}>
+/// <NavigationLink data-phx-link-state="replace" destination={"/products/#{@product.id}"}>
 ///     <Text>More Information</Text>
 /// </NavigationLink>
 /// ```
@@ -57,8 +57,13 @@ struct NavigationLink<Root: RootRegistry>: View {
     @_documentation(visibility: public)
     private var destination: String?
     
-    @LiveAttribute("phx-replace")
-    private var replace: Bool = false
+    @LiveAttribute("data-phx-link-state")
+    private var linkState: LinkState = .push
+    
+    enum LinkState: String, AttributeDecodable {
+        case push
+        case replace
+    }
     
     @LiveElementIgnored
     @Environment(\._anyNavigationTransition)
@@ -82,7 +87,8 @@ struct NavigationLink<Root: RootRegistry>: View {
             } else {
                 nil
             }
-            if replace {
+            switch linkState {
+            case .replace:
                 SwiftUI.Button {
                     Task { @MainActor in
                         try await $liveElement.context.coordinator.session.redirect(
@@ -98,7 +104,7 @@ struct NavigationLink<Root: RootRegistry>: View {
                 } label: {
                     $liveElement.children()
                 }
-            } else {
+            case .push:
                 SwiftUI.NavigationLink(
                     value: LiveNavigationEntry(
                         url: url,
