@@ -21,6 +21,14 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "NavigationLi
 /// </NavigationLink>
 /// ```
 ///
+/// Use the `data-phx-link` attribute to switch between `redirect` and `patch` modes.
+///
+/// ```html
+/// <NavigationLink data-phx-link="patch" destination={"/?id={@product.id}"}>
+///     <Text><%= @product.name %></Text>
+/// </NavigationLink>
+/// ```
+///
 /// Use the `data-phx-link-state` attribute to do a `replace` navigation instead of a `push`.
 /// This will replace the current route with the destination.
 ///
@@ -57,6 +65,14 @@ struct NavigationLink<Root: RootRegistry>: View {
     @_documentation(visibility: public)
     private var destination: String?
     
+    @LiveAttribute("data-phx-link")
+    private var link: Link = .redirect
+    
+    enum Link: String, AttributeDecodable {
+        case redirect
+        case patch
+    }
+    
     @LiveAttribute("data-phx-link-state")
     private var linkState: LinkState = .push
     
@@ -87,32 +103,63 @@ struct NavigationLink<Root: RootRegistry>: View {
             } else {
                 nil
             }
-            switch linkState {
-            case .replace:
+            switch link {
+            case .redirect:
+                switch linkState {
+                case .replace:
+                    SwiftUI.Button {
+                        Task { @MainActor in
+                            try await $liveElement.context.coordinator.session.redirect(
+                                .init(
+                                    kind: .replace,
+                                    to: url,
+                                    mode: .replaceTop
+                                ),
+                                navigationTransition: anyNavigationTransition,
+                                pendingView: pendingView
+                            )
+                        }
+                    } label: {
+                        $liveElement.children()
+                    }
+                case .push:
+                    SwiftUI.NavigationLink(
+                        value: LiveNavigationEntry(
+                            url: url,
+                            coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url),
+                            navigationTransition: anyNavigationTransition,
+                            pendingView: pendingView
+                        )
+                    ) {
+                        $liveElement.children()
+                    }
+                }
+            case .patch:
                 SwiftUI.Button {
                     Task { @MainActor in
+                        // send the `live_patch` event
+                        try await $liveElement.context.coordinator.doPushEvent("live_patch", payload: [
+                            "url": url.absoluteString
+                        ])
+                        // update the navigation path
+                        let kind: LiveRedirect.Kind = switch linkState {
+                        case .push:
+                            .push
+                        case .replace:
+                            .replace
+                        }
+                        print(kind)
                         try await $liveElement.context.coordinator.session.redirect(
                             .init(
-                                kind: .replace,
+                                kind: kind,
                                 to: url,
-                                mode: .replaceTop
+                                mode: .patch
                             ),
                             navigationTransition: anyNavigationTransition,
                             pendingView: pendingView
                         )
                     }
                 } label: {
-                    $liveElement.children()
-                }
-            case .push:
-                SwiftUI.NavigationLink(
-                    value: LiveNavigationEntry(
-                        url: url,
-                        coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url),
-                        navigationTransition: anyNavigationTransition,
-                        pendingView: pendingView
-                    )
-                ) {
                     $liveElement.children()
                 }
             }
