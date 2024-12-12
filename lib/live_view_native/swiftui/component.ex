@@ -150,14 +150,13 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   )
 
-  # `NavigationLink` always pushes a new page.
-  # attr(:replace, :boolean,
-  #   default: false,
-  #   doc: """
-  #   When using `:patch` or `:navigate`,
-  #   should the browser's history be replaced with `pushState`?
-  #   """
-  # )
+  attr(:replace, :boolean,
+    default: false,
+    doc: """
+    When using `:patch` or `:navigate`,
+    should the browser's history be replaced with `pushState`?
+    """
+  )
 
   # attr(:method, :string,
   #   default: "get",
@@ -195,7 +194,11 @@ defmodule LiveViewNative.SwiftUI.Component do
 
   def link(%{navigate: to} = assigns) when is_binary(to) do
     ~LVN"""
-    <NavigationLink destination={@navigate} {@rest}>
+    <NavigationLink
+      destination={@navigate}
+      data-phx-link-state={if @replace, do: "replace", else: "push"}
+      {@rest}
+    >
       <%= render_slot(@inner_block) %>
     </NavigationLink>
     """
