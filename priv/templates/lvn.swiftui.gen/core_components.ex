@@ -416,14 +416,11 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
           <%%= render_slot(@inner_block, f) %>
         <%% else %>
           <%%= for section <- @section do %>
-            <Section isExpanded={Map.get(section, :is_expanded, true)}>
-              <Text :if={not is_nil(Map.get(section, :header))} template={:header}>
-                <%%= Map.get(section, :header) %>
-              </Text>
+            <Section>
+              <Text :if={not is_nil(Map.get(section, :header))} template={:header} content={Map.get(section, :header)} />
+
               <%%= render_slot(section) %>
-              <Text :if={not is_nil(Map.get(section, :footer))} template={:footer}>
-                <%%= Map.get(section, :footer) %>
-              </Text>
+              <Text :if={not is_nil(Map.get(section, :footer))} template={:footer} content={Map.get(section, :footer)} />
             </Section>
           <%% end %>
         <%% end %>

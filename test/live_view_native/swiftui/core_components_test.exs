@@ -54,9 +54,9 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-       <LiveHiddenField name="test-name" value="123" />
-      """
+               ~X"""
+                <LiveHiddenField name="test-name" value="123" />
+               """
     end
 
     test "TextFieldLink" do
@@ -67,16 +67,16 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <LabeledContent>
-            <Text template="label">test-label</Text>
-            <TextFieldLink name="test-name" value="123" prompt="test-prompt">
-              test-label
-            </TextFieldLink>
-          </LabeledContent>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <LabeledContent>
+                   <Text template="label">test-label</Text>
+                   <TextFieldLink name="test-name" value="123" prompt="test-prompt">
+                     test-label
+                   </TextFieldLink>
+                 </LabeledContent>
+               </VStack>
+               """
     end
 
     test "DatePicker" do
@@ -87,13 +87,13 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <DatePicker name="test-name" selection="123">
-            test-label
-          </DatePicker>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <DatePicker name="test-name" selection="123">
+                   test-label
+                 </DatePicker>
+               </VStack>
+               """
     end
 
     test "MultiDatePicker" do
@@ -104,14 +104,14 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <LabeledContent>
-            <Text template="label">test-label</Text>
-            <MultiDatePicker name="test-name" selection="123">test-label</MultiDatePicker>
-          </LabeledContent>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <LabeledContent>
+                   <Text template="label">test-label</Text>
+                   <MultiDatePicker name="test-name" selection="123">test-label</MultiDatePicker>
+                 </LabeledContent>
+               </VStack>
+               """
     end
 
     test "Picker" do
@@ -122,16 +122,16 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <Picker name="test-name" selection="123">
-            <Text template="label">test-label</Text>
-            <Text tag="b">
-              a
-            </Text>
-          </Picker>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <Picker name="test-name" selection="123">
+                   <Text template="label">test-label</Text>
+                   <Text tag="b">
+                     a
+                   </Text>
+                 </Picker>
+               </VStack>
+               """
     end
 
     test "Slider" do
@@ -142,14 +142,14 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <LabeledContent>
-            <Text template="label">test-label</Text>
-            <Slider name="test-name" value="123" lowerBound="1" upperBound="200">test-label</Slider>
-          </LabeledContent>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <LabeledContent>
+                   <Text template="label">test-label</Text>
+                   <Slider name="test-name" value="123" lowerBound="1" upperBound="200">test-label</Slider>
+                 </LabeledContent>
+               </VStack>
+               """
     end
 
     test "Stepper" do
@@ -160,14 +160,14 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <LabeledContent>
-            <Text template="label">test-label</Text>
-            <Stepper name="test-name" value="123"></Stepper>
-          </LabeledContent>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <LabeledContent>
+                   <Text template="label">test-label</Text>
+                   <Stepper name="test-name" value="123"></Stepper>
+                 </LabeledContent>
+               </VStack>
+               """
     end
 
     test "TextEditor" do
@@ -178,14 +178,14 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <LabeledContent>
-            <Text template="label">test-label</Text>
-            <TextEditor name="test-name" text="123" />
-          </LabeledContent>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <LabeledContent>
+                   <Text template="label">test-label</Text>
+                   <TextEditor name="test-name" text="123" />
+                 </LabeledContent>
+               </VStack>
+               """
     end
 
     test "TextField" do
@@ -196,11 +196,11 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <TextField name="test-name" text="123" prompt="test-prompt">test-label</TextField>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <TextField name="test-name" text="123" prompt="test-prompt">test-label</TextField>
+               </VStack>
+               """
     end
 
     test "TextField with placeholder" do
@@ -211,11 +211,11 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <TextField name="test-name" text="123" prompt="test-prompt">test-placeholder</TextField>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <TextField name="test-name" text="123" prompt="test-prompt">test-placeholder</TextField>
+               </VStack>
+               """
     end
 
     test "SecureField" do
@@ -226,11 +226,11 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <SecureField name="test-name" text="123" prompt="test-prompt">test-label</SecureField>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <SecureField name="test-name" text="123" prompt="test-prompt">test-label</SecureField>
+               </VStack>
+               """
     end
 
     test "SecureField with placeholder" do
@@ -241,11 +241,11 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <SecureField name="test-name" text="123" prompt="test-prompt">test-placeholder</SecureField>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <SecureField name="test-name" text="123" prompt="test-prompt">test-placeholder</SecureField>
+               </VStack>
+               """
     end
 
     test "Toggle" do
@@ -256,14 +256,14 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <VStack alignment="leading">
-          <LabeledContent>
-            <Text template="label">test-label</Text>
-            <Toggle name="test-name" isOn="true"></Toggle>
-          </LabeledContent>
-        </VStack>
-        """
+               ~X"""
+               <VStack alignment="leading">
+                 <LabeledContent>
+                   <Text template="label">test-label</Text>
+                   <Toggle name="test-name" isOn="true"></Toggle>
+                 </LabeledContent>
+               </VStack>
+               """
     end
   end
 
@@ -278,30 +278,24 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <Group style="font(.caption); foregroundStyle(.red)">
-          <Text>Error!</Text>
-        </Group>
-        """
-
+               ~X"""
+               <Group style="font(.caption); foregroundStyle(.red)">
+                 <Text>Error!</Text>
+               </Group>
+               """
     end
-
   end
 
   describe "header/1" do
-
   end
 
   describe "modal/1" do
-
   end
 
   describe "flash/1" do
-
   end
 
   describe "flash_group/1" do
-
   end
 
   describe "simple_form/1" do
@@ -312,17 +306,17 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       assigns = %{form: form}
 
       template = ~LVN"""
-        <.simple_form for={@form}>
-        </.simple_form>
-        """
+      <.simple_form for={@form}>
+      </.simple_form>
+      """
 
       assert t2h(template) ==
-        ~X"""
-        <LiveForm>
-          <Form>
-          </Form>
-        </LiveForm>
-        """
+               ~X"""
+               <LiveForm>
+                 <Form>
+                 </Form>
+               </LiveForm>
+               """
     end
 
     test "can render form with an input" do
@@ -332,25 +326,31 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       assigns = %{form: form}
 
       template = ~LVN"""
-        <.simple_form for={@form}>
-          <.input field={@form[:email]} label="Email"/>
-        </.simple_form>
-        """
+      <.simple_form for={@form}>
+        <.input field={@form[:email]} label="Email"/>
+      </.simple_form>
+      """
 
       assert t2h(template) ==
-        ~X"""
-        <LiveForm>
-          <Form>
-            <VStack alignment="leading">
-              <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
-            </VStack>
-          </Form>
-        </LiveForm>
-        """
+               ~X"""
+               <LiveForm>
+                 <Form>
+                   <VStack alignment="leading">
+                     <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+                   </VStack>
+                 </Form>
+               </LiveForm>
+               """
     end
 
     test "can render multiple sections in order" do
-      params = %{"email" => "test@example.com", "first_name" => "Gloria", "last_name" => "Fuertes", "more_info" => "More info here"}
+      params = %{
+        "email" => "test@example.com",
+        "first_name" => "Gloria",
+        "last_name" => "Fuertes",
+        "more_info" => "More info here"
+      }
+
       form = to_form(params, as: "user")
 
       assigns = %{form: form}
@@ -371,65 +371,37 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        trim(~X"""
-        <LiveForm>
-          <Form>
-            <Section isExpanded="true">
-              <Text template="header">Name</Text>
-              <VStack alignment="leading">
-                <TextField id="user_first_name" name="user[first_name]" style="" text="Gloria">First name</TextField>
-              </VStack>
-              <VStack alignment="leading">
-                <TextField id="user_last_name" name="user[last_name]" style="" text="Fuertes">Last name</TextField>
-              </VStack>
-            </Section>
-            <Section isExpanded="true">
-              <VStack alignment="leading">
-                <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
-              </VStack>
-              <Text template="footer">We will contact you here.</Text>
-            </Section>
-            <Section isExpanded="false">
-              <Text template="header">Extra info</Text>
-              <VStack alignment="leading">
-                <TextField id="user_more_info" name="user[more_info]" style="" text="More info here">More info</TextField>
-              </VStack>
-              <Text template="footer">We will use this for...</Text>
-            </Section>
-          </Form>
-        </LiveForm>
-        """)
+               trim(~X"""
+               <LiveForm>
+                 <Form>
+                   <Section>
+                     <Text template="header" content="Name" />
+                     <VStack alignment="leading">
+                       <TextField id="user_first_name" name="user[first_name]" style="" text="Gloria">First name</TextField>
+                     </VStack>
+                     <VStack alignment="leading">
+                       <TextField id="user_last_name" name="user[last_name]" style="" text="Fuertes">Last name</TextField>
+                     </VStack>
+                   </Section>
+                   <Section>
+                     <VStack alignment="leading">
+                       <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+                     </VStack>
+                     <Text template="footer" content="We will contact you here." />
+                   </Section>
+                   <Section>
+                     <Text template="header" content="Extra info" />
+                     <VStack alignment="leading">
+                       <TextField id="user_more_info" name="user[more_info]" style="" text="More info here">More info</TextField>
+                     </VStack>
+                     <Text template="footer" content="We will use this for..." />
+                   </Section>
+                 </Form>
+               </LiveForm>
+               """)
     end
 
-    test "can give a isExpanded value to Section" do
-      params = %{"email" => "test@example.com"}
-      form = to_form(params, as: "user")
-
-      assigns = %{expand?: false, form: form}
-
-      template = ~LVN"""
-      <.simple_form for={@form}>
-        <:section is_expanded={@expand?}>
-          <.input field={@form[:email]} label="Email"/>
-        </:section>
-      </.simple_form>
-      """
-
-      assert t2h(template) ==
-        trim(~X"""
-        <LiveForm>
-          <Form>
-            <Section isExpanded="false">
-              <VStack alignment="leading">
-                <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
-              </VStack>
-            </Section>
-          </Form>
-        </LiveForm>
-        """)
-    end
-
-    test "can render sectionn with footer" do
+    test "can render section with footer" do
       params = %{"email" => "test@example.com"}
       form = to_form(params, as: "user")
 
@@ -444,20 +416,18 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        trim(~X"""
-        <LiveForm>
-          <Form>
-            <Section isExpanded="true">
-              <VStack alignment="leading">
-                <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
-              </VStack>
-              <Text template="footer">
-                A footer
-              </Text>
-            </Section>
-          </Form>
-        </LiveForm>
-        """)
+               trim(~X"""
+               <LiveForm>
+                 <Form>
+                   <Section>
+                     <VStack alignment="leading">
+                       <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+                     </VStack>
+                     <Text template="footer" content="A footer" />
+                   </Section>
+                 </Form>
+               </LiveForm>
+               """)
     end
 
     test "can render section with header" do
@@ -475,23 +445,21 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        trim(~X"""
-        <LiveForm>
-          <Form>
-            <Section isExpanded="true">
-              <Text template="header">
-                A header
-              </Text>
-              <VStack alignment="leading">
-                <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
-              </VStack>
-            </Section>
-          </Form>
-        </LiveForm>
-        """)
+               trim(~X"""
+               <LiveForm>
+                 <Form>
+                   <Section>
+                     <Text template="header" content="A header" />
+                     <VStack alignment="leading">
+                       <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+                     </VStack>
+                   </Section>
+                 </Form>
+               </LiveForm>
+               """)
     end
 
-    test "can render section without attributes" do
+    test "can render section" do
       params = %{"email" => "test@example.com"}
       form = to_form(params, as: "user")
 
@@ -506,17 +474,17 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <LiveForm>
-          <Form>
-            <Section isExpanded="true">
-              <VStack alignment="leading">
-                <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
-              </VStack>
-            </Section>
-          </Form>
-        </LiveForm>
-        """
+               ~X"""
+               <LiveForm>
+                 <Form>
+                   <Section>
+                     <VStack alignment="leading">
+                       <TextField id="user_email" name="user[email]" style="" text="test@example.com">Email</TextField>
+                     </VStack>
+                   </Section>
+                 </Form>
+               </LiveForm>
+               """
     end
   end
 
@@ -529,17 +497,15 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <Button>
-          Send!
-        </Button>
-        """
-
+               ~X"""
+               <Button>
+                 Send!
+               </Button>
+               """
     end
   end
 
   describe "table" do
-
   end
 
   describe "list/1" do
@@ -555,18 +521,18 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       """
 
       assert t2h(template) ==
-        ~X"""
-        <List>
-          <LabeledContent>
-            <Text template="label">Foo</Text>
-            <Text>Foo</Text>
-          </LabeledContent>
-          <LabeledContent>
-            <Text template="label">Bar</Text>
-            <Text>Bar</Text>
-          </LabeledContent>
-        </List>
-        """
+               ~X"""
+               <List>
+                 <LabeledContent>
+                   <Text template="label">Foo</Text>
+                   <Text>Foo</Text>
+                 </LabeledContent>
+                 <LabeledContent>
+                   <Text template="label">Bar</Text>
+                   <Text>Bar</Text>
+                 </LabeledContent>
+               </List>
+               """
     end
   end
 
@@ -575,25 +541,22 @@ defmodule LiveViewNative.SwiftUI.CoreComponentsTest do
       assigns = %{}
 
       template = ~LVN"""
-        <.icon name="star"/>
-        """
+      <.icon name="star"/>
+      """
 
       assert t2h(template) ==
-        ~X"""
-        <Image systemName="star"/>
-        """
+               ~X"""
+               <Image systemName="star"/>
+               """
     end
   end
 
   describe "image/1" do
-
   end
 
   describe "translate_error/1" do
-
   end
 
   describe "translate_errors/1" do
-
   end
 end
