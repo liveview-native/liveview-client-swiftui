@@ -239,7 +239,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         } else {
                             let (data, response) = try await self.urlSession.data(from: url)
                             if let response = response as? HTTPURLResponse,
-                               response.statusCode != 200 {
+                               !(200...299).contains(response.statusCode) {
                                 throw AnyLocalizedError(errorDescription: "Downloading stylesheet '\(url.absoluteString)' failed with status code \(response.statusCode)")
                             }
                             guard let contents = String(data: data, encoding: .utf8)
