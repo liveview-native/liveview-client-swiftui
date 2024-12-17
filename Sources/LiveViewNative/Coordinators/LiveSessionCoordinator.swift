@@ -237,7 +237,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         if let cachedStylesheet = await StylesheetCache.shared.read(for: url, registry: R.self) {
                             return cachedStylesheet
                         } else {
-                            let (data, _) = try await self.urlSession.data(from: url)
+                            let (data, response) = try await self.urlSession.data(from: url)
+                            if let response = response as? HTTPURLResponse,
+                               response.statusCode != 200 {
+                                throw AnyLocalizedError(errorDescription: "Downloading stylesheet '\(url.absoluteString)' failed with status code \(response.statusCode)")
+                            }
                             guard let contents = String(data: data, encoding: .utf8)
                             else { return Stylesheet<R>(content: [], classes: [:]) }
                             let stylesheet = try Stylesheet<R>(from: contents, in: .init())
