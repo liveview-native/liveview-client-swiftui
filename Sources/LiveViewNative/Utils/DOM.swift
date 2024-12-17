@@ -23,7 +23,7 @@ import LiveViewNativeCore
 /// - ``depthFirstChildren()``
 /// - ``elementChildren()``
 /// - ``innerText()``
-public struct ElementNode: Identifiable {
+public struct ElementNode: Identifiable, @unchecked Sendable {
     public let node: Node
     public let data: ElementData
     

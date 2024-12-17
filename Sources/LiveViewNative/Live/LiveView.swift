@@ -154,7 +154,7 @@ public struct LiveView<
     @State private var eventConfirmationTransaction: EventConfirmationTransaction?
     struct EventConfirmationTransaction: Sendable {
         let message: String
-        let callback: (Bool) -> ()
+        let callback: @Sendable (sending Bool) -> ()
     }
     
     @MainActor
@@ -245,9 +245,7 @@ public struct LiveView<
         // data-confirm
         .environment(\.eventConfirmation, session.configuration.eventConfirmation ?? { message, _ in
             return await withCheckedContinuation { continuation in
-                eventConfirmationTransaction = EventConfirmationTransaction(message: message, callback: {
-                    continuation.resume(returning: $0)
-                })
+                eventConfirmationTransaction = EventConfirmationTransaction(message: message, callback: continuation.resume(returning:))
                 showEventConfirmation = true
             }
         })
