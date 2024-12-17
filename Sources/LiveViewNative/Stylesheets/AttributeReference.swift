@@ -22,6 +22,7 @@ import LiveViewNativeCore
 /// ```
 ///
 /// The attribute will be automatically decoded to the correct type using the conformance to ``AttributeDecodable``.
+@MainActor
 public struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: ParseableModifierValue {
     enum Storage {
         case constant(Value)

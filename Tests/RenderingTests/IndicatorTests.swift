@@ -84,4 +84,75 @@ final class IndicatorTests: XCTestCase {
         }
     }
 #endif
+    
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    func testContentUnavailableView() throws {
+        try assertMatch(
+            #"""
+            <ContentUnavailableView>
+                <Text>Label</Text>
+            </ContentUnavailableView>
+            """#
+        ) {
+            ContentUnavailableView {
+                Text("Label")
+            }
+        }
+        try assertMatch(
+            #"""
+            <ContentUnavailableView>
+                <Text template="label">Label</Text>
+            </ContentUnavailableView>
+            """#
+        ) {
+            ContentUnavailableView {
+                Text("Label")
+            }
+        }
+        try assertMatch(
+            #"""
+            <ContentUnavailableView>
+                <Text>Label</Text>
+                <Text template="description">Description</Text>
+            </ContentUnavailableView>
+            """#
+        ) {
+            ContentUnavailableView {
+                Text("Label")
+            } description: {
+                Text("Description")
+            }
+        }
+        try assertMatch(
+            #"""
+            <ContentUnavailableView>
+                <Text>Label</Text>
+                <Text template="description">Description</Text>
+                <Button template="actions">Action</Button>
+            </ContentUnavailableView>
+            """#
+        ) {
+            ContentUnavailableView {
+                Text("Label")
+            } description: {
+                Text("Description")
+            } actions: {
+                Button("Action") {}
+            }
+        }
+        try assertMatch(
+            #"""
+            <ContentUnavailableView search />
+            """#
+        ) {
+            ContentUnavailableView.search
+        }
+        try assertMatch(
+            #"""
+            <ContentUnavailableView search="query text" />
+            """#
+        ) {
+            ContentUnavailableView.search(text: "query text")
+        }
+    }
 }

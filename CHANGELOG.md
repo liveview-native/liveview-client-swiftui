@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `NavigationLink` takes a `destination` template to customize the connecting phase View for its navigation event.
 
 ### Changed
+- Swift 6 is now required to build LiveView Native applications
 
 ### Fixed
 

@@ -56,7 +56,8 @@ public enum ArgumentParseError: LocalizedError {
     }
 }
 
-public struct StandardExpressionParser<Output: ParseableExpressionProtocol>: Parser {
+@MainActor
+public struct StandardExpressionParser<Output: ParseableExpressionProtocol>: @preconcurrency Parser {
     let context: ParseableModifierContext
     
     public var body: some Parser<Substring.UTF8View, Output> {
@@ -73,6 +74,7 @@ public class ParseableModifierContext {
     public init() {}
 }
 
+@MainActor
 public protocol ParseableModifierValue {
     associatedtype _ParserType: Parser<Substring.UTF8View, Self>
     static func parser(in context: ParseableModifierContext) -> _ParserType

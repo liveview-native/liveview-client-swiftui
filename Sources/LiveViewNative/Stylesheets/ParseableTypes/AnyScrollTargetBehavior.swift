@@ -23,7 +23,8 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-struct AnyScrollTargetBehavior: ParseableModifierValue, ScrollTargetBehavior {
+@MainActor
+struct AnyScrollTargetBehavior: ParseableModifierValue, @preconcurrency ScrollTargetBehavior {
     let _updateTarget: (inout ScrollTarget, ScrollTargetBehaviorContext) -> ()
     
     func updateTarget(_ target: inout ScrollTarget, context: Self.TargetContext) {

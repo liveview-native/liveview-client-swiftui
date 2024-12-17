@@ -38,6 +38,7 @@ import LiveViewNativeStylesheet
 /// .inner(color: .red, radius: 8, x: 10, y: -8)
 /// ```
 @_documentation(visibility: public)
+@MainActor
 enum _ShadowStyle: ParseableModifierValue {
     case drop(_drop)
     case inner(_inner)
@@ -70,6 +71,7 @@ enum _ShadowStyle: ParseableModifierValue {
         }
     }
     
+    @MainActor
     @ParseableExpression
     struct _drop {
         static let name = "drop"
@@ -92,6 +94,7 @@ enum _ShadowStyle: ParseableModifierValue {
         }
     }
     
+    @MainActor
     @ParseableExpression
     struct _inner {
         static let name = "inner"

@@ -5,19 +5,19 @@ import Foundation
 struct DocumentationExtensionGeneratorPlugin: CommandPlugin {
     func performCommand(context: PluginContext, arguments: [String]) throws {
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: try context.tool(named: "DocumentationExtensionGenerator").path.string)
+        process.executableURL = try context.tool(named: "DocumentationExtensionGenerator").url
         
-        let target = context.package.targets.first(where: { $0.name == "LiveViewNative" })! as! SourceModuleTarget
+        let target = context.package.targets.first(where: { $0.name == "LiveViewNative" })! as! SwiftSourceModuleTarget
         let viewFiles = target.sourceFiles
-            .filter({ $0.path.string.starts(with: target.directory.appending("Views").string) })
+            .filter({ $0.url.pathComponents.starts(with: target.directoryURL.appending(path: "Views").pathComponents) })
             .filter({ $0.type == .source })
-            .map(\.path)
+            .map(\.url)
         
         process.arguments = arguments
             + viewFiles
-                .reduce(into: [String]()) { partialResult, path in
+                .reduce(into: [String]()) { partialResult, url in
                     partialResult.append("--view")
-                    partialResult.append(path.string)
+                    partialResult.append(url.path())
                 }
 
         try process.run()

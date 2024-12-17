@@ -17,6 +17,7 @@ public enum _EventBinding: String {
 }
 
 extension BuiltinRegistry {
+    @MainActor
     @ViewBuilder
     static func applyBinding(
         _ binding: _EventBinding,

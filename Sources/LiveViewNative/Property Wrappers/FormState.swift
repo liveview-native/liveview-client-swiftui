@@ -54,6 +54,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 ///     }
 /// }
 /// ```
+@MainActor
 @propertyWrapper
 public struct FormState<Value: FormValue> {
     private let defaultValue: Value
@@ -236,7 +237,7 @@ public struct FormState<Value: FormValue> {
     }
 }
 
-extension FormState: DynamicProperty {
+extension FormState: @preconcurrency DynamicProperty {
     public func update() {
         resolveMode()
     }
@@ -244,6 +245,7 @@ extension FormState: DynamicProperty {
 
 // This class contains any data that may need to change during a view update (since @State can't be used).
 // It also serves to notify SwiftUI when this @FormState's particular field has changed (as opposed to updates for other fields).
+@MainActor
 private class FormStateData<Value: FormValue>: ObservableObject {
     var mode: Mode = .unknown
     
