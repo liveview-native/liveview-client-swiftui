@@ -70,6 +70,7 @@ import AsyncAlgorithms
 public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable {
     @ObservedElement private var element: ElementNode
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
+    @Environment(\.eventConfirmation) private var eventConfirmation
     @StateObject var handler = Handler()
     /// The name of the event to send.
     @_documentation(visibility: public)
@@ -336,6 +337,11 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
             guard let event else {
                 return
             }
+            if let confirm = try owner.element.attributeValue(for: "data-confirm"),
+               let eventConfirmation = owner.eventConfirmation
+            {
+                guard await eventConfirmation(confirm, owner.element) else { return }
+            }
             await owner.handler.channel.send(.init(
                 type: owner.type,
                 event: event,
@@ -347,6 +353,11 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
         public func callAsFunction<R: RootRegistry>(value: Any = [String:String](), in context: LiveContext<R>) async throws {
             guard let event else {
                 return
+            }
+            if let confirm = try owner.element.attributeValue(for: "data-confirm"),
+               let eventConfirmation = owner.eventConfirmation
+            {
+                guard await eventConfirmation(confirm, owner.element) else { return }
             }
             let handler = Handler()
             handler.update(
@@ -361,5 +372,16 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
                 target: owner.target
             ))
         }
+    }
+}
+
+extension EnvironmentValues {
+    private enum EventConfirmationKey: EnvironmentKey {
+        static var defaultValue: ((String, ElementNode) async -> Bool)? { nil }
+    }
+    
+    var eventConfirmation: ((String, ElementNode) async -> Bool)? {
+        get { self[EventConfirmationKey.self] }
+        set { self[EventConfirmationKey.self] = newValue }
     }
 }

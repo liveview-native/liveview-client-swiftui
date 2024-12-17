@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `NavigationLink` supports the `data-phx-link` attribute to switch between `redirect` (default) and `patch` navigation
 - `NavigationLink` can perform a replace navigation by setting the `data-phx-link-state` attribute to `replace`
 - `NavigationLink` takes a `destination` template to customize the connecting phase View for its navigation event.
+- The `data-confirm` attribute can be added to elements to show a confirmation dialog before sending an event
 
 ### Changed
 - Swift 6 is now required to build LiveView Native applications

@@ -150,6 +150,13 @@ public struct LiveView<
     let reconnectingView: (_ConnectedContent<R>, Bool) -> ReconnectingView
     let errorView: (Error) -> ErrorView
     
+    @State private var showEventConfirmation: Bool = false
+    @State private var eventConfirmationTransaction: EventConfirmationTransaction?
+    struct EventConfirmationTransaction: Sendable {
+        let message: String
+        let callback: (Bool) -> ()
+    }
+    
     @MainActor
     @ViewBuilder
     func buildPhaseView(_ phase: LiveViewPhase<R>) -> some View {
@@ -233,6 +240,28 @@ public struct LiveView<
             else { return }
             Task(priority: .userInitiated) {
                 await session.connect()
+            }
+        }
+        // data-confirm
+        .environment(\.eventConfirmation, session.configuration.eventConfirmation ?? { message, _ in
+            return await withCheckedContinuation { continuation in
+                eventConfirmationTransaction = EventConfirmationTransaction(message: message, callback: {
+                    continuation.resume(returning: $0)
+                })
+                showEventConfirmation = true
+            }
+        })
+        .confirmationDialog(
+            eventConfirmationTransaction?.message ?? "",
+            isPresented: $showEventConfirmation,
+            titleVisibility: .visible,
+            presenting: eventConfirmationTransaction
+        ) { transaction in
+            SwiftUI.Button("OK") {
+                transaction.callback(true)
+            }
+            SwiftUI.Button("Cancel", role: .cancel) {
+                transaction.callback(false)
             }
         }
     }
