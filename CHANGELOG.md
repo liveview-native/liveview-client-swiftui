@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Swift 6 is now required to build LiveView Native applications
 
 ### Fixed
 
