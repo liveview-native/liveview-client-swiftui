@@ -400,15 +400,31 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     include: ~w(autocomplete name rel action enctype method novalidate target multipart),
     doc: "the arbitrary attributes to apply to the form tag"
 
-  slot :inner_block, required: true
+  slot :inner_block, required: true, doc: "won't be rendered if section slots are passed in"
   slot :actions, doc: "the slot for form actions, such as a submit button"
+  slot :section, required: false, doc: "slot for creating sections inside the form" do
+    attr :is_expanded, :boolean, doc: "a boolean value that determines the section’s expansion state (expanded or collapsed)"
+    attr :header, :string, doc: "text to use as a section's header"
+    attr :footer, :string, doc: "text to use as a section's footer"
+  end
 
   def simple_form(assigns) do
     ~LVN"""
     <.form :let={f} for={@for} as={@as} {@rest}>
       <Form>
-        <%%= render_slot(@inner_block, f) %>
-        <Section>
+        <%%= if @section == [] do %>
+          <%%= render_slot(@inner_block, f) %>
+        <%% else %>
+          <%%= for section <- @section do %>
+            <Section>
+              <Text :if={not is_nil(Map.get(section, :header))} template={:header} content={Map.get(section, :header)} />
+
+              <%%= render_slot(section) %>
+              <Text :if={not is_nil(Map.get(section, :footer))} template={:footer} content={Map.get(section, :footer)} />
+            </Section>
+          <%% end %>
+        <%% end %>
+        <Section :if={@actions != []}>
           <%%= for action <- @actions do %>
             <%%= render_slot(action, f) %>
           <%% end %>
