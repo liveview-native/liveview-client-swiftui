@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Fixed
+- Views will now update properly when the server changes the value of a form field (#1483)
 
 ## [0.3.1] 2024-10-02
 
