@@ -41,10 +41,8 @@ extension ButtonBorderShape: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("roundedRectangle")
     struct RoundedRectangle {
-        static let name = "roundedRectangle"
-        
         let radius: CGFloat
         
         init(radius: CGFloat) {

@@ -22,10 +22,8 @@ import LiveViewNativeStylesheet
 /// <Element style='textScale(.default, isEnabled: attr("isEnabled"))' isEnabled={@isEnabled} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("textScale")
 struct _TextScaleModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "textScale" }
-
     let scale: Any
     let isEnabled: AttributeReference<Bool>
 

@@ -9,10 +9,8 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("matchedTransitionSource")
 struct _MatchedTransitionSourceModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "matchedTransitionSource" }
-
     @ObservedElement private var element
     @LiveContext<R> private var context
     @Environment(\.namespaces) private var namespaces

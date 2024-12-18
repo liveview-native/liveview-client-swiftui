@@ -21,10 +21,8 @@ import LiveViewNativeStylesheet
 /// <Element style='tracking(attr("tracking"))' tracking={@tracking} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("tracking")
 struct _TrackingModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "tracking" }
-
     let tracking: AttributeReference<CoreFoundation.CGFloat>
 
     @ObservedElement private var element

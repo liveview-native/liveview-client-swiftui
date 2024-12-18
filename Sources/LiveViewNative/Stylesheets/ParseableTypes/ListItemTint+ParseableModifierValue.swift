@@ -46,10 +46,8 @@ extension ListItemTint {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("fixed")
         struct Fixed {
-            static let name = "fixed"
-            
             let tint: Color.Resolvable
             
             init(_ tint: Color.Resolvable) {
@@ -57,10 +55,8 @@ extension ListItemTint {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("preferred")
         struct Preferred {
-            static let name = "preferred"
-            
             let tint: Color.Resolvable
             
             init(_ tint: Color.Resolvable) {

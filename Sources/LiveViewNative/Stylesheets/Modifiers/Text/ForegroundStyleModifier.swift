@@ -53,10 +53,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("foregroundStyle")
 struct _ForegroundStyleModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "foregroundStyle" }
-
     enum Value {
         case _0(style: AnyShapeStyle.Resolvable)
         case _1(primary: AnyShapeStyle.Resolvable, secondary: AnyShapeStyle.Resolvable)

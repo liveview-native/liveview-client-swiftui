@@ -33,10 +33,8 @@ enum AnyIndexViewStyle: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("page")
     struct Page {
-        static let name = "page"
-        
         let backgroundDisplayMode: PageIndexViewStyle.BackgroundDisplayMode
         
         init(backgroundDisplayMode: PageIndexViewStyle.BackgroundDisplayMode) {

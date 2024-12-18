@@ -21,10 +21,8 @@ import LiveViewNativeStylesheet
 /// <Element style='italic(attr("isActive"))' isActive={@isActive} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("italic")
 struct _ItalicModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "italic" }
-    
     let isActive: AttributeReference<Bool>
 
     @ObservedElement private var element

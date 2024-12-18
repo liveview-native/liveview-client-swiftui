@@ -110,10 +110,8 @@ public protocol CustomRegistry<Root> {
     /// Use the ``LiveViewNativeStylesheet/ParseableExpression`` macro to generate a parser for a modifier from its `init` clauses.
     ///
     /// ```swift
-    /// @ParseableExpression
+    /// @ASTDecodable("myCustomModifier")
     /// struct MyCustomModifier: ViewModifier {
-    ///     static let name = "myCustomModifier"
-    ///
     ///     let size: CGSize
     ///
     ///     // use as `myCustomModifier(5, 10)`

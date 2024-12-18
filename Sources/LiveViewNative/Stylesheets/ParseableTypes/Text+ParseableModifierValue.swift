@@ -110,9 +110,8 @@ enum _AnyTextLineStyle: ParseableModifierValue {
     }
 }
 
-@ParseableExpression
+@ASTDecodable("LineStyle")
 struct _TextLineStyle {
-    static let name = "LineStyle"
     let pattern: SwiftUI.Text.LineStyle.Pattern
     let color: Color.Resolvable?
     

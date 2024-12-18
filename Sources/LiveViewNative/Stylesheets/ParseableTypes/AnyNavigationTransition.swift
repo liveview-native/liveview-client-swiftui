@@ -45,10 +45,8 @@ enum AnyNavigationTransition: ParseableModifierValue {
     }
     
     #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @ParseableExpression
+    @ASTDecodable("zoom")
     struct Zoom: ParseableModifierValue {
-        static let name = "zoom"
-        
         let sourceID: AttributeReference<String>
         let namespace: AttributeReference<String>
         

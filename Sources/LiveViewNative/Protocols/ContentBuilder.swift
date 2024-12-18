@@ -94,11 +94,9 @@ import LiveViewNativeStylesheet
 /// ```swift
 /// import LiveViewNativeStylesheet
 ///
-/// @ParseableExpression
+/// @ASTDecodable("symbol")
 /// struct SymbolModifier: ContentModifier {
 ///     typealias Builder = ChartContentBuilder
-///
-///     static let name = "symbol"
 ///
 ///     let content: ViewReference
 ///
@@ -119,7 +117,7 @@ import LiveViewNativeStylesheet
 /// }
 /// ```
 ///
-/// Given the initializer `init(content:)`, the `@ParseableExpression` macro will allow the following syntax:
+/// Given the initializer `init(content:)`, the `@ASTDecodable("...")` macro will allow the following syntax:
 ///
 /// ```swift
 /// symbol(content: :my_content)

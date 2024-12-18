@@ -44,10 +44,8 @@ extension PointerStyle: ParseableModifierValue {
     }
     
     #if os(macOS)
-    @ParseableExpression
+    @ASTDecodable("columnResize")
     struct ColumnResize {
-        static let name = "columnResize"
-        
         let value: PointerStyle
         
         init(directions: HorizontalDirection.Set) {
@@ -55,10 +53,8 @@ extension PointerStyle: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("frameResize")
     struct FrameResize {
-        static let name = "frameResize"
-        
         let value: PointerStyle
         
         init(
@@ -69,10 +65,8 @@ extension PointerStyle: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("image")
     struct Image {
-        static let name = "image"
-        
         let value: PointerStyle
         
         init(
@@ -83,10 +77,8 @@ extension PointerStyle: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("rowResize")
     struct RowResize {
-        static let name = "rowResize"
-        
         let value: PointerStyle
         
         init(directions: VerticalDirection.Set) {
@@ -96,10 +88,8 @@ extension PointerStyle: ParseableModifierValue {
     #endif
     
     #if os(visionOS)
-    @ParseableExpression
+    @ASTDecodable("shape")
     struct Shape {
-        static let name = "shape"
-        
         let value: PointerStyle
         
         init(

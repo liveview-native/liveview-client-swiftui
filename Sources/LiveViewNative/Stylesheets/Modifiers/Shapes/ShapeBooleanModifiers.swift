@@ -25,10 +25,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("intersection")
 struct _IntersectionModifier<Root: RootRegistry>: ShapeModifier {
-    static var name: String { "intersection" }
-
     let other: AnyShape
     let eoFill: AttributeReference<Bool>
     
@@ -63,10 +61,8 @@ struct _IntersectionModifier<Root: RootRegistry>: ShapeModifier {
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("union")
 struct _UnionModifier<Root: RootRegistry>: ShapeModifier {
-    static var name: String { "union" }
-
     let other: AnyShape
     let eoFill: AttributeReference<Bool>
     
@@ -101,10 +97,8 @@ struct _UnionModifier<Root: RootRegistry>: ShapeModifier {
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("subtracting")
 struct _SubtractingModifier<Root: RootRegistry>: ShapeModifier {
-    static var name: String { "subtracting" }
-
     let other: AnyShape
     let eoFill: AttributeReference<Bool>
     
@@ -139,10 +133,8 @@ struct _SubtractingModifier<Root: RootRegistry>: ShapeModifier {
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("symmetricDifference")
 struct _SymmetricDifferenceModifier<Root: RootRegistry>: ShapeModifier {
-    static var name: String { "symmetricDifference" }
-
     let other: AnyShape
     let eoFill: AttributeReference<Bool>
     
@@ -177,10 +169,8 @@ struct _SymmetricDifferenceModifier<Root: RootRegistry>: ShapeModifier {
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("lineIntersection")
 struct _LineIntersectionModifier<Root: RootRegistry>: ShapeModifier {
-    static var name: String { "lineIntersection" }
-
     let other: AnyShape
     let eoFill: AttributeReference<Bool>
     
@@ -215,10 +205,8 @@ struct _LineIntersectionModifier<Root: RootRegistry>: ShapeModifier {
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("lineSubtraction")
 struct _LineSubtractionModifier<Root: RootRegistry>: ShapeModifier {
-    static var name: String { "lineSubtraction" }
-
     let other: AnyShape
     let eoFill: AttributeReference<Bool>
     

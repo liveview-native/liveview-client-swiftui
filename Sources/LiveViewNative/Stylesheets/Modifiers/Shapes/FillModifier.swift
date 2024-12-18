@@ -25,10 +25,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("fill")
 struct _FillModifier<Root: RootRegistry>: ShapeFinalizerModifier {
-    static var name: String { "fill" }
-    
     let content: AnyShapeStyle.Resolvable
     let style: FillStyle
     

@@ -375,10 +375,8 @@ extension SymbolEffectOptions: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("speed")
     struct Speed {
-        static let name = "speed"
-        
         let speed: Double
         
         init(_ speed: Double) {
@@ -386,10 +384,8 @@ extension SymbolEffectOptions: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("repeat")
     struct Repeat {
-        static let name = "repeat"
-        
         let count: Int?
         
         init(_ count: Int?) {

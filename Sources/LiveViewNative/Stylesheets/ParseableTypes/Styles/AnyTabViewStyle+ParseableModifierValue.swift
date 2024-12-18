@@ -76,10 +76,8 @@ enum AnyTabViewStyle: ParseableModifierValue {
     }
     
     #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
-    @ParseableExpression
+    @ASTDecodable("page")
     struct Page {
-        static let name = "page"
-        
         let indexDisplayMode: PageTabViewStyle.IndexDisplayMode
         
         init(indexDisplayMode: PageTabViewStyle.IndexDisplayMode) {
@@ -89,10 +87,8 @@ enum AnyTabViewStyle: ParseableModifierValue {
     #endif
     
     #if os(watchOS)
-    @ParseableExpression
+    @ASTDecodable("verticalPage")
     struct VerticalPage {
-        static let name = "verticalPage"
-        
         let transitionStyle: Any
         
         @available(watchOS 10.0, *)

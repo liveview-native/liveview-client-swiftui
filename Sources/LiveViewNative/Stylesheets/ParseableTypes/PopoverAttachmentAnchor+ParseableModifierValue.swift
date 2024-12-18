@@ -36,9 +36,8 @@ extension PopoverAttachmentAnchor: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("rect")
     struct Rect {
-        static let name = "rect"
         let source: Anchor<CGRect>.Source
         
         init(_ source: Anchor<CGRect>.Source) {
@@ -46,9 +45,8 @@ extension PopoverAttachmentAnchor: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("point")
     struct Point {
-        static let name = "point"
         let point: UnitPoint
         
         init(_ point: UnitPoint) {

@@ -24,10 +24,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("transform")
 struct _TransformModifier<Root: RootRegistry>: ShapeModifier {
-    static var name: String { "transform" }
-
     let transform: CGAffineTransform
     
     init(_ transform: CGAffineTransform) {

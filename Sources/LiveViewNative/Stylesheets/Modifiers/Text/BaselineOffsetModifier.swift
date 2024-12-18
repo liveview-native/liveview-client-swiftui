@@ -21,10 +21,8 @@ import LiveViewNativeStylesheet
 /// <Element style='baselineOffset(attr("baselineOffset"))' baselineOffset={@baselineOffset} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("baselineOffset")
 struct _BaselineOffsetModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "baselineOffset" }
-
     let baselineOffset: AttributeReference<CoreFoundation.CGFloat>
 
     @ObservedElement private var element

@@ -10,10 +10,8 @@ import LiveViewNativeStylesheet
 
 // manual implementation
 // `axis` is a tuple type, which cannot conform to `ParseableModifierValue`.
-@ParseableExpression
+@ASTDecodable("perspectiveRotationEffect")
 struct _PerspectiveRotationEffectModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "perspectiveRotationEffect" }
-    
     let angle: AttributeReference<Angle>
     let axis: _Rotation3DEffectModifier<R>._3DAxis
     let anchor: UnitPoint

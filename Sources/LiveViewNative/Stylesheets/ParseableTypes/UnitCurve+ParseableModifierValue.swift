@@ -56,10 +56,8 @@ extension UnitCurve: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("bezier")
     struct Bezier {
-        static let name = "bezier"
-        
         let value: UnitCurve
         
         init(startControlPoint: UnitPoint, endControlPoint: UnitPoint) {

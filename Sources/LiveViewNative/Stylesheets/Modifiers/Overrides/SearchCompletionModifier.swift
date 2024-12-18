@@ -34,10 +34,8 @@ import LiveViewNativeStylesheet
 /// <Element style='searchCompletion(attr("completion"))' completion={@completion} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("searchCompletion")
 struct _SearchCompletionModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "searchCompletion" }
-    
     enum Completion {
         case completion(AttributeReference<String>)
         #if os(iOS) || os(macOS) || os(visionOS)

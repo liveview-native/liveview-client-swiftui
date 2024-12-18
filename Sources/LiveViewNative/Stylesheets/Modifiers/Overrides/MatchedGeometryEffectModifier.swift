@@ -27,10 +27,8 @@ import LiveViewNativeStylesheet
 /// <Element style='matchedGeometryEffect(id: attr("id"), in: attr("namespace"), properties: .frame, anchor: .center, isSource: attr("isSource"))' id={@id} namespace={@namespace} isSource={@isSource} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("matchedGeometryEffect")
 struct _MatchedGeometryEffectModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "matchedGeometryEffect" }
-    
     @Environment(\.namespaces) private var namespaces
     
     @ObservedElement private var element

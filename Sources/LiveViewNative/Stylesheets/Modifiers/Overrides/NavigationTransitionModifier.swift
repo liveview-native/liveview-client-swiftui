@@ -36,10 +36,8 @@ import LiveViewNativeStylesheet
 /// </NavigationLink>
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("navigationTransition")
 struct _NavigationTransitionModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "navigationTransition" }
-    
     let style: Any
     
     @ObservedElement private var element

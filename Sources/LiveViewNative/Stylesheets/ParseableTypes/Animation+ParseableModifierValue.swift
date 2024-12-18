@@ -141,10 +141,8 @@ extension Animation: ParseableModifierValue {
         case smooth(SmoothSpring)
         case snappy(SnappySpring)
         
-        @ParseableExpression
+        @ASTDecodable("easeIn")
         struct EaseIn {
-            static let name = "easeIn"
-            
             let duration: Double?
             
             init(duration: Double?) {
@@ -152,10 +150,8 @@ extension Animation: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("easeOut")
         struct EaseOut {
-            static let name = "easeOut"
-            
             let duration: Double?
             
             init(duration: Double?) {
@@ -163,10 +159,8 @@ extension Animation: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("easeInOut")
         struct EaseInOut {
-            static let name = "easeInOut"
-            
             let duration: Double?
             
             init(duration: Double?) {
@@ -174,10 +168,8 @@ extension Animation: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("linear")
         struct Linear {
-            static let name = "linear"
-            
             let duration: Double?
             
             init(duration: Double?) {
@@ -185,10 +177,8 @@ extension Animation: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("spring")
         struct Spring {
-            static let name = "spring"
-            
             let value: Animation
             
             init() {
@@ -220,10 +210,8 @@ extension Animation: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("interactiveSpring")
         struct InteractiveSpring {
-            static let name = "interactiveSpring"
-            
             let value: Animation
             
             init() {
@@ -247,10 +235,8 @@ extension Animation: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("interpolatingSpring")
         struct InterpolatingSpring {
-            static let name = "interpolatingSpring"
-            
             let value: Animation
             
             init() {
@@ -283,10 +269,8 @@ extension Animation: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("timingCurve")
         struct TimingCurve {
-            static let name = "timingCurve"
-            
             let value: Animation
             
             init(_ p1x: Double, _ p1y: Double, _ p2x: Double, _ p2y: Double, duration: TimeInterval = 0.35) {
@@ -306,10 +290,8 @@ extension Animation: ParseableModifierValue {
         case repeatForever(RepeatForever)
         case speed(Speed)
         
-        @ParseableExpression
+        @ASTDecodable("delay")
         struct Delay {
-            static let name = "delay"
-            
             let delay: Double
             
             init(_ delay: Double) {
@@ -317,10 +299,8 @@ extension Animation: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("speed")
         struct Speed {
-            static let name = "speed"
-            
             let speed: Double
             
             init(_ speed: Double) {
@@ -328,10 +308,8 @@ extension Animation: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("repeatCount")
         struct RepeatCount {
-            static let name = "repeatCount"
-            
             let repeatCount: Int
             let autoreverses: Bool
             
@@ -341,10 +319,8 @@ extension Animation: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("repeatForever")
         struct RepeatForever {
-            static let name = "repeatForever"
-            
             let autoreverses: Bool
             
             init(autoreverses: Bool?) {
@@ -372,10 +348,8 @@ extension Spring: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("Spring")
     struct _Spring {
-        static let name = "Spring"
-        
         let value: Spring
         
         init(
@@ -411,10 +385,8 @@ extension Spring: ParseableModifierValue {
     }
 }
 
-@ParseableExpression
+@ASTDecodable("bouncy")
 struct BouncySpring {
-    static let name = "bouncy"
-    
     let duration: Double
     let extraBounce: Double
     
@@ -427,10 +399,8 @@ struct BouncySpring {
     }
 }
 
-@ParseableExpression
+@ASTDecodable("smooth")
 struct SmoothSpring {
-    static let name = "smooth"
-    
     let duration: Double
     let extraBounce: Double
     
@@ -443,10 +413,8 @@ struct SmoothSpring {
     }
 }
 
-@ParseableExpression
+@ASTDecodable("snappy")
 struct SnappySpring {
-    static let name = "snappy"
-    
     let duration: Double
     let extraBounce: Double
     

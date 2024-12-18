@@ -83,10 +83,8 @@ extension Font: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("system")
     struct System {
-        static let name = "system"
-        
         let value: Font
         
         init(size: CGFloat, weight: Font.Weight? = nil, design: Font.Design? = nil) {
@@ -98,10 +96,8 @@ extension Font: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("custom")
     struct Custom {
-        static let name = "custom"
-        
         let value: Font
         
         init(_ name: String, size: CGFloat) {
@@ -169,10 +165,8 @@ extension Font: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("weight")
         struct WeightMember {
-            static let name = "weight"
-            
             let weight: Font.Weight
             
             init(_ weight: Font.Weight) {
@@ -180,10 +174,8 @@ extension Font: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("width")
         struct WidthMember {
-            static let name = "width"
-            
             let width: Font.Width
             
             init(_ width: Font.Width) {
@@ -191,10 +183,8 @@ extension Font: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("leading")
         struct LeadingMember {
-            static let name = "leading"
-            
             let leading: Font.Leading
             
             init(_ leading: Font.Leading) {

@@ -45,10 +45,8 @@ struct AnyScrollTargetBehavior: ParseableModifierValue, @preconcurrency ScrollTa
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("viewAligned")
     struct ViewAligned {
-        static let name = "viewAligned"
-        
         let limitBehavior: ViewAlignedScrollTargetBehavior.LimitBehavior
         
         init(limitBehavior: ViewAlignedScrollTargetBehavior.LimitBehavior) {

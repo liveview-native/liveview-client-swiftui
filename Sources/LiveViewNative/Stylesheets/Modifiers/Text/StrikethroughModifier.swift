@@ -23,10 +23,8 @@ import LiveViewNativeStylesheet
 /// <Element style='strikethrough(attr("isActive"), pattern: .solid, color: attr("color"))' isActive={@isActive} color={@color} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("strikethrough")
 struct _StrikethroughModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "strikethrough" }
-
     let isActive: AttributeReference<Bool>
     let pattern: SwiftUI.Text.LineStyle.Pattern
     let color: Color.Resolvable?

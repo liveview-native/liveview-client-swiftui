@@ -72,10 +72,8 @@ enum _ShadowStyle: ParseableModifierValue {
     }
     
     @MainActor
-    @ParseableExpression
+    @ASTDecodable("drop")
     struct _drop {
-        static let name = "drop"
-        
         let color: Color.Resolvable
         let radius: AttributeReference<CGFloat>
         let x: AttributeReference<CGFloat>
@@ -95,10 +93,8 @@ enum _ShadowStyle: ParseableModifierValue {
     }
     
     @MainActor
-    @ParseableExpression
+    @ASTDecodable("inner")
     struct _inner {
-        static let name = "inner"
-        
         let color: Color.Resolvable
         let radius: AttributeReference<CGFloat>
         let x: AttributeReference<CGFloat>

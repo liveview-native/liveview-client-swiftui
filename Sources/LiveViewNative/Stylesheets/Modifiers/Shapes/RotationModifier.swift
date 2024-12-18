@@ -25,10 +25,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("rotation")
 struct _RotationModifier<Root: RootRegistry>: ShapeModifier {
-    static var name: String { "rotation" }
-
     let angle: AttributeReference<Angle>
     let anchor: AttributeReference<UnitPoint>
     

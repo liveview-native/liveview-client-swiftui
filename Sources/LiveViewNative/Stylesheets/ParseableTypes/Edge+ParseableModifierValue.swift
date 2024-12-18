@@ -64,10 +64,8 @@ extension EdgeInsets: ParseableModifierValue {
         ParseableEdgeInsets.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("EdgeInsets")
     struct ParseableEdgeInsets {
-        static let name = "EdgeInsets"
-        
         let value: EdgeInsets
         
         init(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) {

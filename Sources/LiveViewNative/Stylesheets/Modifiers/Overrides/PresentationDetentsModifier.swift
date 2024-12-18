@@ -26,10 +26,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("presentationDetents")
 struct _PresentationDetentsModifier: ViewModifier {
-    static let name = "presentationDetents"
-
     let detents: Set<PresentationDetent>
     
     init(_ detents: Set<PresentationDetent>) {

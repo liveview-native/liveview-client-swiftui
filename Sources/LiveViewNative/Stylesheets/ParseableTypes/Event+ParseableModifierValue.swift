@@ -22,10 +22,8 @@ extension Event: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("__event__")
     struct ParseableEvent {
-        static let name = "__event__"
-        
         let event: String
         let type: String
         let debounce: Double?

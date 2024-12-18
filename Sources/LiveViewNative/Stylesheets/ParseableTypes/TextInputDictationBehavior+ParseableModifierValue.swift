@@ -38,10 +38,8 @@ extension TextInputDictationBehavior: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("inline")
     struct Inline {
-        static let name = "inline"
-        
         let activation: TextInputDictationActivation
         
         init(activation: TextInputDictationActivation) {

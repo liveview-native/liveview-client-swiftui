@@ -20,10 +20,8 @@ extension AccessibilityActionCategory: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("AccessibilityActionCategory")
     struct ParseableAccessibilityActionCategory {
-        static let name: String = "AccessibilityActionCategory"
-        
         let value: AccessibilityActionCategory
         
         init(_ name: String) {

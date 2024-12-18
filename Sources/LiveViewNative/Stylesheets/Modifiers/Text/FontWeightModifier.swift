@@ -24,10 +24,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("fontWeight")
 struct _FontWeightModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "fontWeight" }
-
     let weight: SwiftUI.Font.Weight?
 
     init(_ weight: SwiftUI.Font.Weight?) {

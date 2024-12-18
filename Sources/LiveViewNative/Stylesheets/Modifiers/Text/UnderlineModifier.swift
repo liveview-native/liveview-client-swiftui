@@ -23,10 +23,8 @@ import LiveViewNativeStylesheet
 /// <Element style='underline(attr("isActive"), pattern: .solid, color: attr("color"))' isActive={@isActive} color={@color} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("underline")
 struct _UnderlineModifier<Root: RootRegistry>: ViewModifier {
-    static var name: String { "underline" }
-
     let isActive: AttributeReference<Bool>
     let pattern: SwiftUI.Text.LineStyle.Pattern
     let color: Color.Resolvable?

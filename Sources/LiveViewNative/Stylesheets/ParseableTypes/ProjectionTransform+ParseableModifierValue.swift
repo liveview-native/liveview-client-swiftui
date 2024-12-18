@@ -74,10 +74,8 @@ extension CGAffineTransform: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("CGAffineTransform")
     struct _CGAffineTransform {
-        static let name = "CGAffineTransform"
-        
         let value: CGAffineTransform
         
         init(_ a: CGFloat, _ b: CGFloat, _ c: CGFloat, _ d: CGFloat, _ tx: CGFloat, _ ty: CGFloat) {

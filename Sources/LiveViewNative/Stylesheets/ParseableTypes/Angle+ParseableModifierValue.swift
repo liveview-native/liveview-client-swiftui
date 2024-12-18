@@ -31,10 +31,8 @@ extension Angle: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("radians")
     struct Radians {
-        static let name = "radians"
-        
         let radians: Double
         
         init(_ radians: Double) {
@@ -42,10 +40,8 @@ extension Angle: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("degrees")
     struct Degrees {
-        static let name = "degrees"
-        
         let degrees: Double
         
         init(_ degrees: Double) {

@@ -178,10 +178,8 @@ public extension SwiftUI.Color {
         }
         
         @MainActor
-        @ParseableExpression
+        @ASTDecodable("Color")
         struct CustomColor {
-            static let name = "Color"
-            
             let storage: Storage
             
             init(_ name: AttributeReference<String>) {
@@ -337,10 +335,8 @@ enum ColorModifier {
     case opacity(Opacity)
     
     @MainActor
-    @ParseableExpression
+    @ASTDecodable("opacity")
     struct Opacity {
-        static let name = "opacity"
-        
         let value: AttributeReference<Double>
         
         init(_ value: AttributeReference<Double>) {

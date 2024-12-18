@@ -25,10 +25,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("resizable")
 struct _ResizableModifier: ImageModifier {
-    static let name = "resizable"
-    
     let capInsets: EdgeInsets
     let resizingMode: SwiftUI.Image.ResizingMode
     

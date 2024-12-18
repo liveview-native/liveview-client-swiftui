@@ -48,10 +48,8 @@ extension ToolbarPlacement: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("accessoryBar")
     struct AccessoryBar {
-        static let name = "accessoryBar"
-        
         let id: String
         
         init(id: String) {

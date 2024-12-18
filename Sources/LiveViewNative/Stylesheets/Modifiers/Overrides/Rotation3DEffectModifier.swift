@@ -27,10 +27,8 @@ import LiveViewNativeStylesheet
 /// <Element style='rotation3DEffect(.zero, axis: (x: 1, y: 0, z: 0), anchor: .center, anchorZ: attr("anchorZ"), perspective: attr("perspective"))' anchorZ={@anchorZ} perspective={@perspective} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("rotation3DEffect")
 struct _Rotation3DEffectModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "rotation3DEffect" }
-    
     let angle: AttributeReference<Angle>
     let axis: _3DAxis
     let anchor: UnitPoint

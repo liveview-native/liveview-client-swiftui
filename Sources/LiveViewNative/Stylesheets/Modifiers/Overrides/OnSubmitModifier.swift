@@ -32,10 +32,8 @@ import LiveViewNativeStylesheet
 /// def handle_event("action", params, socket)
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("onSubmit")
 struct _OnSubmitModifier: ViewModifier {
-    static let name = "onSubmit"
-    
     let triggers: SubmitTriggers
     @Event private var action: Event.EventHandler
     

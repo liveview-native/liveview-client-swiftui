@@ -30,9 +30,8 @@ extension Anchor<CGRect>.Source: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("rect")
     struct Rect {
-        static let name = "rect"
         let r: CGRect
         
         init(_ r: CGRect) {

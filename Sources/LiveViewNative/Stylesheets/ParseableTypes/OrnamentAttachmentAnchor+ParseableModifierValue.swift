@@ -25,10 +25,8 @@ extension OrnamentAttachmentAnchor: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("scene")
     struct _Scene {
-        static let name = "scene"
-        
         let value: OrnamentAttachmentAnchor
         
         init(_ anchor: UnitPoint) {

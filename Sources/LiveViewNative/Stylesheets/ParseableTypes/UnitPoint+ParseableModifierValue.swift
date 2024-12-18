@@ -49,10 +49,8 @@ extension UnitPoint: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("UnitPoint")
     struct ParseableUnitPoint {
-        static let name = "UnitPoint"
-        
         let x: CGFloat
         let y: CGFloat
         

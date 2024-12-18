@@ -24,10 +24,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("font")
 struct _FontModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "font" }
-
     let font: SwiftUI.Font?
     
     init(_ font: SwiftUI.Font?) {

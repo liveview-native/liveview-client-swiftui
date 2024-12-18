@@ -107,10 +107,8 @@ extension AnyTransition: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("animation")
         struct AnimationModifier {
-            static let name = "animation"
-            
             let animation: Animation?
             
             init(_ animation: Animation?) {
@@ -118,10 +116,8 @@ extension AnyTransition: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("combined")
         struct CombinedModifier {
-            static let name = "combined"
-            
             let other: AnyTransition
             
             init(with other: AnyTransition) {
@@ -139,10 +135,8 @@ extension AnyTransition: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("push")
     struct Push {
-        static let name = "push"
-        
         let edge: Edge
         
         init(from edge: Edge) {
@@ -150,10 +144,8 @@ extension AnyTransition: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("offset")
     struct Offset {
-        static let name = "offset"
-        
         let offset: CGSize
         
         init(_ offset: CGSize) {
@@ -165,10 +157,8 @@ extension AnyTransition: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("scale")
     struct Scale {
-        static let name = "scale"
-        
         let scale: CGFloat
         let anchor: UnitPoint
         
@@ -178,10 +168,8 @@ extension AnyTransition: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("move")
     struct Move {
-        static let name = "move"
-        
         let edge: Edge
         
         init(from edge: Edge) {
@@ -189,10 +177,8 @@ extension AnyTransition: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("asymmetric")
     struct Asymmetric {
-        static let name = "asymmetric"
-        
         let insertion: AnyTransition
         let removal: AnyTransition
         

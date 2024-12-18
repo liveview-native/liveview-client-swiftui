@@ -58,10 +58,8 @@ extension Gradient {
             _Gradient.parser(in: context).map(\.value)
         }
         
-        @ParseableExpression
+        @ASTDecodable("Gradient")
         struct _Gradient {
-            static let name = "Gradient"
-            
             let value: Resolvable
             
             init(colors: [Color.Resolvable]) {
@@ -109,10 +107,8 @@ extension Gradient.Stop {
             })
         }
         
-        @ParseableExpression
+        @ASTDecodable("Stop")
         struct _Stop {
-            static let name = "Stop"
-            
             let value: Gradient.Stop.Resolvable
             
             init(color: Color.Resolvable, location: AttributeReference<CGFloat>) {

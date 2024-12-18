@@ -134,10 +134,8 @@ struct _AnyGesture: ParseableModifierValue {
         case exclusively(Exclusively)
         case updating(Updating)
         
-        @ParseableExpression
+        @ASTDecodable("sequenced")
         struct Sequenced {
-            static let name = "sequenced"
-            
             let other: _AnyGesture
             
             init(before other: _AnyGesture) {
@@ -145,10 +143,8 @@ struct _AnyGesture: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("simultaneously")
         struct Simultaneously {
-            static let name = "simultaneously"
-            
             let other: _AnyGesture
             
             init(with other: _AnyGesture) {
@@ -156,10 +152,8 @@ struct _AnyGesture: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("onEnded")
         struct OnEnded {
-            static let name = "onEnded"
-            
             @Event var action: Event.EventHandler
             
             init(_ action: Event) {
@@ -167,10 +161,8 @@ struct _AnyGesture: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("exclusively")
         struct Exclusively {
-            static let name = "exclusively"
-            
             let other: _AnyGesture
             
             init(before other: _AnyGesture) {
@@ -178,10 +170,8 @@ struct _AnyGesture: ParseableModifierValue {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("updating")
         struct Updating {
-            static let name = "updating"
-            
             let name: String
             
             init(_ name: String) {
@@ -313,9 +303,8 @@ struct _AnyGesture: ParseableModifierValue {
     
     #if !os(tvOS)
     @MainActor
-    @ParseableExpression
+    @ASTDecodable("DragGesture")
     struct Drag {
-        static let name = "DragGesture"
         let value: DragGesture
         
         init(minimumDistance: CGFloat = 10, coordinateSpace: AnyCoordinateSpaceProtocol = .local) {
@@ -325,9 +314,8 @@ struct _AnyGesture: ParseableModifierValue {
     #endif
     
     @MainActor
-    @ParseableExpression
+    @ASTDecodable("LongPressGesture")
     struct LongPress {
-        static let name = "LongPressGesture"
         let value: LongPressGesture
         
         #if os(tvOS)
@@ -343,9 +331,8 @@ struct _AnyGesture: ParseableModifierValue {
     
     #if os(iOS) || os(macOS) || os(visionOS)
     @MainActor
-    @ParseableExpression
+    @ASTDecodable("MagnifyGesture")
     struct Magnify {
-        static let name = "MagnifyGesture"
         let value: AnyGesture<Any>
         
         init(minimumScaleDelta: CGFloat = 0.01) {
@@ -358,9 +345,8 @@ struct _AnyGesture: ParseableModifierValue {
     }
     
     @MainActor
-    @ParseableExpression
+    @ASTDecodable("RotateGesture")
     struct Rotate {
-        static let name = "RotateGesture"
         let value: AnyGesture<Any>
         
         init(minimumAngleDelta: Angle = .degrees(1)) {
@@ -375,9 +361,8 @@ struct _AnyGesture: ParseableModifierValue {
     
     #if !os(tvOS)
     @MainActor
-    @ParseableExpression
+    @ASTDecodable("SpatialTapGesture")
     struct SpatialTap {
-        static let name = "SpatialTapGesture"
         let value: SpatialTapGesture
         
         init(count: Int = 1, coordinateSpace: AnyCoordinateSpaceProtocol = .local) {
@@ -387,9 +372,8 @@ struct _AnyGesture: ParseableModifierValue {
     #endif
     
     @MainActor
-    @ParseableExpression
+    @ASTDecodable("TapGesture")
     struct Tap {
-        static let name = "TapGesture"
         let value: TapGesture
         
         init(count: Int = 1) {

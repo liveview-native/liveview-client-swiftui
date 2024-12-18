@@ -63,10 +63,8 @@ struct AnyPresentationSizing: @preconcurrency PresentationSizing, ParseableModif
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("fitted")
         struct Fitted {
-            static let name = "fitted"
-            
             let horizontal: Bool
             let vertical: Bool
             
@@ -76,10 +74,8 @@ struct AnyPresentationSizing: @preconcurrency PresentationSizing, ParseableModif
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("sticky")
         struct Sticky {
-            static let name = "sticky"
-            
             let horizontal: Bool
             let vertical: Bool
             

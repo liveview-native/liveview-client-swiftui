@@ -21,10 +21,8 @@ import LiveViewNativeStylesheet
 /// <Element style='bold(attr("isActive"))' isActive={@isActive} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("bold")
 struct _BoldModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "bold" }
-
     let isActive: AttributeReference<Bool>
 
     @ObservedElement private var element

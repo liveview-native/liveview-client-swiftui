@@ -289,10 +289,8 @@ public extension AnyShapeStyle {
         }
         
         @MainActor
-        @ParseableExpression
+        @ASTDecodable("angularGradient")
         enum _angularGradient {
-            static let name = "angularGradient"
-            
             case anyGradient(gradient: AnyGradient.Resolvable, center: AttributeReference<UnitPoint>, startAngle: AttributeReference<Angle>, endAngle: AttributeReference<Angle>)
             case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, startAngle: AttributeReference<Angle>, endAngle: AttributeReference<Angle>)
             case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, startAngle: AttributeReference<Angle>, endAngle: AttributeReference<Angle>)
@@ -349,10 +347,8 @@ public extension AnyShapeStyle {
         }
         
         @MainActor
-        @ParseableExpression
+        @ASTDecodable("conicGradient")
         enum _conicGradient {
-            static let name = "conicGradient"
-            
             case anyGradient(gradient: AnyGradient.Resolvable, center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle>)
             case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle>)
             case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle>)
@@ -389,10 +385,8 @@ public extension AnyShapeStyle {
         }
         
         @MainActor
-        @ParseableExpression
+        @ASTDecodable("ellipticalGradient")
         enum _ellipticalGradient {
-            static let name = "ellipticalGradient"
-            
             case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, startRadiusFraction: AttributeReference<CGFloat>, endRadiusFraction: AttributeReference<CGFloat>)
             case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, startRadiusFraction: AttributeReference<CGFloat>, endRadiusFraction: AttributeReference<CGFloat>)
             case stops(stops: [Gradient.Stop.Resolvable], center: AttributeReference<UnitPoint>, startRadiusFraction: AttributeReference<CGFloat>, endRadiusFraction: AttributeReference<CGFloat>)
@@ -429,10 +423,8 @@ public extension AnyShapeStyle {
         }
         
         @MainActor
-        @ParseableExpression
+        @ASTDecodable("linearGradient")
         enum _linearGradient {
-            static let name = "linearGradient"
-            
             case gradient(gradient: Gradient.Resolvable, startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>)
             case colors(colors: [Color.Resolvable], startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>)
             case stops(stops: [Gradient.Stop.Resolvable], startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>)
@@ -469,10 +461,8 @@ public extension AnyShapeStyle {
         }
         
         @MainActor
-        @ParseableExpression
+        @ASTDecodable("radialGradient")
         enum _radialGradient {
-            static let name = "radialGradient"
-            
             case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, startRadius: AttributeReference<CGFloat>, endRadius: AttributeReference<CGFloat>)
             case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, startRadius: AttributeReference<CGFloat>, endRadius: AttributeReference<CGFloat>)
             case stops(stops: [Gradient.Stop.Resolvable], center: AttributeReference<UnitPoint>, startRadius: AttributeReference<CGFloat>, endRadius: AttributeReference<CGFloat>)
@@ -548,10 +538,8 @@ public extension AnyShapeStyle {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("image")
         struct _image {
-            static let name = "image"
-            
             let value: any ShapeStyle
             
             init(_ image: Image, sourceRect: CGRect = .init(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) {
@@ -574,10 +562,8 @@ public extension AnyShapeStyle {
                 }
             }
             
-            @ParseableExpression
+            @ASTDecodable("blendMode")
             struct _blendMode {
-                static let name = "blendMode"
-                
                 let value: BlendMode
                 
                 init(_ value: BlendMode) {
@@ -585,10 +571,8 @@ public extension AnyShapeStyle {
                 }
             }
             
-            @ParseableExpression
+            @ASTDecodable("opacity")
             struct _opacity {
-                static let name = "opacity"
-                
                 let value: AttributeReference<Double>
                 
                 init(_ value: AttributeReference<Double>) {
@@ -596,10 +580,8 @@ public extension AnyShapeStyle {
                 }
             }
             
-            @ParseableExpression
+            @ASTDecodable("shadow")
             struct _shadow {
-                static let name = "shadow"
-                
                 let value: _ShadowStyle
                 
                 init(_ value: _ShadowStyle) {

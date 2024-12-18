@@ -22,10 +22,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("monospacedDigit")
 struct _MonospacedDigitModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "monospacedDigit" }
-
     init() {}
 
     func body(content: Content) -> some View {

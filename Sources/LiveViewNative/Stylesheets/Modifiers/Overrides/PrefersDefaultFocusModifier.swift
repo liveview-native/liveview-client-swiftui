@@ -22,10 +22,8 @@ import LiveViewNativeStylesheet
 /// <Element style='prefersDefaultFocus(attr("prefersDefaultFocus"), in: attr("namespace"))' prefersDefaultFocus={@prefersDefaultFocus} namespace={@namespace} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("prefersDefaultFocus")
 struct _PrefersDefaultFocusModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "prefersDefaultFocus" }
-
     let prefersDefaultFocus: AttributeReference<Bool>
     let namespace: AttributeReference<String>
 

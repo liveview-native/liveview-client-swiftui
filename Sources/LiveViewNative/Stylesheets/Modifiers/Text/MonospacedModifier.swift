@@ -21,10 +21,8 @@ import LiveViewNativeStylesheet
 /// <Element style='monospaced(attr("isActive"))' isActive={@isActive} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("monospaced")
 struct _MonospacedModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "monospaced" }
-
     let isActive: AttributeReference<Bool>
 
     @ObservedElement private var element

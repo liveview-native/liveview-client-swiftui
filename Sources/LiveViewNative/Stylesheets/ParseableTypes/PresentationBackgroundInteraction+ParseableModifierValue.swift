@@ -29,9 +29,8 @@ extension PresentationBackgroundInteraction: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("enabled")
     struct Enabled {
-        static let name = "enabled"
         let detent: PresentationDetent
         
         init(upThrough detent: PresentationDetent) {

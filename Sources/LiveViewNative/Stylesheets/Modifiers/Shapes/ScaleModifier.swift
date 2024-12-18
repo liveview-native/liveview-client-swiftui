@@ -23,10 +23,8 @@ import LiveViewNativeStylesheet
 /// <Element class='scale(x: attr("x"), y: attr("y"), anchor: .center)' x={@x} y={@y} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("scale")
 struct _ScaleModifier<Root: RootRegistry>: ShapeModifier {
-    static var name: String { "scale" }
-
     enum Value {
         case _0(x: AttributeReference<CGFloat>, y: AttributeReference<CGFloat>, anchor: UnitPoint)
         case _1(scale: CGFloat, anchor: UnitPoint)

@@ -50,10 +50,8 @@ extension ContentTransition: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("numericText")
     struct NumericText {
-        static let name = "numericText"
-        
         let value: ContentTransition
         
         init(countsDown: Bool = false) {
@@ -66,10 +64,8 @@ extension ContentTransition: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("symbolEffect")
     struct SymbolEffect {
-        static let name = "symbolEffect"
-        
         let value: ContentTransition
         
         @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)

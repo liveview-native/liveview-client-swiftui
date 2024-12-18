@@ -24,10 +24,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("renderingMode")
 struct _RenderingModeModifier: ImageModifier {
-    static let name = "renderingMode"
-    
     let renderingMode: SwiftUI.Image.TemplateRenderingMode?
     
     init(_ renderingMode: SwiftUI.Image.TemplateRenderingMode?) {

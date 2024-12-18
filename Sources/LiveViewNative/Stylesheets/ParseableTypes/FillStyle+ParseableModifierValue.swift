@@ -24,10 +24,8 @@ extension FillStyle: ParseableModifierValue {
         })
     }
     
-    @ParseableExpression
+    @ASTDecodable("FillStyle")
     struct ParseableFillStyle {
-        static let name = "FillStyle"
-        
         let eoFill: Bool
         let antialiased: Bool
         

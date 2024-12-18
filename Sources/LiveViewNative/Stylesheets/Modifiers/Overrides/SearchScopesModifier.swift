@@ -49,10 +49,8 @@ import LiveViewNativeStylesheet
 /// def handle_event("scope", params, socket)
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("searchScopes")
 struct _SearchScopesModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "searchScopes" }
-    
     @ChangeTracked private var scope: String
     
     let activation: Any?

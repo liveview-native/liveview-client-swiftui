@@ -48,10 +48,8 @@ extension AnyShape: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("rect")
     struct Rect {
-        static let name = "rect"
-        
         let value: AnyShape
         
         init(cornerSize: CGSize, style: RoundedCornerStyle = .continuous) {
@@ -71,10 +69,8 @@ extension AnyShape: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("capsule")
     struct Capsule {
-        static let name = "capsule"
-        
         let value: AnyShape
         
         init(style: RoundedCornerStyle = .continuous) {
@@ -103,10 +99,8 @@ extension RectangleCornerRadii: ParseableModifierValue {
         })
     }
     
-    @ParseableExpression
+    @ASTDecodable("RectangleCornerRadii")
     struct ParseableRectangleCornerRadii {
-        static let name = "RectangleCornerRadii"
-        
         let topLeading: CGFloat
         let bottomLeading: CGFloat
         let bottomTrailing: CGFloat

@@ -26,10 +26,8 @@ import LiveViewNativeStylesheet
 /// </Element>
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("mask")
 struct _MaskModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "mask" }
-    
     @ObservedElement private var element
     @LiveContext<R> private var context
     

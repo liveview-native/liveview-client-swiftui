@@ -21,10 +21,8 @@ import LiveViewNativeStylesheet
 /// <Element style='kerning(attr("kerning"))' kerning={@kerning} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("kerning")
 struct _KerningModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "kerning" }
-
     let kerning: AttributeReference<CoreFoundation.CGFloat>
 
     @ObservedElement private var element

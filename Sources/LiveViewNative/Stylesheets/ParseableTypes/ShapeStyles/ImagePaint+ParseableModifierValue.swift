@@ -13,10 +13,8 @@ extension ImagePaint: ParseableModifierValue {
         _ImagePaint.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("ImagePaint")
     struct _ImagePaint {
-        static let name = "ImagePaint"
-        
         let value: ImagePaint
         
         init(image: Image, sourceRect: CGRect = .init(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) {
@@ -40,10 +38,8 @@ extension Image: ParseableModifierValue {
         _Image.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("Image")
     struct _Image {
-        static let name = "Image"
-        
         let value: SwiftUI.Image
         
         init(_ name: String) {

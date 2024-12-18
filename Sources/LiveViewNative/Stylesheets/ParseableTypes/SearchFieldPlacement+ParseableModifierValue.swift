@@ -37,10 +37,8 @@ extension SearchFieldPlacement: ParseableModifierValue {
     }
     
     #if os(iOS) || os(visionOS)
-    @ParseableExpression
+    @ASTDecodable("navigationBarDrawer")
     struct NavigationBarDrawer {
-        static let name = "navigationBarDrawer"
-        
         let displayMode: SearchFieldPlacement.NavigationBarDrawerDisplayMode
         
         init(displayMode: SearchFieldPlacement.NavigationBarDrawerDisplayMode) {

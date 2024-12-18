@@ -34,10 +34,8 @@ extension ListSectionSpacing: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("custom")
     struct Custom {
-        static let name = "custom"
-        
         let spacing: CGFloat
         
         init(_ spacing: CGFloat) {

@@ -24,10 +24,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("fontDesign")
 struct _FontDesignModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "fontDesign" }
-    
     let design: Any?
 
     @available(watchOS 9.1,tvOS 16.1,iOS 16.1,macOS 13.0, visionOS 1, *)

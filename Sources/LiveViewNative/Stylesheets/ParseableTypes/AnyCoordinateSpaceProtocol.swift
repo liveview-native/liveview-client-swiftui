@@ -68,10 +68,8 @@ struct AnyCoordinateSpaceProtocol: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("scrollView")
     struct ScrollView {
-        static let name = "scrollView"
-        
         let axis: Axis
         
         init(axis: Axis) {
@@ -79,10 +77,8 @@ struct AnyCoordinateSpaceProtocol: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("named")
     struct Named {
-        static let name = "named"
-        
         let name: String
         
         init(_ name: String) {

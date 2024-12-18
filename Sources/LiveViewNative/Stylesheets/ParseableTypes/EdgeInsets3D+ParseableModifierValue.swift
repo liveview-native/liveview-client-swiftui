@@ -31,10 +31,8 @@ extension EdgeInsets3D: ParseableModifierValue {
         ParseableEdgeInsets3D.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("EdgeInsets3D")
     struct ParseableEdgeInsets3D {
-        static let name = "EdgeInsets3D"
-        
         let value: EdgeInsets3D
         
         init(

@@ -40,10 +40,8 @@ extension ModifierGenerator {
                 FileHandle.standardOutput.write(Data(
                     #"""
                     @_documentation(visibility: public)
-                    @ParseableExpression
+                    @ASTDecodable("\#(modifier)")
                     struct _\#(modifier)Modifier<R: RootRegistry>: ViewModifier {
-                        static var name: String { "\#(modifier)" }
-
                         enum Value {
                             case _never
                     \#(signatures.0.map(\.case).joined(separator: "\n"))

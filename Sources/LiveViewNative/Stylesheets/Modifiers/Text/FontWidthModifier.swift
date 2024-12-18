@@ -24,10 +24,8 @@ import LiveViewNativeStylesheet
 /// end
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("fontWidth")
 struct _FontWidthModifier<Root: RootRegistry>: TextModifier {
-    static var name: String { "fontWidth" }
-
     let width: SwiftUI.Font.Width?
     
     init(_ width: SwiftUI.Font.Width?) {

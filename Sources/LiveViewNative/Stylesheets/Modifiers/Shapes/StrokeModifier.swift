@@ -36,10 +36,8 @@ import LiveViewNativeStylesheet
 /// <Element style='stroke(AnyShapeStyle, lineWidth: attr("lineWidth"), antialiased: attr("antialiased"))' lineWidth={@lineWidth} antialiased={@antialiased} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("stroke")
 struct _StrokeModifier<Root: RootRegistry>: ShapeFinalizerModifier {
-    static var name: String { "stroke" }
-    
     enum Storage {
         case _0(content: AnyShapeStyle.Resolvable, style: StrokeStyle, antialiased: AttributeReference<Bool>)
         case _1(content: AnyShapeStyle.Resolvable, lineWidth: AttributeReference<CGFloat>, antialiased: AttributeReference<Bool>)
@@ -93,10 +91,8 @@ extension StrokeStyle: ParseableModifierValue {
         ParseableStrokeStyle.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("StrokeStyle")
     struct ParseableStrokeStyle {
-        static let name = "StrokeStyle"
-        
         let value: StrokeStyle
         
         init(lineWidth: CGFloat = 1, lineCap: CGLineCap = .butt, lineJoin: CGLineJoin = .miter, miterLimit: CGFloat = 10, dash: [CGFloat] = [CGFloat](), dashPhase: CGFloat = 0) {

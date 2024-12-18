@@ -42,10 +42,8 @@ extension PresentationDetent: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("fraction")
     struct Fraction {
-        static let name = "fraction"
-        
         let fraction: CGFloat
         
         init(_ fraction: CGFloat) {
@@ -53,10 +51,8 @@ extension PresentationDetent: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("height")
     struct Height {
-        static let name = "height"
-        
         let height: CGFloat
         
         init(_ height: CGFloat) {

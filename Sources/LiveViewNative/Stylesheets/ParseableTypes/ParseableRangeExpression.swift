@@ -72,10 +72,8 @@ extension PartialRangeFrom: ParseableModifierValue where Bound: ParseableModifie
         ParseablePartialRangeFrom.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("...")
     struct ParseablePartialRangeFrom {
-        static var name: String { "..." }
-        
         let value: PartialRangeFrom<Bound>
         
         init(_ lowerBound: Bound, _ upperBound: NilConstant) {
@@ -89,10 +87,8 @@ extension PartialRangeThrough: ParseableModifierValue where Bound: ParseableModi
         ParseablePartialRangeThrough.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("...")
     struct ParseablePartialRangeThrough {
-        static var name: String { "..." }
-        
         let value: PartialRangeThrough<Bound>
         
         init(_ lowerBound: NilConstant, _ upperBound: Bound) {
@@ -106,10 +102,8 @@ extension PartialRangeUpTo: ParseableModifierValue where Bound: ParseableModifie
         ParseablePartialRangeUpTo.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("..<")
     struct ParseablePartialRangeUpTo {
-        static var name: String { "..<" }
-        
         let value: PartialRangeUpTo<Bound>
         
         init(_ lowerBound: NilConstant, _ upperBound: Bound) {
@@ -123,10 +117,8 @@ extension ClosedRange: ParseableModifierValue where Bound: ParseableModifierValu
         ParseableClosedRange.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("...")
     struct ParseableClosedRange {
-        static var name: String { "..." }
-        
         let value: ClosedRange<Bound>
         
         init(_ lowerBound: Bound, _ upperBound: Bound) {
@@ -140,10 +132,8 @@ extension Range: ParseableModifierValue where Bound: ParseableModifierValue {
         ParseableRange.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("..<")
     struct ParseableRange {
-        static var name: String { "..<" }
-        
         let value: Range<Bound>
         
         init(_ lowerBound: Bound, _ upperBound: Bound) {

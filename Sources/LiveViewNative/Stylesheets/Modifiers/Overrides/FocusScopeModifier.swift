@@ -21,10 +21,8 @@ import LiveViewNativeStylesheet
 /// <Element style='focusScope(attr("namespace"))' namespace={@namespace} />
 /// ```
 @_documentation(visibility: public)
-@ParseableExpression
+@ASTDecodable("focusScope")
 struct _FocusScopeModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "focusScope" }
-    
     let namespace: AttributeReference<String>
     
     @ObservedElement private var element

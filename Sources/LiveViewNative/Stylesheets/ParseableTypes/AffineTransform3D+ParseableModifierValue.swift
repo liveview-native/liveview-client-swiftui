@@ -27,10 +27,8 @@ extension AffineTransform3D: ParseableModifierValue {
         ParseableAffineTransform3D.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("AffineTransform3D")
     struct ParseableAffineTransform3D {
-        static let name = "AffineTransform3D"
-        
         let value: AffineTransform3D
         
         init() {
@@ -91,10 +89,8 @@ extension Size3D: ParseableModifierValue {
         ParseableSize3D.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("Size3D")
     struct ParseableSize3D {
-        static let name = "Size3D"
-        
         let value: Size3D
         
         init(
@@ -136,10 +132,8 @@ extension Rotation3D: ParseableModifierValue {
         ParseableRotation3D.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("Rotation3D")
     struct ParseableRotation3D {
-        static let name = "Rotation3D"
-        
         let value: Rotation3D
         
         init(angle: Angle2D, axis: RotationAxis3D) {
@@ -178,10 +172,8 @@ extension Point3D: ParseableModifierValue {
         ParseablePoint3D.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("Point3D")
     struct ParseablePoint3D {
-        static let name = "Point3D"
-        
         let value: Point3D
         
         init() {
@@ -229,10 +221,8 @@ extension Vector3D: ParseableModifierValue {
         ParseableVector3D.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("Vector3D")
     struct ParseableVector3D {
-        static let name = "Vector3D"
-        
         let value: Vector3D
         
         init() {
@@ -292,10 +282,8 @@ extension Angle2D: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("Angle2D")
     struct ParseableAngle2D {
-        static let name = "Angle2D"
-        
         let value: Angle2D
         
         init() {
@@ -335,10 +323,8 @@ extension RotationAxis3D: ParseableModifierValue {
         ParseableRotationAxis3D.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("RotationAxis3D")
     struct ParseableRotationAxis3D {
-        static let name = "RotationAxis3D"
-        
         let value: RotationAxis3D
         
         init(x: Double, y: Double, z: Double) {
@@ -377,10 +363,8 @@ extension Pose3D: ParseableModifierValue {
         ParseablePose3D.parser(in: context).map(\.value)
     }
     
-    @ParseableExpression
+    @ASTDecodable("Pose3D")
     struct ParseablePose3D {
-        static let name = "Pose3D"
-        
         let value: Pose3D
         
         init() {
@@ -432,10 +416,8 @@ extension AxisWithFactors: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("xAxis")
     struct XAxis: ParseableModifierValue {
-        static let name = "xAxis"
-        
         let value: AxisWithFactors
         
         init(yShearFactor: Double, zShearFactor: Double) {
@@ -443,10 +425,8 @@ extension AxisWithFactors: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("yAxis")
     struct YAxis: ParseableModifierValue {
-        static let name = "yAxis"
-        
         let value: AxisWithFactors
         
         init(xShearFactor: Double, zShearFactor: Double) {
@@ -454,10 +434,8 @@ extension AxisWithFactors: ParseableModifierValue {
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("zAxis")
     struct ZAxis: ParseableModifierValue {
-        static let name = "zAxis"
-        
         let value: AxisWithFactors
         
         init(xShearFactor: Double, yShearFactor: Double) {
