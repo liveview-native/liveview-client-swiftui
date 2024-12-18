@@ -138,9 +138,9 @@ struct NavigationLink<Root: RootRegistry>: View {
                 SwiftUI.Button {
                     Task { @MainActor in
                         // send the `live_patch` event
-                        try await $liveElement.context.coordinator.doPushEvent("live_patch", payload: [
-                            "url": url.absoluteString
-                        ])
+                        try await $liveElement.context.coordinator.doPushEvent("live_patch", payload: .jsonPayload(json: .object(object: [
+                            "url": .str(string: url.absoluteString)
+                        ])))
                         // update the navigation path
                         let kind: LiveRedirect.Kind = switch linkState {
                         case .push:
@@ -148,7 +148,6 @@ struct NavigationLink<Root: RootRegistry>: View {
                         case .replace:
                             .replace
                         }
-                        print(kind)
                         try await $liveElement.context.coordinator.session.redirect(
                             .init(
                                 kind: kind,
