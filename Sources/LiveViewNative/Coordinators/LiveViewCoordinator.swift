@@ -254,10 +254,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         else { return }
                         try await self.session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
                     default:
-                        print("Unhandled event: \(event)")
+                        logger.error("Unhandled event: \(String(describing: event))")
                     }
                 } catch {
-                    print("Event handling error: \(error)")
+                    logger.error("Event handling error: \(error.localizedDescription)")
                 }
             }
         }
