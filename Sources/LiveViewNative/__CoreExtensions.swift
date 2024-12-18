@@ -8,6 +8,35 @@
 import LiveViewNativeCore
 import Foundation
 
+extension LiveViewNativeCore.Method {
+    init?(_ rawValue: String) {
+        switch rawValue.lowercased() {
+        case "get":
+            self = .get
+        case "options":
+            self = .options
+        case "post":
+            self = .post
+        case "put":
+            self = .put
+        case "delete":
+            self = .delete
+        case "head":
+            self = .head
+        case "trace":
+            self = .trace
+        case "connect":
+            self = .connect
+        case "patch":
+            self = .patch
+        default:
+            return nil
+        }
+    }
+}
+
+extension ConnectOpts: @unchecked Sendable {}
+
 extension LiveViewNativeCore.ChannelStatus: @unchecked Sendable {}
 extension LiveViewNativeCore.PhoenixEvent: @unchecked Sendable {}
 extension LiveViewNativeCore.Event: @unchecked Sendable {}
@@ -23,19 +52,19 @@ extension LiveViewNativeCore.ChannelStatuses: @unchecked Sendable {}
 
 extension Node: Identifiable {
     public var id: NodeRef {
-        self.id()
+        self.nodeId()
     }
 }
 
 extension Channel {
-    func eventStream() -> AsyncThrowingStream<EventPayload, any Error> {
+    public func eventStream() -> AsyncThrowingStream<EventPayload, any Error> {
         let events = self.events()
         return AsyncThrowingStream(unfolding: {
             return try await events.event()
         })
     }
     
-    func statusStream() -> AsyncThrowingStream<ChannelStatus, any Error> {
+    public func statusStream() -> AsyncThrowingStream<ChannelStatus, any Error> {
         let statuses = self.statuses()
         return AsyncThrowingStream(unfolding: {
             return try await statuses.status()

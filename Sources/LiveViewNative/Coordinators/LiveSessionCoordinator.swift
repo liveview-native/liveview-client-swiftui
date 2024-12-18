@@ -104,55 +104,23 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
 
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
-            let isDisconnected = switch next.last!.coordinator.state {
-            case .setup, .disconnected:
-                true
-            default:
-                false
-            }
-            print(next.last!.coordinator.url)
-            print(next.last!.url)
-            print(isDisconnected)
-            if next.last!.coordinator.url != next.last!.url || isDisconnected {
-                Task {
-                    do {
-                        if prev.count > next.count {
-                            // back navigation
-                            try await prev.last?.coordinator.disconnect()
-                            let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
-                                .some([
-                                    "_format": .str(string: LiveSessionParameters.platform),
-                                    "_interface": .object(object: LiveSessionParameters.platformParams)
-                                ]),
-                                next.last!.url.absoluteString
-                            )
-                            try await next.last!.coordinator.join(liveChannel)
-                        } else if next.count > prev.count && prev.count > 0 {
-                            // forward navigation (from `redirect` or `<NavigationLink>`)
-                            try await prev.last?.coordinator.disconnect()
-                            let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
-                                .some([
-                                    "_format": .str(string: LiveSessionParameters.platform),
-                                    "_interface": .object(object: LiveSessionParameters.platformParams)
-                                ]),
-                                next.last!.url.absoluteString
-                            )
-                            try await next.last?.coordinator.join(liveChannel)
-                        }
-                    } catch let error as LiveSocketError {
-                        switch error {
-                        case .Phoenix(error: "server rejected join {\"reason\":\"unauthorized\"}"),
-                             .Phoenix(error: "server rejected join {\"reason\":\"stale\"}"):
-                            try await self.disconnect(preserveNavigationPath: true)
-                            let originalURL = self.url
-                            self.url = next.last!.url
-                            try await self.connect(httpMethod: nil, httpBody: nil)
-                            self.url = originalURL
-                        default:
-                            logger.error("\(error)")
-                            throw error
-                        }
-                    }
+            Task {
+                try await prev.last?.coordinator.disconnect()
+                if prev.count > next.count {
+                    // back navigation
+                    try await next.last?.coordinator.join(
+                        self.liveSocket!.back(next.last!.coordinator.liveChannel, nil)
+                    )
+                } else if next.count > prev.count && prev.count > 0 {
+                    // forward navigation (from `redirect` or `<NavigationLink>`)
+                    try await next.last?.coordinator.join(
+                        self.liveSocket!.navigate(next.last!.url.absoluteString, next.last!.coordinator.liveChannel, NavOptions(action: .push))
+                    )
+                } else if next.count == prev.count {
+                    print("replace navigation")
+                    try await next.last?.coordinator.join(
+                        self.liveSocket!.navigate(next.last!.url.absoluteString, next.last!.coordinator.liveChannel, NavOptions(action: .replace))
+                    )
                 }
             }
         }.store(in: &cancellables)
@@ -206,7 +174,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             state = .connecting
             
-            self.liveSocket = try await LiveSocket(originalURL.absoluteString, 10, LiveSessionParameters.platform)
+            self.liveSocket = try await LiveSocket(
+                originalURL.absoluteString,
+                LiveSessionParameters.platform,
+                ConnectOpts(
+                    headers: configuration.headers,
+                    body: httpBody.flatMap({ String(data: $0, encoding: .utf8) }),
+                    method: httpMethod.flatMap(Method.init(_:)),
+                    timeoutMs: 10_000
+                )
+            )
             self.socket = self.liveSocket?.socket()
             
             let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
@@ -246,6 +223,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 bindLiveReloadListener()
             }
         } catch {
+            print(error)
             self.state = .connectionFailed(error)
         }
     }
@@ -358,16 +336,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         self.url = redirect.to
                     }
                     coordinator.document = navigationPath.last!.coordinator.document
-                    try await coordinator.disconnect()
                     navigationPath[navigationPath.count - 1] = entry
-                    let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
-                        .some([
-                            "_format": .str(string: LiveSessionParameters.platform),
-                            "_interface": .object(object: LiveSessionParameters.platformParams)
-                        ]),
-                        entry.url.absoluteString
-                    )
-                    try await coordinator.join(liveChannel)
 //                    try await coordinator.connect(domValues: self.domValues, redirect: true)
                 }
             }

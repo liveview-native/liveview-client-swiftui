@@ -121,7 +121,7 @@ extension ObservedElement {
             if let _resolvedChildIDs {
                 return _resolvedChildIDs
             } else {
-                let result = Set(self.resolvedChildren.map({ $0.id() }))
+                let result = Set(self.resolvedChildren.map({ $0.id }))
                 _resolvedChildIDs = result
                 return result
             }
@@ -187,6 +187,6 @@ extension ObservedElement {
 
 private extension Optional where Wrapped == ElementNode {
     var nodeRef: NodeRef? {
-        self?.node.id()
+        self?.node.id
     }
 }
