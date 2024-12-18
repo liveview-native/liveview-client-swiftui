@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `NavigationLink` takes a `destination` template to customize the connecting phase View for its navigation event.
 
 ### Changed
+- `Section` now uses the `isExpanded` and `phx-change` attributes to enable collapsing in sidebar-styled `List` views
 
 ### Fixed
 
