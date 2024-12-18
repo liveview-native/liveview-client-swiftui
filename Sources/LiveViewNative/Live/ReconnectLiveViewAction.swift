@@ -8,6 +8,7 @@
 import SwiftUI
 
 /// Calls ``LiveSessionCoordinator/reconnect(url:httpMethod:httpBody:)`` in the current context.
+@MainActor
 public struct ReconnectLiveViewAction {
     let baseURL: URL?
     let action: (_ url: URL?, _ httpMethod: String?, _ httpBody: Data?) async -> ()
@@ -30,7 +31,8 @@ public struct ReconnectLiveViewAction {
 }
 
 extension EnvironmentValues {
-    private enum ReconnectLiveViewActionKey: EnvironmentKey {
+    @MainActor
+    private enum ReconnectLiveViewActionKey: @preconcurrency EnvironmentKey {
         static let defaultValue: ReconnectLiveViewAction = .init(baseURL: nil, action: { _, _, _ in })
     }
     

@@ -215,6 +215,7 @@ import LiveViewNativeStylesheet
 ///     }
 /// }
 /// ```
+@MainActor
 public protocol ContentBuilder {
     /// An enum with the supported element names.
     associatedtype TagName: RawRepresentable<String>
@@ -309,8 +310,9 @@ public extension ContentBuilder {
 ///   }
 /// }
 /// ```
+@MainActor
 @propertyWrapper
-public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: DynamicProperty {
+public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: @preconcurrency DynamicProperty {
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @LiveContext<R> private var context
     @Environment(\.stylesheet) private var stylesheet
@@ -333,6 +335,7 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
         )
     }
     
+    @MainActor
     public struct Value {
         let coordinatorEnvironment: CoordinatorEnvironment?
         public let context: LiveContext<R>

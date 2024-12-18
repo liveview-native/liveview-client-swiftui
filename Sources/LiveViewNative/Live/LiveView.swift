@@ -131,6 +131,7 @@ public macro LiveView<
 /// - ``body``
 /// ### See Also
 /// - ``LiveViewModel``
+@MainActor
 public struct LiveView<
     R: RootRegistry,
     PhaseView: View,
@@ -149,6 +150,14 @@ public struct LiveView<
     let reconnectingView: (_ConnectedContent<R>, Bool) -> ReconnectingView
     let errorView: (Error) -> ErrorView
     
+    @State private var showEventConfirmation: Bool = false
+    @State private var eventConfirmationTransaction: EventConfirmationTransaction?
+    struct EventConfirmationTransaction: Sendable {
+        let message: String
+        let callback: @Sendable (sending Bool) -> ()
+    }
+    
+    @MainActor
     @ViewBuilder
     func buildPhaseView(_ phase: LiveViewPhase<R>) -> some View {
         if PhaseView.self != Never.self {
@@ -208,6 +217,7 @@ public struct LiveView<
         }
     }
     
+    @MainActor
     public var body: some View {
         SwiftUI.Group {
             buildPhaseView(phase)
@@ -230,6 +240,26 @@ public struct LiveView<
             else { return }
             Task(priority: .userInitiated) {
                 await session.connect()
+            }
+        }
+        // data-confirm
+        .environment(\.eventConfirmation, session.configuration.eventConfirmation ?? { message, _ in
+            return await withCheckedContinuation { continuation in
+                eventConfirmationTransaction = EventConfirmationTransaction(message: message, callback: continuation.resume(returning:))
+                showEventConfirmation = true
+            }
+        })
+        .confirmationDialog(
+            eventConfirmationTransaction?.message ?? "",
+            isPresented: $showEventConfirmation,
+            titleVisibility: .visible,
+            presenting: eventConfirmationTransaction
+        ) { transaction in
+            SwiftUI.Button("OK") {
+                transaction.callback(true)
+            }
+            SwiftUI.Button("Cancel", role: .cancel) {
+                transaction.callback(false)
             }
         }
     }
@@ -267,10 +297,10 @@ public struct _ConnectedContent<R: RootRegistry>: View {
 
 extension EnvironmentValues {
     enum LiveViewStateViewsKey: EnvironmentKey {
-        static let defaultValue: [ObjectIdentifier:(Any) -> AnyView] = [:]
+        static let defaultValue: [ObjectIdentifier: @MainActor (Any) -> AnyView] = [:]
     }
     
-    var liveViewStateViews: [ObjectIdentifier:(Any) -> AnyView] {
+    var liveViewStateViews: [ObjectIdentifier: @MainActor (Any) -> AnyView] {
         get { self[LiveViewStateViewsKey.self] }
         set { self[LiveViewStateViewsKey.self] = newValue }
     }

@@ -49,6 +49,7 @@ import Combine
 ///     }
 /// }
 /// ```
+@MainActor
 @propertyWrapper
 public struct ObservedElement {
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
@@ -92,7 +93,7 @@ public struct ObservedElement {
     var children: [Node] { overrideElement.flatMap({ Array($0.children()) }) ?? observer.resolvedChildren }
 }
 
-extension ObservedElement: DynamicProperty {
+extension ObservedElement: @preconcurrency DynamicProperty {
     public mutating func update() {
         guard let coordinator else {
             fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")

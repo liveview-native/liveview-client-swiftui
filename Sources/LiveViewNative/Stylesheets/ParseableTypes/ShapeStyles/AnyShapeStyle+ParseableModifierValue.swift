@@ -229,7 +229,8 @@ public extension AnyShapeStyle {
             BaseParser(context: context)
         }
         
-        private struct BaseParser: Parser {
+        @MainActor
+        private struct BaseParser: @preconcurrency Parser {
             let context: ParseableModifierContext
             
             func parse(_ input: inout Substring.UTF8View) throws -> Storage {
@@ -287,6 +288,7 @@ public extension AnyShapeStyle {
             }
         }
         
+        @MainActor
         @ParseableExpression
         enum _angularGradient {
             static let name = "angularGradient"
@@ -346,6 +348,7 @@ public extension AnyShapeStyle {
             }
         }
         
+        @MainActor
         @ParseableExpression
         enum _conicGradient {
             static let name = "conicGradient"
@@ -385,6 +388,7 @@ public extension AnyShapeStyle {
             }
         }
         
+        @MainActor
         @ParseableExpression
         enum _ellipticalGradient {
             static let name = "ellipticalGradient"
@@ -424,6 +428,7 @@ public extension AnyShapeStyle {
             }
         }
         
+        @MainActor
         @ParseableExpression
         enum _linearGradient {
             static let name = "linearGradient"
@@ -463,6 +468,7 @@ public extension AnyShapeStyle {
             }
         }
         
+        @MainActor
         @ParseableExpression
         enum _radialGradient {
             static let name = "radialGradient"

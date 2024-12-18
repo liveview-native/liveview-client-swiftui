@@ -71,6 +71,7 @@ public macro Addon() = #externalMacro(module: "LiveViewNativeMacros", type: "Add
 /// ### Supporting Types
 /// - ``EmptyRegistry``
 /// - ``ViewModifierBuilder``
+@MainActor
 public protocol CustomRegistry<Root> {
     /// The root custom registry type that the live view coordinator and context use.
     ///
@@ -247,7 +248,8 @@ extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Neve
 public protocol RootRegistry: CustomRegistry where Root == Self {
 }
 
-public struct CustomModifierGroupParser<Output, P: Parser>: Parser where P.Input == Substring.UTF8View, P.Output == Output {
+@MainActor
+public struct CustomModifierGroupParser<Output, P: Parser>: @preconcurrency Parser where P.Input == Substring.UTF8View, P.Output == Output {
     public let parser: P
     
     @inlinable

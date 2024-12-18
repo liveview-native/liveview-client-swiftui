@@ -33,6 +33,8 @@ public struct LiveSessionConfiguration {
     
     public var reconnectBehavior: ReconnectBehavior = .exponential
     
+    public var eventConfirmation: ((String, ElementNode) async -> Bool)?
+    
     /// Constructs a default, empty configuration.
     public init() {
     }
@@ -42,19 +44,21 @@ public struct LiveSessionConfiguration {
         headers: [String: String]? = nil,
         urlSessionConfiguration: URLSessionConfiguration = .default,
         transition: AnyTransition? = nil,
-        reconnectBehavior: ReconnectBehavior = .exponential
+        reconnectBehavior: ReconnectBehavior = .exponential,
+        eventConfirmation: ((String, ElementNode) async -> Bool)? = nil
     ) {
         self.headers = headers
         self.connectParams = connectParams
         self.urlSessionConfiguration = urlSessionConfiguration
         self.transition = transition
         self.reconnectBehavior = reconnectBehavior
+        self.eventConfirmation = eventConfirmation
     }
     
-    public struct ReconnectBehavior {
-        let delay: ((_ tries: Int) -> TimeInterval)?
+    public struct ReconnectBehavior: Sendable {
+        let delay: (@Sendable (_ tries: Int) -> TimeInterval)?
         
-        public init(_ delay: @escaping (_ tries: Int) -> TimeInterval) {
+        public init(_ delay: @escaping @Sendable (_ tries: Int) -> TimeInterval) {
             self.delay = delay
         }
         

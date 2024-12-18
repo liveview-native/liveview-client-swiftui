@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftPhoenixClient
+@preconcurrency import SwiftPhoenixClient
 
 /// An error that occurred when connecting to a live view.
 public enum LiveConnectionError: Error, LocalizedError {
@@ -43,7 +43,7 @@ public enum LiveConnectionError: Error, LocalizedError {
         }
     }
     
-    public enum InitialParseComponent: CustomStringConvertible {
+    public enum InitialParseComponent: CustomStringConvertible, Sendable {
         case document
         case csrfToken
         case phxMain

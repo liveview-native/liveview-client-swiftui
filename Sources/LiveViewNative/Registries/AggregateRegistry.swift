@@ -135,7 +135,8 @@ public enum _EitherCustomModifier<First: CustomRegistry, Second: CustomRegistry>
         _ParserType(context: context)
     }
     
-    public struct _ParserType: Parser {
+    @MainActor
+    public struct _ParserType: @preconcurrency Parser {
         let context: ParseableModifierContext
         
         public func parse(_ input: inout Substring.UTF8View) throws -> _EitherCustomModifier<First, Second> {
