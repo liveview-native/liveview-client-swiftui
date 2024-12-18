@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ### Added
+- Added GitHub Action for checking if the changelog was updated.
 
 - LiveViewNative.SwiftUI.Client
 - `NavigationLink` supports the `data-phx-link` attribute to switch between `redirect` (default) and `patch` navigation
