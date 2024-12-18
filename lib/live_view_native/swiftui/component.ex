@@ -80,45 +80,62 @@ defmodule LiveViewNative.SwiftUI.Component do
 
   # ### Overriding the default confirm behaviour
 
-  # `phoenix_html.js` does trigger a custom event `phoenix.link.click` on the clicked DOM element
-  # when a click happened. This allows you to intercept the event on its way bubbling up
-  # to `window` and do your own custom logic to enhance or replace how the `data-confirm`
-  # attribute is handled. You could for example replace the browsers `confirm()` behavior with
-  # a custom javascript implementation:
+  # You can customize the confirm dialog in your app's client code.
+  # Any event on an element with a `data-confirm` attribute will first call the provided
+  # `eventConfirmation` function. Provide a custom function with a `(String, ElementNode) async -> Bool`
+  # signature to show a custom dialog.
 
-  # ```javascript
-  # // listen on document.body, so it's executed before the default of
-  # // phoenix_html, which is listening on the window object
-  # document.body.addEventListener('phoenix.link.click', function (e) {
-  #   // Prevent default implementation
-  #   e.stopPropagation();
-  #   // Introduce alternative implementation
-  #   var message = e.target.getAttribute("data-confirm");
-  #   if(!message){ return true; }
-  #   vex.dialog.confirm({
-  #     message: message,
-  #     callback: function (value) {
-  #       if (value == false) { e.preventDefault(); }
-  #     }
-  #   })
-  # }, false);
-  # ```
-
-  # Or you could attach your own custom behavior.
-
-  # ```javascript
-  # window.addEventListener('phoenix.link.click', function (e) {
-  #   // Introduce custom behaviour
-  #   var message = e.target.getAttribute("data-prompt");
-  #   var answer = e.target.getAttribute("data-prompt-answer");
-  #   if(message && answer && (answer != window.prompt(message))) {
-  #     e.preventDefault();
+  # ```swift
+  # struct ContentView: View {
+  #   @State private var showEventConfirmation: Bool = false
+  #   @State private var eventConfirmationTransaction: EventConfirmationTransaction?
+  #   struct EventConfirmationTransaction: Sendable, Identifiable {
+  #       let id = UUID()
+  #       let message: String
+  #       let role: ButtonRole?
+  #       let callback: @Sendable (sending Bool) -> ()
   #   }
-  # }, false);
+  #
+  #   var body: some View {
+  #       #LiveView(
+  #           .localhost,
+  #           configuration: LiveSessionConfiguration(eventConfirmation: { message, element in
+  #               return await withCheckedContinuation { @MainActor continuation in
+  #                   showEventConfirmation = true
+  #                   eventConfirmationTransaction = EventConfirmationTransaction(
+  #                       message: message,
+  #                       role: try? element.attributeValue(ButtonRole.self, for: "data-confirm-role"), // access a custom attribute
+  #                       callback: continuation.resume(returning:)
+  #                   )
+  #               }
+  #           }),
+  #           addons: [.liveForm]
+  #       ) {
+  #           ConnectingView()
+  #       } disconnected: {
+  #           DisconnectedView()
+  #       } reconnecting: { content, isReconnecting in
+  #           ReconnectingView(isReconnecting: isReconnecting) {
+  #               content
+  #           }
+  #       } error: { error in
+  #           ErrorView(error: error)
+  #       }
+  #       .alert(
+  #           eventConfirmationTransaction?.message ?? "",
+  #           isPresented: $showEventConfirmation,
+  #           presenting: eventConfirmationTransaction
+  #       ) { transaction in
+  #           Button("Confirm", role: transaction.role) {
+  #               transaction.callback(true)
+  #           }
+  #           Button("Cancel", role: .cancel) {
+  #               transaction.callback(false)
+  #           }
+  #       }
+  #   }
+  # }
   # ```
-
-  # The latter could also be bound to any `click` event, but this way you can be sure your custom
-  # code is only executed when the code of `phoenix_html.js` is run.
 
   # ## CSRF Protection
 
