@@ -50,7 +50,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     var socket: LiveViewNativeCore.Socket?
 
     private var liveReloadChannel: LiveViewNativeCore.LiveChannel?
-    private var liveReloadListener: AsyncThrowingStream<LiveViewNativeCore.EventPayload, any Error>?
+    private var liveReloadListener: Channel.EventStream?
     private var liveReloadListenerLoop: Task<(), any Error>?
     
     private var cancellables = Set<AnyCancellable>()
@@ -148,6 +148,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     public convenience init(_ url: URL, config: LiveSessionConfiguration = .init()) where R == EmptyRegistry {
         self.init(url, config: config, customRegistryType: EmptyRegistry.self)
     }
+    
+    deinit {
+        self.liveReloadListenerLoop?.cancel()
+    }
 
     /// Connects this coordinator to the LiveView channel.
     ///
@@ -202,10 +206,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     guard let url = await URL(string: style, relativeTo: self.url)
                     else { continue }
                     group.addTask {
-                        let (data, _) = try await URLSession.shared.data(from: url)
-                        guard let contents = String(data: data, encoding: .utf8)
-                        else { return await Stylesheet<R>(content: [], classes: [:]) }
-                        return try await Stylesheet<R>(from: contents, in: .init())
+                        if let cached = await StylesheetCache.shared.read(for: url, registry: R.self) {
+                            return cached
+                        } else {
+                            let (data, _) = try await URLSession.shared.data(from: url)
+                            guard let contents = String(data: data, encoding: .utf8)
+                            else { return await Stylesheet<R>(content: [], classes: [:]) }
+                            return try await Stylesheet<R>(from: contents, in: .init())
+                        }
                     }
                 }
                 
