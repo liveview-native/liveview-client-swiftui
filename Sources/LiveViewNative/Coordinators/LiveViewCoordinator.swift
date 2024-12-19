@@ -36,8 +36,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     var url: URL
 
-    private(set) weak var liveChannel: LiveViewNativeCore.LiveChannel?
-    private weak var channel: LiveViewNativeCore.Channel?
+    private(set) var liveChannel: LiveViewNativeCore.LiveChannel?
+    private var channel: LiveViewNativeCore.Channel?
 
     @Published var document: LiveViewNativeCore.Document?
     private var elementChangedSubjects = [NodeRef:ObjectWillChangePublisher]()
@@ -54,8 +54,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
-    private var eventListener: AsyncThrowingStream<LiveViewNativeCore.EventPayload, any Error>?
+    private var eventListener: Channel.EventStream?
     private var eventListenerLoop: Task<(), any Error>?
+    private var statusListener: Channel.StatusStream?
     private var statusListenerLoop: Task<(), any Error>?
 
     private(set) internal var liveViewModel = LiveViewModel()
@@ -63,6 +64,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     init(session: LiveSessionCoordinator<R>, url: URL) {
         self.session = session
         self.url = url
+    }
+    
+    deinit {
+        self.eventListenerLoop?.cancel()
+        self.statusListenerLoop?.cancel()
     }
 
     /// Pushes a LiveView event with the given name and payload to the server.
@@ -95,10 +101,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         ])))
     }
     
-    struct ReplyPayload: @unchecked Sendable {
-        let payload: [String: Any]
-    }
-    
     @discardableResult
     internal func doPushEvent(_ event: String, payload: LiveViewNativeCore.Payload) async throws -> [String:Any]? {
         guard let channel = channel else {
@@ -111,34 +113,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         let replyPayload = try await channel.call(event: .user(user: event), payload: payload, timeout: PUSH_TIMEOUT)
         
-        switch replyPayload {
-        case let .jsonPayload(json):
-            switch json {
-            case let .object(object):
-                if case let .object(diff) = object["diff"] {
-                    try self.handleDiff(payload: .object(object: diff), baseURL: self.url)
-                    if case let .object(reply) = diff["r"] {
-                        return reply
-                    }
-                } else if case let .object(redirectObject) = object["live_redirect"],
-                          let redirect = LiveRedirect(from: redirectObject, relativeTo: self.url)
-                {
-                    try await session.redirect(redirect)
-                } else if case let .object(redirectObject) = object["redirect"],
-                          case let .str(destinationString) = redirectObject["to"],
-                          let destination = URL(string: destinationString, relativeTo: self.url)
-                {
-                    try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
-                } else {
-                    return nil
-                }
-            default:
-                fatalError("unsupported message type \(replyPayload)")
-            }
-        default:
-            fatalError("unsupported message type \(replyPayload)")
-        }
-        return nil
+        return try await handleEventReplyPayload(replyPayload)
     }
 
     /// Creates a publisher that can be used to listen for server-sent LiveView events.
@@ -203,6 +178,37 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private func handleDiff(payload: LiveViewNativeCore.Json, baseURL: URL) throws {
         handleEvents(payload)
         try self.document?.mergeFragmentJson(String(data: try JSONEncoder().encode(payload), encoding: .utf8)!)
+    }
+    
+    func handleEventReplyPayload(_ replyPayload: LiveViewNativeCore.Payload) async throws -> [String:Any]? {
+        switch replyPayload {
+        case let .jsonPayload(json):
+            switch json {
+            case let .object(object):
+                if case let .object(diff) = object["diff"] {
+                    try self.handleDiff(payload: .object(object: diff), baseURL: self.url)
+                    if case let .object(reply) = diff["r"] {
+                        return reply
+                    }
+                } else if case let .object(redirectObject) = object["live_redirect"],
+                          let redirect = LiveRedirect(from: redirectObject, relativeTo: self.url)
+                {
+                    try await session.redirect(redirect)
+                } else if case let .object(redirectObject) = object["redirect"],
+                          case let .str(destinationString) = redirectObject["to"],
+                          let destination = URL(string: destinationString, relativeTo: self.url)
+                {
+                    try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
+                } else {
+                    return nil
+                }
+            default:
+                fatalError("unsupported message type \(replyPayload)")
+            }
+        default:
+            fatalError("unsupported message type \(replyPayload)")
+        }
+        return nil
     }
 
     private func handleEvents(_ json: LiveViewNativeCore.Json) {
@@ -289,10 +295,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         let channel = liveChannel.channel()
         self.channel = channel
         
+        let statusListener = channel.statusStream()
+        self.statusListener = statusListener
         statusListenerLoop = Task { @MainActor [weak self] in
-            for try await status in channel.statusStream() {
-                guard let self else { return }
-                self.internalState = switch status {
+            for try await status in statusListener {
+                self?.internalState = switch status {
                 case .joined:
                     .connected
                 case .joining, .waitingForSocketToConnect, .waitingToJoin:
