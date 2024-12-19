@@ -24,10 +24,8 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.3.2"),
-        .package(url: "https://github.com/davidstump/SwiftPhoenixClient.git", .upToNextMinor(from: "5.3.2")),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
-        .package(url: "https://github.com/liveview-native/liveview-native-core", exact: "0.4.0-rc-2"),
+        .package(url: "https://github.com/liveview-native/liveview-native-core", exact: "0.4.0-rc-3"),
         
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.2.0"),
@@ -42,8 +40,6 @@ let package = Package(
         .target(
             name: "LiveViewNative",
             dependencies: [
-                "SwiftSoup",
-                "SwiftPhoenixClient",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "LiveViewNativeCore", package: "liveview-native-core"),
                 "LiveViewNativeMacros",

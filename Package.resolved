@@ -1,13 +1,13 @@
 {
-  "originHash" : "4fe0c9d196f77288978f15e8061a67b8ac0425f12d2f25e8a1803594e77efc49",
+  "originHash" : "6a5ddfa26364abe0acd53c4af877d94a75bd5865a0fe9de361261256db6916f3",
   "pins" : [
     {
       "identity" : "liveview-native-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/liveview-native/liveview-native-core",
       "state" : {
-        "revision" : "13976e2d1eabae8b98994ea12f9e1f934b592930",
-        "version" : "0.4.0-rc-2"
+        "revision" : "74f5044cba915d87cbc4b882b23a1bc6291b3a37",
+        "version" : "0.4.0-rc-3"
       }
     },
     {
@@ -83,30 +83,12 @@
       }
     },
     {
-      "identity" : "swiftphoenixclient",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/davidstump/SwiftPhoenixClient.git",
-      "state" : {
-        "revision" : "f7098ca53af4c9eb2a5e43267c5db5a306c98335",
-        "version" : "5.3.3"
-      }
-    },
-    {
-      "identity" : "swiftsoup",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/scinfu/SwiftSoup.git",
-      "state" : {
-        "revision" : "8b6cf29eead8841a1fa7822481cb3af4ddaadba6",
-        "version" : "2.6.1"
-      }
-    },
-    {
       "identity" : "xctest-dynamic-overlay",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
       "state" : {
-        "revision" : "770f990d3e4eececb57ac04a6076e22f8c97daeb",
-        "version" : "1.4.2"
+        "revision" : "a3f634d1a409c7979cabc0a71b3f26ffa9fc8af1",
+        "version" : "1.4.3"
       }
     }
   ],

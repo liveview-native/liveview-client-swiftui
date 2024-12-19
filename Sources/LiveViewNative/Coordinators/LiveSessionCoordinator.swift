@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftSoup
 import SwiftUI
 import Combine
 import OSLog
@@ -177,6 +176,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             logger.debug("Connecting to \(originalURL.absoluteString)")
             
             state = .connecting
+            
+            print(httpBody.flatMap({ String(data: $0, encoding: .utf8) }))
             
             self.liveSocket = try await LiveSocket(
                 originalURL.absoluteString,

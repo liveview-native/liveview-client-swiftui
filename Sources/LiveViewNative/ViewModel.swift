@@ -318,7 +318,7 @@ private extension URLComponents {
         components.queryItems = components.queryItems?.map({
             .init(
                 name: $0.name,
-                value: $0.value.flatMap({ $0.addingPercentEncoding(withAllowedCharacters: .alphanumerics) })
+                value: $0.value//.flatMap({ $0.addingPercentEncoding(withAllowedCharacters: .alphanumerics) })
             )
         })
         return components.query!

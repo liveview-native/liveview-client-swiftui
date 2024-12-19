@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftSoup
 import SwiftUI
 import Combine
 import LiveViewNativeCore
@@ -120,7 +119,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
         
         guard case .joined = channel.status() else {
-            throw LiveConnectionError.viewCoordinatorReleased
+            throw LiveSocketError.DisconnectionError
         }
         
         let replyPayload = try await channel.call(event: .user(user: event), payload: payload, timeout: PUSH_TIMEOUT)
@@ -327,6 +326,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         self.bindEventListener()
         
         self.document = liveChannel.document()
+        print(self.document!.toString())
         self.bindDocumentListener()
         
         switch liveChannel.joinPayload() {
