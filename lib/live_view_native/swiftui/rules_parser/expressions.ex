@@ -123,6 +123,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
   end
 
   def key_value_pairs(opts \\ []) do
-    comma_separated_list(key_value_pair(opts), opts)
+    wrap(comma_separated_list(key_value_pair(opts), opts))
   end
 end
