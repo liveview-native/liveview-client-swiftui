@@ -26,7 +26,11 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoor
 /// - ``handleEvent(_:handler:)``
 @MainActor
 public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
-    @Published internal private(set) var internalState: LiveSessionState = .setup
+    @Published internal private(set) var internalState: LiveSessionState = .setup {
+        didSet {
+            print(internalState)
+        }
+    }
     
     var state: LiveSessionState {
         internalState

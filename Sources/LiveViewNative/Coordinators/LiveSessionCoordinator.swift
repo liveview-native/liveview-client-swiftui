@@ -190,14 +190,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             )
             self.socket = self.liveSocket?.socket()
             
-            let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
-                .some([
-                    "_format": .str(string: LiveSessionParameters.platform),
-                    "_interface": .object(object: LiveSessionParameters.platformParams)
-                ]),
-                nil
-            )
-            
             self.rootLayout = self.liveSocket!.deadRender()
             let styleURLs = self.liveSocket!.styleUrls()
             
@@ -222,6 +214,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
             }
             
+            let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
+                .some([
+                    "_format": .str(string: LiveSessionParameters.platform),
+                    "_interface": .object(object: LiveSessionParameters.platformParams)
+                ]),
+                nil
+            )
+            
             self.navigationPath.last!.coordinator.join(liveChannel)
             
             self.state = .connected
@@ -243,7 +243,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 guard let self else { return }
                 switch event.event {
                 case .user(user: "assets_change"):
-                    try await self.reconnect()
+                    try await self.disconnect()
+                    self.navigationPath = [.init(url: self.url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
+                    try await self.connect()
                 default:
                     continue
                 }
