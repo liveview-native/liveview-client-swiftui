@@ -57,7 +57,7 @@ struct CoordinatorEnvironment {
     private final class Storage {
         let pushEvent: @MainActor (String, String, Any, Int?) async throws -> [String:Any]?
         let elementChanged: @MainActor (NodeRef) -> ObservableObjectPublisher
-        let document: Document
+        weak var document: Document?
         
         init<R: CustomRegistry>(_ coordinator: LiveViewCoordinator<R>, document: Document) {
             self.pushEvent = coordinator.pushEvent
@@ -73,7 +73,7 @@ struct CoordinatorEnvironment {
     var elementChanged: @MainActor (NodeRef) -> ObservableObjectPublisher {
         storage.elementChanged
     }
-    var document: Document {
+    var document: Document? {
         storage.document
     }
     

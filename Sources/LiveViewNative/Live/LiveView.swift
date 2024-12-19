@@ -231,14 +231,16 @@ public struct LiveView<
         .environment(\.stylesheet, session.stylesheet ?? .init(content: [], classes: [:]))
         .environment(\.reconnectLiveView, .init(baseURL: session.url, action: session.reconnect))
         .environmentObject(session)
-        .task(priority: .userInitiated) {
+        .task {
             await session.connect()
         }
         .onChange(of: scenePhase) { newValue in
-            guard case .active = newValue,
-                  session.socket?.isConnected == false
+            guard case .active = newValue
             else { return }
-            Task(priority: .userInitiated) {
+            if case .connected = session.socket?.status() {
+                return
+            }
+            Task {
                 await session.connect()
             }
         }

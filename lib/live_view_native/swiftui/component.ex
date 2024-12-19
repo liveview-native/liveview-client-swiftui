@@ -152,13 +152,13 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   )
 
-  # attr(:patch, :string,
-  #   doc: """
-  #   Patches the current LiveView.
-  #   The `handle_params` callback of the current LiveView will be invoked and the minimum content
-  #   will be sent over the wire, as any other LiveView diff.
-  #   """
-  # )
+  attr(:patch, :string,
+    doc: """
+    Patches the current LiveView.
+    The `handle_params` callback of the current LiveView will be invoked and the minimum content
+    will be sent over the wire, as any other LiveView diff.
+    """
+  )
 
   attr(:href, :any,
     doc: """
@@ -213,6 +213,20 @@ defmodule LiveViewNative.SwiftUI.Component do
     ~LVN"""
     <NavigationLink
       destination={@navigate}
+      data-phx-link="redirect"
+      data-phx-link-state={if @replace, do: "replace", else: "push"}
+      {@rest}
+    >
+      <%= render_slot(@inner_block) %>
+    </NavigationLink>
+    """
+  end
+
+  def link(%{patch: to} = assigns) when is_binary(to) do
+    ~LVN"""
+    <NavigationLink
+      destination={@patch}
+      data-phx-link="patch"
       data-phx-link-state={if @replace, do: "replace", else: "push"}
       {@rest}
     >
@@ -237,6 +251,124 @@ defmodule LiveViewNative.SwiftUI.Component do
     <NavigationLink destination="#" {@rest}>
       <%= render_slot(@inner_block) %>
     </NavigationLink>
+    """
+  end
+
+  @doc """
+  Builds a file input tag for a LiveView upload.
+
+  [INSERT LVATTRDOCS]
+
+  ## Drag and Drop
+
+  Drag and drop is supported by annotating the droppable container with a `phx-drop-target`
+  attribute pointing to the UploadConfig `ref`, so the following markup is all that is required
+  for drag and drop support:
+
+  ```heex
+  <div class="container" phx-drop-target={@uploads.avatar.ref}>
+    <!-- ... -->
+    <.live_file_input upload={@uploads.avatar} />
+  </div>
+  ```
+
+  ## Examples
+
+  Rendering a file input:
+
+  ```heex
+  <.live_file_input upload={@uploads.avatar} />
+  ```
+
+  Rendering a file input with a label:
+
+  ```heex
+  <label for={@uploads.avatar.ref}>Avatar</label>
+  <.live_file_input upload={@uploads.avatar} />
+  ```
+  """
+  @doc type: :component
+
+  attr :upload, Phoenix.LiveView.UploadConfig,
+    required: true,
+    doc: "The `Phoenix.LiveView.UploadConfig` struct"
+
+  attr :accept, :string,
+    doc:
+      "the optional override for the accept attribute. Defaults to :accept specified by allow_upload"
+
+  attr :rest, :global, include: ~w(webkitdirectory required disabled capture form)
+
+  def live_file_input(%{upload: upload} = assigns) do
+    assigns = assign_new(assigns, :accept, fn -> upload.accept != :any && upload.accept end)
+
+    ~LVN"""
+    <VStack
+      style='fileImporter(id: attr("id"), name: attr("name"), isPresented: attr("is-presented"), allowedContentTypes: attr("accept"), allowsMultipleSelection: attr("multiple"))'
+      is-presented
+      id={@upload.ref}
+      name={@upload.name}
+      accept={@accept}
+      data-phx-update="ignore"
+      data-phx-upload-ref={@upload.ref}
+      data-phx-active-refs={join_refs(for(entry <- @upload.entries, do: entry.ref))}
+      data-phx-done-refs={join_refs(for(entry <- @upload.entries, entry.done?, do: entry.ref))}
+      data-phx-preflighted-refs={join_refs(for(entry <- @upload.entries, entry.preflighted?, do: entry.ref))}
+      data-phx-auto-upload={@upload.auto_upload?}
+      {if @upload.max_entries > 1, do: Map.put(@rest, :multiple, true), else: @rest}
+    />
+    """
+  end
+
+  defp join_refs(entries), do: Enum.join(entries, ",")
+
+  @doc ~S"""
+  Generates an image preview on the client for a selected file.
+
+  [INSERT LVATTRDOCS]
+
+  ## Examples
+
+  ```heex
+  <%= for entry <- @uploads.avatar.entries do %>
+    <.live_img_preview entry={entry} width="75" />
+  <% end %>
+  ```
+
+  When you need to use it multiple times, make sure that they have distinct ids
+
+  ```heex
+  <%= for entry <- @uploads.avatar.entries do %>
+    <.live_img_preview entry={entry} width="75" />
+  <% end %>
+
+  <%= for entry <- @uploads.avatar.entries do %>
+    <.live_img_preview id={"modal-#{entry.ref}"} entry={entry} width="500" />
+  <% end %>
+  ```
+  """
+  @doc type: :component
+
+  attr :entry, Phoenix.LiveView.UploadEntry,
+    required: true,
+    doc: "The `Phoenix.LiveView.UploadEntry` struct"
+
+  attr :id, :string,
+    default: nil,
+    doc:
+      "the id of the img tag. Derived by default from the entry ref, but can be overridden as needed if you need to render a preview of the same entry multiple times on the same page"
+
+  attr :rest, :global, []
+
+  def live_img_preview(assigns) do
+    ~LVN"""
+    <Image
+      id={@id || "phx-preview-#{@entry.ref}"}
+      data-phx-upload-ref={@entry.upload_ref}
+      data-phx-entry-ref={@entry.ref}
+      data-phx-update="ignore"
+      {@rest}
+    />
     """
   end
 end

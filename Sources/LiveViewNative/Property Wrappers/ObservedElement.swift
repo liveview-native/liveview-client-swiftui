@@ -54,7 +54,7 @@ import Combine
 public struct ObservedElement {
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
     @EnvironmentObject private var observer: Observer
-    
+
     private let observeChildren: Bool
     
     private let overrideElement: ElementNode?
@@ -63,33 +63,33 @@ public struct ObservedElement {
     var isConstant: Bool {
         overrideElement != nil
     }
-    
+
     /// Creates an `ObservedElement` that observes changes to the view's element.
     public init(observeChildren: Bool = false) {
         self.overrideElement = nil
         self.observeChildren = observeChildren
     }
-    
+
     public init(element: ElementNode, observeChildren: Bool = false) {
         self.overrideElement = element
         self.observeChildren = observeChildren
     }
-    
+
     public init() {
         self.overrideElement = nil
         self.observeChildren = false
     }
-    
+
     /// The observed element in the document, with all current data.
     public var wrappedValue: ElementNode {
         overrideElement ?? observer.resolvedElement
     }
-    
+
     /// A publisher that publishes when the observed element changes.
     public var projectedValue: some Publisher<NodeRef, Never> {
         observer.elementChangedPublisher
     }
-    
+
     var children: [Node] { overrideElement.flatMap({ Array($0.children()) }) ?? observer.resolvedChildren }
 }
 
@@ -98,7 +98,7 @@ extension ObservedElement: @preconcurrency DynamicProperty {
         guard let coordinator else {
             fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
         }
-        
+
         self.observer.update(
             coordinator,
             observeChildren: observeChildren
@@ -109,8 +109,9 @@ extension ObservedElement: @preconcurrency DynamicProperty {
 extension ObservedElement {
     final class Observer: ObservableObject {
         private var cancellable: AnyCancellable?
-        
+
         let id: NodeRef
+        
         var observedChildIDs: Set<NodeRef> = []
         
         var resolvedElement: ElementNode!
@@ -120,7 +121,7 @@ extension ObservedElement {
             if let _resolvedChildIDs {
                 return _resolvedChildIDs
             } else {
-                let result = Set(self.resolvedChildren.map(\.id))
+                let result = Set(self.resolvedChildren.map({ $0.id }))
                 _resolvedChildIDs = result
                 return result
             }
@@ -129,18 +130,17 @@ extension ObservedElement {
         var objectWillChange = ObjectWillChangePublisher()
         
         var elementChangedPublisher: AnyPublisher<NodeRef, Never>!
-        
         init(_ id: NodeRef) {
             self.id = id
         }
-        
+
         @MainActor
         fileprivate func update(
             _ context: CoordinatorEnvironment,
             observeChildren: Bool
         ) {
             guard cancellable == nil || (observeChildren && self.observedChildIDs != self.resolvedChildIDs) else { return }
-            self.resolvedElement = context.document[id].asElement()
+            self.resolvedElement = context.document?[id].asElement()
             self.resolvedChildren = Array(self.resolvedElement.children())
             self._resolvedChildIDs = nil
             
@@ -161,26 +161,32 @@ extension ObservedElement {
             cancellable = self.elementChangedPublisher
                 .sink { [weak self] _ in
                     guard let self else { return }
-                    self.resolvedElement = context.document[id].asElement()
+                    self.resolvedElement = context.document?[id].asElement()
                     self.resolvedChildren = Array(self.resolvedElement.children())
                     self._resolvedChildIDs = nil
                     self.objectWillChange.send()
                 }
         }
-        
+
         struct Applicator<Content: View>: View {
             @StateObject private var observer: Observer
             let content: Content
-            
+
             init(_ id: NodeRef, @ViewBuilder content: () -> Content) {
                 self._observer = .init(wrappedValue: .init(id))
                 self.content = content()
             }
-            
+
             var body: some View {
                 content
                     .environmentObject(observer)
             }
         }
+    }
+}
+
+private extension Optional where Wrapped == ElementNode {
+    var nodeRef: NodeRef? {
+        self?.node.id
     }
 }
