@@ -49,7 +49,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
         let withID = applyID(element: element, to: bound)
         let withIDAndTag = applyTag(element: element, to: withID)
 
-        return ObservedElement.Observer.Applicator(element.node.id()) {
+        return ObservedElement.Observer.Applicator(element.node.id) {
             withIDAndTag
                 .environment(\.element, element)
         }

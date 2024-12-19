@@ -1,5 +1,5 @@
 {
-  "originHash" : "1b0323fdcd18c0c2c05a234c0357e717f552313cab7e257db03199b9f27bbcc6",
+  "originHash" : "4fe0c9d196f77288978f15e8061a67b8ac0425f12d2f25e8a1803594e77efc49",
   "pins" : [
     {
       "identity" : "liveview-native-core",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-async-algorithms",
       "state" : {
-        "revision" : "9cfed92b026c524674ed869a4ff2dcfdeedf8a2a",
-        "version" : "0.1.0"
+        "revision" : "4c3ea81f81f0a25d0470188459c6d4bf20cf2f97",
+        "version" : "1.0.3"
       }
     },
     {

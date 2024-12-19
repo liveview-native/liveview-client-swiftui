@@ -70,7 +70,7 @@ struct _FileImporterModifier<R: RootRegistry>: ViewModifier {
             Task {
                 do {
                     for url in try result.get() {
-                        try await formModel?.queueFileUpload(id: id, url: url, coordinator: context.coordinator)
+                        try await formModel?.queueFileUpload(name: name.resolve(on: element, in: context), id: id, url: url, coordinator: context.coordinator)
                     }
                 } catch {
                     logger.log(level: .error, "\(error.localizedDescription)")

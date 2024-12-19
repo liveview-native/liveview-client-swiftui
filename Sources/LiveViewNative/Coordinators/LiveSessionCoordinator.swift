@@ -117,7 +117,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         self.liveSocket!.navigate(next.last!.url.absoluteString, next.last!.coordinator.liveChannel, NavOptions(action: .push))
                     )
                 } else if next.count == prev.count {
-                    print("replace navigation")
                     try await next.last?.coordinator.join(
                         self.liveSocket!.navigate(next.last!.url.absoluteString, next.last!.coordinator.liveChannel, NavOptions(action: .replace))
                     )
@@ -231,7 +230,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 bindLiveReloadListener()
             }
         } catch {
-            print(error)
             self.state = .connectionFailed(error)
         }
     }

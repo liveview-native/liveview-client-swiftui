@@ -59,7 +59,7 @@ extension Node: Identifiable {
 }
 
 extension Channel {
-    struct EventStream: AsyncSequence {
+    final class EventStream: AsyncSequence {
         let events: Events
         
         init(for channel: Channel) {

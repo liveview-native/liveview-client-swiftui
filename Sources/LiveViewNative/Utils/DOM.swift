@@ -32,7 +32,7 @@ public struct ElementNode: Identifiable, @unchecked Sendable {
         self.data = data
     }
     
-    public var id: NodeRef { node.id() }
+    public var id: NodeRef { node.id }
     
     /// A sequence representing this element's direct children.
     public func children() -> NodeChildrenSequence { node.children() }

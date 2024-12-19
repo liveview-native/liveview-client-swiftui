@@ -56,6 +56,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     @_spi(LiveForm) public var pushEventImpl: (@MainActor (String, String, Any, Int?) async throws -> [String:Any]?)!
     
     var changeEvent: ((Any) async throws -> ())?
+    var changeEventName: String?
     var submitEvent: String?
     /// An action called when no `phx-submit` event is present.
     ///
@@ -83,7 +84,8 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     @_spi(LiveForm) @preconcurrency public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
         self.fileUploads.removeAll()
         let pushEventImpl = pushEventImpl!
-        self.changeEvent = element.attributeValue(for: .init(name: "phx-change")).flatMap({ event in
+        self.changeEventName = element.attributeValue(for: .init(name: "phx-change"))
+        self.changeEvent = self.changeEventName.flatMap({ event in
             { value in
                 Task {
                     _ = try await pushEventImpl("form", event, value, nil)
@@ -243,24 +245,27 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     }
 
     public func queueFileUpload(
+        name: String,
         id: String,
         url: URL,
         coordinator: LiveViewCoordinator<some RootRegistry>
     ) async throws {
         return try await queueFileUpload(
+            name: name,
             id: id,
             contents: try Data(contentsOf: url),
             fileType: UTType(filenameExtension: url.pathExtension)!,
-            name: url.lastPathComponent,
+            fileName: url.lastPathComponent,
             coordinator: coordinator
         )
     }
     
     public func queueFileUpload(
+        name: String,
         id: String,
         contents: Data,
         fileType: UTType,
-        name: String,
+        fileName: String,
         coordinator: LiveViewCoordinator<some RootRegistry>
     ) async throws {
         guard let liveChannel = coordinator.liveChannel
@@ -269,11 +274,35 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         let file = LiveFile(
             contents,
             fileType.preferredMIMEType!,
-            name,
+            fileName,
+            "",
             id
         )
-        let replyPayload = try await liveChannel.validateUpload(file)
-        try await coordinator.handleEventReplyPayload(replyPayload)
+        if let changeEventName {
+            let replyPayload = try await coordinator.liveChannel!.channel().call(
+                event: .user(user: "event"),
+                payload: .jsonPayload(json: .object(object: [
+                    "type": .str(string: "form"),
+                    "event": .str(string: changeEventName),
+                    "value": .str(string: "_target=\(name)"),
+                    "uploads": .object(object: [
+                        id: .array(array: [
+                            .object(object: [
+                                "path": .str(string: fileName),
+                                "ref": .str(string: "0"),
+                                "last_modified": .numb(number: .posInt(pos: UInt64(Date().timeIntervalSince1970 * 1000))), // in milliseconds
+                                "name": .str(string: "\(fileName).\(fileType.preferredFilenameExtension)"),
+                                "relative_path": .str(string: ""),
+                                "type": .str(string: fileType.preferredMIMEType!),
+                                "size": .numb(number: .posInt(pos: UInt64(contents.count)))
+                            ])
+                        ])
+                    ])
+                ])),
+                timeout: 10_000
+            )
+            try await coordinator.handleEventReplyPayload(replyPayload)
+        }
         self.fileUploads.append(.init(
             id: id,
             data: contents,
