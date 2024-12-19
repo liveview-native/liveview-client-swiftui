@@ -107,19 +107,20 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             Task {
                 try await prev.last?.coordinator.disconnect()
                 if prev.count > next.count {
-                    // back navigation
-                    try await next.last?.coordinator.join(
-                        self.liveSocket!.back(next.last!.coordinator.liveChannel, nil)
+                    // back navigation (we could be going back multiple pages at once, so use `traverseTo` instead of `back`)
+                    let targetEntry = self.liveSocket!.getEntries()[next.count - 1]
+                    next.last?.coordinator.join(
+                        try await self.liveSocket!.traverseTo(targetEntry.id, next.last!.coordinator.liveChannel, nil)
                     )
                 } else if next.count > prev.count && prev.count > 0 {
                     // forward navigation (from `redirect` or `<NavigationLink>`)
-                    try await next.last?.coordinator.join(
-                        self.liveSocket!.navigate(next.last!.url.absoluteString, next.last!.coordinator.liveChannel, NavOptions(action: .push))
+                    next.last?.coordinator.join(
+                        try await self.liveSocket!.navigate(next.last!.url.absoluteString, next.last!.coordinator.liveChannel, NavOptions(action: .push))
                     )
                 } else if next.count == prev.count {
-                    try await next.last?.coordinator.join(
-                        self.liveSocket!.navigate(next.last!.url.absoluteString, next.last!.coordinator.liveChannel, NavOptions(action: .replace))
-                    )
+                    guard let liveChannel = try await self.liveSocket?.navigate(next.last!.url.absoluteString, next.last!.coordinator.liveChannel, NavOptions(action: .replace))
+                    else { return }
+                    next.last?.coordinator.join(liveChannel)
                 }
             }
         }.store(in: &cancellables)
