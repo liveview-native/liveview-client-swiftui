@@ -39,7 +39,12 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) var liveChannel: LiveViewNativeCore.LiveChannel?
     private var channel: LiveViewNativeCore.Channel?
 
-    @Published var document: LiveViewNativeCore.Document?
+    @Published var document: LiveViewNativeCore.Document? {
+        didSet {
+            elementChangedSubjects.removeAll()
+            uploadRef = 0
+        }
+    }
     private var elementChangedSubjects = [NodeRef:ObjectWillChangePublisher]()
     func elementChanged(_ ref: NodeRef) -> ObjectWillChangePublisher {
         guard let subject = elementChangedSubjects[ref] else {
@@ -60,6 +65,13 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private var statusListenerLoop: Task<(), any Error>?
 
     private(set) internal var liveViewModel = LiveViewModel()
+    
+    private var uploadRef: Int = 0
+    func nextUploadRef() -> Int {
+        let next = uploadRef
+        uploadRef += 1
+        return next
+    }
 
     init(session: LiveSessionCoordinator<R>, url: URL) {
         self.session = session

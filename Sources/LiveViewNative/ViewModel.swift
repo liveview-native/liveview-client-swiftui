@@ -118,6 +118,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         for fileUpload in fileUploads {
             try await fileUpload.upload()
         }
+        self.fileUploads.removeAll()
         if let submitEvent = submitEvent {
             try await pushFormEvent(submitEvent)
         } else if let submitAction {
@@ -289,9 +290,9 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                         id: .array(array: [
                             .object(object: [
                                 "path": .str(string: fileName),
-                                "ref": .str(string: "0"),
+                                "ref": .str(string: String(coordinator.nextUploadRef())),
                                 "last_modified": .numb(number: .posInt(pos: UInt64(Date().timeIntervalSince1970 * 1000))), // in milliseconds
-                                "name": .str(string: "\(fileName).\(fileType.preferredFilenameExtension)"),
+                                "name": .str(string: fileName),
                                 "relative_path": .str(string: ""),
                                 "type": .str(string: fileType.preferredMIMEType!),
                                 "size": .numb(number: .posInt(pos: UInt64(contents.count)))

@@ -271,6 +271,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             self.liveReloadChannel = nil
             try await self.socket?.disconnect()
             self.socket = nil
+            self.liveSocket = nil
             self.state = .disconnected
         } catch {
             self.state = .connectionFailed(error)
@@ -289,7 +290,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 self.url = url
                 self.navigationPath = [.init(url: self.url, coordinator: self.navigationPath.first!.coordinator, navigationTransition: nil, pendingView: nil)]
             } else {
+                // preserve the navigation path, but still clear the stale documents, since they're being completely replaced.
                 try await self.disconnect(preserveNavigationPath: true)
+                for entry in self.navigationPath {
+                    entry.coordinator.document = nil
+                }
             }
             try await self.connect(httpMethod: httpMethod, httpBody: httpBody)
         } catch {
