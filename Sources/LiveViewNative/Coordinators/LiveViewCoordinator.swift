@@ -203,10 +203,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                     return nil
                 }
             default:
-                fatalError("unsupported message type \(replyPayload)")
+                logger.error("unhandled event reply: \(String(reflecting: replyPayload))")
             }
         default:
-            fatalError("unsupported message type \(replyPayload)")
+            logger.error("unhandled event reply: \(String(reflecting: replyPayload))")
         }
         return nil
     }
