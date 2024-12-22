@@ -8,7 +8,6 @@ defmodule LiveViewNativeTest.SwiftUI.TestClient do
     changeables: ~w(
       ColorPicker
       DatePicker
-      LiveForm
       Picker
       MultiDatePicker
       SecureField
