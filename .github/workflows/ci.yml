@@ -20,11 +20,18 @@ jobs:
       - name: Setup Xcode Version
         shell: bash
         run: |
-          sudo xcode-select --switch /Applications/Xcode_16.0.app
+          sudo xcode-select --switch /Applications/Xcode_16.2.app
       - uses: irgaly/xcode-cache@v1
         with:
           key: xcode-cache-deriveddata-${{ github.workflow }}
           restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
+      - name: Clear Package Caches
+        shell: bash
+        run: |
+          rm -rf ~/Library/org.swift.swiftpm
+          rm -rf ~/Library/Caches/org.swift.swiftpm
+          rm -rf ~/Library/Developer/Xcode/DerivedData
+          rm -rf ~/.swiftpm
       - name: Run tests on iOS Simulator
         shell: bash
         run: |
