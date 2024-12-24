@@ -20,7 +20,7 @@ jobs:
       - name: Setup Xcode Version
         shell: bash
         run: |
-          sudo xcode-select --switch /Applications/Xcode_16.0.app
+          sudo xcode-select --switch /Applications/Xcode_16.2.app
       - uses: irgaly/xcode-cache@v1
         with:
           key: xcode-cache-deriveddata-${{ github.workflow }}
