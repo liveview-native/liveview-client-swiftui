@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Swift 6 is now required to build LiveView Native applications
 - `Section` now uses the `isExpanded` and `phx-change` attributes to enable collapsing in sidebar-styled `List` views
-- LiveViewNative Core has been updated to v0.4.0, and is now used for all internal networking
+- `liveview-native-core` has been updated to v0.4.0, and is now used for all internal networking
 
 ### Fixed
 
