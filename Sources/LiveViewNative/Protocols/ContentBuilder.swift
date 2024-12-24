@@ -504,14 +504,14 @@ public extension ContentBuilder {
             return try build(
                 element
                     .children()
-                    .filter({ $0.attributes.contains(where: { $0.name == "template" && $0.value == template }) }),
+                    .filter({ $0.attributes().contains(where: { $0.name == "template" && $0.value == template }) }),
                 in: context
             )
         } else {
             return try build(
                 element
                     .children()
-                    .filter({ !$0.attributes.contains(where: { $0.name == "template" }) }),
+                    .filter({ !$0.attributes().contains(where: { $0.name == "template" }) }),
                 in: context
             )
         }
@@ -525,7 +525,7 @@ public extension ContentBuilder {
         return try build(
             element
                 .children()
-                .filter({ $0.attributes.contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) }),
+                .filter({ $0.attributes().contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) }),
             in: context
         )
     }
@@ -572,7 +572,7 @@ public extension ContentBuilder {
         if let template {
             ViewTreeBuilder().fromNodes(
                 element.children()
-                    .filter({ $0.attributes.contains(where: { $0.name == "template" && $0.value == template }) }),
+                    .filter({ $0.attributes().contains(where: { $0.name == "template" && $0.value == template }) }),
                 context: context.context.storage
             )
                 .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
@@ -580,7 +580,7 @@ public extension ContentBuilder {
         } else {
             ViewTreeBuilder().fromNodes(
                 element.children()
-                    .filter({ !$0.attributes.contains(where: { $0.name == "template" }) }),
+                    .filter({ !$0.attributes().contains(where: { $0.name == "template" }) }),
                 context: context.context.storage
             )
                 .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
@@ -596,7 +596,7 @@ public extension ContentBuilder {
     ) -> some View {
         ViewTreeBuilder().fromNodes(
             element.children()
-                .filter({ $0.attributes.contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) }),
+                .filter({ $0.attributes().contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) }),
             context: context.context.storage
         )
             .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
@@ -611,7 +611,7 @@ public extension ContentBuilder {
     ) -> SwiftUI.Text {
         element.children()
             .lazy
-            .filter({ $0.attributes.contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) })
+            .filter({ $0.attributes().contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) })
             .first?.asElement().flatMap({ Text<R>(element: $0, overrideStylesheet: context.stylesheet).body })
                 ?? SwiftUI.Text("")
     }

@@ -43,7 +43,9 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "RoundedRectangle": "Shape<R, RoundedRectangle>(shape: RoundedRectangle(from: element))",
         "Color": "ColorView<R>()",
         "Image": "ImageView<R>()",
-        "phx-main": "PhxMain<R>()"
+        
+        // FIXME: The server should send a platform-specific tag name, or core should have the ability to split the dead render from the main app.
+        "div": "PhxMain<R>()"
     ]
     
     var platformFamilyName: String? {

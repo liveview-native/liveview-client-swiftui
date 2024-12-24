@@ -29,6 +29,7 @@ struct ModifierGenerator: ParsableCommand {
         "_PrefersDefaultFocusModifier<R>",
         "_MatchedTransitionSourceModifier<R>",
         "_NavigationTransitionModifier<R>",
+        "_FileImporterModifier<R>",
     ]
 
     static let requiredTypes: Set<String> = [
@@ -143,6 +144,8 @@ struct ModifierGenerator: ParsableCommand {
         "navigationViewStyle",
         
         "disclosureGroupStyle",
+        
+        "automationElement",
 
         // manually implemented due to argument order edge cases
         "searchScopes",
