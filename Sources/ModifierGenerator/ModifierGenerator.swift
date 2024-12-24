@@ -144,6 +144,8 @@ struct ModifierGenerator: ParsableCommand {
         "navigationViewStyle",
         
         "disclosureGroupStyle",
+        
+        "automationElement",
 
         // manually implemented due to argument order edge cases
         "searchScopes",
