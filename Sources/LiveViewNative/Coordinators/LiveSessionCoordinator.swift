@@ -176,20 +176,37 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             logger.debug("Connecting to \(originalURL.absoluteString)")
             
             state = .connecting
-            let headers = additionalHeaders ?? [:]
-            let mergedHeaders = headers.merging(configuration.headers ?? [:]) { this, _ in this }
-
-            print(httpBody.flatMap({ String(data: $0, encoding: .utf8) }))
+            
+            let cookies = HTTPCookieStorage.shared.cookies(for: self.url) ?? []
+            print(cookies)
+            let headers = (configuration.headers ?? [:])
+                .merging(additionalHeaders ?? [:]) { $1 }
+//                .merging(["Cookie": cookies.map({ "\($0.name)=\($0.value)" }).joined(separator: "; ")]) { $1 }
             
             self.liveSocket = try await LiveSocket(
                 originalURL.absoluteString,
                 LiveSessionParameters.platform,
                 ConnectOpts(
-                    headers: mergedHeaders,
+                    headers: headers,
                     body: httpBody.flatMap({ String(data: $0, encoding: .utf8) }),
                     method: httpMethod.flatMap(Method.init(_:)),
                     timeoutMs: 10_000
                 )
+            )
+            HTTPCookieStorage.shared.setCookies(
+                self.liveSocket!.cookies()
+                    .map {
+                        let components = $0.split(separator: "=", maxSplits: 1)
+                        return HTTPCookie(properties: [
+                            .originURL: self.url as NSURL,
+                            .path: "/",
+                            .name: String(components[0]),
+                            .value: String(components[1]),
+                            .expires: components[0] == "_form_demo_web_user_remember_me" ? NSDate(timeIntervalSinceNow: 60 * 60 * 24 * 365) : nil
+                        ])!
+                    },
+                for: self.url,
+                mainDocumentURL: nil
             )
             self.socket = self.liveSocket?.socket()
             
@@ -289,23 +306,28 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// This can be used to force the LiveView to reset, for example after an unrecoverable error occurs.
     public func reconnect(url: URL? = nil, httpMethod: String? = nil, httpBody: Data? = nil, headers: [String: String]? = nil) async {
-
-        do {
-            if let url {
-                try await self.disconnect(preserveNavigationPath: false)
-                self.url = url
-                self.navigationPath = [.init(url: self.url, coordinator: self.navigationPath.first!.coordinator, navigationTransition: nil, pendingView: nil)]
-            } else {
-                // preserve the navigation path, but still clear the stale documents, since they're being completely replaced.
-                try await self.disconnect(preserveNavigationPath: true)
-                for entry in self.navigationPath {
-                    entry.coordinator.document = nil
-                }
-            }
-            try await self.connect(httpMethod: httpMethod, httpBody: httpBody, additionalHeaders: headers)
-        } catch {
-            self.state = .connectionFailed(error)
+        await self.disconnect()
+        if let url {
+            self.url = url
+            self.navigationPath = [.init(url: self.url, coordinator: self.navigationPath.first!.coordinator, navigationTransition: nil, pendingView: nil)]
         }
+        try await self.connect(httpMethod: httpMethod, httpBody: httpBody, additionalHeaders: headers)
+//        do {
+//            if let url {
+//                try await self.disconnect(preserveNavigationPath: false)
+//                self.url = url
+//                self.navigationPath = [.init(url: self.url, coordinator: self.navigationPath.first!.coordinator, navigationTransition: nil, pendingView: nil)]
+//            } else {
+//                // preserve the navigation path, but still clear the stale documents, since they're being completely replaced.
+//                try await self.disconnect(preserveNavigationPath: true)
+//                for entry in self.navigationPath {
+//                    entry.coordinator.document = nil
+//                }
+//            }
+//            try await self.connect(httpMethod: httpMethod, httpBody: httpBody, additionalHeaders: headers)
+//        } catch {
+//            self.state = .connectionFailed(error)
+//        }
     }
 
     /// Creates a publisher that can be used to listen for server-sent LiveView events.

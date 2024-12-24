@@ -58,9 +58,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
-    private var eventListener: Channel.EventStream?
+//    private var eventListener: Channel.EventStream?
     private var eventListenerLoop: Task<(), any Error>?
-    private var statusListener: Channel.StatusStream?
+//    private var statusListener: Channel.StatusStream?
     private var statusListenerLoop: Task<(), any Error>?
 
     private(set) internal var liveViewModel = LiveViewModel()
@@ -238,11 +238,12 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
 
     func bindEventListener() {
-        let eventListener = self.channel!.eventStream()
-        self.eventListener = eventListener
-        self.eventListenerLoop = Task { [weak self] in
+        self.eventListenerLoop = Task { [weak self, weak channel] in
+            guard let channel else { return }
+            let eventListener = channel.eventStream()
             for try await event in eventListener {
                 guard let self else { return }
+                guard !Task.isCancelled else { return }
                 do {
                     switch event.event {
                     case .user(user: "diff"):
@@ -306,9 +307,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         let channel = liveChannel.channel()
         self.channel = channel
         
-        let statusListener = channel.statusStream()
-        self.statusListener = statusListener
-        statusListenerLoop = Task { @MainActor [weak self] in
+        statusListenerLoop = Task { @MainActor [weak self, unowned channel] in
+            let statusListener = channel.statusStream()
             for try await status in statusListener {
                 self?.internalState = switch status {
                 case .joined:
@@ -326,7 +326,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         self.bindEventListener()
         
         self.document = liveChannel.document()
-        print(self.document!.toString())
         self.bindDocumentListener()
         
         switch liveChannel.joinPayload() {
