@@ -162,7 +162,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// - Parameter httpMethod: The HTTP method to use for the dead render. Defaults to `GET`.
     /// - Parameter httpBody: The HTTP body to send when requesting the dead render.
-    public func connect(httpMethod: String? = nil, httpBody: Data? = nil) async {
+    public func connect(httpMethod: String? = nil, httpBody: Data? = nil, additionalHeaders: [String: String]? = nil) async {
         do {
             switch state {
             case .setup, .disconnected, .connectionFailed:
@@ -176,14 +176,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             logger.debug("Connecting to \(originalURL.absoluteString)")
             
             state = .connecting
-            
+            let headers = additionalHeaders ?? [:]
+            let mergedHeaders = headers.merging(configuration.headers ?? [:]) { this, _ in this }
+
             print(httpBody.flatMap({ String(data: $0, encoding: .utf8) }))
             
             self.liveSocket = try await LiveSocket(
                 originalURL.absoluteString,
                 LiveSessionParameters.platform,
                 ConnectOpts(
-                    headers: configuration.headers,
+                    headers: mergedHeaders,
                     body: httpBody.flatMap({ String(data: $0, encoding: .utf8) }),
                     method: httpMethod.flatMap(Method.init(_:)),
                     timeoutMs: 10_000
@@ -286,7 +288,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// All state will be lost when the reload occurs, as an entirely new LiveView is mounted.
     ///
     /// This can be used to force the LiveView to reset, for example after an unrecoverable error occurs.
-    public func reconnect(url: URL? = nil, httpMethod: String? = nil, httpBody: Data? = nil) async {
+    public func reconnect(url: URL? = nil, httpMethod: String? = nil, httpBody: Data? = nil, headers: [String: String]? = nil) async {
+
         do {
             if let url {
                 try await self.disconnect(preserveNavigationPath: false)
@@ -299,7 +302,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     entry.coordinator.document = nil
                 }
             }
-            try await self.connect(httpMethod: httpMethod, httpBody: httpBody)
+            try await self.connect(httpMethod: httpMethod, httpBody: httpBody, additionalHeaders: headers)
         } catch {
             self.state = .connectionFailed(error)
         }

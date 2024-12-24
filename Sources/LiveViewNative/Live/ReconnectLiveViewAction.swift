@@ -11,14 +11,14 @@ import SwiftUI
 @MainActor
 public struct ReconnectLiveViewAction {
     let baseURL: URL?
-    let action: (_ url: URL?, _ httpMethod: String?, _ httpBody: Data?) async -> ()
+    let action: (_ url: URL?, _ httpMethod: String?, _ httpBody: Data?, _ headers: [String: String]?) async -> ()
     
     public func callAsFunction(_ style: ReconnectionStyle = .automatic) async {
         switch style {
         case .automatic:
-            await action(nil, nil, nil)
+            await action(nil, nil, nil, nil)
         case .restart:
-            await action(baseURL, nil, nil)
+            await action(baseURL, nil, nil, nil)
         }
     }
     
@@ -33,7 +33,7 @@ public struct ReconnectLiveViewAction {
 extension EnvironmentValues {
     @MainActor
     private enum ReconnectLiveViewActionKey: @preconcurrency EnvironmentKey {
-        static let defaultValue: ReconnectLiveViewAction = .init(baseURL: nil, action: { _, _, _ in })
+        static let defaultValue: ReconnectLiveViewAction = .init(baseURL: nil, action: { _, _, _, _ in })
     }
     
     /// An action that calls ``LiveSessionCoordinator/reconnect(url:httpMethod:httpBody:)`` in the current context.
