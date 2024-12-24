@@ -89,8 +89,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.url = url.appending(path: "").absoluteURL
 
         self.configuration = config
-
-        config.urlSessionConfiguration.httpCookieStorage = .shared
+        
+        // load cookies into core
+        for cookie in HTTPCookieStorage.shared.cookies(for: url) ?? [] {
+            try? LiveViewNativeCore.storeSessionCookie("\(cookie.name)=\(cookie.value)", self.url.absoluteString)
+        }
         
         self.navigationPath = [.init(url: url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
 
@@ -177,11 +180,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             state = .connecting
             
-            let cookies = HTTPCookieStorage.shared.cookies(for: self.url) ?? []
-            print(cookies)
             let headers = (configuration.headers ?? [:])
                 .merging(additionalHeaders ?? [:]) { $1 }
-//                .merging(["Cookie": cookies.map({ "\($0.name)=\($0.value)" }).joined(separator: "; ")]) { $1 }
             
             self.liveSocket = try await LiveSocket(
                 originalURL.absoluteString,
@@ -193,21 +193,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     timeoutMs: 10_000
                 )
             )
+            
+            // save cookies to storage
             HTTPCookieStorage.shared.setCookies(
-                self.liveSocket!.cookies()
-                    .map {
-                        let components = $0.split(separator: "=", maxSplits: 1)
-                        return HTTPCookie(properties: [
-                            .originURL: self.url as NSURL,
-                            .path: "/",
-                            .name: String(components[0]),
-                            .value: String(components[1]),
-                            .expires: components[0] == "_form_demo_web_user_remember_me" ? NSDate(timeIntervalSinceNow: 60 * 60 * 24 * 365) : nil
-                        ])!
-                    },
+                (self.liveSocket!.joinHeaders()["set-cookie"] ?? []).flatMap {
+                    HTTPCookie.cookies(withResponseHeaderFields: ["Set-Cookie": $0], for: URL(string: self.liveSocket!.joinUrl())!)
+                },
                 for: self.url,
                 mainDocumentURL: nil
             )
+            
             self.socket = self.liveSocket?.socket()
             
             self.rootLayout = self.liveSocket!.deadRender()
