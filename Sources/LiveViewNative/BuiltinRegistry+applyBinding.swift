@@ -71,10 +71,8 @@ fileprivate struct ProvidedBindingsReader<Content: View, ApplyBinding: View>: Vi
                 applyBinding()
             }
         }
-        .onPreferenceChange(_ProvidedBindingsKey.self) { value in
-            MainActor.assumeIsolated {
-                self.providesBinding = value.contains(binding)
-            }
+        .onPreferenceChange(_ProvidedBindingsKey.self) { [$providesBinding] value in
+            $providesBinding.wrappedValue = value.contains(binding)
         }
     }
 }
