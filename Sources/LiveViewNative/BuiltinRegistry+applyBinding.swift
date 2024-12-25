@@ -8,7 +8,7 @@
 import SwiftUI
 import LiveViewNativeCore
 
-public enum _EventBinding: String {
+public enum _EventBinding: String, Sendable {
     case windowFocus = "phx-window-focus"
     case windowBlur = "phx-window-blur"
     case focus = "phx-focus"
