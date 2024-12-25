@@ -8,7 +8,7 @@
 import SwiftUI
 import LiveViewNativeCore
 
-public enum _EventBinding: String {
+public enum _EventBinding: String, Sendable {
     case windowFocus = "phx-window-focus"
     case windowBlur = "phx-window-blur"
     case focus = "phx-focus"
@@ -71,7 +71,11 @@ fileprivate struct ProvidedBindingsReader<Content: View, ApplyBinding: View>: Vi
                 applyBinding()
             }
         }
-        .onPreferenceChange(_ProvidedBindingsKey.self) { self.providesBinding = $0.contains(binding) }
+        .onPreferenceChange(_ProvidedBindingsKey.self) { value in
+            MainActor.assumeIsolated {
+                self.providesBinding = value.contains(binding)
+            }
+        }
     }
 }
 
