@@ -1,6 +1,6 @@
 defmodule LiveViewNative.SwiftUI.MixProject do
   use Mix.Project
-  @version "0.3.1"
+  @version "0.4.0-rc.0"
   @source_url "https://github.com/liveview-native/liveview-client-swiftui"
 
   def project do
@@ -54,8 +54,8 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       {:makeup_json, "~> 0.1.0", only: [:docs, :test]},
       {:makeup_eex, ">= 0.1.1"},
       {:floki, ">= 0.30.0", only: :test},
-      {:live_view_native, github: "liveview-native/live_view_native", override: true},
-      {:live_view_native_stylesheet, "~> 0.3.1", only: :test},
+      {:live_view_native, "~> 0.4.0-rc.0"},
+      {:live_view_native_stylesheet, "~> 0.3.2", only: :test},
       {:live_view_native_live_form, github: "liveview-native/liveview-native-live-form", only: :test},
       {:gettext, "~> 0.20", only: :test},
       {:live_view_native_test_endpoint, github: "liveview-native/live_view_native_test_endpoint", branch: "main", only: :test},
@@ -73,7 +73,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       groups_for_extras: groups_for_extras(),
       main: "readme",
       source_url: @source_url,
-      source_ref: "v#{@version}",
+      source_ref: @version,
       before_closing_body_tag: %{
         html: """
         <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.3/dist/mermaid.min.js"></script>

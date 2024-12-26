@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased]
+## [0.4.0]
 
 ### Added
 
@@ -16,10 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The `data-confirm` attribute can be added to elements to show a confirmation dialog before sending an event
 
 ### Changed
+
 - Swift 6 is now required to build LiveView Native applications
 - `Section` now uses the `isExpanded` and `phx-change` attributes to enable collapsing in sidebar-styled `List` views
 - `liveview-native-core` has been updated to v0.4.0, and is now used for all internal networking
 - `LiveConnectionError` was removed, use error types from `LiveViewNativeCore` instead
+
+### Removed
+
+- `sigil_SWIFTUI`
 
 ### Fixed
 - Views will now update properly when the server changes the value of a form field (#1483)
