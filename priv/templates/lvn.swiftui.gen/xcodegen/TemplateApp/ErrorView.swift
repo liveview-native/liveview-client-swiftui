@@ -5,6 +5,7 @@
 
 import SwiftUI
 import LiveViewNative
+import LiveViewNativeCore
 
 struct ErrorView: View {
     let error: Error
@@ -102,5 +103,5 @@ struct ErrorView: View {
 }
 
 #Preview {
-   ErrorView(error: LiveConnectionError.initialParseError(missingOrInvalid: .csrfToken))
+    ErrorView(error: LiveSocketError.NoDocumentInJoinPayload)
 }
