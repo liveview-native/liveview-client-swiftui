@@ -10,7 +10,7 @@ import SwiftUI
 /// Container that lays out its children in a vertical line.
 ///
 /// ```html
-/// <VStack>
+/// <VStack alignment="leading">
 ///     <Text>Top</Text>
 ///     <Text>Bottom</Text>
 /// </VStack>
