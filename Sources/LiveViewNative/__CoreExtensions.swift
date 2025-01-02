@@ -7,6 +7,7 @@
 
 import LiveViewNativeCore
 import Foundation
+import Combine
 
 public extension LiveViewNativeCore.Method {
     init?(_ rawValue: String) {
@@ -133,3 +134,5 @@ public extension Channel {
 //        StatusStream(for: self)
 //    }
 //}
+
+extension JsonDecoder: TopLevelDecoder {}

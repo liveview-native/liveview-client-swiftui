@@ -55,7 +55,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     internal let builder = ViewTreeBuilder<R>()
 
-    private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
+    private(set) internal var eventSubject = PassthroughSubject<(String, Json), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
 //    private var eventListener: Channel.EventStream?
@@ -167,7 +167,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     ///     }
     /// }
     /// ```
-    public func receiveEvent(_ event: String) -> some Publisher<Payload, Never> {
+    public func receiveEvent(_ event: String) -> some Publisher<Json, Never> {
         eventSubject
             .filter { $0.0 == event }
             .map(\.1)
@@ -180,10 +180,18 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// Handlers registered using this method will receive events for the lifetime of the coordinator.
     /// To create an event listener that can later be cancelled, use ``receiveEvent(_:)``.
-    public func handleEvent(_ event: String, handler: @escaping (Payload) -> Void) {
+    public func handleEvent(_ event: String, handler: @escaping (Json) -> Void) {
         receiveEvent(event)
             .sink(receiveValue: handler)
             .store(in: &eventHandlers)
+    }
+    
+    public func receiveEvent<T>(_ event: String, for type: T.Type) -> some Publisher<T, Never>
+        where T: Decodable
+    {
+        receiveEvent(event)
+            .decode(type: type, decoder: JsonDecoder())
+            .catch({ _ in Empty() })
     }
 
     private func handleDiff(payload: LiveViewNativeCore.Json, baseURL: URL) throws {
@@ -229,11 +237,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             return
         }
         for case let .array(event) in events {
-            guard case let .str(string: name) = event[0],
-                  case let .object(object: value) = event[1] else {
+            guard case let .str(string: name) = event[0] else {
                 continue
             }
-            eventSubject.send((name, value))
+            eventSubject.send((name, event[1]))
         }
     }
 

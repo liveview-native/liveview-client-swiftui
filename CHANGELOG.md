@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `NavigationLink` can perform a replace navigation by setting the `data-phx-link-state` attribute to `replace`
 - `NavigationLink` takes a `destination` template to customize the connecting phase View for its navigation event.
 - The `data-confirm` attribute can be added to elements to show a confirmation dialog before sending an event
+- `LiveSessionCoordinator.receiveEvent(_:for:)` and `LiveViewCoordinator.receiveEvent(_:for:)` to receive events with `Decodable` type payloads
 
 ### Changed
 
@@ -21,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Section` now uses the `isExpanded` and `phx-change` attributes to enable collapsing in sidebar-styled `List` views
 - `liveview-native-core` has been updated to v0.4.0, and is now used for all internal networking
 - `LiveConnectionError` was removed, use error types from `LiveViewNativeCore` instead
+- `LiveSessionCoordinator.handleEvent(_:handler:)`, `LiveSessionCoordinator.receiveEvent(_:)`, `LiveViewCoordinator.handleEvent(_:handler:)`, and `LiveViewCoordinator.receiveEvent(_:)` will now return a `LiveViewNativeCore.Json` type instead of `[String: Any]` 
 
 ### Removed
 

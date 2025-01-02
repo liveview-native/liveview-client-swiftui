@@ -55,7 +55,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     private var mergedEventSubjects: AnyCancellable?
-    private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
+    private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Json)), Never>()
     private var eventHandlers = Set<AnyCancellable>()
     
     private var reconnectAttempts = 0
@@ -333,10 +333,19 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// This event will be received from every LiveView handled by this session coordinator.
     ///
     /// See ``LiveViewCoordinator/receiveEvent(_:)`` for more details.
-    public func receiveEvent(_ event: String) -> some Publisher<(LiveViewCoordinator<R>, Payload), Never> {
+    public func receiveEvent(_ event: String) -> some Publisher<(LiveViewCoordinator<R>, Json), Never> {
         eventSubject
             .filter { $0.1.0 == event }
             .map({ ($0.0, $0.1.1) })
+    }
+    
+    public func receiveEvent<T>(_ event: String, for type: T.Type) -> some Publisher<(LiveViewCoordinator<R>, T), Never>
+        where T: Decodable
+    {
+        eventSubject
+            .filter { $0.1.0 == event }
+            .tryMap({ ($0.0, try JsonDecoder().decode(T.self, from: $0.1.1)) })
+            .catch({ _ in Empty() })
     }
 
     /// Permanently registers a handler for a server-sent LiveView event.
@@ -347,7 +356,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// This event handler will be added to every LiveView handled by this session coordinator.
     ///
     /// See ``LiveViewCoordinator/handleEvent(_:handler:)`` for more details.
-    public func handleEvent(_ event: String, handler: @escaping (LiveViewCoordinator<R>, Payload) -> Void) {
+    public func handleEvent(_ event: String, handler: @escaping (LiveViewCoordinator<R>, Json) -> Void) {
         receiveEvent(event)
             .sink(receiveValue: handler)
             .store(in: &eventHandlers)
