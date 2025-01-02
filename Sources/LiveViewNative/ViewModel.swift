@@ -251,6 +251,12 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         url: URL,
         coordinator: LiveViewCoordinator<some RootRegistry>
     ) async throws {
+        let shouldRelinquishAccess = url.startAccessingSecurityScopedResource()
+        defer {
+            if shouldRelinquishAccess {
+                url.stopAccessingSecurityScopedResource()
+            }
+        }
         return try await queueFileUpload(
             name: name,
             id: id,
