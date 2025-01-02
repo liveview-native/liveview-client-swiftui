@@ -229,8 +229,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             return
         }
         for case let .array(event) in events {
-            guard let name = event[0] as? String,
-                  let value = event[1] as? Payload else {
+            guard case let .str(string: name) = event[0],
+                  case let .object(object: value) = event[1] else {
                 continue
             }
             eventSubject.send((name, value))
