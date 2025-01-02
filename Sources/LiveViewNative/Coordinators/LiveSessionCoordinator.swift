@@ -339,7 +339,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             .map({ ($0.0, $0.1.1) })
     }
     
-    public func receiveEvent<T>(_ event: String, for type: T.Type) -> some Publisher<(LiveViewCoordinator<R>, T), Never>
+    public func receiveEvent<T>(_ event: String, for type: T.Type = T.self) -> some Publisher<(LiveViewCoordinator<R>, T), Never>
         where T: Decodable
     {
         eventSubject

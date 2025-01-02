@@ -186,7 +186,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             .store(in: &eventHandlers)
     }
     
-    public func receiveEvent<T>(_ event: String, for type: T.Type) -> some Publisher<T, Never>
+    public func receiveEvent<T>(_ event: String, for type: T.Type = T.self) -> some Publisher<T, Never>
         where T: Decodable
     {
         receiveEvent(event)
