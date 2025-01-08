@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Section` now uses the `isExpanded` and `phx-change` attributes to enable collapsing in sidebar-styled `List` views
 - `liveview-native-core` has been updated to v0.4.0, and is now used for all internal networking
 - `LiveConnectionError` was removed, use error types from `LiveViewNativeCore` instead
+- all components including the generated CoreComponents are now arity or 2 with `_interface`
 
 ### Removed
 

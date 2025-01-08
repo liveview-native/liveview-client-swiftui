@@ -85,7 +85,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   slot :inner_block
 
-  def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
+  def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns, interface) do
     assigns =
       assigns
       |> assign(field: nil, id: assigns.id || field.id)
@@ -107,16 +107,16 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
       |> Kernel.++(Enum.reverse(styles))
       |> Enum.join(";")
 
-    input(put_in(assigns, [:rest, :style], style))
+    input(put_in(assigns, [:rest, :style], style), interface)
   end
 
-  def input(%{type: "hidden"} = assigns) do
+  def input(%{type: "hidden"} = assigns, _interface) do
     ~LVN"""
     <LiveHiddenField id={@id} name={@name} value={@value} {@rest} />
     """
   end
 
-  def input(%{type: "TextFieldLink"} = assigns) do
+  def input(%{type: "TextFieldLink"} = assigns, _interface) do
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
@@ -130,7 +130,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  def input(%{type: "DatePicker"} = assigns) do
+  def input(%{type: "DatePicker"} = assigns, _interface) do
     ~LVN"""
     <VStack alignment="leading">
       <DatePicker id={@id} name={@name} selection={@value} {@rest}>
@@ -141,7 +141,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  def input(%{type: "MultiDatePicker"} = assigns) do
+  def input(%{type: "MultiDatePicker"} = assigns, _interface) do
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
@@ -153,7 +153,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  def input(%{type: "Picker"} = assigns) do
+  def input(%{type: "Picker"} = assigns, _interface) do
     ~LVN"""
     <VStack alignment="leading">
       <Picker id={@id} name={@name} selection={@value} {@rest}>
@@ -170,7 +170,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  def input(%{type: "Slider"} = assigns) do
+  def input(%{type: "Slider"} = assigns, _interface) do
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
@@ -182,7 +182,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  def input(%{type: "Stepper"} = assigns) do
+  def input(%{type: "Stepper"} = assigns, _interface) do
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
@@ -194,7 +194,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  def input(%{type: "TextEditor"} = assigns) do
+  def input(%{type: "TextEditor"} = assigns, _interface) do
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
@@ -206,7 +206,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  def input(%{type: "TextField"} = assigns) do
+  def input(%{type: "TextField"} = assigns, _interface) do
     ~LVN"""
     <VStack alignment="leading">
       <TextField id={@id} name={@name} text={@value} prompt={@prompt} {@rest}><%%= @placeholder || @label %></TextField>
@@ -215,7 +215,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  def input(%{type: "SecureField"} = assigns) do
+  def input(%{type: "SecureField"} = assigns, _interface) do
     ~LVN"""
     <VStack alignment="leading">
       <SecureField id={@id} name={@name} text={@value} prompt={@prompt} {@rest}><%%= @placeholder || @label %></SecureField>
@@ -224,7 +224,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  def input(%{type: "Toggle"} = assigns) do
+  def input(%{type: "Toggle"} = assigns, _interface) do
     ~LVN"""
     <VStack alignment="leading">
       <LabeledContent>
@@ -242,7 +242,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   @doc type: :component
   slot :inner_block, required: true
 
-  def error(assigns) do
+  def error(assigns, _interface) do
     ~LVN"""
     <Group style="font(.caption); foregroundStyle(.red)">
       <%%= render_slot(@inner_block) %>
@@ -261,7 +261,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   slot :subtitle
   slot :actions
 
-  def header(assigns) do
+  def header(assigns, _interface) do
     ~LVN"""
     <VStack style={[
       "navigationTitle(:title)",
@@ -303,7 +303,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   attr :on_cancel, :string, default: nil
   slot :inner_block, required: true
 
-  def modal(assigns) do
+  def modal(assigns, _interface) do
     ~LVN"""
     <VStack
       id={@id}
@@ -335,7 +335,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   slot :inner_block, doc: "the optional inner block that renders the flash message"
 
-  def flash(assigns) do
+  def flash(assigns, _interface) do
     assigns = assign_new(assigns, :id, fn -> "flash-#{assigns.kind}" end)
 
     ~LVN"""
@@ -367,7 +367,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   attr :flash, :map, required: true, doc: "the map of flash messages"
   attr :id, :string, default: "flash-group", doc: "the optional id of flash container"
 
-  def flash_group(assigns) do
+  def flash_group(assigns, _interface) do
     ~LVN"""
     <Group id={@id}>
       <.flash kind={:info} title={"Success!"} flash={@flash} />
@@ -408,7 +408,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     attr :footer, :string, doc: "text to use as a section's footer"
   end
 
-  def simple_form(assigns) do
+  def simple_form(assigns, _interface) do
     ~LVN"""
     <.form :let={f} for={@for} as={@as} {@rest}>
       <Form>
@@ -449,7 +449,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   slot :inner_block, required: true
 
-  def button(%{ type: "submit" } = assigns) do
+  def button(%{ type: "submit" } = assigns, _interface) do
     ~LVN"""
     <Section>
       <LiveSubmitButton style={[
@@ -469,7 +469,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  def button(assigns) do
+  def button(assigns, _interface) do
     ~LVN"""
     <Button {@rest}>
       <%%= render_slot(@inner_block) %>
@@ -503,7 +503,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   slot :action, doc: "the slot for showing user actions in the last table column"
 
-  def table(assigns) do
+  def table(assigns, _interface) do
     ~LVN"""
     <Table id={@id}>
       <Group template="columns">
@@ -543,7 +543,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     attr :title, :string, required: true
   end
 
-  def list(assigns) do
+  def list(assigns, _interface) do
     ~LVN"""
     <List>
       <LabeledContent :for={item <- @item}>
@@ -567,7 +567,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   attr :name, :string, required: true
   attr :rest, :global
 
-  def icon(assigns) do
+  def icon(assigns, _interface) do
     ~LVN"""
     <Image systemName={@name} {@rest} />
     """
@@ -621,7 +621,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     attr :style, :string
   end
 
-  def image(assigns) do
+  def image(assigns, _interface) do
     ~LVN"""
     <AsyncImage url={@url} {@rest}>
       <Group template="phase.empty" :if={@empty != []}>
@@ -633,13 +633,13 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  defp image_success(%{ slot: [%{ inner_block: nil }] } = assigns) do
+  defp image_success(%{ slot: [%{ inner_block: nil }] } = assigns, _interface) do
     ~LVN"""
     <AsyncImage image template="phase.success" :for={slot <- @slot} class={Map.get(slot, :class)} {%{ style: Map.get(slot, :style) }} />
     """
   end
 
-  defp image_success(assigns) do
+  defp image_success(assigns, _interface) do
     ~LVN"""
     <Group template="phase.success" :if={@slot != []}>
       <%%= render_slot(@slot) %>
@@ -647,13 +647,13 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
-  defp image_failure(%{ slot: [%{ inner_block: nil }] } = assigns) do
+  defp image_failure(%{ slot: [%{ inner_block: nil }] } = assigns, _interface) do
     ~LVN"""
     <AsyncImage error template="phase.failure" :for={slot <- @slot} class={Map.get(slot, :class)} {%{ style: Map.get(slot, :style) }} />
     """
   end
 
-  defp image_failure(assigns) do
+  defp image_failure(assigns, _interface) do
     ~LVN"""
     <Group template="phase.failure" :if={@slot != []}>
       <%%= render_slot(@slot) %>
