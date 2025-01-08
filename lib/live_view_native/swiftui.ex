@@ -5,7 +5,7 @@ defmodule LiveViewNative.SwiftUI do
     format: :swiftui,
     component: LiveViewNative.SwiftUI.Component,
     module_suffix: :SwiftUI,
-    template_engine: LiveViewNative.Engine,
+    template_engine: LiveViewNative.Template.Engine,
     stylesheet_rules_parser: LiveViewNative.SwiftUI.RulesParser,
     test_client: %LiveViewNativeTest.SwiftUI.TestClient{}
 

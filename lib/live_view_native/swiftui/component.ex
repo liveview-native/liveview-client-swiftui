@@ -198,7 +198,7 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   )
 
-  def link(%{navigate: to} = assigns) when is_binary(to) do
+  def link(%{navigate: to} = assigns, _interface) when is_binary(to) do
     ~LVN"""
     <NavigationLink
       destination={@navigate}
@@ -211,7 +211,7 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   end
 
-  def link(%{patch: to} = assigns) when is_binary(to) do
+  def link(%{patch: to} = assigns, _interface) when is_binary(to) do
     ~LVN"""
     <NavigationLink
       destination={@patch}
@@ -224,7 +224,7 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   end
 
-  def link(%{href: href} = assigns) when href != "#" and not is_nil(href) do
+  def link(%{href: href} = assigns, _interface) when href != "#" and not is_nil(href) do
     href = Phoenix.LiveView.Utils.valid_destination!(href, "<.link>")
     assigns = assign(assigns, :href, href)
 
@@ -235,7 +235,7 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   end
 
-  def link(%{} = assigns) do
+  def link(%{} = assigns, _interface) do
     ~LVN"""
     <NavigationLink destination="#" {@rest}>
       <%= render_slot(@inner_block) %>
@@ -288,7 +288,7 @@ defmodule LiveViewNative.SwiftUI.Component do
 
   attr :rest, :global, include: ~w(webkitdirectory required disabled capture form)
 
-  def live_file_input(%{upload: upload} = assigns) do
+  def live_file_input(%{upload: upload} = assigns, _interface) do
     assigns = assign_new(assigns, :accept, fn -> upload.accept != :any && upload.accept end)
 
     ~LVN"""
@@ -349,7 +349,7 @@ defmodule LiveViewNative.SwiftUI.Component do
 
   attr :rest, :global, []
 
-  def live_img_preview(assigns) do
+  def live_img_preview(assigns, _interface) do
     ~LVN"""
     <Image
       id={@id || "phx-preview-#{@entry.ref}"}
