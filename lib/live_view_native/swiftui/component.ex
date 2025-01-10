@@ -8,8 +8,9 @@ defmodule LiveViewNative.SwiftUI.Component do
   use LiveViewNative.Component
 
   defmacro __using__(_) do
-    quote location: :keep do
+    quote do
       import LiveViewNative.Component, only: [sigil_LVN: 2]
+      import unquote(__MODULE__)
     end
   end
 
