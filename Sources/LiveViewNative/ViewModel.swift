@@ -164,14 +164,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     }
     
     public func buildFormURLComponents() throws -> URLComponents {
-        let data = try data.mapValues { value in
-            if let value = value as? String {
-                return value
-            } else {
-                return try value.formQueryEncoded()
-            }
-        }
-
+        let data = try toDictionary()
         var components = URLComponents()
         components.queryItems = data.map {
             URLQueryItem(name: $0.key, value: $0.value)
@@ -179,6 +172,16 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         
         return components
     }
+    
+    public func toDictionary() throws -> [String: String] {
+            return try data.mapValues { value in
+                if let value = value as? String {
+                    return value
+                } else {
+                    return try value.formQueryEncoded()
+                }
+            }
+        }
 
     @MainActor
     private func pushFormEvent(_ event: String) async throws {
@@ -269,8 +272,8 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         fileName: String,
         coordinator: LiveViewCoordinator<some RootRegistry>
     ) async throws {
-        guard let liveChannel = coordinator.liveChannel
-        else { return }
+        //guard let liveChannel = coordinator.liveChannel
+        //else { return }
         
         let file = LiveFile(
             contents,
@@ -280,34 +283,35 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             id
         )
         if let changeEventName {
-            let replyPayload = try await coordinator.liveChannel!.channel().call(
-                event: .user(user: "event"),
-                payload: .jsonPayload(json: .object(object: [
-                    "type": .str(string: "form"),
-                    "event": .str(string: changeEventName),
-                    "value": .str(string: "_target=\(name)"),
-                    "uploads": .object(object: [
-                        id: .array(array: [
-                            .object(object: [
-                                "path": .str(string: fileName),
-                                "ref": .str(string: String(coordinator.nextUploadRef())),
-                                "last_modified": .numb(number: .posInt(pos: UInt64(Date().timeIntervalSince1970 * 1000))), // in milliseconds
-                                "name": .str(string: fileName),
-                                "relative_path": .str(string: ""),
-                                "type": .str(string: fileType.preferredMIMEType!),
-                                "size": .numb(number: .posInt(pos: UInt64(contents.count)))
-                            ])
-                        ])
-                    ])
-                ])),
-                timeout: 10_000
-            )
-            try await coordinator.handleEventReplyPayload(replyPayload)
+//            let replyPayload = try await coordinator.liveChannel!.channel().call(
+//                event: .user(user: "event"),
+//                payload: .jsonPayload(json: .object(object: [
+//                    "type": .str(string: "form"),
+//                    "event": .str(string: changeEventName),
+//                    "value": .str(string: "_target=\(name)"),
+//                    "uploads": .object(object: [
+//                        id: .array(array: [
+//                            .object(object: [
+//                                "path": .str(string: fileName),
+//                                "ref": .str(string: String(coordinator.nextUploadRef())),
+//                                "last_modified": .numb(number: .posInt(pos: UInt64(Date().timeIntervalSince1970 * 1000))), // in milliseconds
+//                                "name": .str(string: fileName),
+//                                "relative_path": .str(string: ""),
+//                                "type": .str(string: fileType.preferredMIMEType!),
+//                                "size": .numb(number: .posInt(pos: UInt64(contents.count)))
+//                            ])
+//                        ])
+//                    ])
+//                ])),
+//                timeout: 10_000
+//            )
+//            try await coordinator.handleEventReplyPayload(replyPayload)
         }
         self.fileUploads.append(.init(
             id: id,
             data: contents,
-            upload: { try await liveChannel.uploadFile(file) }
+            // TODO: put the uploadFile function on the pseudo channel
+            upload: { /* try await liveChannel.uploadFile(file) */ }
         ))
     }
 }

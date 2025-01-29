@@ -45,8 +45,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     @Published private(set) var stylesheet: Stylesheet<R>?
 
     // Socket connection
-    var liveSocket: LiveViewNativeCore.LiveSocket?
-    var socket: LiveViewNativeCore.Socket?
+    //var liveSocket: LiveViewNativeCore.LiveSocket?
+    //var socket: LiveViewNativeCore.Socket?
 
     private var liveReloadChannel: LiveViewNativeCore.LiveChannel?
     private var liveReloadListener: Channel.EventStream?
@@ -60,6 +60,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     
     private var reconnectAttempts = 0
     
+    // TODO: Once this works sub out the rest
+    private var persistence: SimpleStore?
+    private var eventHandler: SimpleEventHandler
+    private var patchHandler: SimplePatchHandler
+    
+    private var liveviewClient: LiveViewClient?
+    private var builder: LiveViewClientBuilder
+    
+    
+
     /// Positions for `<ScrollView>` elements with an explicit ID.
     ///
     /// These positions are used for scroll restoration on back navigation.
@@ -80,7 +90,15 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.init(host.url, config: config, customRegistryType: customRegistryType)
     }
-
+    
+    public func clientChannel() -> LiveViewClientChannel? {
+        self.liveviewClient?.channel()
+    }
+    
+    public func status() -> SocketStatus {
+        (try? self.liveviewClient?.status()) ?? .disconnected
+    }
+    
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
@@ -88,12 +106,24 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     public init(_ url: URL, config: LiveSessionConfiguration = .init(), customRegistryType _: R.Type = R.self) {
         self.url = url.appending(path: "").absoluteURL
 
+        
+        self.patchHandler = SimplePatchHandler({ _, _, _ in })
+        self.eventHandler = SimpleEventHandler(
+            event_callback: { _ in },
+            chan_status_callback: { _ in },
+            sock_status_callback: { _ in },
+            change_callback: { _, _, _, _ in }
+        )
+
+        self.builder = LiveViewClientBuilder();
+        
+        self.builder.setPatchHandler(patchHandler)
+//        self.builder.setPersistenceProvider(persistence)
+        self.builder.setLiveChannelEventHandler(eventHandler)
+        self.builder.setLogLevel(.debug)
+
         self.configuration = config
         
-        // load cookies into core
-        for cookie in HTTPCookieStorage.shared.cookies(for: url) ?? [] {
-            try? LiveViewNativeCore.storeSessionCookie("\(cookie.name)=\(cookie.value)", self.url.absoluteString)
-        }
         
         self.navigationPath = [.init(url: url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
 
@@ -103,28 +133,49 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         .sink(receiveValue: { [weak self] value in
             self?.eventSubject.send(value)
         })
+        
+        self.eventHandler.viewReloadSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newView in
+                guard let self else { return }
+                guard let last = self.navigationPath.last else { return }
+                if let client = self.liveviewClient {
+                    last.coordinator.join(client, self.eventHandler, self.patchHandler)
+                }
+        }.store(in: &cancellables)
 
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
             Task {
-                let last_channel = prev.last?.coordinator.liveChannel!
-                try await prev.last?.coordinator.disconnect()
-                if prev.count > next.count {
-                    // back navigation (we could be going back multiple pages at once, so use `traverseTo` instead of `back`)
-                    let targetEntry = self.liveSocket!.getEntries()[next.count - 1]
-                    next.last?.coordinator.join(
-                        try await self.liveSocket!.traverseTo(targetEntry.id, last_channel, nil)
-                    )
-                } else if next.count > prev.count && prev.count > 0 {
-                    // forward navigation (from `redirect` or `<NavigationLink>`)
-                    next.last?.coordinator.join(
-                        try await self.liveSocket!.navigate(next.last!.url.absoluteString, last_channel, NavOptions(action: .push))
-                    )
-                } else if next.count == prev.count {
-                    guard let liveChannel = try await self.liveSocket?.navigate(next.last!.url.absoluteString, last_channel, NavOptions(action: .replace))
-                    else { return }
-                    next.last?.coordinator.join(liveChannel)
-                }
+                
+                //working nav code
+                 let next_url = next.last!.url.absoluteString
+//                 try await prev.last?.coordinator.disconnect()
+                 var opts = NavOptions()
+                 opts.joinParams = .some([ "_interface": .object(object: LiveSessionParameters.platformParams)])
+                 if let client = self.liveviewClient {
+                    try await client.navigate(next_url, opts)
+                 }
+                
+                 //next.last?.coordinator.join(ch)
+//                let last_channel = prev.last?.coordinator.liveChannel
+//                try await prev.last?.coordinator.disconnect()
+//                if prev.count > next.count {
+//                    // back navigation (we could be going back multiple pages at once, so use `traverseTo` instead of `back`)
+//                    let targetEntry = self.liveSocket!.getEntries()[next.count - 1]
+//                    next.last?.coordinator.join(
+//                        try await self.liveSocket!.traverseTo(targetEntry.id, last_channel!, nil)
+//                    )
+//                } else if next.count > prev.count && prev.count > 0 {
+//                    // forward navigation (from `redirect` or `<NavigationLink>`)
+//                    next.last?.coordinator.join(
+//                        try await self.liveSocket!.navigate(next.last!.url.absoluteString, last_channel!, NavOptions(action: .push))
+//                    )
+//                } else if next.count == prev.count {
+//                    guard let liveChannel = try await self.liveSocket?.navigate(next.last!.url.absoluteString, last_channel!, NavOptions(action: .replace))
+//                    else { return }
+//                    next.last?.coordinator.join(liveChannel)
+//                }
             }
         }.store(in: &cancellables)
         // Receive events from all live views.
@@ -183,31 +234,38 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             let headers = (configuration.headers ?? [:])
                 .merging(additionalHeaders ?? [:]) { $1 }
-            
-            self.liveSocket = try await LiveSocket(
-                originalURL.absoluteString,
-                LiveSessionParameters.platform,
-                ConnectOpts(
-                    headers: headers,
-                    body: httpBody.flatMap({ String(data: $0, encoding: .utf8) }),
-                    method: httpMethod.flatMap(Method.init(_:)),
-                    timeoutMs: 10_000
-                )
+
+            let opts = ClientConnectOpts(
+                joinParams: .some([ "_interface": .object(object: LiveSessionParameters.platformParams)]),
+                headers: .some(headers),
+                method: Method.init(httpMethod ?? "Get"),
+                requestBody: httpBody
             )
             
-            // save cookies to storage
-            HTTPCookieStorage.shared.setCookies(
-                (self.liveSocket!.joinHeaders()["set-cookie"] ?? []).flatMap {
-                    HTTPCookie.cookies(withResponseHeaderFields: ["Set-Cookie": $0], for: URL(string: self.liveSocket!.joinUrl())!)
-                },
-                for: self.url,
-                mainDocumentURL: nil
-            )
+            if let client = self.liveviewClient {
+                try await client.reconnect(originalURL.absoluteString, opts)
+            } else {
+                self.liveviewClient = try await self.builder.connect(originalURL.absoluteString, opts)
+                self.navigationPath.last!.coordinator.join(self.liveviewClient!, self.eventHandler, self.patchHandler)
+            }
             
-            self.socket = self.liveSocket?.socket()
             
-            self.rootLayout = self.liveSocket!.deadRender()
-            let styleURLs = self.liveSocket!.styleUrls()
+//            self.liveSocket = try await LiveSocket(
+//                originalURL.absoluteString,
+//                LiveSessionParameters.platform,
+//                ConnectOpts(
+//                    headers: headers,
+//                    body: httpBody.flatMap({ String(data: $0, encoding: .utf8) }),
+//                    method: httpMethod.flatMap(Method.init(_:)),
+//                    timeoutMs: 10_000
+//                )
+//            )
+//            
+            
+            //self.socket = self.liveSocket?.socket()
+            
+            self.rootLayout = try self.liveviewClient!.deadRender()
+            let styleURLs = try self.liveviewClient!.styleUrls()
             
             self.stylesheet = try await withThrowingTaskGroup(of: Stylesheet<R>.self) { @Sendable group in
                 for style in styleURLs {
@@ -230,44 +288,44 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
             }
             
-            let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
-                .some([
-                    "_format": .str(string: LiveSessionParameters.platform),
-                    "_interface": .object(object: LiveSessionParameters.platformParams)
-                ]),
-                nil
-            )
+//            let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
+//                .some([
+//                    "_format": .str(string: LiveSessionParameters.platform),
+//                    "_interface": .object(object: LiveSessionParameters.platformParams)
+//                ]),
+//                nil
+//            )
             
-            self.navigationPath.last!.coordinator.join(liveChannel)
             
             self.state = .connected
             
-            if self.liveSocket!.hasLiveReload() {
-                self.liveReloadChannel = try await self.liveSocket!.joinLivereloadChannel()
-                bindLiveReloadListener()
-            }
+//            if let liveReloadChannel = try self.liveviewClient?.liveReloadChannel() {
+//                self.liveReloadChannel = liveReloadChannel
+//                bindLiveReloadListener()
+//            }
+            
         } catch {
             self.state = .connectionFailed(error)
         }
     }
     
-    func bindLiveReloadListener() {
-        let eventListener = self.liveReloadChannel!.channel().eventStream()
-        self.liveReloadListener = eventListener
-        self.liveReloadListenerLoop = Task { @MainActor [weak self] in
-            for try await event in eventListener {
-                guard let self else { return }
-                switch event.event {
-                case .user(user: "assets_change"):
-                    try await self.disconnect()
-                    self.navigationPath = [.init(url: self.url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
-                    try await self.connect()
-                default:
-                    continue
-                }
-            }
-        }
-    }
+//    func bindLiveReloadListener() {
+//        let eventListener = self.liveReloadChannel!.channel().eventStream()
+//        self.liveReloadListener = eventListener
+//        self.liveReloadListenerLoop = Task { @MainActor [weak self] in
+//            for try await event in eventListener {
+//                guard let self else { return }
+//                switch event.event {
+//                case .user(user: "assets_change"):
+//                    await self.disconnect()
+//                    self.navigationPath = [.init(url: self.url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
+//                    await self.connect()
+//                default:
+//                    continue
+//                }
+//            }
+//        }
+//    }
 
     private func disconnect(preserveNavigationPath: Bool = false) async {
         do {
@@ -285,11 +343,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 
                 self.navigationPath = [self.navigationPath.first!]
             }
-            try await self.liveReloadChannel?.channel().leave()
-            self.liveReloadChannel = nil
-            try await self.socket?.disconnect()
-            self.socket = nil
-            self.liveSocket = nil
+            //try await self.liveReloadChannel?.channel().leave()
+            //self.liveReloadChannel = nil
+            //try await self.socket?.disconnect()
+            //self.socket = nil
+            //self.liveSocket = nil
+            if let client = self.liveviewClient {
+                try await client.disconnect()
+            }
             self.state = .disconnected
         } catch {
             self.state = .connectionFailed(error)
@@ -307,7 +368,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             self.url = url
             self.navigationPath = [.init(url: self.url, coordinator: self.navigationPath.first!.coordinator, navigationTransition: nil, pendingView: nil)]
         }
-        try await self.connect(httpMethod: httpMethod, httpBody: httpBody, additionalHeaders: headers)
+        await self.connect(httpMethod: httpMethod, httpBody: httpBody, additionalHeaders: headers)
 //        do {
 //            if let url {
 //                try await self.disconnect(preserveNavigationPath: false)
@@ -352,6 +413,22 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         receiveEvent(event)
             .sink(receiveValue: handler)
             .store(in: &eventHandlers)
+    }
+    
+    public func postFormData(
+        url: Url,
+        formData: [String: String]
+    ) async throws {
+        
+        
+
+        if let client = self.liveviewClient {
+            
+            try await client.postForm(url.absoluteString,
+                                      formData,
+                                      .some([ "_interface": .object(object: LiveSessionParameters.platformParams)]),
+                                      nil)
+        }
     }
     
     func redirect(
@@ -537,3 +614,5 @@ fileprivate extension URL {
 
 extension Socket: @unchecked Sendable {}
 extension Channel: @unchecked Sendable {}
+extension LiveViewClient: @unchecked Sendable {}
+extension LiveViewClientBuilder: @unchecked Sendable {}
