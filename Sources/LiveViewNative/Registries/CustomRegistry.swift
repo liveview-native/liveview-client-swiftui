@@ -160,7 +160,7 @@ public protocol CustomRegistry<Root> {
     ///     }
     /// }
     /// ```
-    associatedtype CustomModifier: ViewModifier & ParseableModifierValue = EmptyModifier
+    associatedtype CustomModifier: ViewModifier & Decodable = _EmptyRegistryModifier
     /// The type of view this registry produces for error views.
     ///
     /// - Warning: Generally, implementors will use an opaque return type on their ``errorView(for:)`` implementations and this will be inferred automatically.
@@ -195,31 +195,12 @@ public protocol CustomRegistry<Root> {
     /// - Parameter error: The error of the view is reporting.
     @ViewBuilder
     static func errorView(for error: Error) -> ErrorView
-    
-    /// Parse the ``CustomModifier`` from ``input``.
-    ///
-    /// - Note: It is recommended to use the ``LiveViewNativeStylesheet/ParseableExpression`` macro to generate a parser.
-    /// The generated parser can then be called inside this function.
-    static func parseModifier(
-        _ input: inout Substring.UTF8View,
-        in context: ParseableModifierContext
-    ) throws -> CustomModifier
 }
 
 extension CustomRegistry where ErrorView == Never {
     /// A default implementation that falls back to the default framework error view.
     public static func errorView(for error: Error) -> Never {
         fatalError()
-    }
-}
-
-extension CustomRegistry {
-    /// A default implementation that uses ``CustomModifier/parser(in:)``.
-    public static func parseModifier(
-        _ input: inout Substring.UTF8View,
-        in context: ParseableModifierContext
-    ) throws -> CustomModifier {
-        try Self.CustomModifier.parser(in: context).parse(&input)
     }
 }
 
@@ -248,75 +229,8 @@ extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Neve
 public protocol RootRegistry: CustomRegistry where Root == Self {
 }
 
-@MainActor
-public struct CustomModifierGroupParser<Output, P: Parser>: @preconcurrency Parser where P.Input == Substring.UTF8View, P.Output == Output {
-    public let parser: P
-    
-    @inlinable
-    public init(
-        output outputType: Output.Type = Output.self,
-        @CustomModifierGroupParserBuilder<Substring.UTF8View, Output> _ build: () -> P
-    ) {
-        self.parser = build()
-    }
-    
-    public func parse(_ input: inout Substring.UTF8View) throws -> P.Output {
-        var copy = input
-        let (modifierName, metadata) = try Parse {
-            "{".utf8
-            Whitespace()
-            AtomLiteral()
-            Whitespace()
-            ",".utf8
-            Whitespace()
-            Metadata.parser()
-        }.parse(&copy)
-        
-        do {
-            return try parser.parse(&input)
-        } catch let error as ModifierParseError {
-            throw error
-        } catch {
-            throw ModifierParseError(error: .unknownModifier(modifierName), metadata: metadata)
-        }
-    }
-}
-
-@resultBuilder
-public struct CustomModifierGroupParserBuilder<Input, Output> {
-    public static func buildPartialBlock(first: some Parser<Input, Output>) -> some Parser<Input, Output> {
-        first
-    }
-    public static func buildPartialBlock(accumulated: some Parser<Input, Output>, next: some Parser<Input, Output>) -> some Parser<Input, Output> {
-        Accumulator(accumulated: accumulated, next: next)
-    }
-    
-    struct Accumulator<A: Parser, B: Parser>: Parser where A.Input == Input, B.Input == Input, A.Output == Output, B.Output == Output {
-        let accumulated: A
-        let next: B
-        
-        func parse(_ input: inout Input) throws -> Output {
-            let copy = input
-            let firstError: ModifierParseError?
-            do {
-                return try accumulated.parse(&input)
-            } catch let error as ModifierParseError {
-                firstError = error
-            } catch {
-                firstError = nil
-            }
-            input = copy
-            do {
-                return try next.parse(&input)
-            } catch let error as ModifierParseError {
-                throw error
-            } catch {
-                if let firstError {
-                    throw firstError
-                } else {
-                    throw error
-                }
-            }
-        }
+public struct _EmptyRegistryModifier: ViewModifier, Decodable {
+    public func body(content: Content) -> some View {
+        content
     }
 }

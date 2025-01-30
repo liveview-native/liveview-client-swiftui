@@ -12,7 +12,7 @@ import LiveViewNativeStylesheet
 /// This protocol provides access to the `ViewModifier` type returned from `decodeModifier` in the `BuiltinRegistry`.
 /// That type is used by `ModifierContainer.builtin`.
 protocol BuiltinRegistryProtocol {
-    associatedtype BuiltinModifier: ViewModifier & ParseableModifierValue
+    associatedtype BuiltinModifier: ViewModifier & Decodable
 }
 
 @MainActor
