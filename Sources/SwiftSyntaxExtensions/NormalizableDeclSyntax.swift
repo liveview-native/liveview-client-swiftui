@@ -1,0 +1,302 @@
+//
+//  NormalizableDeclSyntax.swift
+//  LiveViewNative
+//
+//  Created by Carson Katri on 1/29/25.
+//
+
+import SwiftSyntax
+
+/// `FunctionDeclSyntax` or `InitializerDeclSyntax`.
+///
+/// This type must have the following parameters:
+/// - `signature`
+/// - `genericWhereClause`
+/// - `genericParameterClause`
+public protocol NormalizableDeclSyntax: DeclSyntaxProtocol {
+    var signature: FunctionSignatureSyntax { get set }
+    var attributes: AttributeListSyntax { get }
+    var genericWhereClause: GenericWhereClauseSyntax? { get }
+    var genericParameterClause: GenericParameterClauseSyntax? { get }
+}
+
+extension FunctionDeclSyntax: NormalizableDeclSyntax {}
+extension InitializerDeclSyntax: NormalizableDeclSyntax {}
+
+public extension NormalizableDeclSyntax {
+    /// Check if the modifier decl has valid parameters.
+    var isValidModifier: Bool {
+        // deprecated/obsoleted symbols
+        guard !attributes.isDeprecated
+        else { return false }
+        
+        for parameter in signature.parameterClause.parameters {
+            guard parameter.type.isValidModifierType else { return false }
+            
+            // only @ViewBuilder and () -> Void functions are allowed
+            if let functionType = parameter.type.as(FunctionTypeSyntax.self) ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self) {
+                guard functionType.returnClause.type.isVoid || parameter.isViewBuilder
+                else { return false }
+            }
+               
+        }
+            
+        return true
+    }
+    
+    /// Converts all generic types into erased types (`some ShapeStyle` -> `AnyShapeStyle`, `T: Hashable` -> `AnyHashable`, `Value` -> `String`)
+    ///
+    /// 1. `some` types become a type-eraser: `some ShapeStyle` -> `AnyShapeStyle`
+    /// 2. same-type requirements become the right type (`T where T == String` -> `String`)
+    /// 3. conformance requirements become a type-eraser (`T: Hashable` -> `AnyHashable`)
+    /// 4. unconstrained types become `String` (`Value` -> `String`)
+    func normalizedParameterTypes() -> Self {
+        return self.with(\.signature.parameterClause.parameters, FunctionParameterListSyntax(signature.parameterClause.parameters.map { parameter in
+            if let identifierType = parameter.type.as(IdentifierTypeSyntax.self) {
+                if let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
+                    switch requirement.requirement {
+                    case let .sameTypeRequirement(sameType):
+                        guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                        else { return nil }
+                        return sameType.rightType
+                    case let .conformanceRequirement(conformance):
+                        guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                        else { return nil }
+                        return conformance.rightType.erasedType()
+                    default:
+                        return nil
+                    }
+                }).first {
+                    return parameter
+                        .with(\.type, genericType)
+                        .makeAttributeReference()
+                } else if let genericType = genericParameterClause?.parameters.lazy.compactMap({ genericParameter -> TypeSyntax? in
+                    guard genericParameter.name.text == identifierType.name.text
+                    else { return nil }
+                    return genericParameter.inheritedType ?? TypeSyntax(IdentifierTypeSyntax(name: .identifier("String"))) // if there is no type constraint, use a string
+                }).first {
+                    return parameter
+                        .with(\.type, genericType.erasedType())
+                        .makeAttributeReference()
+                }
+            }
+            if let optionalType = parameter.type.as(OptionalTypeSyntax.self),
+               let identifierType = optionalType.wrappedType.as(IdentifierTypeSyntax.self)
+            {
+                if let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
+                    switch requirement.requirement {
+                    case let .sameTypeRequirement(sameType):
+                        guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                        else { return nil }
+                        return sameType.rightType
+                    case let .conformanceRequirement(conformance):
+                        guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                        else { return nil }
+                        return conformance.rightType.erasedType()
+                    default:
+                        return nil
+                    }
+                }).first {
+                    return parameter
+                        .with(\.type, TypeSyntax(OptionalTypeSyntax(wrappedType: genericType)))
+                        .makeAttributeReference()
+                } else if let genericType = genericParameterClause?.parameters.lazy.compactMap({ genericParameter -> TypeSyntax? in
+                    guard genericParameter.name.text == identifierType.name.text
+                    else { return nil }
+                    return genericParameter.inheritedType
+                }).first {
+                    return parameter
+                        .with(\.type, TypeSyntax(OptionalTypeSyntax(wrappedType: genericType.erasedType())))
+                        .makeAttributeReference()
+                }
+            }
+            if let someType = parameter.type.as(SomeOrAnyTypeSyntax.self)?.constraint {
+                return parameter
+                    .with(\.type, someType.erasedType())
+                    .makeAttributeReference()
+            }
+            if parameter.isViewBuilder {
+                return parameter
+                    .with(\.attributes, AttributeListSyntax())
+                    .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("ViewReference"))))
+                    .makeAttributeReference()
+            }
+            if let functionType = parameter.type.as(FunctionTypeSyntax.self) {
+                // closures that return values other than `Void` are not supported.
+                // we *might* be able to support those if the closure is `async`.
+                guard functionType.returnClause.type.isVoid
+                else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
+                return parameter
+                    .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                    .makeAttributeReference()
+            }
+            if let attributedType = parameter.type.as(AttributedTypeSyntax.self),
+               let functionType = attributedType.baseType.as(FunctionTypeSyntax.self)
+            {
+                // closures that return values other than `Void` are not supported.
+                // we *might* be able to support those if the closure is `async`.
+                guard functionType.returnClause.type.isVoid
+                else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
+                return parameter
+                    .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                    .makeAttributeReference()
+            }
+            // [S] where S == String -> [String]
+            // [S] where S: Protocol -> [StylesheetResolvableProtocol]
+            if let arrayType = parameter.type.as(ArrayTypeSyntax.self),
+               let identifierType = arrayType.element.as(IdentifierTypeSyntax.self)
+            {
+                if let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
+                    switch requirement.requirement {
+                    case let .sameTypeRequirement(sameType):
+                        guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                        else { return nil }
+                        return sameType.rightType
+                    case let .conformanceRequirement(conformance):
+                        guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                        else { return nil }
+                        return conformance.rightType.erasedType()
+                    default:
+                        return nil
+                    }
+                }).first {
+                    return parameter
+                        .with(\.type, TypeSyntax(arrayType.with(\.element, genericType)))
+                        .makeAttributeReference()
+                } else if let genericType = genericParameterClause?.parameters.lazy.compactMap({ genericParameter -> TypeSyntax? in
+                    guard genericParameter.name.text == identifierType.name.text
+                    else { return nil }
+                    return genericParameter.inheritedType ?? TypeSyntax(IdentifierTypeSyntax(name: .identifier("String"))) // if there is no type constraint, use a string
+                }).first {
+                    return parameter
+                        .with(\.type, TypeSyntax(arrayType.with(\.element, genericType.erasedType())))
+                        .makeAttributeReference()
+                }
+            }
+            if parameter.type.isPrimitiveDecodable { // AttributeReference<T>
+                return parameter
+                    .makeAttributeReference()
+            } else { // T.Resolvable
+                if let arrayType = parameter.type.as(ArrayTypeSyntax.self) { // [T] -> [T.Resolvable]
+                    return parameter
+                        .with(\.type, TypeSyntax(
+                            arrayType.with(\.element, TypeSyntax(MemberTypeSyntax(baseType: arrayType.element, name: .identifier("Resolvable"))))
+                        ))
+                } else if let memberType = parameter.type.as(MemberTypeSyntax.self),
+                          memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift",
+                          memberType.name.text == "Set",
+                          let elementType = memberType.genericArgumentClause?.arguments.first?.argument
+                { // Swift.Set<T> -> AttributeReference<StylesheetResolvableSet<T.Resolvable>>
+                    return parameter
+                        .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("StylesheetResolvableSet"), genericArgumentClause: GenericArgumentClauseSyntax {
+                            GenericArgumentSyntax(argument: MemberTypeSyntax(baseType: elementType, name: .identifier("Resolvable")))
+                        })))
+                        .with(\.defaultValue, parameter.defaultValue.flatMap({ defaultValue in
+                            defaultValue.with(\.value, ExprSyntax(
+                                FunctionCallExprSyntax(
+                                    calledExpression: MemberAccessExprSyntax(name: .identifier("constant")),
+                                    leftParen: .leftParenToken(),
+                                    rightParen: .rightParenToken()
+                                ) {
+                                    LabeledExprSyntax(expression: defaultValue.value)
+                                }
+                            ))
+                        }))
+                        .makeAttributeReference()
+                } else if let optionalType = parameter.type.as(OptionalTypeSyntax.self) { // T? -> T.Resolvable?
+                    return parameter
+                        .with(\.type, TypeSyntax(
+                            optionalType.with(\.wrappedType, TypeSyntax(MemberTypeSyntax(baseType: optionalType.wrappedType, name: .identifier("Resolvable"))))
+                        ))
+                } else { // T -> T.Resolvable
+                    return parameter
+                        .with(\.type, TypeSyntax(MemberTypeSyntax(baseType: parameter.type, name: .identifier("Resolvable"))))
+                        .with(\.defaultValue, parameter.defaultValue.flatMap({ defaultValue in
+                            defaultValue.with(\.value, ExprSyntax(
+                                FunctionCallExprSyntax(
+                                    calledExpression: MemberAccessExprSyntax(name: .identifier("__constant")),
+                                    leftParen: .leftParenToken(),
+                                    rightParen: .rightParenToken()
+                                ) {
+                                    LabeledExprSyntax(expression: defaultValue.value)
+                                }
+                            ))
+                        }))
+                }
+            }
+        }))
+    }
+}
+
+public extension TypeSyntax {
+    /// Erase a type by giving it a `StylesheetResolvable*` prefix
+    /// (we can choose to either typealias this to an existing eraser, or implement our own)
+    ///
+    /// The following protocols will be converted to a single concrete type:
+    /// - `BinaryFloatingPoint` -> `Double`
+    /// - `Equatable` -> `String`
+    /// - `Hashable` -> `String`
+    /// - `StringProtocol` -> `String`
+    /// - `View` -> `InlineViewReference` (this is a `View` argument that isn't a function argument with `@ViewBuilder`)
+    ///
+    /// Other protocols will be converted to `StylesheetResolvable*` erasers.
+    func erasedType() -> TypeSyntax {
+        if let identifierType = self.as(IdentifierTypeSyntax.self) {
+            if identifierType.name.text == "BinaryFloatingPoint" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("Double")))
+            } else if identifierType.name.text == "Equatable" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
+            } else if identifierType.name.text == "Hashable" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
+            } else if identifierType.name.text == "StringProtocol" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
+            } else if identifierType.name.text == "View" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("InlineViewReference")))
+            } else {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("StylesheetResolvable\(identifierType.name.text)")))
+            }
+        } else if let memberType = self.as(MemberTypeSyntax.self) {
+            if memberType.name.text == "BinaryFloatingPoint" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("Double")))
+            } else if memberType.name.text == "Equatable" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
+            } else if memberType.name.text == "Hashable" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
+            } else if memberType.name.text == "StringProtocol" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
+            } else if memberType.name.text == "View" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("InlineViewReference")))
+            } else {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("StylesheetResolvable\(memberType.name.text)")))
+            }
+        } else if let optionalType = self.as(OptionalTypeSyntax.self) {
+            return TypeSyntax(OptionalTypeSyntax(wrappedType: TypeSyntax(optionalType).erasedType()))
+        } else if let arrayType = self.as(ArrayTypeSyntax.self) {
+            return TypeSyntax(arrayType.with(\.element, arrayType.element.erasedType()))
+        } else if let someType = self.as(SomeOrAnyTypeSyntax.self) {
+            return someType.constraint.erasedType()
+        } else {
+            fatalError("type '\(self)' cannot erased")
+        }
+    }
+    
+    /// Checks if a type represents `Swift.Void`.
+    var isVoid: Bool {
+        if let tuple = self.as(TupleTypeSyntax.self),
+           tuple.elements.isEmpty
+        {
+            return true
+        } else if let memberType = self.as(MemberTypeSyntax.self),
+                  memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift",
+                  memberType.name.text == "Void"
+        {
+            return true
+        } else if let identifierType = self.as(IdentifierTypeSyntax.self),
+                  identifierType.name.text == "Void"
+        {
+            return true
+        } else {
+            return false
+        }
+    }
+}
