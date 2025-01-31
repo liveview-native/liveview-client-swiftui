@@ -107,6 +107,14 @@ public extension FunctionParameterSyntax {
             {
                 resolvedAttribute = FunctionCallExprSyntax.resolveAttributeReference(resolvedAttribute)
             }
+            // TextReference should call `resolve(...)` again
+            if (
+                attributeReferenceType.genericArgumentClause!.arguments.first!.argument.as(IdentifierTypeSyntax.self)
+                    ?? attributeReferenceType.genericArgumentClause!.arguments.first!.argument.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)
+               )?.name.text == "TextReference"
+            {
+                resolvedAttribute = FunctionCallExprSyntax.resolveAttributeReference(resolvedAttribute)
+            }
             if attributeReferenceType.genericArgumentClause!.arguments.first!.argument.as(IdentifierTypeSyntax.self)?.name.text == "ViewReference" {
                 // `ViewReference` should be converted into a closure that resolves the `ViewReference`.
                 return ExprSyntax(
@@ -118,12 +126,16 @@ public extension FunctionParameterSyntax {
                 )
             } else if attributeReferenceType.genericArgumentClause!.arguments.first!.argument.as(IdentifierTypeSyntax.self)?.name.text == "Event" {
                 // `Event` should be converted into a closure that calls the `Event` as a function.
-                // { resolvedValue() }
+                // { resolvedValue.wrappedValue() }
                 return ExprSyntax(
                     ClosureExprSyntax {
                         CodeBlockItemSyntax(item: .expr(
                             ExprSyntax(FunctionCallExprSyntax(
-                                calledExpression: resolvedAttribute,
+                                calledExpression: MemberAccessExprSyntax(
+                                    base: resolvedAttribute,
+                                    period: .periodToken(),
+                                    name: .identifier("wrappedValue")
+                                ),
                                 leftParen: .leftParenToken(),
                                 rightParen: .rightParenToken()
                             ) {

@@ -22,8 +22,7 @@ import LiveViewNativeCore
 /// ```
 ///
 /// The attribute will be automatically decoded to the correct type using the conformance to ``AttributeDecodable``.
-@MainActor
-public struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: ParseableModifierValue {
+public struct AttributeReference<Value: Decodable & AttributeDecodable>: Decodable, StylesheetResolvable {
     enum Storage {
         case constant(Value)
         case reference(AttributeName)
@@ -48,15 +47,23 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
         self.storage = storage
     }
     
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            Value.parser(in: context).map(Storage.constant)
-            AttributeName.parser(in: context).map(Storage.reference)
-            GestureStateReference.parser(in: context).map(\.value)
-        }
-        .map(Self.init)
+    public static func constant(_ value: Value) -> Self {
+        .init(value)
     }
     
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        
+        if let attributeName = try? container.decode(AttributeName.self) {
+            self.storage = .reference(attributeName)
+        } else if let gestureStateReference = try? container.decode(GestureStateReference.self) {
+            self.storage = gestureStateReference.value
+        } else {
+            self.storage = .constant(try container.decode(Value.self))
+        }
+    }
+    
+    @MainActor
     public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Value {
         switch storage {
         case .constant(let value):
@@ -83,91 +90,102 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
             }
             let defaultValue: Value = defaultValue ?? castValue(0.0)
             
-            guard let value = context.gestureState.wrappedValue[name]
-            else { return defaultValue }
-            
-            switch body.base {
-            case .translation:
-                #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
-                guard let value = value as? DragGesture.Value,
-                      let member = body.member
-                else { return defaultValue }
-                switch member {
-                case .width:
-                    return castValue(value.translation.width)
-                case .height:
-                    return castValue(value.translation.height)
-                default:
-                    return defaultValue
-                }
-                #else
-                return defaultValue
-                #endif
-            case .magnification:
-                #if os(iOS) || os(macOS)
-                if #available(iOS 17.0, macOS 14.0, *) {
-                    guard let value = value as? MagnifyGesture.Value else { return defaultValue }
-                    return castValue(value.magnification)
-                } else {
-                    return defaultValue
-                }
-                #else
-                return defaultValue
-                #endif
-            case .rotation:
-                #if os(iOS) || os(macOS)
-                if #available(iOS 17.0, macOS 14.0, *) {
-                    guard let value = value as? RotateGesture.Value else { return defaultValue }
-                    switch body.member {
-                    case .radians:
-                        return castValue(CGFloat(value.rotation.radians))
-                    case .degrees:
-                        return castValue(CGFloat(value.rotation.degrees))
-                    default:
-                        var rotation = value.rotation
-                        if let minValue {
-                            rotation = .degrees(max(minValue, value.rotation.degrees))
-                        }
-                        if let maxValue {
-                            rotation = .degrees(min(maxValue, value.rotation.degrees))
-                        }
-                        return rotation as! Value
-                    }
-                } else {
-                    return defaultValue
-                }
-                #else
-                return defaultValue
-                #endif
-            case .startAnchor:
-                #if os(iOS) || os(macOS)
-                if #available(iOS 17.0, macOS 14.0, *) {
-                    if let value = value as? MagnifyGesture.Value {
-                        return value.startAnchor as! Value
-                    } else if let value = value as? RotateGesture.Value {
-                        return value.startAnchor as! Value
-                    } else {
-                        return defaultValue
-                    }
-                } else {
-                    return defaultValue
-                }
-                #else
-                return defaultValue
-                #endif
-            }
+            // FIXME: gesture state
+            return defaultValue
+//            guard let value = context.gestureState.wrappedValue[name]
+//            else { return defaultValue }
+//            
+//            switch body.base {
+//            case .translation:
+//                #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
+//                guard let value = value as? DragGesture.Value,
+//                      let member = body.member
+//                else { return defaultValue }
+//                switch member {
+//                case .width:
+//                    return castValue(value.translation.width)
+//                case .height:
+//                    return castValue(value.translation.height)
+//                default:
+//                    return defaultValue
+//                }
+//                #else
+//                return defaultValue
+//                #endif
+//            case .magnification:
+//                #if os(iOS) || os(macOS)
+//                if #available(iOS 17.0, macOS 14.0, *) {
+//                    guard let value = value as? MagnifyGesture.Value else { return defaultValue }
+//                    return castValue(value.magnification)
+//                } else {
+//                    return defaultValue
+//                }
+//                #else
+//                return defaultValue
+//                #endif
+//            case .rotation:
+//                #if os(iOS) || os(macOS)
+//                if #available(iOS 17.0, macOS 14.0, *) {
+//                    guard let value = value as? RotateGesture.Value else { return defaultValue }
+//                    switch body.member {
+//                    case .radians:
+//                        return castValue(CGFloat(value.rotation.radians))
+//                    case .degrees:
+//                        return castValue(CGFloat(value.rotation.degrees))
+//                    default:
+//                        var rotation = value.rotation
+//                        if let minValue {
+//                            rotation = .degrees(max(minValue, value.rotation.degrees))
+//                        }
+//                        if let maxValue {
+//                            rotation = .degrees(min(maxValue, value.rotation.degrees))
+//                        }
+//                        return rotation as! Value
+//                    }
+//                } else {
+//                    return defaultValue
+//                }
+//                #else
+//                return defaultValue
+//                #endif
+//            case .startAnchor:
+//                #if os(iOS) || os(macOS)
+//                if #available(iOS 17.0, macOS 14.0, *) {
+//                    if let value = value as? MagnifyGesture.Value {
+//                        return value.startAnchor as! Value
+//                    } else if let value = value as? RotateGesture.Value {
+//                        return value.startAnchor as! Value
+//                    } else {
+//                        return defaultValue
+//                    }
+//                } else {
+//                    return defaultValue
+//                }
+//                #else
+//                return defaultValue
+//                #endif
+//            }
         }
     }
     
-    @ParseableExpression
+    @ASTDecodable("__gesture_state__")
     struct GestureStateReference {
-        static var name: String { "__gesture_state__" }
-        
         let value: Storage
         
-        struct PropertyReference: ParseableModifierValue {
+        @ASTDecodable("PropertyReference")
+        struct PropertyReference {
             let base: Base
             let member: Member?
+            
+            static var translation: Self { .init(base: .translation, member: nil) }
+            static var magnification: Self { .init(base: .magnification, member: nil) }
+            static var rotation: Self { .init(base: .rotation, member: nil) }
+            static var startAnchor: Self { .init(base: .startAnchor, member: nil) }
+            
+            var width: Self { .init(base: base, member: .width) }
+            var height: Self { .init(base: base, member: .height) }
+            var radians: Self { .init(base: base, member: .radians) }
+            var degrees: Self { .init(base: base, member: .degrees) }
             
             enum Base: String, CaseIterable {
                 case translation
@@ -178,32 +196,13 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
                 
                 case startAnchor
             }
+            
             enum Member: String, CaseIterable {
                 case width
                 case height
                 
                 case radians
                 case degrees
-            }
-            
-            static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-                MemberExpression {
-                    NilLiteral()
-                } member: {
-                    OneOf {
-                        MemberExpression {
-                            EnumParser<Base>()
-                        } member: {
-                            EnumParser<Member>()
-                        }
-                        .map { (base, member) in
-                            Self.init(base: base, member: member)
-                        }
-                        EnumParser<Base>()
-                            .map({ Self.init(base: $0, member: nil) })
-                    }
-                }
-                .map(\.member)
             }
         }
         
@@ -240,11 +239,17 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
     }
 }
 
-extension AttributeName: ParseableModifierValue {
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        ASTNode("__attr__", in: context) {
-            String.parser(in: context)
+extension AttributeName: @retroactive Decodable {
+    public init(from decoder: any Decoder) throws {
+        self.init(rawValue: try decoder.singleValueContainer().decode(Attr.self).value)!
+    }
+    
+    @ASTDecodable("__attr__")
+    struct Attr {
+        let value: String
+        
+        init(_ value: String) {
+            self.value = value
         }
-        .map({ Self.init(rawValue: $1)! })
     }
 }

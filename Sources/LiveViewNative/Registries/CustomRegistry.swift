@@ -72,7 +72,7 @@ public macro Addon() = #externalMacro(module: "LiveViewNativeMacros", type: "Add
 /// - ``EmptyRegistry``
 /// - ``ViewModifierBuilder``
 @MainActor
-public protocol CustomRegistry<Root> {
+public protocol CustomRegistry<Root>: Decodable {
     /// The root custom registry type that the live view coordinator and context use.
     ///
     /// Conform you registry type to ``RootRegistry``, which sets this type to `Self` automatically, if you intend to use your registry directly.

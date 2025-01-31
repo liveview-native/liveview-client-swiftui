@@ -97,7 +97,7 @@ import LiveViewNativeCore
 /// * ``dateStyle``
 @_documentation(visibility: public)
 @LiveElement
-struct Text<Root: RootRegistry>: View {
+struct TextView<Root: RootRegistry>: View {
     @LiveElementIgnored
     @ClassModifiers<Root>
     private var modifiers
@@ -136,11 +136,13 @@ struct Text<Root: RootRegistry>: View {
     var body: SwiftUI.Text {
         if _liveElement.isConstant {
             return modifiers.reduce(text) { result, modifier in
-                if case let ._anyTextModifier(textModifier) = modifier {
-                    return textModifier.apply(to: result, on: $liveElement.element, in: $liveElement.context)
-                } else {
-                    return result
-                }
+                // FIXME: Text modifiers
+                return result
+//                if case let ._anyTextModifier(textModifier) = modifier {
+//                    return textModifier.apply(to: result, on: $liveElement.element, in: $liveElement.context)
+//                } else {
+//                    return result
+//                }
             }
         } else {
             return text

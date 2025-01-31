@@ -65,23 +65,44 @@ public extension ResolvableDeclSyntaxProtocol {
     var fullyResolvedAvailabilityAttributes: AttributeListSyntax {
         let selfAvailability = Array(attributes).filter(\.isAvailability)
         
-        if !selfAvailability.isEmpty {
-            return AttributeListSyntax(selfAvailability)
-        }
-        
         guard let parentDecl = parent?.as(MemberBlockItemSyntax.self)?.parent?.as(MemberBlockItemListSyntax.self)?.parent?.as(MemberBlockSyntax.self)?.parent
         else { return AttributeListSyntax(selfAvailability) }
         
-        if let structAvailability = parentDecl.as(StructDeclSyntax.self)?.fullyResolvedAvailabilityAttributes {
-            return structAvailability
-        }
-        if let enumAvailability = parentDecl.as(EnumDeclSyntax.self)?.fullyResolvedAvailabilityAttributes {
-            return enumAvailability
-        }
-        if let extensionDecl = parentDecl.as(ExtensionDeclSyntax.self) {
-            return extensionDecl.attributes.filter(\.isAvailability)
+        let parentAvailability = if let structAvailability = parentDecl.as(StructDeclSyntax.self)?.fullyResolvedAvailabilityAttributes {
+            structAvailability
+        } else if let enumAvailability = parentDecl.as(EnumDeclSyntax.self)?.fullyResolvedAvailabilityAttributes {
+            enumAvailability
+        } else if let extensionDecl = parentDecl.as(ExtensionDeclSyntax.self) {
+            extensionDecl.attributes.filter(\.isAvailability)
+        } else {
+            AttributeListSyntax([])
         }
         
-        return AttributeListSyntax(selfAvailability)
+        if selfAvailability.isEmpty {
+            return parentAvailability
+        } else { // merge only `@available(platform, unavailable)` attributes
+            return AttributeListSyntax {
+                for attribute in selfAvailability {
+                    if case let .attribute(attributeSyntax) = attribute {
+                        if case .availability = attributeSyntax.arguments {
+                            attribute
+                        }
+                    }
+                }
+                for attribute in parentAvailability {
+                    if case let .attribute(attributeSyntax) = attribute {
+                        if case let .availability(availability) = attributeSyntax.arguments,
+                           availability.contains(where: {
+                               guard case let .token(token) = $0.argument,
+                                     token.tokenKind == .keyword(.unavailable)
+                               else { return false }
+                               return true
+                           }){
+                            attribute
+                        }
+                    }
+                }
+            }
+        }
     }
 }

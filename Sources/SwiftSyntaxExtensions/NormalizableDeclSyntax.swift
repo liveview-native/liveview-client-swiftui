@@ -178,10 +178,21 @@ public extension NormalizableDeclSyntax {
                     .makeAttributeReference()
             } else { // T.Resolvable
                 if let arrayType = parameter.type.as(ArrayTypeSyntax.self) { // [T] -> [T.Resolvable]
-                    return parameter
-                        .with(\.type, TypeSyntax(
-                            arrayType.with(\.element, TypeSyntax(MemberTypeSyntax(baseType: arrayType.element, name: .identifier("Resolvable"))))
-                        ))
+                    // [SwiftUICore.Text] -> [TextReference]
+                    if let memberType = arrayType.element.as(MemberTypeSyntax.self),
+                       memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUICore",
+                       memberType.name.text == "Text"
+                    {
+                        return parameter
+                            .with(\.type, TypeSyntax(
+                                arrayType.with(\.element, TypeSyntax(IdentifierTypeSyntax(name: .identifier("TextReference"))))
+                            ))
+                    } else {
+                        return parameter
+                            .with(\.type, TypeSyntax(
+                                arrayType.with(\.element, TypeSyntax(MemberTypeSyntax(baseType: arrayType.element, name: .identifier("Resolvable"))))
+                            ))
+                    }
                 } else if let memberType = parameter.type.as(MemberTypeSyntax.self),
                           memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift",
                           memberType.name.text == "Set",
@@ -203,11 +214,40 @@ public extension NormalizableDeclSyntax {
                             ))
                         }))
                         .makeAttributeReference()
-                } else if let optionalType = parameter.type.as(OptionalTypeSyntax.self) { // T? -> T.Resolvable?
+                } else if let memberType = parameter.type.as(MemberTypeSyntax.self),
+                          memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUICore",
+                          memberType.name.text == "Text"
+                { // SwiftUICore.Text -> TextReference
                     return parameter
-                        .with(\.type, TypeSyntax(
-                            optionalType.with(\.wrappedType, TypeSyntax(MemberTypeSyntax(baseType: optionalType.wrappedType, name: .identifier("Resolvable"))))
-                        ))
+                        .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("TextReference"))))
+                        .with(\.defaultValue, parameter.defaultValue.flatMap({ defaultValue in
+                            defaultValue.with(\.value, ExprSyntax(
+                                FunctionCallExprSyntax(
+                                    calledExpression: MemberAccessExprSyntax(name: .identifier("constant")),
+                                    leftParen: .leftParenToken(),
+                                    rightParen: .rightParenToken()
+                                ) {
+                                    LabeledExprSyntax(expression: defaultValue.value)
+                                }
+                            ))
+                        }))
+                        .makeAttributeReference()
+                } else if let optionalType = parameter.type.as(OptionalTypeSyntax.self) { // T? -> T.Resolvable?
+                    // Text? -> TextReference?
+                    if let memberType = optionalType.wrappedType.as(MemberTypeSyntax.self),
+                       memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUICore",
+                       memberType.name.text == "Text"
+                    {
+                        return parameter
+                            .with(\.type, TypeSyntax(
+                                optionalType.with(\.wrappedType, TypeSyntax(IdentifierTypeSyntax(name: .identifier("TextReference"))))
+                            ))
+                    } else {
+                        return parameter
+                            .with(\.type, TypeSyntax(
+                                optionalType.with(\.wrappedType, TypeSyntax(MemberTypeSyntax(baseType: optionalType.wrappedType, name: .identifier("Resolvable"))))
+                            ))
+                    }
                 } else { // T -> T.Resolvable
                     return parameter
                         .with(\.type, TypeSyntax(MemberTypeSyntax(baseType: parameter.type, name: .identifier("Resolvable"))))

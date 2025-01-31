@@ -12,7 +12,7 @@ import SwiftSyntaxMacros
 import SwiftSyntaxBuilder
 import SwiftParser
 import SwiftSyntaxExtensions
-import ASTDecodable
+import ASTDecodableImplementation
 
 public final class StyleDefinitionGenerator: SyntaxVisitor {
     let moduleName: String
@@ -331,6 +331,13 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                         }
                     },
                     name: TokenSyntax.identifier("_ViewModifier__\(modifier.name.text)"),
+                    genericParameterClause: GenericParameterClauseSyntax {
+                        GenericParameterSyntax(
+                            name: .identifier("Root"),
+                            colon: .colonToken(),
+                            inheritedType: IdentifierTypeSyntax(name: .identifier("RootRegistry"))
+                        )
+                    },
                     inheritanceClause: InheritanceClauseSyntax(inheritedTypes: InheritedTypeListSyntax {
                         InheritedTypeSyntax(type: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("SwiftUICore")), name: .identifier("ViewModifier")))
                     })
@@ -374,7 +381,14 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                     // context
                     VariableDeclSyntax(
                         attributes: AttributeListSyntax {
-                            AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("LiveContext")))
+                            AttributeSyntax(
+                                attributeName: IdentifierTypeSyntax(
+                                    name: .identifier("LiveContext"),
+                                    genericArgumentClause: GenericArgumentClauseSyntax {
+                                        GenericArgumentSyntax(argument: IdentifierTypeSyntax(name: .identifier("Root")))
+                                    }
+                                )
+                            )
                         },
                         modifiers: DeclModifierListSyntax([DeclModifierSyntax(name: .keyword(.private))]),
                         .var,
