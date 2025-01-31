@@ -186,7 +186,7 @@ package struct ASTDecodable: ExtensionMacro {
                     )
                 },
                 effectSpecifiers: FunctionEffectSpecifiersSyntax(
-                    throwsSpecifier: .keyword(.throws)
+                    throwsClause: ThrowsClauseSyntax(throwsSpecifier: .keyword(.throws))
                 )
             )
         ) {
@@ -541,7 +541,7 @@ package struct ASTDecodable: ExtensionMacro {
             // throw errors
             ThrowStmtSyntax(
                 expression: FunctionCallExprSyntax(
-                    callee: TypeExprSyntax(type: TypeSyntax("JSONStylesheet.MultipleFailures"))
+                    callee: TypeExprSyntax(type: TypeSyntax("LiveViewNativeStylesheet.MultipleFailures"))
                 ) {
                     LabeledExprSyntax(expression: errorsReference)
                 }

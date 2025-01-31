@@ -69,7 +69,7 @@ struct StaticMembersDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
                         )
                     },
                     effectSpecifiers: FunctionEffectSpecifiersSyntax(
-                        throwsSpecifier: .keyword(.throws)
+                        throwsClause: ThrowsClauseSyntax(throwsSpecifier: .keyword(.throws))
                     )
                 )
             ) {
@@ -239,7 +239,7 @@ struct StaticMembersDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
                         // throw errors
                         ThrowStmtSyntax(
                             expression: FunctionCallExprSyntax(
-                                callee: TypeExprSyntax(type: TypeSyntax("JSONStylesheet.MultipleFailures"))
+                                callee: TypeExprSyntax(type: TypeSyntax("LiveViewNativeStylesheet.MultipleFailures"))
                             ) {
                                 LabeledExprSyntax(expression: errorsReference)
                                 LabeledExprSyntax(label: "annotations", expression: annotationsReference)

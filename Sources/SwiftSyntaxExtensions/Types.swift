@@ -189,12 +189,14 @@ public extension TypeSyntaxProtocol {
     var isResolvableType: Bool {
         if let resolvableType = self.as(MemberTypeSyntax.self),
            resolvableType.name.text == "Resolvable"
-        {
+        { // T.Resolvable
             return true
-        } else if let optionalType = self.as(OptionalTypeSyntax.self) {
+        } else if let optionalType = self.as(OptionalTypeSyntax.self) { // (some StylesheetResolvable)?
             return optionalType.wrappedType.isResolvableType
-        } else if let arrayType = self.as(ArrayTypeSyntax.self) {
+        } else if let arrayType = self.as(ArrayTypeSyntax.self) { // [some StylesheetResolvable]
             return arrayType.element.isResolvableType
+        } else if self.as(IdentifierTypeSyntax.self)?.name.text == "TextReference" { // `TextReference`
+            return true
         } else {
             return false
         }

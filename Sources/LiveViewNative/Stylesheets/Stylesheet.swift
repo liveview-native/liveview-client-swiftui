@@ -18,9 +18,9 @@ public struct Stylesheet<R: RootRegistry>: Sendable {
         self.classes = classes
     }
     
-    init(from data: String, in context: ParseableModifierContext) throws {
+    init(from data: String) throws {
         self.content = [data]
-        self.classes = try StylesheetParser<BuiltinRegistry<R>.BuiltinModifier>(context: context).parse(data.utf8)
+        self.classes = try JSONDecoder().decode([String:[BuiltinRegistry<R>.BuiltinModifier]].self, from: Data(data.utf8))
     }
     
     func merge(with other: Stylesheet<R>) -> Stylesheet<R> {
@@ -51,7 +51,7 @@ extension Stylesheet: @preconcurrency AttributeDecodable {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
         do {
-            try self.init(from: value, in: .init())
+            try self.init(from: value)
         } catch {
             // Log errors instead of propagating
             logger.error(

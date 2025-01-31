@@ -86,7 +86,7 @@ import LiveViewNativeStylesheet
 /// Set the ``ContentModifier/Builder`` associated type to the ``ContentBuilder`` it is compatible with.
 ///
 /// Depend on `LiveViewNativeStylesheet` to create a parser for a custom modifier.
-/// Add the ``LiveViewNativeStylesheet/ParseableExpression`` macro to have a parser generated from the `init` clauses on the type.
+/// Add the ``LiveViewNativeStylesheet/ASTDecodable`` macro to have a parser generated from the `init` clauses on the type.
 /// Add a static `name` property to be used by the macro.
 ///
 /// - Note: Use `ViewReference` to support nested content in a modifier.
@@ -94,11 +94,9 @@ import LiveViewNativeStylesheet
 /// ```swift
 /// import LiveViewNativeStylesheet
 ///
-/// @ParseableExpression
+/// @ASTDecodable("symbol")
 /// struct SymbolModifier: ContentModifier {
 ///     typealias Builder = ChartContentBuilder
-///
-///     static let name = "symbol"
 ///
 ///     let content: ViewReference
 ///
@@ -383,21 +381,29 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: @
             return [:]
         } else {
             return try stylesheet.content.reduce(into: [:], {
-                $0.merge(try StylesheetParser<BuilderModifierContainer<Builder>>(context: .init()).parse($1.utf8), uniquingKeysWith: { $1 })
+                $0.merge(
+                    try JSONDecoder().decode([String:[BuilderModifierContainer<Builder>]].self, from: Data($1.utf8)),
+                    uniquingKeysWith: { $1 }
+                )
             })
         }
     }
 }
 
-enum BuilderModifierContainer<Builder: ContentBuilder>: ViewModifier, ParseableModifierValue {
+enum BuilderModifierContainer<Builder: ContentBuilder>: ViewModifier, Decodable {
     case unsupported
     case modifier(Builder.ModifierType)
     
-    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            Builder.ModifierType.parser(in: context).map(Self.modifier)
-            _AnyNodeParser(context: context).map({ _ in Self.unsupported })
+    nonisolated init(from decoder: any Decoder) throws {
+        var container = try decoder.singleValueContainer()
+        
+        if let modifier = try? container.decode(Builder.ModifierType.self) {
+            self = .modifier(modifier)
+            return
         }
+        
+        _ = try container.decode(ASTNode.self)
+        self = .unsupported
     }
     
     func body(content: Content) -> some View {
@@ -612,7 +618,7 @@ public extension ContentBuilder {
         element.children()
             .lazy
             .filter({ $0.attributes().contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) })
-            .first?.asElement().flatMap({ Text<R>(element: $0, overrideStylesheet: context.stylesheet).body })
+            .first?.asElement().flatMap({ TextView<R>(element: $0, overrideStylesheet: context.stylesheet).body })
                 ?? SwiftUI.Text("")
     }
     
@@ -674,7 +680,7 @@ public extension ContentBuilder {
 /// Modifiers must be decoded from the ``ContentBuilder/decodeModifier(_:from:registry:)``.
 ///
 /// - Note: Keys are automatically converted from `camelCase` to `snake_case` in the decoder.
-public protocol ContentModifier<Builder>: ParseableModifierValue {
+public protocol ContentModifier<Builder>: Decodable {
     associatedtype Builder: ContentBuilder
     func apply<R: RootRegistry>(
         to content: Builder.Content,
@@ -694,10 +700,7 @@ public struct EmptyContentModifier<Builder: ContentBuilder>: ContentModifier {
         return content
     }
     
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        ASTNode("__never__", in: context) {}
-            .map({ _ in fatalError() })
-    }
+    public init(from decoder: any Decoder) throws {}
 }
 
 enum ContentBuilderError: Error {

@@ -67,7 +67,7 @@ import AsyncAlgorithms
 ///- ``EventHandler``
 @MainActor
 @propertyWrapper
-public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable {
+public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable, @preconcurrency AttributeDecodable {
     @ObservedElement private var element: ElementNode
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @Environment(\.eventConfirmation) private var eventConfirmation
@@ -103,6 +103,12 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
     }
     private var throttleAttribute: Double? {
         try? element.attributeValue(Double.self, for: "phx-throttle")
+    }
+    
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.init(AttributeName(rawValue: value)!, type: "click")
     }
     
     enum Debounce: AttributeDecodable, Equatable {

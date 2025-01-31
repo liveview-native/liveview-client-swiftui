@@ -279,13 +279,25 @@ extension StyleDefinitionGenerator {
             attributes: node.fullyResolvedAvailabilityAttributes,
             extendedType: MemberTypeSyntax(baseType: node.fullyResolvedType, name: .identifier("Resolvable"))
         ) {
-            // func resolve(on element: Element, in context: Context)
+            // @MainActor func resolve<R>(on element: ElementNode, in context: LiveContext<R>)
             FunctionDeclSyntax(
+                attributes: AttributeListSyntax {
+                    AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor")))
+                },
                 name: .identifier("resolve"),
+                genericParameterClause: GenericParameterClauseSyntax(parameters: [
+                    GenericParameterSyntax(
+                        name: .identifier("R"),
+                        colon: .colonToken(),
+                        inheritedType: IdentifierTypeSyntax(name: .identifier("RootRegistry"))
+                    )
+                ]),
                 signature: FunctionSignatureSyntax(
                     parameterClause: FunctionParameterClauseSyntax(parameters: FunctionParameterListSyntax {
-                        FunctionParameterSyntax(firstName: .identifier("on"), secondName: .identifier("__element"), colon: .colonToken(), type: IdentifierTypeSyntax(name: .identifier("Element")))
-                        FunctionParameterSyntax(firstName: .identifier("in"), secondName: .identifier("__context"), colon: .colonToken(), type: IdentifierTypeSyntax(name: .identifier("Context")))
+                        FunctionParameterSyntax(firstName: .identifier("on"), secondName: .identifier("__element"), colon: .colonToken(), type: IdentifierTypeSyntax(name: .identifier("ElementNode")))
+                        FunctionParameterSyntax(firstName: .identifier("in"), secondName: .identifier("__context"), colon: .colonToken(), type: IdentifierTypeSyntax(name: .identifier("LiveContext"), genericArgumentClause: GenericArgumentClauseSyntax(arguments: [
+                            GenericArgumentSyntax(argument: IdentifierTypeSyntax(name: .identifier("R")))
+                        ])))
                     }),
                     returnClause: ReturnClauseSyntax(type: node.fullyResolvedType)
                 )
@@ -344,7 +356,7 @@ extension StyleDefinitionGenerator {
                                                     let expression = FunctionCallExprSyntax.resolveAttributeReference(parameterReference)
                                                     if let firstName = parameter.firstName,
                                                        firstName.tokenKind != .wildcard {
-                                                        LabeledExprSyntax(label: firstName, colon: .colonToken(), expression: expression)
+                                                        LabeledExprSyntax(label: firstName.trimmed, colon: .colonToken(), expression: expression)
                                                     } else {
                                                         LabeledExprSyntax(expression: expression)
                                                     }
@@ -424,7 +436,7 @@ extension StyleDefinitionGenerator {
                                             if parameter.firstName.tokenKind == .wildcard {
                                                 LabeledExprSyntax(expression: expression)
                                             } else {
-                                                LabeledExprSyntax(label: parameter.firstName, colon: .colonToken(), expression: expression)
+                                                LabeledExprSyntax(label: parameter.firstName.trimmed, colon: .colonToken(), expression: expression)
                                             }
                                         }
                                     })
@@ -471,7 +483,7 @@ extension StyleDefinitionGenerator {
                                                 if parameter.firstName.tokenKind == .wildcard {
                                                     LabeledExprSyntax(expression: expression)
                                                 } else {
-                                                    LabeledExprSyntax(label: parameter.firstName, colon: .colonToken(), expression: expression)
+                                                    LabeledExprSyntax(label: parameter.firstName.trimmed, colon: .colonToken(), expression: expression)
                                                 }
                                             }
                                         }
@@ -517,7 +529,7 @@ extension StyleDefinitionGenerator {
                                                 if parameter.firstName.tokenKind == .wildcard {
                                                     LabeledExprSyntax(expression: expression)
                                                 } else {
-                                                    LabeledExprSyntax(label: parameter.firstName, colon: .colonToken(), expression: expression)
+                                                    LabeledExprSyntax(label: parameter.firstName.trimmed, colon: .colonToken(), expression: expression)
                                                 }
                                             }
                                         }

@@ -15,6 +15,7 @@ struct ModifierGenerator: ParsableCommand {
     // Note: This file is auto-generated from the `ModifierGeneratorPlugin`.
     import SwiftUI
     import Spatial
+    import LiveViewNativeStylesheet
     
     """#
     
@@ -60,18 +61,26 @@ struct ModifierGenerator: ParsableCommand {
         }
         
         // write the output
-        try Self.header.write(to: output, atomically: true, encoding: .utf8)
+        var outputContents = ""
+        
+        outputContents += Self.header
         
         for (name, decoder) in decoderOutputs {
             guard modifiersOutput.contains(name) || decoderOutputs.filter({ $0.key != name }).values.contains(where: { $0.contains(name) })
             else { continue } // this type is not used by any modifiers or other decoders
-            try decoder.write(to: output, atomically: true, encoding: .utf8)
+            outputContents += decoder + "\n"
         }
         
-        try modifiersOutput.write(to: output, atomically: true, encoding: .utf8)
+        outputContents += modifiersOutput
+        
+        try outputContents.write(to: output, atomically: true, encoding: .utf8)
         
         // create the `BuiltinModifier` type
-        
+//        try makeBuiltinModifier(sortedModifiers.map(\.key)).formatted().description.write(
+//            to: output,
+//            atomically: true,
+//            encoding: .utf8
+//        )
     }
 }
 

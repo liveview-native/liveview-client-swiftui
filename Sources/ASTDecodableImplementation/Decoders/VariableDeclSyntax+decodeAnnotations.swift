@@ -28,7 +28,7 @@ extension VariableDeclSyntax {
                         ) {
                             LabeledExprSyntax(
                                 expression: MemberAccessExprSyntax(
-                                    base: TypeExprSyntax(type: TypeSyntax("JSONStylesheet.Annotations")),
+                                    base: TypeExprSyntax(type: TypeSyntax("LiveViewNativeStylesheet.Annotations")),
                                     name: .identifier("self")
                                 )
                             )

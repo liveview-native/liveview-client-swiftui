@@ -116,7 +116,7 @@ let package = Package(
         .executableTarget(
             name: "ModifierGenerator",
             dependencies: [
-                "ASTDecodable",
+                "ASTDecodableImplementation",
                 "SwiftSyntaxExtensions",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
@@ -134,7 +134,7 @@ let package = Package(
         
         // Stylesheet
         .target(
-            name: "ASTDecodable",
+            name: "ASTDecodableImplementation",
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
@@ -144,7 +144,7 @@ let package = Package(
         .macro(
             name: "LiveViewNativeStylesheetMacros",
             dependencies: [
-                "ASTDecodable",
+                "ASTDecodableImplementation",
                 
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
