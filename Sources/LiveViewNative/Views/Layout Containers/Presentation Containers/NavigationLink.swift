@@ -81,9 +81,10 @@ struct NavigationLink<Root: RootRegistry>: View {
         case replace
     }
     
-    @LiveElementIgnored
-    @Environment(\._anyNavigationTransition)
-    private var anyNavigationTransition: Any?
+    // FIXME: _anyNavigationTransition
+//    @LiveElementIgnored
+//    @Environment(\._anyNavigationTransition)
+//    private var anyNavigationTransition: Any?
     
     @LiveElementIgnored
     @Environment(\.anyLiveContextStorage)
@@ -115,7 +116,7 @@ struct NavigationLink<Root: RootRegistry>: View {
                                     to: url,
                                     mode: .replaceTop
                                 ),
-                                navigationTransition: anyNavigationTransition,
+                                navigationTransition: nil, // FIXME: navigationTransition
                                 pendingView: pendingView
                             )
                         }
@@ -127,7 +128,7 @@ struct NavigationLink<Root: RootRegistry>: View {
                         value: LiveNavigationEntry(
                             url: url,
                             coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url),
-                            navigationTransition: anyNavigationTransition,
+                            navigationTransition: nil, // FIXME: navigationTransition
                             pendingView: pendingView
                         )
                     ) {
@@ -154,7 +155,7 @@ struct NavigationLink<Root: RootRegistry>: View {
                                 to: url,
                                 mode: .patch
                             ),
-                            navigationTransition: anyNavigationTransition,
+                            navigationTransition: nil, // FIXME: navigationTransition
                             pendingView: pendingView
                         )
                     }
