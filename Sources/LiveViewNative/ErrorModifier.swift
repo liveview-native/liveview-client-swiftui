@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
+import LiveViewNativeStylesheet
 
-struct ErrorModifier<R: RootRegistry>: ViewModifier {
-    let type: String
-    let error: any Error
+struct ErrorModifier: ViewModifier {
+    let node: ASTNode
+    
+    init(_ node: ASTNode) {
+        self.node = node
+    }
     
     func body(content: Content) -> some View {
         content
             .overlay {
 //                AnyErrorView<R>(error)
-                Text(error.localizedDescription)
+                Text("failed to decode \(node)")
                     .foregroundStyle(.red)
             }
     }

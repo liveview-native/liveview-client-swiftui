@@ -73,14 +73,11 @@ struct ModifierGenerator: ParsableCommand {
         
         outputContents += modifiersOutput
         
-        try outputContents.write(to: output, atomically: true, encoding: .utf8)
-        
         // create the `BuiltinModifier` type
-//        try makeBuiltinModifier(sortedModifiers.map(\.key)).formatted().description.write(
-//            to: output,
-//            atomically: true,
-//            encoding: .utf8
-//        )
+        outputContents += "\n"
+        outputContents += try makeBuiltinModifier(sortedModifiers.map(\.key)).formatted().description
+        
+        try outputContents.write(to: output, atomically: true, encoding: .utf8)
     }
 }
 

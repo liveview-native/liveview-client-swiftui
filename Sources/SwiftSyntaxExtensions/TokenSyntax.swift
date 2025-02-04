@@ -27,3 +27,13 @@ public extension TokenSyntax {
         }
     }
 }
+
+public extension String {
+    func removingBacktickEscape() -> Self {
+        if self.starts(with: "`") && self.hasSuffix("`") {
+            return String(self.dropFirst(1).dropLast(1))
+        } else {
+            return self
+        }
+    }
+}

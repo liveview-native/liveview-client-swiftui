@@ -228,7 +228,7 @@ struct StaticMembersDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
                                         pattern: ExpressionPatternSyntax(expression: StringLiteralExprSyntax(
                                             openingQuote: .stringQuoteToken(),
                                             segments: [
-                                                .stringSegment(StringSegmentSyntax(content: .stringSegment(name.trimmed.text)))
+                                                .stringSegment(StringSegmentSyntax(content: .stringSegment(name.trimmed.text.removingBacktickEscape())))
                                             ],
                                             closingQuote: .stringQuoteToken()
                                         ))
