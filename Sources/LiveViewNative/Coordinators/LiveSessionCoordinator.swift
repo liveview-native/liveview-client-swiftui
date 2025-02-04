@@ -61,10 +61,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private var reconnectAttempts = 0
     
     // TODO: Once this works sub out the rest
-    private var persistence: SimpleStore?
+    private var persistence: SimplePersistentStore
     private var eventHandler: SimpleEventHandler
     private var patchHandler: SimplePatchHandler
-    
+    private var navHandler: SimpleNavHandler
+
     private var liveviewClient: LiveViewClient?
     private var builder: LiveViewClientBuilder
     
@@ -107,18 +108,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.url = url.appending(path: "").absoluteURL
 
         
-        self.patchHandler = SimplePatchHandler({ _, _, _ in })
-        self.eventHandler = SimpleEventHandler(
-            event_callback: { _ in },
-            chan_status_callback: { _ in },
-            sock_status_callback: { _ in },
-            change_callback: { _, _, _, _ in }
-        )
+        self.patchHandler = SimplePatchHandler()
+        self.eventHandler = SimpleEventHandler()
+        self.navHandler = SimpleNavHandler()
+        self.persistence = SimplePersistentStore()
 
         self.builder = LiveViewClientBuilder();
         
         self.builder.setPatchHandler(patchHandler)
-//        self.builder.setPersistenceProvider(persistence)
+        self.builder.setNavigationHandler(navHandler)
+        self.builder.setPersistenceProvider(persistence)
         self.builder.setLiveChannelEventHandler(eventHandler)
         self.builder.setLogLevel(.debug)
 
@@ -133,7 +132,25 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         .sink(receiveValue: { [weak self] value in
             self?.eventSubject.send(value)
         })
-        
+       
+        // TODO: move all navigation path manipulation into this watcher.
+        self.navHandler.navEventSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] navEvent in
+                switch navEvent.event {
+                case .push:
+                    print("push")
+                case .replace:
+                    print("replace")
+                case .reload:
+                    print("reload")
+                case .traverse:
+                    print("traverse")
+                case .patch:
+                    print("patch")
+                }
+            }.store(in: &cancellables)
+
         self.eventHandler.viewReloadSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newView in
@@ -153,6 +170,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
 //                 try await prev.last?.coordinator.disconnect()
                  var opts = NavOptions()
                  opts.joinParams = .some([ "_interface": .object(object: LiveSessionParameters.platformParams)])
+                 // TODO: Replace all redirects which would modify the navigation path with the proper calls
+                 // TODO: to client navigation. use the listener on line 136 for modifying the path.
                  if let client = self.liveviewClient {
                     try await client.navigate(next_url, opts)
                  }

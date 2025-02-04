@@ -204,20 +204,19 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                     if case let .object(reply) = diff["r"] {
                         return reply
                     }
-                    //TODO: remove this and move it inside the client
-                } else if case let .object(redirectObject) = object["live_redirect"],
-                          let redirect = LiveRedirect(from: redirectObject, relativeTo: self.url)
-                {
-                    try await session.redirect(redirect)
-                    //TODO: remove this and move it inside the client
-                } else if case let .object(redirectObject) = object["redirect"],
-                          case let .str(destinationString) = redirectObject["to"],
-                          let destination = URL(string: destinationString, relativeTo: self.url)
-                {
-                    try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
-                } else {
-                    return nil
                 }
+//                else if case let .object(redirectObject) = object["live_redirect"],
+//                          let redirect = LiveRedirect(from: redirectObject, relativeTo: self.url)
+//                {
+//                    try await session.redirect(redirect)
+//                } else if case let .object(redirectObject) = object["redirect"],
+//                          case let .str(destinationString) = redirectObject["to"],
+//                          let destination = URL(string: destinationString, relativeTo: self.url)
+//                {
+//                    try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
+//                } else {
+                    return nil
+                // }
             default:
                 logger.error("unhandled event reply: \(String(reflecting: replyPayload))")
             }
