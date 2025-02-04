@@ -10,19 +10,36 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("PrimitiveButtonStyle")
-enum StylesheetResolvablePrimitiveButtonStyle: PrimitiveButtonStyle, StylesheetResolvable {
+enum StylesheetResolvablePrimitiveButtonStyle: @preconcurrency PrimitiveButtonStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     #if os(macOS)
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case accessoryBar
+    
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case accessoryBarAction
     #endif
     case bordered
     case borderedProminent
     case borderless
     #if os(tvOS)
+    @available(iOS, unavailable)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case card
     #endif
     #if os(macOS)
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case link
     #endif
     case plain
@@ -70,7 +87,7 @@ extension StylesheetResolvablePrimitiveButtonStyle {
     }
 }
 
-extension StylesheetResolvablePrimitiveButtonStyle: AttributeDecodable {
+extension StylesheetResolvablePrimitiveButtonStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":
@@ -104,7 +121,7 @@ extension StylesheetResolvablePrimitiveButtonStyle: AttributeDecodable {
 }
 
 @ASTDecodable("ButtonStyle")
-enum StylesheetResolvableButtonStyle: ButtonStyle, StylesheetResolvable, AttributeDecodable {
+enum StylesheetResolvableButtonStyle: @preconcurrency ButtonStyle, StylesheetResolvable, @preconcurrency Decodable, @preconcurrency AttributeDecodable {
     case __never
 }
 

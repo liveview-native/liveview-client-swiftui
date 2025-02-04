@@ -1,13 +1,13 @@
 import LiveViewNativeStylesheet
 
+@MainActor
 protocol StylesheetResolvable {
     associatedtype Resolved
     
-    @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Resolved
 }
 
-enum StylesheetResolvableSet<T>: Decodable, StylesheetResolvable where T: Decodable & StylesheetResolvable, T.Resolved: Hashable {
+enum StylesheetResolvableSet<T>: @preconcurrency Decodable, StylesheetResolvable where T: Decodable & StylesheetResolvable, T.Resolved: Hashable {
     typealias Resolved = Set<T.Resolved>
     
     case constant(Set<T.Resolved>)

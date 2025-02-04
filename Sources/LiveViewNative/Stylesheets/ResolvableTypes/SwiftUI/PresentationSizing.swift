@@ -10,8 +10,9 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("PresentationSizing")
+@MainActor
 @available(iOS 18, macOS 15, tvOS 18, visionOS 2, watchOS 11, *)
-indirect enum StylesheetResolvablePresentationSizing: PresentationSizing, StylesheetResolvable {
+indirect enum StylesheetResolvablePresentationSizing: @preconcurrency PresentationSizing, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case fitted
     case form
@@ -84,7 +85,7 @@ extension StylesheetResolvablePresentationSizing {
 }
 
 @available(iOS 18, macOS 15, tvOS 18, visionOS 2, watchOS 11, *)
-extension StylesheetResolvablePresentationSizing: AttributeDecodable {
+extension StylesheetResolvablePresentationSizing: @preconcurrency AttributeDecodable {
     init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

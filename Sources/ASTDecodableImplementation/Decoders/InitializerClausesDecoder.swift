@@ -36,7 +36,14 @@ struct InitializerClausesDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
         return StructDeclSyntax(
             name: name,
             inheritanceClause: InheritanceClauseSyntax(inheritedTypes: [
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             ])
         ) {
             // decoded value
@@ -49,7 +56,9 @@ struct InitializerClausesDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
             
             // clauses
             for clause in clauses {
-                clause.argumentsDecl
+                clause.attributes.makeOSCheck {
+                    clause.argumentsDecl
+                }
             }
             
             // init from decoder
@@ -127,57 +136,63 @@ struct InitializerClausesDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
                 
                 // arguments
                 for clause in clauses {
-                    DoStmtSyntax(
-                        // store caught error in the `errors` array.
-                        catchClauses: CatchClauseListSyntax {
-                            CatchClauseSyntax(CatchItemListSyntax {
-                                CatchItemSyntax(
-                                    pattern: ValueBindingPatternSyntax(
-                                        bindingSpecifier: .keyword(.let),
-                                        pattern: IdentifierPatternSyntax(identifier: errorName)
-                                    )
-                                )
-                            }) {
-                                FunctionCallExprSyntax(
-                                    calledExpression: MemberAccessExprSyntax(
-                                        base: errorsReference,
-                                        name: .identifier("append")
-                                    ),
-                                    leftParen: .leftParenToken(),
-                                    rightParen: .rightParenToken()
-                                ) {
-                                    LabeledExprSyntax(expression: errorReference)
-                                }
-                            }
-                        }
-                    ) {
-                        // set `value` to the decoded arguments `value`
-                        InfixOperatorExprSyntax(
-                            leftOperand: MemberAccessExprSyntax(
-                                base: DeclReferenceExprSyntax(baseName: .identifier("self")),
-                                name: .identifier("value")
-                            ),
-                            operator: AssignmentExprSyntax(),
-                            rightOperand: TryExprSyntax(
-                                expression: MemberAccessExprSyntax(
-                                    base: FunctionCallExprSyntax(
-                                        callee: MemberAccessExprSyntax(
-                                            base: containerReference,
-                                            name: .identifier("decode")
-                                        )
-                                    ) {
-                                        LabeledExprSyntax(
-                                            expression: MemberAccessExprSyntax(
-                                                base: DeclReferenceExprSyntax(baseName: clause.argumentsDecl.name),
-                                                name: .identifier("self")
+                    clause.attributes.makeOSCheck {
+                        clause.attributes.makeRuntimeOSCheck {
+                            DoStmtSyntax(
+                                // store caught error in the `errors` array.
+                                catchClauses: CatchClauseListSyntax {
+                                    CatchClauseSyntax(CatchItemListSyntax {
+                                        CatchItemSyntax(
+                                            pattern: ValueBindingPatternSyntax(
+                                                bindingSpecifier: .keyword(.let),
+                                                pattern: IdentifierPatternSyntax(identifier: errorName)
                                             )
                                         )
-                                    },
-                                    name: .identifier("value")
+                                    }) {
+                                        FunctionCallExprSyntax(
+                                            calledExpression: MemberAccessExprSyntax(
+                                                base: errorsReference,
+                                                name: .identifier("append")
+                                            ),
+                                            leftParen: .leftParenToken(),
+                                            rightParen: .rightParenToken()
+                                        ) {
+                                            LabeledExprSyntax(expression: errorReference)
+                                        }
+                                    }
+                                }
+                            ) {
+                                // set `value` to the decoded arguments `value`
+                                InfixOperatorExprSyntax(
+                                    leftOperand: MemberAccessExprSyntax(
+                                        base: DeclReferenceExprSyntax(baseName: .identifier("self")),
+                                        name: .identifier("value")
+                                    ),
+                                    operator: AssignmentExprSyntax(),
+                                    rightOperand: TryExprSyntax(
+                                        expression: MemberAccessExprSyntax(
+                                            base: FunctionCallExprSyntax(
+                                                callee: MemberAccessExprSyntax(
+                                                    base: containerReference,
+                                                    name: .identifier("decode")
+                                                )
+                                            ) {
+                                                LabeledExprSyntax(
+                                                    expression: MemberAccessExprSyntax(
+                                                        base: DeclReferenceExprSyntax(baseName: clause.argumentsDecl.name),
+                                                        name: .identifier("self")
+                                                    )
+                                                )
+                                            },
+                                            name: .identifier("value")
+                                        )
+                                    )
                                 )
-                            )
-                        )
-                        ReturnStmtSyntax()
+                                ReturnStmtSyntax()
+                            }
+                        } elseBody: {
+                            
+                        }
                     }
                 }
                 
@@ -199,14 +214,16 @@ struct InitializerClausesDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
 struct InitializerClause {
     let signature: FunctionSignatureSyntax
     let argumentsDecl: StructDeclSyntax
+    let attributes: AttributeListSyntax
     
     init(
         _ name: TokenSyntax,
-        for signature: FunctionSignatureSyntax,
+        for initializer: InitializerDeclSyntax,
         type: some TypeSyntaxProtocol,
         in context: MacroExpansionContext
     ) throws {
-        self.signature = signature
+        self.signature = initializer.signature
+        self.attributes = initializer.attributes
         
         let decoderName = context.makeUniqueName("decoder")
         let decoderReference = DeclReferenceExprSyntax(baseName: decoderName)
@@ -223,13 +240,21 @@ struct InitializerClause {
         let errorName = context.makeUniqueName("error")
         let errorReference = DeclReferenceExprSyntax(baseName: errorName)
         
-        let labeledArguments = signature.parameterClause.parameters
+        let labeledArguments = initializer.signature.parameterClause.parameters
             .filter({ $0.firstName.tokenKind != .wildcard })
         
         self.argumentsDecl = StructDeclSyntax(
+            attributes: initializer.attributes.filter(\.isAvailability) + [.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))],
             name: name,
             inheritanceClause: InheritanceClauseSyntax {
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             }
         ) {
             // CodingKeys
@@ -262,6 +287,7 @@ struct InitializerClause {
             
             // decoder
             InitializerDeclSyntax(
+                attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
                 signature: FunctionSignatureSyntax(
                     parameterClause: FunctionParameterClauseSyntax {
                         FunctionParameterSyntax(
@@ -292,7 +318,7 @@ struct InitializerClause {
                     )
                 }
                 
-                for parameter in signature.parameterClause.parameters {
+                for parameter in initializer.signature.parameterClause.parameters {
                     if parameter.firstName.tokenKind == .wildcard {
                         VariableDeclSyntax(
                             bindingSpecifier: .keyword(.let)
@@ -443,7 +469,7 @@ struct InitializerClause {
                         leftParen: .leftParenToken(),
                         rightParen: .rightParenToken()
                     ) {
-                        for argument in signature.parameterClause.parameters {
+                        for argument in initializer.signature.parameterClause.parameters {
                             if argument.firstName.tokenKind == .wildcard {
                                 LabeledExprSyntax(
                                     expression: DeclReferenceExprSyntax(baseName: argument.secondName ?? argument.firstName)

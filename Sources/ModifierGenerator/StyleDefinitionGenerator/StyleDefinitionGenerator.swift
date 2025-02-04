@@ -339,7 +339,18 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                         )
                     },
                     inheritanceClause: InheritanceClauseSyntax(inheritedTypes: InheritedTypeListSyntax {
-                        InheritedTypeSyntax(type: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("SwiftUICore")), name: .identifier("ViewModifier")))
+                        // SwiftUICore.ViewModifier
+                        InheritedTypeSyntax(
+                            type: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("SwiftUICore")), name: .identifier("ViewModifier"))
+                        )
+                        // @preconcurrency Swift.Decodable
+                        InheritedTypeSyntax(
+                            type: AttributedTypeSyntax(
+                                specifiers: TypeSpecifierListSyntax([]),
+                                attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                                baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                            )
+                        )
                     })
                 ) {
                     FunctionDeclSyntax(

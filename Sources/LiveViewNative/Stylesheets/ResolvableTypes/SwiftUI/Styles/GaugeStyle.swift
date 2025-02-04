@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("GaugeStyle")
-enum StylesheetResolvableGaugeStyle: GaugeStyle, StylesheetResolvable {
+enum StylesheetResolvableGaugeStyle: @preconcurrency GaugeStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case circular
     case accessoryCircular
@@ -49,7 +49,7 @@ extension StylesheetResolvableGaugeStyle {
     }
 }
 
-extension StylesheetResolvableGaugeStyle: AttributeDecodable {
+extension StylesheetResolvableGaugeStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

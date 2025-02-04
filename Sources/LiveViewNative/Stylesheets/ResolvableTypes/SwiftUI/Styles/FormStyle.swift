@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("FormStyle")
-enum StylesheetResolvableFormStyle: FormStyle, StylesheetResolvable {
+enum StylesheetResolvableFormStyle: @preconcurrency FormStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case columns
     case grouped
@@ -34,7 +34,7 @@ extension StylesheetResolvableFormStyle {
     }
 }
 
-extension StylesheetResolvableFormStyle: AttributeDecodable {
+extension StylesheetResolvableFormStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

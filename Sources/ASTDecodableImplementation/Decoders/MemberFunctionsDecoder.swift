@@ -54,9 +54,17 @@ struct MemberFunctionsDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
         )
         
         return StructDeclSyntax(
+            attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
             name: name,
             inheritanceClause: InheritanceClauseSyntax(inheritedTypes: [
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             ])
         ) {
             // decoded value
@@ -76,6 +84,7 @@ struct MemberFunctionsDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
             
             // init from decoder
             InitializerDeclSyntax(
+                attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
                 signature: FunctionSignatureSyntax(
                     parameterClause: FunctionParameterClauseSyntax {
                         FunctionParameterSyntax(
@@ -361,10 +370,17 @@ struct MemberFunctionClause {
             .filter { $0.firstName.tokenKind != .wildcard }
         
         self.argumentsDecl = StructDeclSyntax(
-            attributes: function.attributes.filter(\.isAvailability),
+            attributes: function.attributes.filter(\.isAvailability) + [.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))],
             name: name,
             inheritanceClause: InheritanceClauseSyntax {
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             }
         ) {
             // CodingKeys
@@ -397,6 +413,7 @@ struct MemberFunctionClause {
             
             // decoder
             InitializerDeclSyntax(
+                attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
                 signature: FunctionSignatureSyntax(
                     parameterClause: FunctionParameterClauseSyntax {
                         FunctionParameterSyntax(

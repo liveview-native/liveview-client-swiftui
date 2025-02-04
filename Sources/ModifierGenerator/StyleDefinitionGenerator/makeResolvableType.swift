@@ -124,6 +124,14 @@ extension StyleDefinitionGenerator {
             name: .identifier("Resolvable"),
             inheritanceClause: InheritanceClauseSyntax {
                 InheritedTypeSyntax(type: IdentifierTypeSyntax(name: .identifier("StylesheetResolvable")))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             }
         ) {
             // add a constant case for default values

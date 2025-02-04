@@ -22,7 +22,8 @@ import LiveViewNativeCore
 /// ```
 ///
 /// The attribute will be automatically decoded to the correct type using the conformance to ``AttributeDecodable``.
-public struct AttributeReference<Value: Decodable & AttributeDecodable>: Decodable, StylesheetResolvable {
+@MainActor
+public struct AttributeReference<Value: Decodable & AttributeDecodable>: @preconcurrency Decodable, StylesheetResolvable {
     enum Storage {
         case constant(Value)
         case reference(AttributeName)
@@ -169,11 +170,11 @@ public struct AttributeReference<Value: Decodable & AttributeDecodable>: Decodab
     }
     
     @ASTDecodable("__gesture_state__")
-    struct GestureStateReference {
+    @MainActor struct GestureStateReference: @preconcurrency Decodable {
         let value: Storage
         
         @ASTDecodable("PropertyReference")
-        struct PropertyReference {
+        @MainActor struct PropertyReference: @preconcurrency Decodable {
             let base: Base
             let member: Member?
             
@@ -245,7 +246,7 @@ extension AttributeName: @retroactive Decodable {
     }
     
     @ASTDecodable("__attr__")
-    struct Attr {
+    struct Attr: @preconcurrency Decodable {
         let value: String
         
         init(_ value: String) {

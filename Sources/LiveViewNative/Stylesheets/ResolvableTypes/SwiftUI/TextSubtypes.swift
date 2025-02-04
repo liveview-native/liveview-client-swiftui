@@ -29,7 +29,7 @@ import LiveViewNativeCore
 //}
 
 @ASTDecodable("Pattern")
-enum TextLineStylePatternResolvable: StylesheetResolvable {
+enum TextLineStylePatternResolvable: StylesheetResolvable, @preconcurrency Decodable {
     case __constant(SwiftUI.Text.LineStyle.Pattern)
     case solid
     case dot
@@ -61,7 +61,7 @@ extension TextLineStylePatternResolvable {
 }
 
 @ASTDecodable("TextAttribute")
-enum StylesheetResolvableTextAttribute: TextAttribute, StylesheetResolvable, AttributeDecodable {
+enum StylesheetResolvableTextAttribute: @preconcurrency TextAttribute, StylesheetResolvable, @preconcurrency Decodable, @preconcurrency AttributeDecodable {
     case __never
 }
 
@@ -74,6 +74,6 @@ extension StylesheetResolvableTextAttribute {
 
 extension StylesheetResolvableTextAttribute {
     init(from attribute: Attribute?, on element: ElementNode) throws {
-        fatalError()
+        fatalError("'TextAttribute' is not supported")
     }
 }

@@ -10,10 +10,14 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("ToggleStyle")
-enum StylesheetResolvableToggleStyle: ToggleStyle, StylesheetResolvable {
+enum StylesheetResolvableToggleStyle: @preconcurrency ToggleStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case button
     #if os(macOS)
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case checkbox
     #endif
     case `switch`
@@ -41,7 +45,7 @@ extension StylesheetResolvableToggleStyle {
     }
 }
 
-extension StylesheetResolvableToggleStyle: AttributeDecodable {
+extension StylesheetResolvableToggleStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

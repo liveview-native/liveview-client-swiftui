@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("Gesture")
-enum StylesheetResolvableGesture: Gesture, StylesheetResolvable {
+enum StylesheetResolvableGesture: @preconcurrency Gesture, StylesheetResolvable, @preconcurrency Decodable {
     case drag
     
     var body: some Gesture {
@@ -24,14 +24,14 @@ extension StylesheetResolvableGesture {
     }
 }
 
-extension StylesheetResolvableGesture: AttributeDecodable {
+extension StylesheetResolvableGesture: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         fatalError()
     }
 }
 
 @ASTDecodable("UIGestureRecognizerRepresentable")
-enum StylesheetResolvableUIGestureRecognizerRepresentable: UIGestureRecognizerRepresentable, StylesheetResolvable {
+enum StylesheetResolvableUIGestureRecognizerRepresentable: @preconcurrency UIGestureRecognizerRepresentable, StylesheetResolvable, @preconcurrency Decodable {
     case drag
     
     func makeUIGestureRecognizer(context: Context) -> some UIGestureRecognizer {
@@ -46,7 +46,7 @@ extension StylesheetResolvableUIGestureRecognizerRepresentable {
     }
 }
 
-extension StylesheetResolvableUIGestureRecognizerRepresentable: AttributeDecodable {
+extension StylesheetResolvableUIGestureRecognizerRepresentable: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         fatalError()
     }

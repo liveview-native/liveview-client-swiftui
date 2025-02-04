@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("TabViewStyle")
-enum StylesheetResolvableTabViewStyle: StylesheetResolvable {
+enum StylesheetResolvableTabViewStyle: StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     
     #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
@@ -24,7 +24,7 @@ enum StylesheetResolvableTabViewStyle: StylesheetResolvable {
 }
 
 #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
-extension PageTabViewStyle.IndexDisplayMode.Resolvable: AttributeDecodable {
+extension PageTabViewStyle.IndexDisplayMode.Resolvable: @preconcurrency AttributeDecodable {
     init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "always":
@@ -41,7 +41,7 @@ extension PageTabViewStyle.IndexDisplayMode.Resolvable: AttributeDecodable {
 #endif
 
 #if os(watchOS)
-extension VerticalPageTabViewStyle.TransitionStyle.Resolvable: AttributeDecodable {
+extension VerticalPageTabViewStyle.TransitionStyle.Resolvable: @preconcurrency AttributeDecodable {
     init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":
@@ -109,7 +109,7 @@ extension View {
     }
 }
 
-extension StylesheetResolvableTabViewStyle: AttributeDecodable {
+extension StylesheetResolvableTabViewStyle: @preconcurrency AttributeDecodable {
     init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

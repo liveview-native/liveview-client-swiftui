@@ -10,7 +10,8 @@ import LiveViewNativeStylesheet
 
 extension CGPoint {
     @ASTDecodable("CGPoint")
-    enum Resolvable: StylesheetResolvable {
+    @MainActor
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGPoint)
         case _init(x: AttributeReference<CGFloat>, y: AttributeReference<CGFloat>)
         
@@ -36,7 +37,8 @@ extension CGPoint.Resolvable {
 
 extension CGVector {
     @ASTDecodable("CGVector")
-    enum Resolvable: StylesheetResolvable {
+    @MainActor
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGVector)
         case _init(dx: AttributeReference<CGFloat>, dy: AttributeReference<CGFloat>)
         
@@ -62,7 +64,8 @@ extension CGVector.Resolvable {
 
 extension CGSize {
     @ASTDecodable("CGSize")
-    enum Resolvable: StylesheetResolvable {
+    @MainActor
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGSize)
         case _init(width: AttributeReference<CGFloat>, height: AttributeReference<CGFloat>)
         
@@ -86,7 +89,8 @@ extension CGSize.Resolvable {
 
 extension CGRect {
     @ASTDecodable("CGRect")
-    enum Resolvable: StylesheetResolvable {
+    @MainActor
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGRect)
         case _init1(origin: CGPoint.Resolvable, size: CGSize.Resolvable)
         case _init2(x: AttributeReference<CGFloat>, y: AttributeReference<CGFloat>, width: AttributeReference<CGFloat>, height: AttributeReference<CGFloat>)
@@ -117,7 +121,7 @@ extension CGRect.Resolvable {
 
 extension CGPath {
     @ASTDecodable("CGPath")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGPath)
     }
 }
@@ -134,7 +138,7 @@ extension CGPath.Resolvable {
 
 extension CGMutablePath {
     @ASTDecodable("CGMutablePath")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGMutablePath)
     }
 }
@@ -151,7 +155,7 @@ extension CGMutablePath.Resolvable {
 
 extension CGLineCap {
     @ASTDecodable("CGLineCap")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGLineCap)
         case butt
         case round
@@ -177,7 +181,7 @@ extension CGLineCap.Resolvable {
 
 extension CGLineJoin {
     @ASTDecodable("CGLineJoin")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGLineJoin)
         case miter
         case round
@@ -203,7 +207,7 @@ extension CGLineJoin.Resolvable {
 
 extension CGAffineTransform {
     @ASTDecodable("CGAffineTransform")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGAffineTransform)
     }
 }
@@ -220,7 +224,7 @@ extension CGAffineTransform.Resolvable {
 
 extension CGImage {
     @ASTDecodable("CGImage")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGImage)
     }
 }
@@ -237,7 +241,7 @@ extension CGImage.Resolvable {
 
 extension CGColor {
     @ASTDecodable("CGColor")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGColor)
     }
 }

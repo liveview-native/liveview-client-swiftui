@@ -11,7 +11,7 @@ import LiveViewNativeStylesheet
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ColorResource {
     @ASTDecodable("ColorResource")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(ColorResource)
     }
 }
@@ -30,7 +30,7 @@ extension ColorResource.Resolvable {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ImageResource {
     @ASTDecodable("ImageResource")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(ImageResource)
     }
 }

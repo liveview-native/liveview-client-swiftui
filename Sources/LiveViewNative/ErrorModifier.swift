@@ -14,7 +14,9 @@ struct ErrorModifier<R: RootRegistry>: ViewModifier {
     func body(content: Content) -> some View {
         content
             .overlay {
-                AnyErrorView<R>(error)
+//                AnyErrorView<R>(error)
+                Text(error.localizedDescription)
+                    .foregroundStyle(.red)
             }
     }
 }

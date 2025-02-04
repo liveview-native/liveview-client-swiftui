@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("LabeledContentStyle")
-enum StylesheetResolvableLabeledContentStyle: LabeledContentStyle, StylesheetResolvable {
+enum StylesheetResolvableLabeledContentStyle: @preconcurrency LabeledContentStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
 }
 
@@ -28,7 +28,7 @@ extension StylesheetResolvableLabeledContentStyle {
     }
 }
 
-extension StylesheetResolvableLabeledContentStyle: AttributeDecodable {
+extension StylesheetResolvableLabeledContentStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

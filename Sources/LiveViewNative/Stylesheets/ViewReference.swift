@@ -16,7 +16,7 @@ import LiveViewNativeCore
 /// <Text template="view1" />
 /// <ScrollView template="view2" />
 /// ```
-public struct ViewReference: Decodable, AttributeDecodable {
+public struct ViewReference: @preconcurrency Decodable, @preconcurrency AttributeDecodable {
     let value: [String]
     
     public init(from decoder: any Decoder) throws {
@@ -70,7 +70,7 @@ extension Optional where Wrapped == ViewReference {
 }
 
 /// A ``ViewReference`` that only resolves to `SwiftUI.Text`.
-public struct TextReference: Decodable, AttributeDecodable, StylesheetResolvable {
+public struct TextReference: @preconcurrency Decodable, @preconcurrency AttributeDecodable, StylesheetResolvable {
     let value: String
     
     public init(from decoder: any Decoder) throws {
@@ -182,7 +182,7 @@ struct _TextReferenceObserver: ViewModifier {
 /// <ToolbarItem template="item2" />
 /// ```
 @_documentation(visibility: public)
-struct ToolbarContentReference: Decodable {
+struct ToolbarContentReference: @preconcurrency Decodable {
     let value: [String]
     
     init(from decoder: any Decoder) throws {
@@ -223,7 +223,7 @@ struct ToolbarContentReference: Decodable {
 /// <ToolbarItem template="item2" id="item2" />
 /// ```
 @_documentation(visibility: public)
-struct CustomizableToolbarContentReference: Decodable {
+struct CustomizableToolbarContentReference: @preconcurrency Decodable {
     let value: [String]
     
     init(from decoder: any Decoder) throws {

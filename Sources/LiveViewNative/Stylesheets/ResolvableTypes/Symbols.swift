@@ -12,7 +12,7 @@ import LiveViewNativeCore
 
 @ASTDecodable("IndefiniteSymbolEffect")
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-enum StylesheetResolvableIndefiniteSymbolEffect: StylesheetResolvable {
+enum StylesheetResolvableIndefiniteSymbolEffect: StylesheetResolvable, @preconcurrency Decodable {
     case appear
     case bounce
     case breathe
@@ -32,7 +32,7 @@ extension StylesheetResolvableIndefiniteSymbolEffect {
 }
 
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-extension StylesheetResolvableIndefiniteSymbolEffect: AttributeDecodable {
+extension StylesheetResolvableIndefiniteSymbolEffect: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "appear":
@@ -61,7 +61,7 @@ extension StylesheetResolvableIndefiniteSymbolEffect: AttributeDecodable {
 
 @ASTDecodable("DiscreteSymbolEffect")
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-enum StylesheetResolvableDiscreteSymbolEffect: StylesheetResolvable {
+enum StylesheetResolvableDiscreteSymbolEffect: StylesheetResolvable, @preconcurrency Decodable {
     case bounce
     case breathe
     case pulse
@@ -78,7 +78,7 @@ extension StylesheetResolvableDiscreteSymbolEffect {
 }
 
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-extension StylesheetResolvableDiscreteSymbolEffect: AttributeDecodable {
+extension StylesheetResolvableDiscreteSymbolEffect: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "bounce":
@@ -185,7 +185,8 @@ extension View {
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
 extension Symbols.SymbolEffectOptions {
     @ASTDecodable("SymbolEffectOptions")
-    indirect enum Resolvable: StylesheetResolvable {
+    @MainActor
+    indirect enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(SymbolEffectOptions)
         
         case `default`
@@ -215,7 +216,7 @@ extension Symbols.SymbolEffectOptions {
 }
 
 @available(macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-extension SymbolEffectOptions.RepeatBehavior.Resolvable: AttributeDecodable {
+extension SymbolEffectOptions.RepeatBehavior.Resolvable: @preconcurrency AttributeDecodable {
     init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "continuous":
@@ -263,7 +264,8 @@ extension SymbolEffectOptions.Resolvable {
 @available(iOS 18, macOS 15, tvOS 18, visionOS 2, watchOS 11, *)
 extension SymbolEffectOptions.RepeatBehavior {
     @ASTDecodable("RepeatBehavior")
-    enum Resolvable: StylesheetResolvable {
+    @MainActor
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case continuous
         case periodic
         

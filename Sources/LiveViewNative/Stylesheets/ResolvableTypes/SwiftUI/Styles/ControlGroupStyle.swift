@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("ControlGroupStyle")
-enum StylesheetResolvableControlGroupStyle: ControlGroupStyle, StylesheetResolvable {
+enum StylesheetResolvableControlGroupStyle: @preconcurrency ControlGroupStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case compactMenu
     case menu
@@ -46,7 +46,7 @@ extension StylesheetResolvableControlGroupStyle {
     }
 }
 
-extension StylesheetResolvableControlGroupStyle: AttributeDecodable {
+extension StylesheetResolvableControlGroupStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

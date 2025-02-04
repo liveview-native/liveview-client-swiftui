@@ -10,18 +10,36 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("ListStyle")
-enum StylesheetResolvableListStyle: StylesheetResolvable {
+enum StylesheetResolvableListStyle: StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     #if os(macOS)
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case bordered
     #endif
     #if os(watchOS)
+    @available(iOS, unavailable)
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(visionOS, unavailable)
     case carousel
+    @available(iOS, unavailable)
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(visionOS, unavailable)
     case elliptical
     #endif
     #if os(iOS) || os(tvOS) || os(visionOS)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
     case grouped
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
     case inset
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
     case insetGrouped
     #endif
     case plain
@@ -67,7 +85,7 @@ extension View {
     }
 }
 
-extension StylesheetResolvableListStyle: AttributeDecodable {
+extension StylesheetResolvableListStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

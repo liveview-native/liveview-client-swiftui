@@ -250,7 +250,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                             let (data, _) = try await URLSession.shared.data(from: url)
                             guard let contents = String(data: data, encoding: .utf8)
                             else { return await Stylesheet<R>(content: [], classes: [:]) }
-                            return try await Stylesheet<R>(from: contents)
+                            return try! await Stylesheet<R>(from: contents)
                         }
                     }
                 }

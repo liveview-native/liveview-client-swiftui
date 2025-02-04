@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("ProgressViewStyle")
-enum StylesheetResolvableProgressViewStyle: ProgressViewStyle, StylesheetResolvable {
+enum StylesheetResolvableProgressViewStyle: @preconcurrency ProgressViewStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case circular
     case linear
@@ -34,7 +34,7 @@ extension StylesheetResolvableProgressViewStyle {
     }
 }
 
-extension StylesheetResolvableProgressViewStyle: AttributeDecodable {
+extension StylesheetResolvableProgressViewStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

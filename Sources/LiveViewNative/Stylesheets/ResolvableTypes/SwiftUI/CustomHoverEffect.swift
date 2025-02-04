@@ -12,7 +12,7 @@ import LiveViewNativeCore
 
 @ASTDecodable("CustomHoverEffect")
 @available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-enum StylesheetResolvableCustomHoverEffect: StylesheetResolvable, CustomHoverEffect {
+enum StylesheetResolvableCustomHoverEffect: StylesheetResolvable, @preconcurrency CustomHoverEffect, @preconcurrency Decodable {
     case automatic
 }
 
@@ -28,7 +28,7 @@ extension StylesheetResolvableCustomHoverEffect {
 }
 
 @available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-extension StylesheetResolvableCustomHoverEffect: AttributeDecodable {
+extension StylesheetResolvableCustomHoverEffect: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         fatalError()
     }

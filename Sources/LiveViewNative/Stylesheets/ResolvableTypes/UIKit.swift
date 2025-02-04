@@ -11,7 +11,7 @@ import LiveViewNativeCore
 
 extension UITextContentType {
     @ASTDecodable("UITextContentType")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case namePrefix
         case name
         case nameSuffix
@@ -218,7 +218,7 @@ extension UITextContentType.Resolvable {
     }
 }
 
-extension UITextContentType.Resolvable: AttributeDecodable {
+extension UITextContentType.Resolvable: @preconcurrency AttributeDecodable {
     init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "namePrefix":
@@ -317,7 +317,7 @@ extension UITextContentType.Resolvable: AttributeDecodable {
 
 extension UIKeyboardType {
     @ASTDecodable("UIKeyboardType")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case `default`
         case asciiCapable
         case numbersAndPunctuation
@@ -364,7 +364,7 @@ extension UIKeyboardType.Resolvable {
     }
 }
 
-extension UIKeyboardType: AttributeDecodable {
+extension UIKeyboardType: @preconcurrency AttributeDecodable {
     public init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "default":

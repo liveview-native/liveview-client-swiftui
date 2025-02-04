@@ -45,9 +45,17 @@ struct StaticMemberFunctionsDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
         )
         
         return StructDeclSyntax(
+            attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
             name: name,
             inheritanceClause: InheritanceClauseSyntax(inheritedTypes: [
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             ])
         ) {
             // decoded value
@@ -67,6 +75,7 @@ struct StaticMemberFunctionsDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
             
             // init from decoder
             InitializerDeclSyntax(
+                attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
                 signature: FunctionSignatureSyntax(
                     parameterClause: FunctionParameterClauseSyntax {
                         FunctionParameterSyntax(
@@ -198,7 +207,7 @@ struct StaticMemberFunctionsDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
                 // arguments
                 for clause in clauses {
                     clause.attributes.makeOSCheck {
-                        clauses.first!.attributes.makeRuntimeOSCheck {
+                        clause.attributes.makeRuntimeOSCheck {
                             DoStmtSyntax(
                                 // store caught error in the `errors` array.
                                 catchClauses: CatchClauseListSyntax {
@@ -294,7 +303,14 @@ struct StaticMemberFunctionClause {
             name: identifierEnumName,
             inheritanceClause: InheritanceClauseSyntax {
                 InheritedTypeSyntax(type: TypeSyntax("Swift.String"))
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             }
         ) {
             MemberBlockItemSyntax(decl: EnumCaseDeclSyntax {
@@ -331,10 +347,17 @@ struct StaticMemberFunctionClause {
             .filter { $0.firstName.tokenKind != .wildcard }
         
         self.argumentsDecl = StructDeclSyntax(
-            attributes: function.attributes.filter(\.isAvailability),
+            attributes: function.attributes.filter(\.isAvailability) + [.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))],
             name: name,
             inheritanceClause: InheritanceClauseSyntax {
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             }
         ) {
             identifierEnum
@@ -369,6 +392,7 @@ struct StaticMemberFunctionClause {
             
             // decoder
             InitializerDeclSyntax(
+                attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
                 signature: FunctionSignatureSyntax(
                     parameterClause: FunctionParameterClauseSyntax {
                         FunctionParameterSyntax(

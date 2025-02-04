@@ -14,7 +14,7 @@ struct StaticMembersDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
     let name: TokenSyntax
     let type: TypeSyntaxType
     let identifierEnumReference: DeclReferenceExprSyntax
-    let members: [PatternBindingSyntax]
+    let members: [StaticMemberClause]
     
     func makeSyntax(in context: MacroExpansionContext) -> StructDeclSyntax {
         // Names for decoding that won't collide with user-provided names.
@@ -45,9 +45,17 @@ struct StaticMembersDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
         )
         
         return StructDeclSyntax(
+            attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
             name: name,
             inheritanceClause: InheritanceClauseSyntax(inheritedTypes: [
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             ])
         ) {
             // decoded value
@@ -60,6 +68,7 @@ struct StaticMembersDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
             
             // init from decoder
             InitializerDeclSyntax(
+                attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
                 signature: FunctionSignatureSyntax(
                     parameterClause: FunctionParameterClauseSyntax {
                         FunctionParameterSyntax(
@@ -208,30 +217,45 @@ struct StaticMembersDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
                 ) {
                     for member in members {
                         if let name = member
+                            .member
                             .pattern
                             .as(IdentifierPatternSyntax.self)?
                             .identifier
                         {
-                            SwitchCaseSyntax(label: .case(SwitchCaseLabelSyntax {
-                                SwitchCaseItemSyntax(
-                                    pattern: ExpressionPatternSyntax(expression: StringLiteralExprSyntax(
-                                        openingQuote: .stringQuoteToken(),
-                                        segments: [
-                                            .stringSegment(StringSegmentSyntax(content: .stringSegment(name.trimmed.text)))
-                                        ],
-                                        closingQuote: .stringQuoteToken()
-                                    ))
-                                )
-                            })) {
-                                InfixOperatorExprSyntax(
-                                    leftOperand: MemberAccessExprSyntax(
-                                        base: DeclReferenceExprSyntax(baseName: .identifier("self")),
-                                        name: .identifier("value")
-                                    ),
-                                    operator: AssignmentExprSyntax(),
-                                    rightOperand: MemberAccessExprSyntax(name: name)
-                                )
-                                ReturnStmtSyntax()
+                            member.attributes.makeOSCheck {
+                                SwitchCaseSyntax(label: .case(SwitchCaseLabelSyntax {
+                                    SwitchCaseItemSyntax(
+                                        pattern: ExpressionPatternSyntax(expression: StringLiteralExprSyntax(
+                                            openingQuote: .stringQuoteToken(),
+                                            segments: [
+                                                .stringSegment(StringSegmentSyntax(content: .stringSegment(name.trimmed.text)))
+                                            ],
+                                            closingQuote: .stringQuoteToken()
+                                        ))
+                                    )
+                                })) {
+                                    member.attributes.makeRuntimeOSCheck {
+                                        InfixOperatorExprSyntax(
+                                            leftOperand: MemberAccessExprSyntax(
+                                                base: DeclReferenceExprSyntax(baseName: .identifier("self")),
+                                                name: .identifier("value")
+                                            ),
+                                            operator: AssignmentExprSyntax(),
+                                            rightOperand: MemberAccessExprSyntax(base: TypeExprSyntax(type: type), name: name)
+                                        )
+                                        ReturnStmtSyntax()
+                                    } elseBody: {
+                                        // throw errors
+                                        ThrowStmtSyntax(
+                                            expression: FunctionCallExprSyntax(
+                                                callee: TypeExprSyntax(type: TypeSyntax("LiveViewNativeStylesheet.MultipleFailures"))
+                                            ) {
+                                                LabeledExprSyntax(expression: errorsReference)
+                                                LabeledExprSyntax(label: "annotations", expression: annotationsReference)
+                                            }
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
@@ -250,4 +274,9 @@ struct StaticMembersDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
             }
         }
     }
+}
+
+struct StaticMemberClause {
+    let member: PatternBindingSyntax
+    let attributes: AttributeListSyntax
 }

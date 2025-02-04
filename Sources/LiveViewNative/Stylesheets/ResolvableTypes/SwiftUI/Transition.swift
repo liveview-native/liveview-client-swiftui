@@ -11,7 +11,7 @@ import LiveViewNativeCore
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @ASTDecodable("Transition")
-enum StylesheetResolvableTransition: Transition, StylesheetResolvable {
+enum StylesheetResolvableTransition: @preconcurrency Transition, StylesheetResolvable, @preconcurrency Decodable {
     case opacity
 }
 
@@ -27,7 +27,7 @@ extension StylesheetResolvableTransition {
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension StylesheetResolvableTransition: AttributeDecodable {
+extension StylesheetResolvableTransition: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         self = .opacity
     }

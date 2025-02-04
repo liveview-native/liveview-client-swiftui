@@ -10,21 +10,30 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("PickerStyle")
-enum StylesheetResolvablePickerStyle: StylesheetResolvable {
+enum StylesheetResolvablePickerStyle: StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case inline
     case menu
     #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+    @available(macOS, unavailable)
     case navigationLink
     #endif
     #if os(iOS) || os(macOS) || os(visionOS)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
     case palette
     #endif
     #if os(macOS)
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case radioGroup
     #endif
     case segmented
     #if os(iOS) || os(visionOS) || os(watchOS)
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
     case wheel
     #endif
 }
@@ -35,7 +44,7 @@ extension StylesheetResolvablePickerStyle {
     }
 }
 
-extension StylesheetResolvablePickerStyle: AttributeDecodable {
+extension StylesheetResolvablePickerStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

@@ -48,7 +48,14 @@ package struct ASTDecodable: ExtensionMacro {
             name: identifierEnumName,
             inheritanceClause: InheritanceClauseSyntax {
                 InheritedTypeSyntax(type: TypeSyntax("Swift.String"))
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             }
         ) {
             MemberBlockItemSyntax(decl: EnumCaseDeclSyntax {
@@ -63,8 +70,22 @@ package struct ASTDecodable: ExtensionMacro {
         let membersName = context.makeUniqueName("Members")
         let memberFunctionsName = context.makeUniqueName("MemberFunctions")
         
-        /// Decoders for each clause of arguments.
-        let clauses: [InitializerClause] = try declaration.memberBlock.members
+        // Decoders for each clause of arguments.
+        let ifConfigDecls = declaration.memberBlock.members
+            .compactMap({ $0.decl.as(IfConfigDeclSyntax.self) })
+            .flatMap({
+                $0.clauses.flatMap({ clause -> MemberBlockItemListSyntax in
+                    guard case .decls(let decls) = clause.as(IfConfigClauseSyntax.self)?.elements
+                    else { return [] }
+                    return decls
+                })
+            })
+        
+        
+        /// All members of the type including those nested in an `IfConfigDecl`.
+        let combinedMembers = declaration.memberBlock.members + ifConfigDecls
+        
+        let clauses: [InitializerClause] = try combinedMembers
             .compactMap({ $0.decl.as(InitializerDeclSyntax.self) })
             .filter({
                 $0.modifiers.isAccessible
@@ -76,17 +97,17 @@ package struct ASTDecodable: ExtensionMacro {
                 let clauseName = context.makeUniqueName("Clause\(offset)")
                 return try InitializerClause(
                     clauseName,
-                    for: initializer.signature,
+                    for: initializer,
                     type: type,
                     in: context
                 )
             })
         
-        let enumCases: [EnumCaseDeclSyntax] = declaration.memberBlock.members
+        let enumCases: [EnumCaseDeclSyntax] = combinedMembers
             .compactMap({ $0.decl.as(EnumCaseDeclSyntax.self) })
             .filter { !$0.elements.contains(where: { $0.name.text.starts(with: "_") }) }
         
-        let staticMemberFunctions: [StaticMemberFunctionClause] = try declaration.memberBlock.members
+        let staticMemberFunctions: [StaticMemberFunctionClause] = try combinedMembers
             .compactMap({ $0.decl.as(FunctionDeclSyntax.self) })
             .filter({
                 !$0.name.text.starts(with: "_")
@@ -107,20 +128,24 @@ package struct ASTDecodable: ExtensionMacro {
                 )
             })
         
-        let staticMembers: [PatternBindingSyntax] = declaration.memberBlock.members
+        let staticMembers: [StaticMemberClause] = combinedMembers
             .compactMap({ $0.decl.as(VariableDeclSyntax.self) })
             .filter({
                 !$0.bindings.contains(where: { $0.pattern.as(IdentifierPatternSyntax.self)?.identifier.text.starts(with: "_") ?? false })
                 && $0.modifiers.isStatic
                 && $0.modifiers.isAccessible
             })
-            .flatMap(\.bindings)
+            .flatMap({ decl in
+                decl.bindings.map({ binding in
+                    StaticMemberClause(member: binding, attributes: decl.attributes)
+                })
+            })
             .filter({
-                $0.typeAnnotation?.type.as(IdentifierTypeSyntax.self)?.name.text == "Self"
-                    || $0.typeAnnotation?.type.as(IdentifierTypeSyntax.self)?.name.text == type.as(IdentifierTypeSyntax.self)?.name.text
+                $0.member.typeAnnotation?.type.as(IdentifierTypeSyntax.self)?.name.text == "Self"
+                || $0.member.typeAnnotation?.type.as(IdentifierTypeSyntax.self)?.name.text == type.as(IdentifierTypeSyntax.self)?.name.text
             })
         
-        let members: [PatternBindingSyntax] = declaration.memberBlock.members
+        let members: [PatternBindingSyntax] = combinedMembers
             .compactMap({ $0.decl.as(VariableDeclSyntax.self) })
             .filter({
                 !$0.bindings.contains(where: { $0.pattern.as(IdentifierPatternSyntax.self)?.identifier.text.starts(with: "_") ?? false })
@@ -134,7 +159,7 @@ package struct ASTDecodable: ExtensionMacro {
                     || $0.typeAnnotation?.type.as(IdentifierTypeSyntax.self)?.name.text == type.as(IdentifierTypeSyntax.self)?.name.text)
             })
         
-        let memberFunctions: [MemberFunctionClause] = try declaration.memberBlock.members
+        let memberFunctions: [MemberFunctionClause] = try combinedMembers
             .compactMap({ $0.decl.as(FunctionDeclSyntax.self) })
             .filter({
                 !$0.name.text.starts(with: "_")
@@ -176,7 +201,8 @@ package struct ASTDecodable: ExtensionMacro {
         
         /// The `init(decoder:)` implementation.
         let decoder = InitializerDeclSyntax(
-            modifiers: declaration.modifiers.filter({ $0.name.tokenKind != .keyword(.indirect) }) + [.init(name: .keyword(.nonisolated))],
+            attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
+            modifiers: declaration.modifiers.filter({ $0.name.tokenKind != .keyword(.indirect) }),
             signature: FunctionSignatureSyntax(
                 parameterClause: FunctionParameterClauseSyntax {
                     FunctionParameterSyntax(
@@ -556,9 +582,9 @@ package struct ASTDecodable: ExtensionMacro {
             ExtensionDeclSyntax(
                 attributes: declaration.attributes.filter(\.isAvailability),
                 extendedType: type,
-                inheritanceClause: InheritanceClauseSyntax {
-                    InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
-                },
+//                inheritanceClause: InheritanceClauseSyntax {
+//                    InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+//                },
                 genericWhereClause: genericParameters.isEmpty ? nil : GenericWhereClauseSyntax {
                     // require all generic types to also conform to decodable
                     for generic in genericParameters {

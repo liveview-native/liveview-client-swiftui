@@ -48,9 +48,17 @@ struct MembersDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
         )
         
         return StructDeclSyntax(
+            attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
             name: name,
             inheritanceClause: InheritanceClauseSyntax(inheritedTypes: [
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             ])
         ) {
             // decoded value
@@ -63,6 +71,7 @@ struct MembersDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
             
             // init from decoder
             InitializerDeclSyntax(
+                attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))]),
                 signature: FunctionSignatureSyntax(
                     parameterClause: FunctionParameterClauseSyntax {
                         FunctionParameterSyntax(

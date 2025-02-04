@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 
 @ASTDecodable("CustomAnimation")
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-enum StylesheetResolvableCustomAnimation: CustomAnimation, StylesheetResolvable {
+enum StylesheetResolvableCustomAnimation: @preconcurrency CustomAnimation, StylesheetResolvable, @preconcurrency Decodable {
     case __never
     
     func animate<V>(value: V, time: TimeInterval, context: inout AnimationContext<V>) -> V? where V : VectorArithmetic {

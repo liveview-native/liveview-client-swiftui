@@ -10,11 +10,15 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("TextFieldStyle")
-enum StylesheetResolvableTextFieldStyle: StylesheetResolvable {
+enum StylesheetResolvableTextFieldStyle: StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case plain
     case roundedBorder
     #if os(macOS)
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case squareBorder
     #endif
 }
@@ -44,7 +48,7 @@ extension View {
     }
 }
 
-extension StylesheetResolvableTextFieldStyle: AttributeDecodable {
+extension StylesheetResolvableTextFieldStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

@@ -10,7 +10,8 @@ import LiveViewNativeStylesheet
 
 extension Spatial.Size3D {
     @ASTDecodable("Size3D")
-    enum Resolvable: StylesheetResolvable {
+    @MainActor
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Spatial.Size3D)
         case _init(width: AttributeReference<Double>, height: AttributeReference<Double>, depth: AttributeReference<Double>)
         

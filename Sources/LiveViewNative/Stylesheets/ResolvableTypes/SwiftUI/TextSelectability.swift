@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("TextSelectability")
-enum StylesheetResolvableTextSelectability: StylesheetResolvable {
+enum StylesheetResolvableTextSelectability: StylesheetResolvable, @preconcurrency Decodable {
     case enabled
     case disabled
 }
@@ -34,7 +34,7 @@ extension View {
     }
 }
 
-extension StylesheetResolvableTextSelectability: AttributeDecodable {
+extension StylesheetResolvableTextSelectability: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "enabled":

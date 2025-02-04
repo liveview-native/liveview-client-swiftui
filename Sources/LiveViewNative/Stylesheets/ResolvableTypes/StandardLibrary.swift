@@ -10,7 +10,8 @@ import LiveViewNativeCore
 
 extension AnyHashable {
     @ASTDecodable("AnyHashable")
-    enum Resolvable: StylesheetResolvable {
+    @MainActor
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(AnyHashable)
         case _string(AttributeReference<String>)
         
@@ -32,7 +33,7 @@ extension AnyHashable.Resolvable {
 }
 
 extension Character {
-    struct Resolvable: Decodable, StylesheetResolvable {
+    struct Resolvable: @preconcurrency Decodable, StylesheetResolvable {
         let value: AttributeReference<String>
         
         init(from decoder: any Decoder) throws {
@@ -53,7 +54,7 @@ enum StylesheetResolvableRangeExpression: Decodable {
     }
 }
 
-extension StylesheetResolvableRangeExpression: AttributeDecodable {
+extension StylesheetResolvableRangeExpression: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         fatalError()
     }

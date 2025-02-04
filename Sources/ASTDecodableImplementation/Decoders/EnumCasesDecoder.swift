@@ -47,7 +47,14 @@ struct EnumCasesDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
         return StructDeclSyntax(
             name: name,
             inheritanceClause: InheritanceClauseSyntax(inheritedTypes: [
-                InheritedTypeSyntax(type: TypeSyntax("Swift.Decodable"))
+                // @preconcurrency Swift.Decodable
+                InheritedTypeSyntax(
+                    type: AttributedTypeSyntax(
+                        specifiers: TypeSpecifierListSyntax([]),
+                        attributes: AttributeListSyntax([.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("preconcurrency"))))]),
+                        baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("Swift")), name: .identifier("Decodable"))
+                    )
+                )
             ])
         ) {
             // decoded value
@@ -192,66 +199,72 @@ struct EnumCasesDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
                 for caseDecl in cases {
                     for element in caseDecl.elements {
                         if let parameters = element.parameterClause?.parameters {
-                            DoStmtSyntax(
-                                // store caught error in the `errors` array.
-                                catchClauses: CatchClauseListSyntax {
-                                    CatchClauseSyntax(CatchItemListSyntax {
-                                        CatchItemSyntax(
-                                            pattern: ValueBindingPatternSyntax(
-                                                bindingSpecifier: .keyword(.let),
-                                                pattern: IdentifierPatternSyntax(identifier: errorName)
-                                            )
-                                        )
-                                    }) {
-                                        FunctionCallExprSyntax(
-                                            calledExpression: MemberAccessExprSyntax(
-                                                base: errorsReference,
-                                                name: .identifier("append")
-                                            ),
-                                            leftParen: .leftParenToken(),
-                                            rightParen: .rightParenToken()
-                                        ) {
-                                            LabeledExprSyntax(expression: errorReference)
-                                        }
-                                    }
-                                }
-                            ) {
-                                InfixOperatorExprSyntax(
-                                    leftOperand: MemberAccessExprSyntax(
-                                        base: DeclReferenceExprSyntax(baseName: .identifier("self")),
-                                        name: .identifier("value")
-                                    ),
-                                    operator: AssignmentExprSyntax(),
-                                    rightOperand: TryExprSyntax(
-                                        expression: FunctionCallExprSyntax(
-                                            callee: MemberAccessExprSyntax(name: element.name)
-                                        ) {
-                                            for parameter in parameters {
-                                                let expression = FunctionCallExprSyntax(
-                                                    callee: MemberAccessExprSyntax(
-                                                        base: argumentsContainerReference,
-                                                        name: .identifier("decode")
+                            caseDecl.attributes.makeOSCheck {
+                                caseDecl.attributes.makeRuntimeOSCheck {
+                                    DoStmtSyntax(
+                                        // store caught error in the `errors` array.
+                                        catchClauses: CatchClauseListSyntax {
+                                            CatchClauseSyntax(CatchItemListSyntax {
+                                                CatchItemSyntax(
+                                                    pattern: ValueBindingPatternSyntax(
+                                                        bindingSpecifier: .keyword(.let),
+                                                        pattern: IdentifierPatternSyntax(identifier: errorName)
                                                     )
+                                                )
+                                            }) {
+                                                FunctionCallExprSyntax(
+                                                    calledExpression: MemberAccessExprSyntax(
+                                                        base: errorsReference,
+                                                        name: .identifier("append")
+                                                    ),
+                                                    leftParen: .leftParenToken(),
+                                                    rightParen: .rightParenToken()
                                                 ) {
-                                                    LabeledExprSyntax(
-                                                        expression: MemberAccessExprSyntax(
-                                                            base: TypeExprSyntax(type: parameter.type),
-                                                            name: .identifier("self")
-                                                        )
-                                                    )
-                                                }
-                                                if let name = parameter.firstName,
-                                                   name.tokenKind != .wildcard
-                                                {
-                                                    LabeledExprSyntax(label: name.trimmed, colon: .colonToken(), expression: expression)
-                                                } else {
-                                                    LabeledExprSyntax(expression: expression)
+                                                    LabeledExprSyntax(expression: errorReference)
                                                 }
                                             }
                                         }
-                                    )
-                                )
-                                ReturnStmtSyntax()
+                                    ) {
+                                        InfixOperatorExprSyntax(
+                                            leftOperand: MemberAccessExprSyntax(
+                                                base: DeclReferenceExprSyntax(baseName: .identifier("self")),
+                                                name: .identifier("value")
+                                            ),
+                                            operator: AssignmentExprSyntax(),
+                                            rightOperand: TryExprSyntax(
+                                                expression: FunctionCallExprSyntax(
+                                                    callee: MemberAccessExprSyntax(name: element.name)
+                                                ) {
+                                                    for parameter in parameters {
+                                                        let expression = FunctionCallExprSyntax(
+                                                            callee: MemberAccessExprSyntax(
+                                                                base: argumentsContainerReference,
+                                                                name: .identifier("decode")
+                                                            )
+                                                        ) {
+                                                            LabeledExprSyntax(
+                                                                expression: MemberAccessExprSyntax(
+                                                                    base: TypeExprSyntax(type: parameter.type),
+                                                                    name: .identifier("self")
+                                                                )
+                                                            )
+                                                        }
+                                                        if let name = parameter.firstName,
+                                                           name.tokenKind != .wildcard
+                                                        {
+                                                            LabeledExprSyntax(label: name.trimmed, colon: .colonToken(), expression: expression)
+                                                        } else {
+                                                            LabeledExprSyntax(expression: expression)
+                                                        }
+                                                    }
+                                                }
+                                            )
+                                        )
+                                        ReturnStmtSyntax()
+                                    }
+                                } elseBody: {
+                                    
+                                }
                             }
                         }
                     }
@@ -277,26 +290,40 @@ struct EnumCasesDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
                 ) {
                     for caseDecl in cases {
                         for element in caseDecl.elements where element.parameterClause == nil {
-                            SwitchCaseSyntax(label: .case(SwitchCaseLabelSyntax {
-                                SwitchCaseItemSyntax(
-                                    pattern: ExpressionPatternSyntax(expression: StringLiteralExprSyntax(
-                                        openingQuote: .stringQuoteToken(),
-                                        segments: [
-                                            .stringSegment(StringSegmentSyntax(content: .stringSegment(element.name.trimmed.text)))
-                                        ],
-                                        closingQuote: .stringQuoteToken()
-                                    ))
-                                )
-                            })) {
-                                InfixOperatorExprSyntax(
-                                    leftOperand: MemberAccessExprSyntax(
-                                        base: DeclReferenceExprSyntax(baseName: .identifier("self")),
-                                        name: .identifier("value")
-                                    ),
-                                    operator: AssignmentExprSyntax(),
-                                    rightOperand: MemberAccessExprSyntax(name: element.name)
-                                )
-                                ReturnStmtSyntax()
+                            caseDecl.attributes.makeOSCheck {
+                                SwitchCaseSyntax(label: .case(SwitchCaseLabelSyntax {
+                                    SwitchCaseItemSyntax(
+                                        pattern: ExpressionPatternSyntax(expression: StringLiteralExprSyntax(
+                                            openingQuote: .stringQuoteToken(),
+                                            segments: [
+                                                .stringSegment(StringSegmentSyntax(content: .stringSegment(element.name.trimmed.text)))
+                                            ],
+                                            closingQuote: .stringQuoteToken()
+                                        ))
+                                    )
+                                })) {
+                                    caseDecl.attributes.makeRuntimeOSCheck {
+                                        InfixOperatorExprSyntax(
+                                            leftOperand: MemberAccessExprSyntax(
+                                                base: DeclReferenceExprSyntax(baseName: .identifier("self")),
+                                                name: .identifier("value")
+                                            ),
+                                            operator: AssignmentExprSyntax(),
+                                            rightOperand: MemberAccessExprSyntax(base: TypeExprSyntax(type: type), name: element.name)
+                                        )
+                                        ReturnStmtSyntax()
+                                    } elseBody: {
+                                        // throw errors
+                                        ThrowStmtSyntax(
+                                            expression: FunctionCallExprSyntax(
+                                                callee: TypeExprSyntax(type: TypeSyntax("LiveViewNativeStylesheet.MultipleFailures"))
+                                            ) {
+                                                LabeledExprSyntax(expression: errorsReference)
+                                                LabeledExprSyntax(label: "annotations", expression: annotationsReference)
+                                            }
+                                        )
+                                    }
+                                }
                             }
                         }
                     }

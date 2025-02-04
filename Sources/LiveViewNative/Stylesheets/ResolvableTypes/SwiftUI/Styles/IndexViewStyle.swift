@@ -11,7 +11,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("IndexViewStyle")
-enum StylesheetResolvableIndexViewStyle: StylesheetResolvable {
+enum StylesheetResolvableIndexViewStyle: StylesheetResolvable, @preconcurrency Decodable {
     case page
     
     case _page(backgroundDisplayMode: AttributeReference<PageIndexViewStyle.BackgroundDisplayMode.Resolvable>)
@@ -56,7 +56,7 @@ extension View {
     }
 }
 
-extension StylesheetResolvableIndexViewStyle: AttributeDecodable {
+extension StylesheetResolvableIndexViewStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "page":

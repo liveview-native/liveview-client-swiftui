@@ -10,17 +10,27 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("DatePickerStyle")
-enum StylesheetResolvableDatePickerStyle: DatePickerStyle, StylesheetResolvable {
+enum StylesheetResolvableDatePickerStyle: @preconcurrency DatePickerStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case compact
     #if os(macOS)
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case field
     #endif
     case graphical
     #if os(macOS)
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case stepperField
     #endif
     #if os(iOS) || os(watchOS) || os(visionOS)
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
     case wheel
     #endif
 }
@@ -55,7 +65,7 @@ extension StylesheetResolvableDatePickerStyle {
     }
 }
 
-extension StylesheetResolvableDatePickerStyle: AttributeDecodable {
+extension StylesheetResolvableDatePickerStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

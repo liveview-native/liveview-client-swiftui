@@ -11,7 +11,7 @@ import LiveViewNativeCore
 
 @ASTDecodable("ScrollTargetBehavior")
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-enum StylesheetResolvableScrollTargetBehavior: ScrollTargetBehavior, StylesheetResolvable {
+enum StylesheetResolvableScrollTargetBehavior: @preconcurrency ScrollTargetBehavior, StylesheetResolvable, @preconcurrency Decodable {
     case _resolved(any ScrollTargetBehavior)
     
     case paging
@@ -32,7 +32,7 @@ enum StylesheetResolvableScrollTargetBehavior: ScrollTargetBehavior, StylesheetR
 }
 
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-extension ViewAlignedScrollTargetBehavior.LimitBehavior.Resolvable: AttributeDecodable {
+extension ViewAlignedScrollTargetBehavior.LimitBehavior.Resolvable: @preconcurrency AttributeDecodable {
     init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":
@@ -80,7 +80,7 @@ extension StylesheetResolvableScrollTargetBehavior {
 }
 
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-extension StylesheetResolvableScrollTargetBehavior: AttributeDecodable {
+extension StylesheetResolvableScrollTargetBehavior: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "paging":

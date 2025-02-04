@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("NavigationSplitViewStyle")
-enum StylesheetResolvableNavigationSplitViewStyle: NavigationSplitViewStyle, StylesheetResolvable {
+enum StylesheetResolvableNavigationSplitViewStyle: @preconcurrency NavigationSplitViewStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case balanced
     case prominentDetail
@@ -34,7 +34,7 @@ extension StylesheetResolvableNavigationSplitViewStyle {
     }
 }
 
-extension StylesheetResolvableNavigationSplitViewStyle: AttributeDecodable {
+extension StylesheetResolvableNavigationSplitViewStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

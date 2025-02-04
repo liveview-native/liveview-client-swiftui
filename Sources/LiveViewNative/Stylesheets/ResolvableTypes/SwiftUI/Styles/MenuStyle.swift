@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("MenuStyle")
-enum StylesheetResolvableMenuStyle: MenuStyle, StylesheetResolvable {
+enum StylesheetResolvableMenuStyle: @preconcurrency MenuStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case button
 }
@@ -31,7 +31,7 @@ extension StylesheetResolvableMenuStyle {
     }
 }
 
-extension StylesheetResolvableMenuStyle: AttributeDecodable {
+extension StylesheetResolvableMenuStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

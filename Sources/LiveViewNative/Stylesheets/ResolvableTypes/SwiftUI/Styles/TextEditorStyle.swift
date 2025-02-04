@@ -12,10 +12,14 @@ import LiveViewNativeCore
 #if os(iOS) || os(macOS) || os(visionOS)
 @ASTDecodable("TextEditorStyle")
 @available(iOS 17, macOS 14, *)
-enum StylesheetResolvableTextEditorStyle: TextEditorStyle, StylesheetResolvable {
+enum StylesheetResolvableTextEditorStyle: @preconcurrency TextEditorStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case plain
     #if os(visionOS)
+    @available(iOS, unavailable)
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
     case roundedBorder
     #endif
 }
@@ -42,7 +46,7 @@ extension StylesheetResolvableTextEditorStyle {
 }
 
 @available(iOS 17, macOS 14, *)
-extension StylesheetResolvableTextEditorStyle: AttributeDecodable {
+extension StylesheetResolvableTextEditorStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

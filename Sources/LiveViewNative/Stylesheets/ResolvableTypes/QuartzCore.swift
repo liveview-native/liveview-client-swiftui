@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 
 extension CATransform3D {
     @ASTDecodable("CATransform3D")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CATransform3D)
     }
 }

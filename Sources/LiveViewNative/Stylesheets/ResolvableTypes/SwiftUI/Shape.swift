@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("Shape")
-enum StylesheetResolvableShape: SwiftUI.Shape, StylesheetResolvable {
+enum StylesheetResolvableShape: SwiftUI.Shape, StylesheetResolvable, @preconcurrency Decodable {
     case circle
     
     nonisolated func path(in rect: CGRect) -> Path {
@@ -40,7 +40,7 @@ extension StylesheetResolvableShape: AttributeDecodable {
 }
 
 @ASTDecodable("InsettableShape")
-enum StylesheetResolvableInsettableShape: InsettableShape, StylesheetResolvable {
+enum StylesheetResolvableInsettableShape: InsettableShape, StylesheetResolvable, @preconcurrency Decodable {
     case circle
     
     nonisolated func path(in rect: CGRect) -> Path {
@@ -62,7 +62,7 @@ extension StylesheetResolvableInsettableShape {
     }
 }
 
-extension StylesheetResolvableInsettableShape: AttributeDecodable {
+extension StylesheetResolvableInsettableShape: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "circle":

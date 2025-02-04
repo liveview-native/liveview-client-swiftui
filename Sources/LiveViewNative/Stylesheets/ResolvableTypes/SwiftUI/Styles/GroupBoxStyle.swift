@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("GroupBoxStyle")
-enum StylesheetResolvableGroupBoxStyle: GroupBoxStyle, StylesheetResolvable {
+enum StylesheetResolvableGroupBoxStyle: @preconcurrency GroupBoxStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
 }
 
@@ -28,7 +28,7 @@ extension StylesheetResolvableGroupBoxStyle {
     }
 }
 
-extension StylesheetResolvableGroupBoxStyle: AttributeDecodable {
+extension StylesheetResolvableGroupBoxStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

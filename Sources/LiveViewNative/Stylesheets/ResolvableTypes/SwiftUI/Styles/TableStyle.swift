@@ -10,10 +10,14 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("TableStyle")
-enum StylesheetResolvableTableStyle: TableStyle, StylesheetResolvable {
+enum StylesheetResolvableTableStyle: @preconcurrency TableStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case inset
     #if os(macOS)
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
     case bordered
     #endif
 }
@@ -38,7 +42,7 @@ extension StylesheetResolvableTableStyle {
     }
 }
 
-extension StylesheetResolvableTableStyle: AttributeDecodable {
+extension StylesheetResolvableTableStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":

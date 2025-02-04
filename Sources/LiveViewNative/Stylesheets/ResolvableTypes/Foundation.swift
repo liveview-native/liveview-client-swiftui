@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 
 extension Calendar {
     @ASTDecodable("Calendar")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case _current
         case _autoupdatingCurrent
         
@@ -33,7 +33,7 @@ extension Calendar.Resolvable {
 
 extension Locale {
     @ASTDecodable("Locale")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case _current
         case _autoupdatingCurrent
         
@@ -56,7 +56,8 @@ extension Locale.Resolvable {
 
 extension Locale.Language {
     @ASTDecodable("Language")
-    enum Resolvable: StylesheetResolvable {
+    @MainActor
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Locale.Language)
         case _init(identifier: AttributeReference<String>)
         
@@ -80,7 +81,7 @@ extension Locale.Language.Resolvable {
 
 extension Date.ComponentsFormatStyle.Field {
     @ASTDecodable("Field")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Date.ComponentsFormatStyle.Field)
         case _day
         case _hour
@@ -126,7 +127,7 @@ extension Date.ComponentsFormatStyle.Field.Resolvable {
 
 extension NumberFormatStyleConfiguration.SignDisplayStrategy {
     @ASTDecodable("SignDisplayStrategy")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(NumberFormatStyleConfiguration.SignDisplayStrategy)
         case _automatic
         case _never
@@ -158,7 +159,7 @@ extension NumberFormatStyleConfiguration.SignDisplayStrategy.Resolvable {
 
 extension Bundle {
     @ASTDecodable("Bundle")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Bundle)
         case _init(url: URL)
         
@@ -182,7 +183,8 @@ extension Bundle.Resolvable {
 
 extension LocalizedStringResource {
     @ASTDecodable("LocalizedStringResource")
-    enum Resolvable: StylesheetResolvable {
+    @MainActor
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(LocalizedStringResource)
         case _init(key: AttributeReference<String>)
         
@@ -205,7 +207,7 @@ extension LocalizedStringResource.Resolvable {
 
 extension DateInterval {
     @ASTDecodable("DateInterval")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(DateInterval)
     }
 }
@@ -221,7 +223,7 @@ extension DateInterval.Resolvable {
 
 extension AttributedString {
     @ASTDecodable("AttributedString")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(AttributedString)
     }
 }

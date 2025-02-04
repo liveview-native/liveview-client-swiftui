@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 
 extension Accessibility.AXCustomContent.Importance {
     @ASTDecodable("Importance")
-    enum Resolvable: StylesheetResolvable {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Accessibility.AXCustomContent.Importance)
         
         case `default`
