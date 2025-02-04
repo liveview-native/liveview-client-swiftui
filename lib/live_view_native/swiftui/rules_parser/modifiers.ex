@@ -9,7 +9,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
 
   defcombinator(
     :key_value_list,
-    enclosed("[", key_value_pairs(generate_error?: true, allow_empty?: false), "]",
+    enclosed("[", wrap(key_value_pairs(generate_error?: true, allow_empty?: false)), "]",
       allow_empty?: false,
       error_parser: non_whitespace(also_ignore: String.to_charlist(")],"))
     )
