@@ -135,78 +135,111 @@ extension ModifierGenerator {
                                     ))
                                 ))
                             }) {
-                                // switch over the modifier name and decode the correct type
-                                SwitchExprSyntax(subject: MemberAccessExprSyntax(
-                                    base: DeclReferenceExprSyntax(baseName: .identifier("modifierTypeName")),
-                                    period: .periodToken(),
-                                    name: .identifier("name")
-                                )) {
-                                    for modifier in modifiers {
-                                        SwitchCaseSyntax(
-                                            label: .case(SwitchCaseLabelSyntax(caseItems: [
-                                                SwitchCaseItemSyntax(
-                                                    pattern: ExpressionPatternSyntax(
-                                                        expression: StringLiteralExprSyntax(content: modifier)
-                                                    )
-                                                )
-                                            ]))
-                                        ) {
-                                            // decode this modifier type to self
+                                DoStmtSyntax(
+                                    catchClauses: CatchClauseListSyntax {
+                                        CatchClauseSyntax {
+                                            // if the specific modifier fails to decode create an ErrorModifier instead.
                                             InfixOperatorExprSyntax(
                                                 leftOperand: DeclReferenceExprSyntax(baseName: .identifier("self")),
                                                 operator: AssignmentExprSyntax(),
                                                 rightOperand: FunctionCallExprSyntax(
-                                                    callee: MemberAccessExprSyntax(name: .identifier(modifier))
+                                                    callee: MemberAccessExprSyntax(name: .identifier("_error"))
                                                 ) {
-                                                    LabeledExprSyntax(expression: TryExprSyntax(expression: FunctionCallExprSyntax(
-                                                        callee: MemberAccessExprSyntax(
-                                                            base: DeclReferenceExprSyntax(baseName: .identifier("container")),
-                                                            period: .periodToken(),
-                                                            name: .identifier("decode")
-                                                        )
+                                                    LabeledExprSyntax(expression: FunctionCallExprSyntax(
+                                                        callee: DeclReferenceExprSyntax(baseName: .identifier("ErrorModifier"))
                                                     ) {
-                                                        LabeledExprSyntax(expression: MemberAccessExprSyntax(
-                                                            base: GenericSpecializationExprSyntax(
-                                                                expression: DeclReferenceExprSyntax(baseName: .identifier("_ViewModifier__\(modifier)")),
-                                                                genericArgumentClause: GenericArgumentClauseSyntax {
-                                                                    GenericArgumentSyntax(argument: IdentifierTypeSyntax(name: .identifier("R")))
-                                                                }
-                                                            ),
-                                                            period: .periodToken(),
-                                                            name: .identifier("self")
-                                                        ))
-                                                    }))
+                                                        LabeledExprSyntax(expression: TryExprSyntax(expression: FunctionCallExprSyntax(
+                                                            callee: MemberAccessExprSyntax(
+                                                                base: DeclReferenceExprSyntax(baseName: .identifier("container")),
+                                                                period: .periodToken(),
+                                                                name: .identifier("decode")
+                                                            )
+                                                        ) {
+                                                            LabeledExprSyntax(expression: MemberAccessExprSyntax(
+                                                                base: DeclReferenceExprSyntax(baseName: .identifier("ASTNode")),
+                                                                period: .periodToken(),
+                                                                name: .identifier("self")
+                                                            ))
+                                                        }))
+                                                    })
                                                 }
                                             )
                                         }
                                     }
-                                    
-                                    SwitchCaseSyntax(label: .default(SwitchDefaultLabelSyntax())) {
-                                        InfixOperatorExprSyntax(
-                                            leftOperand: DeclReferenceExprSyntax(baseName: .identifier("self")),
-                                            operator: AssignmentExprSyntax(),
-                                            rightOperand: FunctionCallExprSyntax(
-                                                callee: MemberAccessExprSyntax(name: .identifier("_error"))
-                                            ) {
-                                                LabeledExprSyntax(expression: FunctionCallExprSyntax(
-                                                    callee: DeclReferenceExprSyntax(baseName: .identifier("ErrorModifier"))
-                                                ) {
-                                                    LabeledExprSyntax(expression: TryExprSyntax(expression: FunctionCallExprSyntax(
-                                                        callee: MemberAccessExprSyntax(
-                                                            base: DeclReferenceExprSyntax(baseName: .identifier("container")),
-                                                            period: .periodToken(),
-                                                            name: .identifier("decode")
+                                ) {
+                                    // switch over the modifier name and decode the correct type
+                                    SwitchExprSyntax(subject: MemberAccessExprSyntax(
+                                        base: DeclReferenceExprSyntax(baseName: .identifier("modifierTypeName")),
+                                        period: .periodToken(),
+                                        name: .identifier("name")
+                                    )) {
+                                        for modifier in modifiers {
+                                            SwitchCaseSyntax(
+                                                label: .case(SwitchCaseLabelSyntax(caseItems: [
+                                                    SwitchCaseItemSyntax(
+                                                        pattern: ExpressionPatternSyntax(
+                                                            expression: StringLiteralExprSyntax(content: modifier)
                                                         )
+                                                    )
+                                                ]))
+                                            ) {
+                                                // decode this modifier type to self
+                                                InfixOperatorExprSyntax(
+                                                    leftOperand: DeclReferenceExprSyntax(baseName: .identifier("self")),
+                                                    operator: AssignmentExprSyntax(),
+                                                    rightOperand: FunctionCallExprSyntax(
+                                                        callee: MemberAccessExprSyntax(name: .identifier(modifier))
                                                     ) {
-                                                        LabeledExprSyntax(expression: MemberAccessExprSyntax(
-                                                            base: DeclReferenceExprSyntax(baseName: .identifier("ASTNode")),
-                                                            period: .periodToken(),
-                                                            name: .identifier("self")
-                                                        ))
-                                                    }))
-                                                })
+                                                        LabeledExprSyntax(expression: TryExprSyntax(expression: FunctionCallExprSyntax(
+                                                            callee: MemberAccessExprSyntax(
+                                                                base: DeclReferenceExprSyntax(baseName: .identifier("container")),
+                                                                period: .periodToken(),
+                                                                name: .identifier("decode")
+                                                            )
+                                                        ) {
+                                                            LabeledExprSyntax(expression: MemberAccessExprSyntax(
+                                                                base: GenericSpecializationExprSyntax(
+                                                                    expression: DeclReferenceExprSyntax(baseName: .identifier("_ViewModifier__\(modifier)")),
+                                                                    genericArgumentClause: GenericArgumentClauseSyntax {
+                                                                        GenericArgumentSyntax(argument: IdentifierTypeSyntax(name: .identifier("R")))
+                                                                    }
+                                                                ),
+                                                                period: .periodToken(),
+                                                                name: .identifier("self")
+                                                            ))
+                                                        }))
+                                                    }
+                                                )
                                             }
-                                        )
+                                        }
+                                        
+                                        SwitchCaseSyntax(label: .default(SwitchDefaultLabelSyntax())) {
+                                            InfixOperatorExprSyntax(
+                                                leftOperand: DeclReferenceExprSyntax(baseName: .identifier("self")),
+                                                operator: AssignmentExprSyntax(),
+                                                rightOperand: FunctionCallExprSyntax(
+                                                    callee: MemberAccessExprSyntax(name: .identifier("_error"))
+                                                ) {
+                                                    LabeledExprSyntax(expression: FunctionCallExprSyntax(
+                                                        callee: DeclReferenceExprSyntax(baseName: .identifier("ErrorModifier"))
+                                                    ) {
+                                                        LabeledExprSyntax(expression: TryExprSyntax(expression: FunctionCallExprSyntax(
+                                                            callee: MemberAccessExprSyntax(
+                                                                base: DeclReferenceExprSyntax(baseName: .identifier("container")),
+                                                                period: .periodToken(),
+                                                                name: .identifier("decode")
+                                                            )
+                                                        ) {
+                                                            LabeledExprSyntax(expression: MemberAccessExprSyntax(
+                                                                base: DeclReferenceExprSyntax(baseName: .identifier("ASTNode")),
+                                                                period: .periodToken(),
+                                                                name: .identifier("self")
+                                                            ))
+                                                        }))
+                                                    })
+                                                }
+                                            )
+                                        }
                                     }
                                 }
                             }

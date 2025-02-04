@@ -242,15 +242,15 @@ public struct AttributeReference<Value: Decodable & AttributeDecodable>: @precon
 
 extension AttributeName: @retroactive Decodable {
     public init(from decoder: any Decoder) throws {
-        self.init(rawValue: try decoder.singleValueContainer().decode(Attr.self).value)!
+        // ["__attr__", { ... }, "attribute-name"]
+        var container = try decoder.unkeyedContainer()
+        _ = try container.decode(Attr.self)
+        _ = try container.decode(Annotations.self)
+        
+        self = .init(rawValue: try container.decode(String.self))!
     }
     
-    @ASTDecodable("__attr__")
-    struct Attr: @preconcurrency Decodable {
-        let value: String
-        
-        init(_ value: String) {
-            self.value = value
-        }
+    private enum Attr: String, Decodable {
+        case attr = "__attr__"
     }
 }
