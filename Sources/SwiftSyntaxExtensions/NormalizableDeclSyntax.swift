@@ -34,7 +34,10 @@ public extension NormalizableDeclSyntax {
             guard parameter.type.isValidModifierType else { return false }
             
             // only @ViewBuilder and () -> Void functions are allowed
-            if let functionType = parameter.type.as(FunctionTypeSyntax.self) ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self) {
+            if let functionType = parameter.type.as(FunctionTypeSyntax.self)
+                ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self)
+                ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(TupleTypeSyntax.self)?.elements.first?.type.as(FunctionTypeSyntax.self)
+            {
                 guard functionType.returnClause.type.isVoid || parameter.isViewBuilder
                 else { return false }
             }
@@ -132,6 +135,19 @@ public extension NormalizableDeclSyntax {
             }
             if let attributedType = parameter.type.as(AttributedTypeSyntax.self),
                let functionType = attributedType.baseType.as(FunctionTypeSyntax.self)
+            {
+                // closures that return values other than `Void` are not supported.
+                // we *might* be able to support those if the closure is `async`.
+                guard functionType.returnClause.type.isVoid
+                else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
+                return parameter
+                    .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                    .makeAttributeReference()
+            }
+            if let attributedType = parameter.type.as(AttributedTypeSyntax.self),
+               let tupleType = attributedType.baseType.as(TupleTypeSyntax.self),
+               tupleType.elements.count == 1,
+               let functionType = tupleType.elements.first!.type.as(FunctionTypeSyntax.self)
             {
                 // closures that return values other than `Void` are not supported.
                 // we *might* be able to support those if the closure is `async`.
@@ -276,6 +292,7 @@ public extension TypeSyntax {
     /// - `BinaryFloatingPoint` -> `Double`
     /// - `Equatable` -> `String`
     /// - `Hashable` -> `String`
+    /// - `Identifiable` -> `String`
     /// - `StringProtocol` -> `String`
     /// - `View` -> `InlineViewReference` (this is a `View` argument that isn't a function argument with `@ViewBuilder`)
     ///
@@ -287,6 +304,8 @@ public extension TypeSyntax {
             } else if identifierType.name.text == "Equatable" {
                 return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
             } else if identifierType.name.text == "Hashable" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
+            } else if identifierType.name.text == "Identifiable" {
                 return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
             } else if identifierType.name.text == "StringProtocol" {
                 return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
@@ -301,6 +320,8 @@ public extension TypeSyntax {
             } else if memberType.name.text == "Equatable" {
                 return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
             } else if memberType.name.text == "Hashable" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
+            } else if memberType.name.text == "Identifiable" {
                 return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
             } else if memberType.name.text == "StringProtocol" {
                 return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))

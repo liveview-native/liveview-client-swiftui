@@ -81,11 +81,6 @@ struct NavigationLink<Root: RootRegistry>: View {
         case replace
     }
     
-    // FIXME: _anyNavigationTransition
-//    @LiveElementIgnored
-//    @Environment(\._anyNavigationTransition)
-//    private var anyNavigationTransition: Any?
-    
     @LiveElementIgnored
     @Environment(\.anyLiveContextStorage)
     private var anyLiveContextStorage: Any?

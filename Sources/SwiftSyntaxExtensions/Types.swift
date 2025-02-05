@@ -21,6 +21,14 @@ public extension TypeSyntaxProtocol {
             guard functionType.parameters.isEmpty
             else { return false }
         }
+        if let attributedType = self.as(AttributedTypeSyntax.self),
+           let tupleType = attributedType.baseType.as(TupleTypeSyntax.self),
+           tupleType.elements.count == 1,
+           let functionType = tupleType.elements.first!.type.as(FunctionTypeSyntax.self)
+        {
+            guard functionType.parameters.isEmpty
+            else { return false }
+        }
         
         // Tuple types can't be encoded/decoded automatically.
         if self.is(TupleTypeSyntax.self) {
@@ -72,6 +80,23 @@ public extension TypeSyntaxProtocol {
             return false
         }
         
+        // SwiftUI.AccessibilityFocusState<T>.Binding is not allowed
+        if let memberType = self.as(MemberTypeSyntax.self),
+           memberType.baseType.as(MemberTypeSyntax.self)?.name.text == "AccessibilityFocusState",
+           memberType.name.text == "Binding"
+        {
+            return false
+        }
+        
+        // Swift.Optional<() -> ()> with a function wrapped type is not allowed
+        if let memberType = self.as(MemberTypeSyntax.self),
+           memberType.baseType.as(MemberTypeSyntax.self)?.name.text == "Swift",
+           memberType.name.text == "Optional",
+           memberType.genericArgumentClause?.arguments.first?.argument.as(FunctionDeclSyntax.self) != nil
+        {
+            return false
+        }
+        
         // Decoder is not allowed
         if let memberType = self.as(MemberTypeSyntax.self),
            memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift",
@@ -92,6 +117,30 @@ public extension TypeSyntaxProtocol {
         if let memberType = self.as(MemberTypeSyntax.self),
            memberType.baseType.as(MemberTypeSyntax.self)?.name.text == "String",
            memberType.name.text == "Index"
+        {
+            return false
+        }
+        
+        // Swift.KeyPath is not allowed
+        if let memberType = self.as(MemberTypeSyntax.self),
+           memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift",
+           memberType.name.text == "KeyPath"
+        {
+            return false
+        }
+        
+        // Swift.Range is not allowed
+        if let memberType = self.as(MemberTypeSyntax.self),
+           memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift",
+           memberType.name.text == "Range"
+        {
+            return false
+        }
+        
+        // SwiftUICore.UnitPoint3D is not allowed
+        if let memberType = self.as(MemberTypeSyntax.self),
+           memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUICore",
+           memberType.name.text == "UnitPoint3D"
         {
             return false
         }
@@ -118,6 +167,13 @@ public extension TypeSyntaxProtocol {
         // optional wrapped type must be valid
         if let optionalType = self.as(OptionalTypeSyntax.self),
            !optionalType.wrappedType.isValidModifierType
+        {
+            return false
+        }
+        
+        // array element type must be valid
+        if let arrayType = self.as(ArrayTypeSyntax.self),
+           !arrayType.element.isValidModifierType
         {
             return false
         }

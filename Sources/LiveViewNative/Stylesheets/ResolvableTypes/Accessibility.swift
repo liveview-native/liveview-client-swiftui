@@ -6,7 +6,9 @@
 //
 
 import Accessibility
+import SwiftUI
 import LiveViewNativeStylesheet
+import LiveViewNativeCore
 
 extension Accessibility.AXCustomContent.Importance {
     @ASTDecodable("Importance")
@@ -28,5 +30,25 @@ extension Accessibility.AXCustomContent.Importance.Resolvable {
         case .high:
             return .high
         }
+    }
+}
+
+struct StylesheetResolvableAXChartDescriptorRepresentable: StylesheetResolvable, @preconcurrency Decodable, @preconcurrency AXChartDescriptorRepresentable {
+    init(from decoder: any Decoder) throws {
+        fatalError("'AXChartDescriptor' is not supported")
+    }
+    
+    func makeChartDescriptor() -> AXChartDescriptor {
+        fatalError("'AXChartDescriptor' is not supported")
+    }
+    
+    func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Self where R : RootRegistry {
+        return self
+    }
+}
+
+extension StylesheetResolvableAXChartDescriptorRepresentable: @preconcurrency AttributeDecodable {
+    init(from attribute: Attribute?, on element: ElementNode) throws {
+        fatalError("'AXChartDescriptor' is not supported")
     }
 }

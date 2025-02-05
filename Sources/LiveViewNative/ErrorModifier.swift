@@ -7,8 +7,11 @@
 
 import SwiftUI
 import LiveViewNativeStylesheet
+import OSLog
 
-struct ErrorModifier: ViewModifier {
+private let errorModifierLogger = Logger(subsystem: "LiveViewNative", category: "Stylesheet")
+
+struct ErrorModifier: ViewModifier, Error {
     let node: ASTNode
     
     init(_ node: ASTNode) {
@@ -17,10 +20,8 @@ struct ErrorModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .overlay {
-//                AnyErrorView<R>(error)
-                Text("failed to decode \(node)")
-                    .foregroundStyle(.red)
+            .task {
+                errorModifierLogger.warning("Using modifier \(node.debugDescription) that failed to decode\n\(node.annotations.debugDescription)")
             }
     }
 }

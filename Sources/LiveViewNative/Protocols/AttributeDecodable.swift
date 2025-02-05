@@ -294,3 +294,11 @@ extension URL: AttributeDecodable {
         self = try URL(value, strategy: .url)
     }
 }
+
+extension Set: AttributeDecodable where Element: AttributeDecodable & Decodable {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self = try makeJSONDecoder().decode(Self.self, from: Data(value.utf8))
+    }
+}

@@ -8,7 +8,7 @@
 /// Metadata associated with an ``ASTNode``.
 ///
 /// This is encoded as a map with the keys `file`, `line`, `module`, and `source`.
-public struct Annotations: Codable, Hashable, Sendable {
+public struct Annotations: Codable, Hashable, Sendable, CustomDebugStringConvertible {
     /// The file the node appears in.
     public let file: String?
     /// The line number this node is on.
@@ -30,5 +30,12 @@ public struct Annotations: Codable, Hashable, Sendable {
         self.line = line
         self.module = module
         self.source = source
+    }
+    
+    public var debugDescription: String {
+        #"""
+        \#(source ?? "unknown source")
+        \#(module ?? "UnknownModule") \#(file ?? "unknown_file"):\#(line ?? 1)
+        """#
     }
 }

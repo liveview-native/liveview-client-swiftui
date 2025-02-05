@@ -1,4 +1,6 @@
+import Foundation
 import LiveViewNativeStylesheet
+import LiveViewNativeCore
 
 @MainActor
 protocol StylesheetResolvable {
@@ -24,6 +26,14 @@ enum StylesheetResolvableSet<T>: @preconcurrency Decodable, StylesheetResolvable
         case let .resolvable(value):
             return Set(value.map({ $0.resolve(on: element, in: context) }))
         }
+    }
+}
+
+extension StylesheetResolvableSet: @preconcurrency AttributeDecodable {
+    init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self = .resolvable(try makeJSONDecoder().decode([T].self, from: Data(value.utf8)))
     }
 }
 

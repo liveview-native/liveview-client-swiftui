@@ -75,7 +75,22 @@ struct ModifierGenerator: ParsableCommand {
         
         // create the `BuiltinModifier` type
         outputContents += "\n"
-        outputContents += try makeBuiltinModifier(sortedModifiers.map(\.key)).formatted().description
+        
+        // chunk the modifiers into smaller groups (so each one uses less memory on the stack)
+        let chunkSize = 14
+        let modifierList = sortedModifiers.map(\.key)
+        let modifierChunks: [[String]] = stride(from: 0, to: modifierList.count, by: chunkSize).map {
+            Array(modifierList[$0..<min($0 + chunkSize, modifierList.count)])
+        }
+        for (index, chunk) in modifierChunks.enumerated() {
+            outputContents += try makeBuiltinModifierChunk("_BuiltinModifier__Chunk\(index)", chunk)
+                .formatted()
+                .description
+            outputContents += "\n"
+        }
+        // aggregate of all modifier chunks
+        outputContents += makeBuiltinModifier(modifierChunks).formatted().description
+        
         
         try outputContents.write(to: output, atomically: true, encoding: .utf8)
     }
