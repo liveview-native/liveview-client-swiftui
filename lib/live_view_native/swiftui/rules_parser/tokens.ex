@@ -84,7 +84,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
         show_incorrect_text?: true
       )
     )
-    |> map({String, :to_atom, []})
+    |> post_traverse({PostProcessors, :to_atom_ast, []})
   end
 
   def double_quoted_string() do
