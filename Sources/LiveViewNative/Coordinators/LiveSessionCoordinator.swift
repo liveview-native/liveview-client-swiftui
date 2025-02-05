@@ -44,10 +44,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     @Published private(set) var rootLayout: LiveViewNativeCore.Document?
     @Published private(set) var stylesheet: Stylesheet<R>?
 
-    // Socket connection
-    //var liveSocket: LiveViewNativeCore.LiveSocket?
-    //var socket: LiveViewNativeCore.Socket?
-
     private var liveReloadChannel: LiveViewNativeCore.LiveChannel?
     private var liveReloadListener: Channel.EventStream?
     private var liveReloadListenerLoop: Task<(), any Error>?
