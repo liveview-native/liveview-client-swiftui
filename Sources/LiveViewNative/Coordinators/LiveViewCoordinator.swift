@@ -119,6 +119,27 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             return nil
         }
     }
+    
+    @discardableResult
+    public func call(event: String, payload: LiveViewNativeCore.Payload) async throws -> LiveViewNativeCore.Payload? {
+        guard case .connected = state else {
+            throw LiveSocketError.DisconnectionError
+        }
+        
+        if let replyPayload = try await channel?.call(event, payload) {
+            return replyPayload
+        } else {
+            return nil
+        }
+    }
+    
+    public func uploadFile(file: LiveViewNativeCore.LiveFile) async throws  {
+        guard case .connected = state else {
+            throw LiveSocketError.DisconnectionError
+        }
+        
+        try await liveviewClient?.uploadFiles([file]);
+    }
 
     /// Creates a publisher that can be used to listen for server-sent LiveView events.
     ///
