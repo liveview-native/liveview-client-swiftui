@@ -38,9 +38,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
 
     var url: URL
 
-    // private(set) var liveChannel: LiveViewNativeCore.LiveChannel?
-    // private var channel: LiveViewNativeCore.Channel?
-    
     @Published var document: LiveViewNativeCore.Document? {
         didSet {
             elementChangedSubjects.removeAll()
@@ -62,10 +59,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
-//    private var eventListener: Channel.EventStream?
-    // private var eventListenerLoop: Task<(), any Error>?
-//    private var statusListener: Channel.StatusStream?
-    //private var statusListenerLoop: Task<(), any Error>?
+
 
     private(set) internal var liveViewModel = LiveViewModel()
     
@@ -81,10 +75,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         self.url = url
     }
     
-    deinit {
-        //self.eventListenerLoop?.cancel()
-        //self.statusListenerLoop?.cancel()
-    }
 
     /// Pushes a LiveView event with the given name and payload to the server.
     ///
@@ -189,10 +179,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             .store(in: &eventHandlers)
     }
 
-//    private func handleDiff(payload: LiveViewNativeCore.Json, baseURL: URL) throws {
-//        handleEvents(payload)
-//        try self.document?.mergeFragmentJson(String(data: try JSONEncoder().encode(payload), encoding: .utf8)!)
-//    }
+
     
     func handleEventReplyPayload(_ replyPayload: LiveViewNativeCore.Payload) async throws -> [String:Any]? {
         switch replyPayload {
@@ -200,23 +187,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             switch json {
             case let .object(object):
                 if case let .object(diff) = object["diff"] {
-                    //try self.handleDiff(payload: .object(object: diff), baseURL: self.url)
                     if case let .object(reply) = diff["r"] {
                         return reply
                     }
                 }
-//                else if case let .object(redirectObject) = object["live_redirect"],
-//                          let redirect = LiveRedirect(from: redirectObject, relativeTo: self.url)
-//                {
-//                    try await session.redirect(redirect)
-//                } else if case let .object(redirectObject) = object["redirect"],
-//                          case let .str(destinationString) = redirectObject["to"],
-//                          let destination = URL(string: destinationString, relativeTo: self.url)
-//                {
-//                    try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
-//                } else {
-                    return nil
-                // }
+                return nil
             default:
                 logger.error("unhandled event reply: \(String(reflecting: replyPayload))")
             }
@@ -241,70 +216,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
 
-//    func bindEventListener() {
-//        self.eventListenerLoop = Task { [weak self, weak channel] in
-//            guard let channel else { return }
-//            let eventListener = channel.eventStream()
-//            for try await event in eventListener {
-//                guard let self else { return }
-//                guard !Task.isCancelled else { return }
-//                do {
-//                    switch event.event {
-//                    case .user(user: "diff"):
-//                        switch event.payload {
-//                        case let .jsonPayload(json):
-//                            try self.handleDiff(payload: json, baseURL: self.url)
-//                        case .binary:
-//                            fatalError()
-//                        }
-//                    case .user(user: "live_redirect"):
-//                        guard case let .jsonPayload(json) = event.payload,
-//                              case let .object(payload) = json,
-//                              let redirect = LiveRedirect(from: payload, relativeTo: self.url)
-//                        else { break }
-//                        try await self.session.redirect(redirect)
-//                    case .user(user: "live_patch"):
-//                        guard case let .jsonPayload(json) = event.payload,
-//                              case let .object(payload) = json,
-//                              let redirect = LiveRedirect(from: payload, relativeTo: self.url, mode: .patch)
-//                        else { return }
-//                        try await self.session.redirect(redirect)
-//                    case .user(user: "redirect"):
-//                        guard case let .jsonPayload(json) = event.payload,
-//                              case let .object(payload) = json,
-//                              let destination = (payload["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: self.url) })
-//                        else { return }
-//                        try await self.session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
-//                    default:
-//                        logger.error("Unhandled event: \(String(describing: event))")
-//                    }
-//                } catch {
-//                    logger.error("Event handling error: \(error.localizedDescription)")
-//                }
-//            }
-//        }
-//    }
-    
-//    func bindDocumentListener() {
-//        self.liveviewClient?.onDocument(.changed, { [weak self] nodeRef, nodeData, parent in
-//            guard let self else { return }
-//            switch nodeData {
-//            case .root:
-//                // when the root changes, update the `NavStackEntry` itself.
-//                self.objectWillChange.send()
-//            case .leaf:
-//                // text nodes don't have their own views, changes to them need to be handled by the parent Text view
-//                if let parent {
-//                    self.elementChanged(nodeRef).send()
-//                } else {
-//                    self.elementChanged(nodeRef).send()
-//                }
-//            case .nodeElement:
-//                // when a single element changes, send an update only to that element.
-//                self.elementChanged(nodeRef).send()
-//            }
-//        }, { doc in })
-//    }
+
 
     func join(_ client: LiveViewNativeCore.LiveViewClient,
               _ eventListener: SimpleEventHandler,
@@ -313,8 +225,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         self.liveviewClient = client
         self.channel = client.channel()
         self.document = try! client.document()
-        //self.liveChannel = liveChannel
-        //self.channel = channel
         
          eventListener.channelStatusSubject
             .receive(on: DispatchQueue.main)
@@ -354,25 +264,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }.store(in: &eventHandlers)
 
         
-//        statusListenerLoop = Task { @MainActor [weak self, unowned liveviewClient] in
-//            statusListener = eventListener.channelStatusSubject;
-//            for try await status in statusListener {
-//                self?.internalState = switch status {
-//                case .joined:
-//                    .connected
-//                case .joining, .waitingForSocketToConnect, .waitingToJoin:
-//                    .connecting
-//                case .waitingToRejoin:
-//                    .reconnecting
-//                case .leaving, .left, .shuttingDown, .shutDown:
-//                    .disconnected
-//                }
-//            }
-//        }
-        
-        // self.bindEventListener()
-        
-        //self.bindDocumentListener()
+
         
         switch try! client.joinPayload() {
         case let .jsonPayload(.object(payload)):
@@ -385,12 +277,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     func disconnect() {
-        //try await self.channel?.leave()
-        //self.eventListenerLoop = nil
-        //self.statusListenerLoop = nil
-        //self.liveChannel = nil
-        //self.channel = nil
-        
         self.liveviewClient = nil
         self.channel = nil
         self.internalState = .setup
