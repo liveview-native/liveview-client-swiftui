@@ -346,6 +346,9 @@ struct StaticMemberFunctionClause {
         let labeledArguments = signature.parameterClause.parameters
             .filter { $0.firstName.tokenKind != .wildcard }
         
+        let argumentTypeNames = signature.parameterClause.parameters
+            .map { context.makeUniqueName($0.secondName?.text ?? $0.firstName.text) }
+        
         self.argumentsDecl = StructDeclSyntax(
             attributes: function.attributes.filter(\.isAvailability) + [.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))],
             name: name,
@@ -388,6 +391,27 @@ struct StaticMemberFunctionClause {
                     pattern: IdentifierPatternSyntax(identifier: .identifier("value")),
                     typeAnnotation: TypeAnnotationSyntax(type: type)
                 )
+            }
+            
+            // create an enum for coding keys for each labeled argument with a default value
+            // this type is used with the `LabeledArgument` type to decode optional labeled arguments
+            for (index, parameter) in function.signature.parameterClause.parameters.enumerated()
+                where parameter.firstName.tokenKind != .wildcard
+                    && parameter.defaultValue != nil
+            {
+                let parameterTypeName = argumentTypeNames[index]
+                EnumDeclSyntax(
+                    name: parameterTypeName,
+                    inheritanceClause: InheritanceClauseSyntax {
+                        InheritedTypeSyntax(type: IdentifierTypeSyntax(name: .identifier("String")))
+                        InheritedTypeSyntax(type: IdentifierTypeSyntax(name: .identifier("CodingKey")))
+                        InheritedTypeSyntax(type: IdentifierTypeSyntax(name: .identifier("CaseIterable")))
+                    }
+                ) {
+                    EnumCaseDeclSyntax {
+                        EnumCaseElementSyntax(name: parameter.secondName ?? parameter.firstName)
+                    }
+                }
             }
             
             // decoder
@@ -464,7 +488,7 @@ struct StaticMemberFunctionClause {
                     )
                 }
                 
-                for parameter in function.signature.parameterClause.parameters {
+                for (index, parameter) in function.signature.parameterClause.parameters.enumerated() {
                     if parameter.firstName.tokenKind == .wildcard {
                         VariableDeclSyntax(
                             bindingSpecifier: .keyword(.let)
@@ -516,91 +540,119 @@ struct StaticMemberFunctionClause {
                             )
                         }
                     } else {
-                        // nested container for labeled arguments
-                        let nestedContainer = FunctionCallExprSyntax(
-                            callee: MemberAccessExprSyntax(
-                                base: containerReference,
-                                name: .identifier("nestedContainer")
-                            )
-                        ) {
-                            LabeledExprSyntax(
-                                label: .identifier("keyedBy"),
-                                colon: .colonToken(),
-                                expression: MemberAccessExprSyntax(
-                                    base: codingKeysReference,
-                                    name: .identifier("self")
-                                )
-                            )
-                        }
-                        VariableDeclSyntax(
-                            bindingSpecifier: .keyword(.let)
-                        ) {
-                            let decodeExpr: ExprSyntax = if let defaultValue = parameter.defaultValue?.value {
-                                ExprSyntax(
-                                    InfixOperatorExprSyntax(
-                                        leftOperand: TupleExprSyntax {
-                                            LabeledExprSyntax(
-                                                expression: TryExprSyntax(
-                                                    questionOrExclamationMark: .postfixQuestionMarkToken(),
-                                                    expression: FunctionCallExprSyntax(
-                                                        callee: MemberAccessExprSyntax(
-                                                            base: nestedContainer,
-                                                            name: .identifier("decodeIfPresent")
+                        if let defaultValue = parameter.defaultValue?.value {
+                            // use the `LabeledArgument` type to decode labeled arguments with default values
+                            // reference the enum for the coding key
+                            let parameterTypeName = argumentTypeNames[index]
+                            // decode the type if present
+                            VariableDeclSyntax(
+                                bindingSpecifier: .keyword(.let)
+                            ) {
+                                PatternBindingSyntax(
+                                    pattern: IdentifierPatternSyntax(identifier: parameter.secondName ?? parameter.firstName),
+                                    initializer: InitializerClauseSyntax(
+                                        value: InfixOperatorExprSyntax(
+                                            leftOperand: TupleExprSyntax {
+                                                LabeledExprSyntax(
+                                                    expression: TryExprSyntax(
+                                                        questionOrExclamationMark: .postfixQuestionMarkToken(),
+                                                        expression: MemberAccessExprSyntax(
+                                                            base: OptionalChainingExprSyntax(expression: FunctionCallExprSyntax(
+                                                                callee: MemberAccessExprSyntax(
+                                                                    base: argumentsContainerReference,
+                                                                    name: .identifier("decodeIfPresent")
+                                                                )
+                                                            ) {
+                                                                LabeledExprSyntax(
+                                                                    expression: MemberAccessExprSyntax(
+                                                                        base: TypeExprSyntax(type: IdentifierTypeSyntax(
+                                                                            name: .identifier("LabeledArgument"),
+                                                                            genericArgumentClause: GenericArgumentClauseSyntax {
+                                                                                GenericArgumentSyntax(argument: IdentifierTypeSyntax(name: parameterTypeName))
+                                                                                GenericArgumentSyntax(argument: parameter.type)
+                                                                            }
+                                                                        )),
+                                                                        name: .identifier("self")
+                                                                    )
+                                                                )
+                                                            }),
+                                                            period: .periodToken(),
+                                                            name: .identifier("value")
                                                         )
-                                                    ) {
-                                                        LabeledExprSyntax(
-                                                            expression: MemberAccessExprSyntax(
-                                                                base: TypeExprSyntax(type: parameter.type),
-                                                                name: .identifier("self")
-                                                            )
-                                                        )
-                                                        LabeledExprSyntax(
-                                                            label: "forKey",
-                                                            expression: MemberAccessExprSyntax(
-                                                                name: parameter.secondName ?? parameter.firstName
-                                                            )
-                                                        )
-                                                    }
+                                                    )
                                                 )
-                                            )
-                                        },
-                                        operator: BinaryOperatorExprSyntax(operator: .binaryOperator("??")),
-                                        rightOperand: defaultValue
-                                    )
-                                )
-                            } else {
-                                ExprSyntax(
-                                    TryExprSyntax(
-                                        expression: FunctionCallExprSyntax(
-                                            callee: MemberAccessExprSyntax(
-                                                base: nestedContainer,
-                                                name: .identifier("decode")
-                                            )
-                                        ) {
-                                            LabeledExprSyntax(
-                                                expression: MemberAccessExprSyntax(
-                                                    base: TypeExprSyntax(type: parameter.type),
-                                                    name: .identifier("self")
-                                                )
-                                            )
-                                            LabeledExprSyntax(
-                                                label: "forKey",
-                                                expression: MemberAccessExprSyntax(
-                                                    name: parameter.secondName ?? parameter.firstName
-                                                )
-                                            )
-                                        }
+                                            },
+                                            operator: BinaryOperatorExprSyntax(operator: .binaryOperator("??")),
+                                            rightOperand: defaultValue
+                                        )
                                     )
                                 )
                             }
-                            PatternBindingSyntax(
-                                pattern: IdentifierPatternSyntax(identifier: parameter.secondName ?? parameter.firstName),
-                                initializer: InitializerClauseSyntax(
-                                    value: decodeExpr
+                        } else {
+                            // nested container for labeled arguments
+                            let nestedContainer = FunctionCallExprSyntax(
+                                callee: MemberAccessExprSyntax(
+                                    base: argumentsContainerReference,
+                                    name: .identifier("nestedContainer")
                                 )
-                            )
+                            ) {
+                                LabeledExprSyntax(
+                                    label: .identifier("keyedBy"),
+                                    colon: .colonToken(),
+                                    expression: MemberAccessExprSyntax(
+                                        base: codingKeysReference,
+                                        name: .identifier("self")
+                                    )
+                                )
+                            }
+                            VariableDeclSyntax(
+                                bindingSpecifier: .keyword(.let)
+                            ) {
+                                PatternBindingSyntax(
+                                    pattern: IdentifierPatternSyntax(identifier: parameter.secondName ?? parameter.firstName),
+                                    initializer: InitializerClauseSyntax(
+                                        value: TryExprSyntax(
+                                            expression: FunctionCallExprSyntax(
+                                                callee: MemberAccessExprSyntax(
+                                                    base: nestedContainer,
+                                                    name: .identifier("decode")
+                                                )
+                                            ) {
+                                                LabeledExprSyntax(
+                                                    expression: MemberAccessExprSyntax(
+                                                        base: TypeExprSyntax(type: parameter.type),
+                                                        name: .identifier("self")
+                                                    )
+                                                )
+                                                LabeledExprSyntax(
+                                                    label: "forKey",
+                                                    expression: MemberAccessExprSyntax(
+                                                        name: parameter.secondName ?? parameter.firstName
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    )
+                                )
+                            }
                         }
                     }
+                }
+                
+                // unkeyed container should be empty if all arguments were used
+                // otherwise this clause does not match
+                GuardStmtSyntax(conditions: ConditionElementListSyntax {
+                    ConditionElementSyntax(condition: .expression(ExprSyntax(MemberAccessExprSyntax(
+                        base: argumentsContainerReference,
+                        period: .periodToken(),
+                        name: .identifier("isAtEnd")
+                    ))))
+                }) {
+                    ThrowStmtSyntax(expression: MemberAccessExprSyntax(
+                        base: TypeExprSyntax(type: IdentifierTypeSyntax(name: .identifier("ASTDecodableError"))),
+                        period: .periodToken(),
+                        name: .identifier("tooManyArguments")
+                    ))
                 }
                 
                 // set `value`

@@ -203,11 +203,13 @@ public extension NormalizableDeclSyntax {
                             .with(\.type, TypeSyntax(
                                 arrayType.with(\.element, TypeSyntax(IdentifierTypeSyntax(name: .identifier("TextReference"))))
                             ))
+                            .with(\.defaultValue, nil)
                     } else {
                         return parameter
                             .with(\.type, TypeSyntax(
                                 arrayType.with(\.element, TypeSyntax(MemberTypeSyntax(baseType: arrayType.element, name: .identifier("Resolvable"))))
                             ))
+                            .with(\.defaultValue, nil)
                     }
                 } else if let memberType = parameter.type.as(MemberTypeSyntax.self),
                           memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift",

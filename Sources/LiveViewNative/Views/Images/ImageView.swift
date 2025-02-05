@@ -99,15 +99,13 @@ struct ImageView<Root: RootRegistry>: View {
 
     public var body: SwiftUI.Image? {
         image.flatMap({ (image: SwiftUI.Image) -> SwiftUI.Image in
-            // FIXME: Image modifiers
-            return image
-//            return modifiers.reduce(image) { result, modifier in
-//                if case let ._anyImageModifier(imageModifier) = modifier {
-//                    return imageModifier.apply(to: result, on: $liveElement.element)
-//                } else {
-//                    return result
-//                }
-//            }
+            return modifiers.reduce(image) { result, modifier in
+                if case let ._imageModifier(imageModifier) = modifier {
+                    return imageModifier.apply(to: result, on: $liveElement.element, in: $liveElement.context)
+                } else {
+                    return result
+                }
+            }
         })
     }
     

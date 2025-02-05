@@ -59,3 +59,40 @@ extension StylesheetResolvableRangeExpression: @preconcurrency AttributeDecodabl
         fatalError()
     }
 }
+
+extension Double {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+        case __constant(Double)
+        case reference(AttributeReference<Double>)
+        
+        @ASTDecodable("Double")
+        enum Member: @preconcurrency Decodable {
+            case infinity
+            case pi
+        }
+        
+        init(from decoder: any Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            
+            if let member = try? container.decode(Member.self) {
+                switch member {
+                case .infinity:
+                    self = .__constant(.infinity)
+                case .pi:
+                    self = .__constant(.pi)
+                }
+            } else {
+                self = .reference(try container.decode(AttributeReference<Double>.self))
+            }
+        }
+        
+        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Double where R : RootRegistry {
+            switch self {
+            case let .__constant(constant):
+                return constant
+            case let .reference(reference):
+                return reference.resolve(on: element, in: context)
+            }
+        }
+    }
+}

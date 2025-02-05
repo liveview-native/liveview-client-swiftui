@@ -182,6 +182,9 @@ public extension TypeSyntaxProtocol {
     }
     
     /// Checks if this type has an existing conformance to `Decodable`.
+    ///
+    /// - Note: `Double` and `CGFloat` are intentionally excluded,
+    /// as they have a resolvable type for their static members.
     var isPrimitiveDecodable: Bool {
         if let arrayType = self.as(ArrayTypeSyntax.self) {
             return arrayType.element.isPrimitiveDecodable
@@ -196,20 +199,10 @@ public extension TypeSyntaxProtocol {
            memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift"
         {
             switch memberType.name.text {
-            case "Bool", "Double", "Duration", "Float", "Float16", "Int", "Int128", "Int16", "Int32", "Int64", "Int8", "LocalTestingActorID", "Never", "ObservationRegistrar", "SIMD16", "SIMD2", "SIMD3", "SIMD32", "SIMD4", "SIMD64", "SIMD8", "SIMDMask", "String", "TaskPriority", "UInt", "UInt128", "UInt16", "UInt32", "UInt64", "UInt8":
+            case "Bool", "Duration", "Float", "Float16", "Int", "Int128", "Int16", "Int32", "Int64", "Int8", "LocalTestingActorID", "Never", "ObservationRegistrar", "SIMD16", "SIMD2", "SIMD3", "SIMD32", "SIMD4", "SIMD64", "SIMD8", "SIMDMask", "String", "TaskPriority", "UInt", "UInt128", "UInt16", "UInt32", "UInt64", "UInt8":
                 return true
             case "ClosedRange", "CollectionDifference", "ContiguousArray", "Optional", "PartialRangeFrom", "PartialRangeThrough", "PartialRangeUpTo", "Range", "Set", "Dictionary":
                 return memberType.genericArgumentClause?.arguments.allSatisfy({ $0.argument.isPrimitiveDecodable }) ?? true
-            default:
-                return false
-            }
-        }
-        if let memberType = self.as(MemberTypeSyntax.self),
-           memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "CoreFoundation" || memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "CoreGraphics"
-        {
-            switch memberType.name.text {
-            case "CGFloat":
-                return true
             default:
                 return false
             }
@@ -226,12 +219,10 @@ public extension TypeSyntaxProtocol {
         }
         if let identifierType = self.as(IdentifierTypeSyntax.self) {
             switch identifierType.name.text {
-            case "Bool", "Double", "Duration", "Float", "Float16", "Int", "Int128", "Int16", "Int32", "Int64", "Int8", "LocalTestingActorID", "Never", "ObservationRegistrar", "SIMD16", "SIMD2", "SIMD3", "SIMD32", "SIMD4", "SIMD64", "SIMD8", "SIMDMask", "String", "TaskPriority", "UInt", "UInt128", "UInt16", "UInt32", "UInt64", "UInt8":
+            case "Bool", "Duration", "Float", "Float16", "Int", "Int128", "Int16", "Int32", "Int64", "Int8", "LocalTestingActorID", "Never", "ObservationRegistrar", "SIMD16", "SIMD2", "SIMD3", "SIMD32", "SIMD4", "SIMD64", "SIMD8", "SIMDMask", "String", "TaskPriority", "UInt", "UInt128", "UInt16", "UInt32", "UInt64", "UInt8":
                 return true
             case "ClosedRange", "CollectionDifference", "ContiguousArray", "Optional", "PartialRangeFrom", "PartialRangeThrough", "PartialRangeUpTo", "Range", "Set", "Dictionary":
                 return identifierType.genericArgumentClause?.arguments.allSatisfy({ $0.argument.isPrimitiveDecodable }) ?? true
-            case "CGFloat":
-                return true
             case "TimeInterval", "Date", "URL", "Data":
                 return true
             default:

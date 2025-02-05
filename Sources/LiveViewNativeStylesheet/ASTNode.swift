@@ -110,3 +110,22 @@ public struct ASTNode: Codable, Hashable, CustomDebugStringConvertible, Sendable
         }
     }
 }
+
+/// A type that decodes a specific labeled argument.
+///
+/// `Key` should be a type that conforms to `CodingKey` and `CaseIterable` that has only 1 case.
+///
+/// ```swift
+/// enum MinWidth: String, CodingKey, CaseIterable {
+///     case minWidth
+/// }
+///
+/// LabeledArgument<MinWidth, CGFloat?>
+/// ```
+public struct LabeledArgument<Key: CodingKey & CaseIterable, Value: Decodable>: Decodable {
+    public let value: Value
+    
+    public init(from decoder: any Decoder) throws {
+        self.value = try decoder.container(keyedBy: Key.self).decode(Value.self, forKey: Key.allCases.first!)
+    }
+}

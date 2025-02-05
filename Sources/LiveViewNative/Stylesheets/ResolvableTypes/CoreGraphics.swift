@@ -255,3 +255,39 @@ extension CGColor.Resolvable {
         }
     }
 }
+
+extension CGFloat {
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+        case __constant(CGFloat)
+        case reference(AttributeReference<CGFloat>)
+        
+        @ASTDecodable("CGFloat")
+        enum Member: @preconcurrency Decodable {
+            case infinity
+            case pi
+        }
+        
+        init(from decoder: any Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            if let member = try? container.decode(Member.self) {
+                switch member {
+                case .infinity:
+                    self = .__constant(.infinity)
+                case .pi:
+                    self = .__constant(.pi)
+                }
+            } else {
+                self = .reference(try container.decode(AttributeReference<CGFloat>.self))
+            }
+        }
+        
+        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> CGFloat where R : RootRegistry {
+            switch self {
+            case let .__constant(constant):
+                return constant
+            case let .reference(reference):
+                return reference.resolve(on: element, in: context)
+            }
+        }
+    }
+}

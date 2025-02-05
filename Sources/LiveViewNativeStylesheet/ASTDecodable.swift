@@ -18,6 +18,14 @@ public enum ASTDecodableOptions {
     case none
 }
 
+public enum ASTDecodableError: Error {
+    case _tooManyArguments
+    
+    public static var tooManyArguments: Self {
+        return ._tooManyArguments
+    }
+}
+
 public struct MultipleFailures: Error {
     let errors: [any Error]
     let annotations: Annotations?
