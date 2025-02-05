@@ -22,10 +22,10 @@ public struct ViewReference: @preconcurrency Decodable, @preconcurrency Attribut
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         
-        if let value = try? container.decode(String.self) {
+        if let value = try? container.decode(AtomLiteral.self).value {
             self.value = [value]
         } else {
-            self.value = try container.decode([String].self)
+            self.value = try container.decode([AtomLiteral].self).map(\.value)
         }
     }
     
@@ -74,7 +74,7 @@ public struct TextReference: @preconcurrency Decodable, @preconcurrency Attribut
     let value: String
     
     public init(from decoder: any Decoder) throws {
-        self.value = try decoder.singleValueContainer().decode(String.self)
+        self.value = try decoder.singleValueContainer().decode(AtomLiteral.self).value
     }
     
     @MainActor
@@ -87,7 +87,7 @@ public struct TextReference: @preconcurrency Decodable, @preconcurrency Attribut
         resolveTemplate(on: element, in: context).flatMap({
             TextView<R>(element: $0, overrideStylesheet: context.coordinator.session.stylesheet).body
         })
-            ?? SwiftUI.Text(value)
+            ?? SwiftUI.Text("")
     }
     
     public init(from attribute: Attribute?, on element: ElementNode) throws {
@@ -188,10 +188,10 @@ struct ToolbarContentReference: @preconcurrency Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         
-        if let value = try? container.decode(String.self) {
+        if let value = try? container.decode(AtomLiteral.self).value {
             self.value = [value]
         } else {
-            self.value = try container.decode([String].self)
+            self.value = try container.decode([AtomLiteral].self).map(\.value)
         }
     }
     
@@ -229,10 +229,10 @@ struct CustomizableToolbarContentReference: @preconcurrency Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         
-        if let value = try? container.decode(String.self) {
+        if let value = try? container.decode(AtomLiteral.self).value {
             self.value = [value]
         } else {
-            self.value = try container.decode([String].self)
+            self.value = try container.decode([AtomLiteral].self).map(\.value)
         }
     }
     

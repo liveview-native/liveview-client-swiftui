@@ -64,6 +64,10 @@ public struct ASTNode: Codable, Hashable, CustomDebugStringConvertible, Sendable
         public enum MemberAccess: String, Decodable {
             case dot = "."
         }
+        
+        public enum Atom: String, Decodable {
+            case colon = ":"
+        }
     }
     
     public init(identifier: String, annotations: Annotations, arguments: [Argument]) {
@@ -127,5 +131,39 @@ public struct LabeledArgument<Key: CodingKey & CaseIterable, Value: Decodable>: 
     
     public init(from decoder: any Decoder) throws {
         self.value = try decoder.container(keyedBy: Key.self).decode(Value.self, forKey: Key.allCases.first!)
+    }
+}
+
+/// A type that decodes an atom AST node.
+///
+/// ```elixir
+/// :atom_value
+/// ```
+///
+/// This will be decoded to `AtomLiteral(value: "atom_value")`.
+/// The atom is encoded as an AST node in the JSON output:
+///
+/// ```
+/// [":", {}, "atom_value"]
+/// ```
+public struct AtomLiteral: Decodable, CustomStringConvertible {
+    public let value: String
+    public let annotations: Annotations
+    
+    public var description: String {
+        value
+    }
+    
+    init(_ value: String) {
+        self.value = value
+        self.annotations = .init()
+    }
+    
+    public init(from decoder: any Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        
+        _ = try container.decode(ASTNode.Identifiers.Atom.self)
+        self.annotations = try container.decode(Annotations.self)
+        self.value = try container.decode(String.self)
     }
 }
