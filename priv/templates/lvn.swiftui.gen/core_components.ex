@@ -452,7 +452,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   def button(%{ type: "submit" } = assigns, _interface) do
     ~LVN"""
     <Section>
-      <LiveSubmitButton style={[
+      <LiveButton style={[
         "buttonStyle(.borderedProminent)",
         "controlSize(.large)",
         "listRowInsets(EdgeInsets())",
@@ -464,7 +464,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
         ]}>
           <%%= render_slot(@inner_block) %>
         </Group>
-      </LiveSubmitButton>
+      </LiveButton>
     </Section>
     """
   end
