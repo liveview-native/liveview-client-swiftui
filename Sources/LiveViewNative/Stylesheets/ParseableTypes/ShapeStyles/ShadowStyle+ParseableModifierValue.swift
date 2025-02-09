@@ -52,6 +52,7 @@ enum _ShadowStyle: ParseableModifierValue {
         }
     }
     
+    @MainActor
     func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> ShadowStyle {
         switch self {
         case .drop(let drop):

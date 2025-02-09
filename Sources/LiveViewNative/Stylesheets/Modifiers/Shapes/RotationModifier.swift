@@ -40,6 +40,7 @@ struct _RotationModifier<Root: RootRegistry>: ShapeModifier {
         self.anchor = anchor
     }
 
+    @MainActor
     func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         return shape.rotation(angle.resolve(on: element, in: context), anchor: anchor.resolve(on: element, in: context))
     }

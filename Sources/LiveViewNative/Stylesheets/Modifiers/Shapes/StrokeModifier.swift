@@ -55,7 +55,7 @@ struct _StrokeModifier<Root: RootRegistry>: ShapeFinalizerModifier {
         self.storage = ._1(content: content, lineWidth: lineWidth, antialiased: antialiased)
     }
     
-    @ViewBuilder
+    @ViewBuilder @MainActor
     func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some View {
         switch storage {
         case ._0(let content, let style, let antialiased):

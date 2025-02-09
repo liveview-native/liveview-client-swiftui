@@ -14,6 +14,7 @@ protocol ShapeModifier<Root> {
     associatedtype Root: RootRegistry
     associatedtype ModifiedShape: SwiftUI.Shape
     
+    @MainActor
     func apply(to shape: SwiftUI.AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> ModifiedShape
 }
 
@@ -23,7 +24,7 @@ protocol ShapeFinalizerModifier<Root> {
     associatedtype Root: RootRegistry
     associatedtype FinalizedShape: SwiftUI.View
     
-    @ViewBuilder
+    @ViewBuilder @MainActor
     func apply(to shape: SwiftUI.AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> FinalizedShape
 }
 
