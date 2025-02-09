@@ -47,23 +47,6 @@ defmodule LiveViewNative.SwiftUI.MixProject do
     |> Enum.filter(&(!(&1 =~ "lvn.swiftui.gen.docs")))
   end
 
-  defp deps do
-    [
-      {:ex_doc, ">= 0.0.0", only: [:docs, :test]},
-      {:makeup_swift, "~> 0.0.1", only: [:docs, :test]},
-      {:makeup_json, "~> 0.1.0", only: [:docs, :test]},
-      {:makeup_eex, ">= 0.1.1"},
-      {:floki, ">= 0.30.0", only: :test},
-      # {:live_view_native, "~> 0.4.0-rc.0"},
-      {:live_view_native, github: "liveview-native/live_view_native", override: true},
-      {:live_view_native_stylesheet, github: "liveview-native/live_view_native_stylesheet", only: :test},
-      {:live_view_native_live_form, github: "liveview-native/liveview-native-live-form", only: :test},
-      {:gettext, "~> 0.20", only: :test},
-      {:live_view_native_test_endpoint, github: "liveview-native/live_view_native_test_endpoint", branch: "main", only: :test},
-      {:nimble_parsec, "~> 1.3"}
-    ]
-  end
-
   defp docs do
     [
       groups_for_functions: [
@@ -161,5 +144,23 @@ defmodule LiveViewNative.SwiftUI.MixProject do
     unless opts[:skip_gen_docs], do: Mix.Task.run("lvn.swiftui.gen.docs", args)
     unless opts[:skip_livebooks], do: Mix.Task.run("lvn.swiftui.gen.livemarkdown")
     Mix.Task.run("docs")
+  end
+
+  defp deps do
+    [
+      {:ex_doc, ">= 0.0.0", only: [:docs, :test]},
+      {:makeup_swift, "~> 0.0.1", only: [:docs, :test]},
+      {:makeup_json, "~> 0.1.0", only: [:docs, :test]},
+      {:makeup_eex, ">= 0.1.1"},
+      {:floki, ">= 0.30.0", only: :test},
+      # {:live_view_native, "~> 0.4.0-rc.0"},
+      # {:live_view_native, github: "liveview-native/live_view_native", override: true},
+      {:live_view_native, path: "../live_view_native", override: true},
+      {:live_view_native_stylesheet, github: "liveview-native/live_view_native_stylesheet", only: :test},
+      {:live_view_native_live_form, github: "liveview-native/liveview-native-live-form", only: :test},
+      {:gettext, "~> 0.20", only: :test},
+      {:live_view_native_test_endpoint, github: "liveview-native/live_view_native_test_endpoint", branch: "main", only: :test},
+      {:nimble_parsec, "~> 1.3"}
+    ]
   end
 end
