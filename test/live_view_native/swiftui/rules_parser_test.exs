@@ -78,14 +78,14 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "parses atoms as an argument value" do
       input = "background(content: :star_red)"
-      output = {:background, [], [{:content, {:":", [],"star_red"}}]}
+      output = {:background, [], [{:content, :star_red}]}
 
       assert parse(input) == output
     end
 
     test "parses string wrapped atoms as an argument value" do
       input = "background(content: :\"star-red\")"
-      output = {:background, [], [{:content, {:":", [], "star-red"}}]}
+      output = {:background, [], [{:content, :"star-red"}]}
 
       assert parse(input) == output
     end
@@ -381,7 +381,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "gesture" do
       input = ~s{offset(x: gesture_state(:drag, .translation.width))}
-      output = {:offset, [], [{:x, {:__gesture_state__, [], [{:":", [], "drag"}, {:., [], [nil, {:., [], [:translation, :width]}]}]}}]}
+      output = {:offset, [], [{:x, {:__gesture_state__, [], [:drag, {:., [], [nil, {:., [], [:translation, :width]}]}]}}]}
 
       assert parse(input) == output
 
