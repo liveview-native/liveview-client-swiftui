@@ -28,7 +28,7 @@ public struct AttributeReference<Value: Decodable & AttributeDecodable>: @precon
         case constant(Value)
         case reference(AttributeName)
         case gestureState(
-            String,
+            AtomLiteral,
             GestureStateReference.PropertyReference,
             defaultValue: Value?,
             min: CGFloat?,
@@ -89,83 +89,87 @@ public struct AttributeReference<Value: Decodable & AttributeDecodable>: @precon
                     return value as! Value
                 }
             }
-            let defaultValue: Value = defaultValue ?? castValue(0.0)
+            let defaultValue: Value = defaultValue ?? (Value.self == CGSize.self ? CGSize(width: 0, height: 0) as! Value : castValue(0.0))
             
-            // FIXME: gesture state
-            return defaultValue
-//            guard let value = context.gestureState.wrappedValue[name]
-//            else { return defaultValue }
-//            
-//            switch body.base {
-//            case .translation:
-//                #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
-//                guard let value = value as? DragGesture.Value,
-//                      let member = body.member
-//                else { return defaultValue }
-//                switch member {
-//                case .width:
-//                    return castValue(value.translation.width)
-//                case .height:
-//                    return castValue(value.translation.height)
-//                default:
-//                    return defaultValue
-//                }
-//                #else
-//                return defaultValue
-//                #endif
-//            case .magnification:
-//                #if os(iOS) || os(macOS)
-//                if #available(iOS 17.0, macOS 14.0, *) {
-//                    guard let value = value as? MagnifyGesture.Value else { return defaultValue }
-//                    return castValue(value.magnification)
-//                } else {
-//                    return defaultValue
-//                }
-//                #else
-//                return defaultValue
-//                #endif
-//            case .rotation:
-//                #if os(iOS) || os(macOS)
-//                if #available(iOS 17.0, macOS 14.0, *) {
-//                    guard let value = value as? RotateGesture.Value else { return defaultValue }
-//                    switch body.member {
-//                    case .radians:
-//                        return castValue(CGFloat(value.rotation.radians))
-//                    case .degrees:
-//                        return castValue(CGFloat(value.rotation.degrees))
-//                    default:
-//                        var rotation = value.rotation
-//                        if let minValue {
-//                            rotation = .degrees(max(minValue, value.rotation.degrees))
-//                        }
-//                        if let maxValue {
-//                            rotation = .degrees(min(maxValue, value.rotation.degrees))
-//                        }
-//                        return rotation as! Value
-//                    }
-//                } else {
-//                    return defaultValue
-//                }
-//                #else
-//                return defaultValue
-//                #endif
-//            case .startAnchor:
-//                #if os(iOS) || os(macOS)
-//                if #available(iOS 17.0, macOS 14.0, *) {
-//                    if let value = value as? MagnifyGesture.Value {
-//                        return value.startAnchor as! Value
-//                    } else if let value = value as? RotateGesture.Value {
-//                        return value.startAnchor as! Value
-//                    } else {
-//                        return defaultValue
-//                    }
-//                } else {
-//                    return defaultValue
-//                }
-//                #else
-//                return defaultValue
-//                #endif
-//            }
+            guard let value = context.gestureState.wrappedValue[name.value]
+            else { return defaultValue }
+            
+            switch body.base {
+            case .translation:
+                #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
+                guard let value = value as? DragGesture.Value
+                else { return defaultValue }
+                if let member = body.member {
+                    switch member {
+                    case .width:
+                        return castValue(value.translation.width)
+                    case .height:
+                        return castValue(value.translation.height)
+                    default:
+                        return defaultValue
+                    }
+                } else {
+                    return CGSize(
+                        width: (value.translation.width + offset) * scale,
+                        height: (value.translation.height + offset) * scale
+                    ) as! Value
+                }
+                #else
+                return defaultValue
+                #endif
+            case .magnification:
+                #if os(iOS) || os(macOS)
+                if #available(iOS 17.0, macOS 14.0, *) {
+                    guard let value = value as? MagnifyGesture.Value else { return defaultValue }
+                    return castValue(value.magnification)
+                } else {
+                    return defaultValue
+                }
+                #else
+                return defaultValue
+                #endif
+            case .rotation:
+                #if os(iOS) || os(macOS)
+                if #available(iOS 17.0, macOS 14.0, *) {
+                    guard let value = value as? RotateGesture.Value else { return defaultValue }
+                    switch body.member {
+                    case .radians:
+                        return castValue(CGFloat(value.rotation.radians))
+                    case .degrees:
+                        return castValue(CGFloat(value.rotation.degrees))
+                    default:
+                        var rotation = value.rotation
+                        if let minValue {
+                            rotation = .degrees(max(minValue, value.rotation.degrees))
+                        }
+                        if let maxValue {
+                            rotation = .degrees(min(maxValue, value.rotation.degrees))
+                        }
+                        return rotation as! Value
+                    }
+                } else {
+                    return defaultValue
+                }
+                #else
+                return defaultValue
+                #endif
+            case .startAnchor:
+                #if os(iOS) || os(macOS)
+                if #available(iOS 17.0, macOS 14.0, *) {
+                    if let value = value as? MagnifyGesture.Value {
+                        return value.startAnchor as! Value
+                    } else if let value = value as? RotateGesture.Value {
+                        return value.startAnchor as! Value
+                    } else {
+                        return defaultValue
+                    }
+                } else {
+                    return defaultValue
+                }
+                #else
+                return defaultValue
+                #endif
+            }
         }
     }
     
@@ -208,7 +212,7 @@ public struct AttributeReference<Value: Decodable & AttributeDecodable>: @precon
         }
         
         init(
-            _ name: String,
+            _ name: AtomLiteral,
             _ body: PropertyReference,
             defaultValue: Value? = nil,
             min: CGFloat? = nil,

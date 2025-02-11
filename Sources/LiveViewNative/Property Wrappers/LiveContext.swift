@@ -27,14 +27,13 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     
     @Environment(\.namespaces) var namespaces
     
-    // FIXME: gestureState
-//    @Environment(\.gestureState) private var environmentGestureState
-//    internal var overrideGestureState: GestureState<[String:Any]>?
-//    /// The `GestureState` value in the environment.
-//    /// Uses the ``overrideGestureState`` if present.
-//    var gestureState: GestureState<[String:Any]> {
-//        overrideGestureState ?? environmentGestureState
-//    }
+    @Environment(\.gestureState) private var environmentGestureState
+    internal var overrideGestureState: GestureState<[String:Any]>?
+    /// The `GestureState` value in the environment.
+    /// Uses the ``overrideGestureState`` if present.
+    var gestureState: GestureState<[String:Any]> {
+        overrideGestureState ?? environmentGestureState
+    }
     
     internal let overrideStorage: LiveContextStorage<R>?
     var storage: LiveContextStorage<R> {
@@ -63,14 +62,13 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         self.overrideStorage = storage
     }
     
-    // FIXME: gestureState
-//    /// Add an ``overrideGestureState`` to the context.
-//    /// This will take precedence over the environment value.
-//    internal func withGestureState(_ state: GestureState<[String:Any]>) -> Self {
-//        var copy = self
-//        copy.overrideGestureState = state
-//        return copy
-//    }
+    /// Add an ``overrideGestureState`` to the context.
+    /// This will take precedence over the environment value.
+    internal func withGestureState(_ state: GestureState<[String:Any]>) -> Self {
+        var copy = self
+        copy.overrideGestureState = state
+        return copy
+    }
     
     /// Builds a view representing the given element in the current context.
     ///

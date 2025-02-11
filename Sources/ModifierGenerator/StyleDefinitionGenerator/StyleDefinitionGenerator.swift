@@ -197,6 +197,10 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
             let modifierAvailability = modifier.attributes.filter(\.isAvailability)
             let availability = modifierAvailability.isEmpty ? extensionAvailability : modifierAvailability
             
+            let usesGestureState = modifier.signature.parameterClause.parameters.contains(where: {
+                $0.type.as(IdentifierTypeSyntax.self)?.genericArgumentClause?.arguments.first?.argument.as(IdentifierTypeSyntax.self)?.name.text == "StylesheetResolvableGesture"
+            })
+            
             /// The enum case added to the declaration for this signature
             let enumCase = EnumCaseDeclSyntax {
                 EnumCaseElementSyntax(
@@ -265,37 +269,66 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                         ))
                 )
             })) {
-                // apply the modifier to `content`.
-                let modifiedContent = CodeBlockItemSyntax(item: .expr(
-                    ExprSyntax(
-                        FunctionCallExprSyntax(
-                            calledExpression: MemberAccessExprSyntax(
-                                base: DeclReferenceExprSyntax(baseName: .identifier("__content")),
-                                declName: DeclReferenceExprSyntax(baseName: modifier.name)
-                            ),
-                            leftParen: .leftParenToken(),
-                            rightParen: .rightParenToken()
+                if usesGestureState {
+                    // shadow the context to inject the gesture state
+                    // let __context = self.__context.withGestureState(___gestureState)
+                    VariableDeclSyntax(
+                        .let,
+                        name: PatternSyntax(IdentifierPatternSyntax(identifier: .identifier("__context"))),
+                        initializer: InitializerClauseSyntax(value: FunctionCallExprSyntax(
+                            callee: MemberAccessExprSyntax(
+                                base: MemberAccessExprSyntax(
+                                    base: DeclReferenceExprSyntax(baseName: .identifier("self")),
+                                    name: .identifier("__context")
+                                ),
+                                name: .identifier("withGestureState")
+                            )
                         ) {
-                            for parameter in modifier.signature.parameterClause.parameters {
-                                let expression: ExprSyntax = parameter.resolvedExpr()
-                                switch parameter.firstName.tokenKind {
-                                case .wildcard:
-                                    LabeledExprSyntax(expression: expression)
-                                default:
-                                    LabeledExprSyntax(
-                                        label: parameter.firstName.text,
-                                        expression: expression
-                                    )
-                                }
-                            }
-                        }
+                            LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("___gestureState")))
+                        })
                     )
-                ))
+                }
+                // apply the modifier to `content`.
+                let modifiedContent = FunctionCallExprSyntax(
+                    calledExpression: MemberAccessExprSyntax(
+                        base: DeclReferenceExprSyntax(baseName: .identifier("__content")),
+                        declName: DeclReferenceExprSyntax(baseName: modifier.name)
+                    ),
+                    leftParen: .leftParenToken(),
+                    rightParen: .rightParenToken()
+                ) {
+                    for parameter in modifier.signature.parameterClause.parameters {
+                        let expression: ExprSyntax = parameter.resolvedExpr()
+                        switch parameter.firstName.tokenKind {
+                        case .wildcard:
+                            LabeledExprSyntax(expression: expression)
+                        default:
+                            LabeledExprSyntax(
+                                label: parameter.firstName.text,
+                                expression: expression
+                            )
+                        }
+                    }
+                }
                 
                 availability.makeOSCheck {
                     // check availability at runtime
                     availability.makeRuntimeOSCheck {
-                        modifiedContent
+                        if usesGestureState {
+                            FunctionCallExprSyntax(
+                                callee: MemberAccessExprSyntax(
+                                    base: modifiedContent,
+                                    declName: DeclReferenceExprSyntax(baseName: .identifier("environment"))
+                                )
+                            ) {
+                                LabeledExprSyntax(expression: KeyPathExprSyntax(components: KeyPathComponentListSyntax {
+                                    KeyPathComponentSyntax(period: .periodToken(), component: .property(KeyPathPropertyComponentSyntax(declName: DeclReferenceExprSyntax(baseName: .identifier("gestureState")))))
+                                }))
+                                LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("___gestureState")))
+                            }
+                        } else {
+                            modifiedContent
+                        }
                     } elseBody: {
                         ExprSyntax(DeclReferenceExprSyntax(baseName: .identifier("__content")))
                     }
@@ -405,6 +438,25 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                         .var,
                         name: PatternSyntax(IdentifierPatternSyntax(identifier: .identifier("__context")))
                     )
+                    // gesture state
+                    if usesGestureState {
+                        VariableDeclSyntax(
+                            attributes: AttributeListSyntax {
+                                AttributeSyntax(
+                                    attributeName: IdentifierTypeSyntax(name: .identifier("GestureState"))
+                                )
+                            },
+                            modifiers: DeclModifierListSyntax([DeclModifierSyntax(name: .keyword(.private))]),
+                            .var,
+                            name: PatternSyntax(IdentifierPatternSyntax(identifier: .identifier("__gestureState"))),
+                            initializer: InitializerClauseSyntax(
+                                value: FunctionCallExprSyntax(callee: TypeExprSyntax(type: DictionaryTypeSyntax(
+                                    key: IdentifierTypeSyntax(name: .identifier("String")),
+                                    value: IdentifierTypeSyntax(name: .identifier("Any"))
+                                )))
+                            )
+                        )
+                    }
                     
                     VariableDeclSyntax(
                         modifiers: DeclModifierListSyntax([DeclModifierSyntax(name: .keyword(.private))]),

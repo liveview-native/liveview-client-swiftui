@@ -147,6 +147,7 @@ extension ModifierGenerator {
                                                                 name: .identifier("self")
                                                             ))
                                                         }))
+                                                        LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("error")))
                                                     })
                                                 }
                                             )
@@ -257,6 +258,7 @@ extension ModifierGenerator {
                                                                 name: .identifier("self")
                                                             ))
                                                         }))
+                                                        LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("modifierTypeName")))
                                                     })
                                                 }
                                             )
@@ -518,6 +520,7 @@ extension ModifierGenerator {
                                                         name: .identifier("self")
                                                     ))
                                                 }))
+                                                LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("error")))
                                             })
                                         }
                                     }
@@ -585,6 +588,7 @@ extension ModifierGenerator {
                                                         name: .identifier("self")
                                                     ))
                                                 }))
+                                                LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("modifierTypeName")))
                                             })
                                         }
                                     }

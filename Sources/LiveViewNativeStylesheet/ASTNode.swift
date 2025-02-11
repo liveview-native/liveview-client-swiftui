@@ -154,7 +154,7 @@ public struct AtomLiteral: Decodable, CustomStringConvertible {
         value
     }
     
-    init(_ value: String) {
+    public init(_ value: String) {
         self.value = value
         self.annotations = .init()
     }
@@ -165,5 +165,39 @@ public struct AtomLiteral: Decodable, CustomStringConvertible {
         _ = try container.decode(ASTNode.Identifiers.Atom.self)
         self.annotations = try container.decode(Annotations.self)
         self.value = try container.decode(String.self)
+    }
+}
+
+/// A type that decodes a member access AST node.
+///
+/// ```elixir
+/// base.member
+/// ```
+///
+/// A member access is encoded as an AST node with a `.` identifier.
+///
+/// ```
+/// [".", {}, [<base>, <member>]]
+/// ```
+public struct MemberAccess<Base: Decodable, Member: Decodable>: Decodable {
+    public let base: Base
+    public let member: Member
+    public let annotations: Annotations
+    
+    public init(base: Base, member: Member) {
+        self.base = base
+        self.member = member
+        self.annotations = .init()
+    }
+    
+    public init(from decoder: any Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        
+        _ = try container.decode(ASTNode.Identifiers.MemberAccess.self)
+        self.annotations = try container.decode(Annotations.self)
+        
+        var argumentsContainer = try container.nestedUnkeyedContainer()
+        self.base = try argumentsContainer.decode(Base.self)
+        self.member = try argumentsContainer.decode(Member.self)
     }
 }

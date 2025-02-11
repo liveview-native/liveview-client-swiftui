@@ -63,14 +63,29 @@ extension CGVector.Resolvable {
 }
 
 extension CGSize {
-    @ASTDecodable("CGSize")
     @MainActor
     enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGSize)
-        case _init(width: AttributeReference<CGFloat>, height: AttributeReference<CGFloat>)
+        case _reference(AttributeReference<CGSize>)
+        case _ast(ASTCGSize)
         
-        init(width: AttributeReference<CGFloat>, height: AttributeReference<CGFloat>) {
-            self = ._init(width: width, height: height)
+        init(from decoder: any Decoder) throws {
+            var container = try decoder.singleValueContainer()
+            
+            if let reference = try? container.decode(AttributeReference<CGSize>.self) {
+                self = ._reference(reference)
+            } else {
+                self = ._ast(try container.decode(ASTCGSize.self))
+            }
+        }
+        
+        @ASTDecodable("CGSize")
+        enum ASTCGSize: @preconcurrency Decodable {
+            case _init(width: AttributeReference<CGFloat>, height: AttributeReference<CGFloat>)
+            
+            init(width: AttributeReference<CGFloat>, height: AttributeReference<CGFloat>) {
+                self = ._init(width: width, height: height)
+            }
         }
     }
 }
@@ -81,7 +96,9 @@ extension CGSize.Resolvable {
         switch self {
         case let .__constant(value):
             return value
-        case ._init(let width, let height):
+        case let ._reference(reference):
+            return reference.resolve(on: element, in: context)
+        case ._ast(._init(let width, let height)):
             return .init(width: width.resolve(on: element, in: context), height: height.resolve(on: element, in: context))
         }
     }

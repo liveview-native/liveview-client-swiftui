@@ -7,6 +7,7 @@
 
 import SwiftUI
 import LiveViewNativeCore
+import LiveViewNativeStylesheet
 
 /// A type that conforms to this protocol can be decoded from a DOM attribute key/value pair.
 ///
@@ -231,6 +232,14 @@ extension CoreFoundation.CGFloat: AttributeDecodable {
     }
 }
 
+extension CoreFoundation.CGSize: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self = try makeJSONDecoder().decode(Self.self, from: Data(value.utf8))
+    }
+}
+
 extension SIMD2: AttributeDecodable where Self: Decodable {
     public init(from attribute: Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
@@ -300,5 +309,13 @@ extension Set: AttributeDecodable where Element: AttributeDecodable & Decodable 
         guard let value = attribute?.value
         else { throw AttributeDecodingError.badValue(Self.self) }
         self = try makeJSONDecoder().decode(Self.self, from: Data(value.utf8))
+    }
+}
+
+extension AtomLiteral: AttributeDecodable {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self.init(value)
     }
 }
