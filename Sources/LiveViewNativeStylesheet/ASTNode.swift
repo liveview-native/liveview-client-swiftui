@@ -107,6 +107,12 @@ public struct ASTNode: Codable, Hashable, CustomDebugStringConvertible, Sendable
                 \(identifier)(\(arguments.map(\.debugDescription).joined(separator: ", ")))
                 """
             }
+        case ":": // atom
+            if case let .unlabeled(value) = arguments.first {
+                return ":\(value.debugDescription)"
+            } else {
+                return ":"
+            }
         default:
             return """
             \(identifier)(\(arguments.map(\.debugDescription).joined(separator: ", ")))

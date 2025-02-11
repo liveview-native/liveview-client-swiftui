@@ -28,7 +28,7 @@ enum BuiltinRegistryModifierError: Error {
 
 /// A type that decodes the name from an AST node, then throws itself as an
 /// error to avoid consuming the value.
-struct ModifierTypeName: Decodable, Error {
+struct ModifierTypeName: Decodable, LocalizedError {
     let name: String
     
     init(name: String) {
@@ -38,6 +38,10 @@ struct ModifierTypeName: Decodable, Error {
     init(from decoder: any Decoder) throws {
         var container = try decoder.unkeyedContainer()
         throw Self(name: try container.decode(String.self))
+    }
+    
+    var errorDescription: String? {
+        "Unknown modifier '\(name)'"
     }
 }
 

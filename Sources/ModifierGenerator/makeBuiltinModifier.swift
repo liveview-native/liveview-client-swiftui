@@ -55,6 +55,17 @@ extension ModifierGenerator {
                         ])
                     )
                 ])
+                // case _shapeFinalizerModifier(ShapeFinalizerModifierRegistry)
+                EnumCaseDeclSyntax(elements: [
+                    EnumCaseElementSyntax(
+                        name: .identifier("_shapeFinalizerModifier"),
+                        parameterClause: EnumCaseParameterClauseSyntax(parameters: [
+                            EnumCaseParameterSyntax(
+                                type: IdentifierTypeSyntax(name: .identifier("ShapeFinalizerModifierRegistry"))
+                            )
+                        ])
+                    )
+                ])
                 // case _error(ErrorModifier)
                 EnumCaseDeclSyntax(elements: [
                     EnumCaseElementSyntax(
@@ -235,6 +246,42 @@ extension ModifierGenerator {
                                                 ReturnStmtSyntax()
                                             }
                                             
+                                            IfExprSyntax(conditions: ConditionElementListSyntax {
+                                                ConditionElementSyntax(
+                                                    condition: .optionalBinding(OptionalBindingConditionSyntax(
+                                                        bindingSpecifier: .keyword(.let),
+                                                        pattern: IdentifierPatternSyntax(identifier: .identifier("modifier")),
+                                                        initializer: InitializerClauseSyntax(value: TryExprSyntax(
+                                                            questionOrExclamationMark: .postfixQuestionMarkToken(),
+                                                            expression: FunctionCallExprSyntax(
+                                                                callee: MemberAccessExprSyntax(
+                                                                    base: DeclReferenceExprSyntax(baseName: .identifier("container")),
+                                                                    period: .periodToken(),
+                                                                    name: .identifier("decode")
+                                                                )
+                                                            ) {
+                                                                LabeledExprSyntax(expression: MemberAccessExprSyntax(
+                                                                    base: TypeExprSyntax(type: IdentifierTypeSyntax(name: .identifier("ShapeFinalizerModifierRegistry"))),
+                                                                    period: .periodToken(),
+                                                                    name: .identifier("self")
+                                                                ))
+                                                            }
+                                                        ))
+                                                    ))
+                                                )
+                                            }) {
+                                                InfixOperatorExprSyntax(
+                                                    leftOperand: DeclReferenceExprSyntax(baseName: .identifier("self")),
+                                                    operator: AssignmentExprSyntax(),
+                                                    rightOperand: FunctionCallExprSyntax(
+                                                        callee: MemberAccessExprSyntax(name: .identifier("_shapeFinalizerModifier"))
+                                                    ) {
+                                                        LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("modifier")))
+                                                    }
+                                                )
+                                                ReturnStmtSyntax()
+                                            }
+                                            
                                             // otherwise create an ErrorModifier
                                             InfixOperatorExprSyntax(
                                                 leftOperand: DeclReferenceExprSyntax(baseName: .identifier("self")),
@@ -378,6 +425,26 @@ extension ModifierGenerator {
                                 bindingSpecifier: .keyword(.let),
                                 pattern: ExpressionPatternSyntax(expression: FunctionCallExprSyntax(
                                     callee: MemberAccessExprSyntax(name: .identifier("_imageModifier"))
+                                ) {
+                                    LabeledExprSyntax(expression: PatternExprSyntax(pattern: IdentifierPatternSyntax(identifier: .identifier("modifier"))))
+                                })
+                            ))
+                        })) {
+                            FunctionCallExprSyntax(callee: MemberAccessExprSyntax(
+                                base: DeclReferenceExprSyntax(baseName: .identifier("content")),
+                                period: .periodToken(),
+                                name: .identifier("modifier")
+                            )) {
+                                LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("modifier")))
+                            }
+                        }
+                        
+                        // case let ._shapeFinalizerModifier(modifier)
+                        SwitchCaseSyntax(label: .case(SwitchCaseLabelSyntax {
+                            SwitchCaseItemSyntax(pattern: ValueBindingPatternSyntax(
+                                bindingSpecifier: .keyword(.let),
+                                pattern: ExpressionPatternSyntax(expression: FunctionCallExprSyntax(
+                                    callee: MemberAccessExprSyntax(name: .identifier("_shapeFinalizerModifier"))
                                 ) {
                                     LabeledExprSyntax(expression: PatternExprSyntax(pattern: IdentifierPatternSyntax(identifier: .identifier("modifier"))))
                                 })

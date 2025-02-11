@@ -29,22 +29,20 @@ struct Shape<Root: RootRegistry, S: SwiftUI.InsettableShape>: View {
     }
     
     var body: some View {
-        // FIXME: Shape View
-        shape
-//        var modifiers = modifiers
-//        var shape = shape.erasedToAnyShape()
+        var modifiers = modifiers
+        var shape = AnyShape(shape)
 //        while case let ._anyShapeModifier(modifier) = modifiers.first {
 //            shape = modifier.apply(to: shape, on: $liveElement.element, in: $liveElement.context).erasedToAnyShape()
 //            modifiers.removeFirst()
 //        }
-//        
-//        return SwiftUI.Group {
-//            if case let ._anyShapeFinalizerModifier(modifier) = modifiers.first {
-//                modifier.apply(to: shape, on: $liveElement.element, in: $liveElement.context)
-//            } else {
-//                shape
-//            }
-//        }
+        
+        return SwiftUI.Group {
+            if case let ._shapeFinalizerModifier(modifier) = modifiers.first {
+                modifier.apply(to: shape, on: $liveElement.element, in: $liveElement.context)
+            } else {
+                shape
+            }
+        }
     }
 }
 
