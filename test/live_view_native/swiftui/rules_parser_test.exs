@@ -29,7 +29,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
                output
       end
 
-      test "parses modifier function definition with annotation (2)" do
+    test "parses modifier function definition with annotation (2)" do
       {line, input} = {__ENV__.line,"""
       font(.largeTitle)
       bold(true)
@@ -92,8 +92,12 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "parses a naked IME" do
       input = "font(.largeTitle)"
-
       output = {:font, [], [{:., [], [nil, :largeTitle]}]}
+
+      assert parse(input) == output
+
+      input = "Color.blue.opacity(0.2).blendMode(.multiply).mix(with: .orange).opacity(0.7)"
+      output = {:., [], [{:., [], [{:., [], [{:., [], [{:., [], [:Color, :blue]}, {:opacity, [], [0.2]}]}, {:blendMode, [], [{:., [], [nil, :multiply]}]}]}, {:mix, [], [[:with: {:., [], [nil, :orange]}]]}]}, {:opacity, [], [0.7]}]}
 
       assert parse(input) == output
     end
@@ -116,8 +120,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       input = "font(color: Color.red.shadow(.thick))"
 
       output =
-        {:font, [],
-         [{:color, {:., [], [:Color, {:., [], [:red, {:shadow, [], [{:., [], [nil, :thick]}]}]}]}}]}
+        {:font, [], [{:color, {:., [], [{:., [], [:Color, :red]}, {:shadow, [], [{:., [], [nil, :thick]}]}]}}]}
 
       assert parse(input) == output
 
@@ -135,9 +138,9 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     end
 
     test "parses naked chained IME" do
-      input = "font(.largeTitle.red)"
+      input = "font(.largerTitle.red)"
 
-      output = {:font, [], [{:., [], [nil, {:., [], [:largeTitle, :red]}]}]}
+      output = {:font, [], [{:., [], [{:., [], [nil, :largerTitle]}, :red]}]}
 
       assert parse(input) == output
     end
