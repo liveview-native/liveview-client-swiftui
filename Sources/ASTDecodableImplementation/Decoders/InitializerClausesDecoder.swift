@@ -350,10 +350,32 @@ struct InitializerClause {
                             let decodeExpr: ExprSyntax = if let defaultValue = parameter.defaultValue?.value {
                                 ExprSyntax(
                                     InfixOperatorExprSyntax(
-                                        leftOperand: FunctionCallExprSyntax(
+                                        leftOperand: TupleExprSyntax {
+                                            LabeledExprSyntax(expression: TryExprSyntax(questionOrExclamationMark: .postfixQuestionMarkToken(), expression: FunctionCallExprSyntax(
+                                                callee: MemberAccessExprSyntax(
+                                                    base: containerReference,
+                                                    name: .identifier("decodeIfPresent")
+                                                )
+                                            ) {
+                                                LabeledExprSyntax(
+                                                    expression: MemberAccessExprSyntax(
+                                                        base: TypeExprSyntax(type: parameter.type),
+                                                        name: .identifier("self")
+                                                    )
+                                                )
+                                            }))
+                                        },
+                                        operator: BinaryOperatorExprSyntax(operator: .binaryOperator("??")),
+                                        rightOperand: defaultValue
+                                    )
+                                )
+                            } else {
+                                ExprSyntax(
+                                    TryExprSyntax(
+                                        expression: FunctionCallExprSyntax(
                                             callee: MemberAccessExprSyntax(
                                                 base: containerReference,
-                                                name: .identifier("decodeIfPresent")
+                                                name: .identifier("decode")
                                             )
                                         ) {
                                             LabeledExprSyntax(
@@ -362,34 +384,14 @@ struct InitializerClause {
                                                     name: .identifier("self")
                                                 )
                                             )
-                                        },
-                                        operator: BinaryOperatorExprSyntax(operator: .binaryOperator("??")),
-                                        rightOperand: defaultValue
+                                        }
                                     )
-                                )
-                            } else {
-                                ExprSyntax(
-                                    FunctionCallExprSyntax(
-                                        callee: MemberAccessExprSyntax(
-                                            base: containerReference,
-                                            name: .identifier("decode")
-                                        )
-                                    ) {
-                                        LabeledExprSyntax(
-                                            expression: MemberAccessExprSyntax(
-                                                base: TypeExprSyntax(type: parameter.type),
-                                                name: .identifier("self")
-                                            )
-                                        )
-                                    }
                                 )
                             }
                             PatternBindingSyntax(
                                 pattern: IdentifierPatternSyntax(identifier: parameter.secondName ?? parameter.firstName),
                                 initializer: InitializerClauseSyntax(
-                                    value: TryExprSyntax(
-                                        expression: decodeExpr
-                                    )
+                                    value: decodeExpr
                                 )
                             )
                         }

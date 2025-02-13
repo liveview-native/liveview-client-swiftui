@@ -32,6 +32,6 @@ public struct MultipleFailures: LocalizedError {
     }
     
     public var errorDescription: String? {
-        "\(errors.map(\.localizedDescription).joined(separator: "\n"))\(annotations.flatMap({ "\n\($0.debugDescription)" }) ?? "")"
+        "\(errors.map({ String(describing: $0) }).joined(separator: "\n"))\(annotations.flatMap({ "\n\($0.debugDescription)" }) ?? "")"
     }
 }
