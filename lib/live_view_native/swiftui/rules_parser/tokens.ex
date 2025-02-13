@@ -113,6 +113,14 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     combinator |> ignore(optional(whitespace(min: 1)))
   end
 
+  def ignore_dot(combinator \\ empty()) do
+    combinator |> ignore(string("."))
+  end
+
+  def ignore_semicolon(combinator \\ empty()) do
+    combinator |> ignore(string(";"))
+  end
+
   # @tuple_children [
   #   parsec(:nested_attribute),
   #   atom(),

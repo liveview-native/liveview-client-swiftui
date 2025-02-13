@@ -27,7 +27,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
                annotations: true
              ) ==
                output
-      end
+    end
 
     test "parses modifier function definition with annotation (2)" do
       {line, input} = {__ENV__.line,"""
@@ -40,6 +40,27 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         {:font, [file: __ENV__.file, line: line, module: __ENV__.module, source: "font(.largeTitle)"], [{:., [file: __ENV__.file, line: line, module: __ENV__.module, source: "font(.largeTitle)"], [nil, :largeTitle]}]},
         {:bold, [file: __ENV__.file, line: line + 1, module: __ENV__.module, source: "bold(true)"], [true]},
         {:italic, [file: __ENV__.file, line: line + 2, module: __ENV__.module, source: "italic(true)"], [true]}
+      ]
+
+      assert parse(input,
+          file: __ENV__.file,
+          module: __ENV__.module,
+          line: line,
+          annotations: true
+        ) == output
+    end
+
+    test "ignores leading . and trailing ;" do
+      {line, input} = {__ENV__.line,"""
+      .font(.largeTitle);
+      .bold(true);
+      .italic(true);
+      """}
+
+      output = [
+        {:font, [file: __ENV__.file, line: line, module: __ENV__.module, source: ".font(.largeTitle);"], [{:., [file: __ENV__.file, line: line, module: __ENV__.module, source: ".font(.largeTitle);"], [nil, :largeTitle]}]},
+        {:bold, [file: __ENV__.file, line: line + 1, module: __ENV__.module, source: ".bold(true);"], [true]},
+        {:italic, [file: __ENV__.file, line: line + 2, module: __ENV__.module, source: ".italic(true);"], [true]}
       ]
 
       assert parse(input,
