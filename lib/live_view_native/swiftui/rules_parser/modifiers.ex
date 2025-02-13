@@ -281,8 +281,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   defparsec(
     :modifier,
     ignore_whitespace()
+    |> optional(ignore_dot())
     |> concat(modifier_name())
     |> concat(modifier_brackets.(nested: false))
+    |> optional(ignore_semicolon())
     |> post_traverse({PostProcessors, :to_function_call_ast, []}),
     export_combinator: true
   )
