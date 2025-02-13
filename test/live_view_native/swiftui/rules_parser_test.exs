@@ -138,9 +138,9 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     end
 
     test "parses naked chained IME" do
-      input = "font(.largerTitle.red)"
+      input = "font(.largeTitle.red)"
 
-      output = {:font, [], [{:., [], [{:., [], [nil, :largerTitle]}, :red]}]}
+      output = {:font, [], [{:., [], [{:., [], [nil, :largeTitle]}, :red]}]}
 
       assert parse(input) == output
     end
