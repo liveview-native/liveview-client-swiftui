@@ -157,9 +157,23 @@ public struct AttributeReference<Value: Decodable & AttributeDecodable>: @precon
                 #if os(iOS) || os(macOS)
                 if #available(iOS 17.0, macOS 14.0, *) {
                     if let value = value as? MagnifyGesture.Value {
-                        return value.startAnchor as! Value
+                        switch body.member {
+                        case .x:
+                            return value.startAnchor.x as! Value
+                        case .y:
+                            return value.startAnchor.y as! Value
+                        default:
+                            return value.startAnchor as! Value
+                        }
                     } else if let value = value as? RotateGesture.Value {
-                        return value.startAnchor as! Value
+                        switch body.member {
+                        case .x:
+                            return value.startAnchor.x as! Value
+                        case .y:
+                            return value.startAnchor.y as! Value
+                        default:
+                            return value.startAnchor as! Value
+                        }
                     } else {
                         return defaultValue
                     }
@@ -192,6 +206,9 @@ public struct AttributeReference<Value: Decodable & AttributeDecodable>: @precon
             var radians: Self { .init(base: base, member: .radians) }
             var degrees: Self { .init(base: base, member: .degrees) }
             
+            var x: Self { .init(base: base, member: .x) }
+            var y: Self { .init(base: base, member: .y) }
+            
             enum Base: String, CaseIterable {
                 case translation
                 
@@ -208,6 +225,9 @@ public struct AttributeReference<Value: Decodable & AttributeDecodable>: @precon
                 
                 case radians
                 case degrees
+                
+                case x
+                case y
             }
         }
         

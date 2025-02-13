@@ -46,6 +46,8 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
     public override func visit(_ node: EnumDeclSyntax) -> SyntaxVisitorContinueKind {
         guard !typeDenylist.contains(node.name.text)
         else { return .skipChildren }
+        guard !typeDenylist.contains(node.fullyResolvedType.trimmedDescription)
+        else { return .skipChildren }
         
         guard node.genericParameterClause == nil && node.genericWhereClause == nil
         else { return .skipChildren }
@@ -102,6 +104,8 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
     
     public override func visit(_ node: StructDeclSyntax) -> SyntaxVisitorContinueKind {
         guard !typeDenylist.contains(node.name.text)
+        else { return .skipChildren }
+        guard !typeDenylist.contains(node.fullyResolvedType.trimmedDescription)
         else { return .skipChildren }
         
         guard node.genericParameterClause == nil && node.genericWhereClause == nil
