@@ -13,6 +13,10 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
     case modified(Self, StylesheetResolvableGestureModifier)
     case tap(_TapGesture)
     case drag(_DragGesture)
+    case spatialTap(_SpatialTapGesture)
+    case longPress(_LongPressGesture)
+    case magnify(Any)
+    case rotate(Any)
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -30,6 +34,28 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
         if let gesture = try? container.decode(_DragGesture.self) {
             self = .drag(gesture)
             return
+        }
+        
+        if let gesture = try? container.decode(_SpatialTapGesture.self) {
+            self = .spatialTap(gesture)
+            return
+        }
+        
+        if let gesture = try? container.decode(_LongPressGesture.self) {
+            self = .longPress(gesture)
+            return
+        }
+        
+        if #available(iOS 17.0, macOS 14.0, *) {
+            if let gesture = try? container.decode(_MagnifyGesture.self) {
+                self = .magnify(gesture)
+                return
+            }
+            
+            if let gesture = try? container.decode(_RotateGesture.self) {
+                self = .rotate(gesture)
+                return
+            }
         }
         
         throw BuiltinRegistryModifierError.unknownModifier
@@ -50,6 +76,34 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
                 drag.resolve(on: element, in: context)
                     .map({ $0 as Any })
             )
+        case let .spatialTap(spatialTap):
+            return AnyGesture(
+                spatialTap.resolve(on: element, in: context)
+                    .map({ $0 as Any })
+            )
+        case let .longPress(longPress):
+            return AnyGesture(
+                longPress.resolve(on: element, in: context)
+                    .map({ $0 as Any })
+            )
+        case let .magnify(magnify):
+            if #available(iOS 17.0, macOS 14.0, *) {
+                return AnyGesture(
+                    (magnify as! _MagnifyGesture).resolve(on: element, in: context)
+                        .map({ $0 as Any })
+                )
+            } else {
+                fatalError("MagnifyGesture is not available")
+            }
+        case let .rotate(rotate):
+            if #available(iOS 17.0, macOS 14.0, *) {
+                return AnyGesture(
+                    (rotate as! _RotateGesture).resolve(on: element, in: context)
+                        .map({ $0 as Any })
+                )
+            } else {
+                fatalError("RotateGesture is not available")
+            }
         }
     }
 }
