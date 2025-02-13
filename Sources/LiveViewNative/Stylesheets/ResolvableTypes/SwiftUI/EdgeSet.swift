@@ -77,4 +77,3 @@ extension Edge.Set.Resolvable {
         }
     }
 }
-#endif

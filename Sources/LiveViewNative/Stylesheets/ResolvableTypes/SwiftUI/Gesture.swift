@@ -11,6 +11,7 @@ import LiveViewNativeCore
 
 indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency Decodable {
     case modified(Self, StylesheetResolvableGestureModifier)
+    case tap(_TapGesture)
     case drag(_DragGesture)
     
     init(from decoder: any Decoder) throws {
@@ -18,6 +19,11 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
         
         if let modifiedContent = try? container.decode(MemberAccess<Self, StylesheetResolvableGestureModifier>.self) {
             self = .modified(modifiedContent.base, modifiedContent.member)
+            return
+        }
+        
+        if let gesture = try? container.decode(_TapGesture.self) {
+            self = .tap(gesture)
             return
         }
         
@@ -34,6 +40,11 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
         switch self {
         case let .modified(base, modifier):
             return modifier.resolve(on: element, in: context, appliedTo: base.resolve(on: element, in: context))
+        case let .tap(tap):
+            return AnyGesture(
+                tap.resolve(on: element, in: context)
+                    .map({ $0 as Any })
+            )
         case let .drag(drag):
             return AnyGesture(
                 drag.resolve(on: element, in: context)
@@ -101,6 +112,97 @@ struct _DragGesture: @preconcurrency Decodable, StylesheetResolvable {
         DragGesture(
             minimumDistance: minimumDistance.resolve(on: element, in: context),
             coordinateSpace: coordinateSpace.resolve(on: element, in: context)
+        )
+    }
+}
+
+@ASTDecodable("TapGesture")
+struct _TapGesture: @preconcurrency Decodable, StylesheetResolvable {
+    let count: AttributeReference<Int>
+    
+    init(count: AttributeReference<Int> = .constant(1)) {
+        self.count = count
+    }
+    
+    func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> TapGesture where R : RootRegistry {
+        TapGesture(count: count.resolve(on: element, in: context))
+    }
+}
+
+@ASTDecodable("SpatialTapGesture")
+struct _SpatialTapGesture: @preconcurrency Decodable, StylesheetResolvable {
+    let count: AttributeReference<Int>
+    let coordinateSpace: CoordinateSpace.Resolvable
+    
+    init(
+        count: AttributeReference<Int> = .constant(1),
+        coordinateSpace: CoordinateSpace.Resolvable = .__constant(.local)
+    ) {
+        self.count = count
+        self.coordinateSpace = coordinateSpace
+    }
+    
+    func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> SpatialTapGesture where R : RootRegistry {
+        SpatialTapGesture(
+            count: count.resolve(on: element, in: context),
+            coordinateSpace: coordinateSpace.resolve(on: element, in: context)
+        )
+    }
+}
+
+@ASTDecodable("LongPressGesture")
+struct _LongPressGesture: @preconcurrency Decodable, StylesheetResolvable {
+    let minimumDuration: Double.Resolvable
+    let maximumDistance: CGFloat.Resolvable
+    
+    init(
+        minimumDuration: Double.Resolvable = .__constant(0.5),
+        maximumDistance: CGFloat.Resolvable = .__constant(10)
+    ) {
+        self.minimumDuration = minimumDuration
+        self.maximumDistance = maximumDistance
+    }
+    
+    func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> LongPressGesture where R : RootRegistry {
+        LongPressGesture(
+            minimumDuration: minimumDuration.resolve(on: element, in: context),
+            maximumDistance: maximumDistance.resolve(on: element, in: context)
+        )
+    }
+}
+
+@ASTDecodable("MagnifyGesture")
+@available(iOS 17.0, macOS 14.0, *)
+struct _MagnifyGesture: @preconcurrency Decodable, StylesheetResolvable {
+    let minimumScaleDelta: CGFloat.Resolvable
+    
+    init(
+        minimumScaleDelta: CGFloat.Resolvable = .__constant(0.01)
+    ) {
+        self.minimumScaleDelta = minimumScaleDelta
+    }
+    
+    func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> MagnifyGesture where R : RootRegistry {
+        MagnifyGesture(
+            minimumScaleDelta: minimumScaleDelta.resolve(on: element, in: context)
+        )
+    }
+}
+
+@ASTDecodable("RotateGesture")
+@available(iOS 17.0, macOS 14.0, *)
+struct _RotateGesture: @preconcurrency Decodable, StylesheetResolvable {
+    let minimumAngleDelta: Angle.Resolvable
+    
+    init(
+        minimumAngleDelta: Angle.Resolvable = .__constant(.degrees(1))
+    ) {
+        self.minimumAngleDelta = minimumAngleDelta
+    }
+    
+    func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> RotateGesture where R : RootRegistry {
+        RotateGesture(
+            minimumAngleDelta: minimumAngleDelta.resolve(on: element, in: context)
         )
     }
 }
