@@ -182,7 +182,17 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     test "parses complex modifier chains" do
       input = "color(color: .foo.bar.baz(1, 2).qux)"
 
-      output = {:color, [], [color: {:., [], [{:., [], [{:., [], [{:., [], [nil, :foo]}, :bar]}, {:baz, [], [1, 2]}]}, :qux]}]}
+      output =
+        {:color, [],
+          [
+            {
+              :color,
+                {:., [],
+                  [{:., [], [{:., [], [{:., [], [nil, :foo]}, :bar]}, {:baz, [], [1, 2]}]}, :qux]
+              }
+            }
+          ]
+        }
 
       assert parse(input) == output
     end
