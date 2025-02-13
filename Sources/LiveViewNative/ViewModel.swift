@@ -164,14 +164,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     }
     
     public func buildFormURLComponents() throws -> URLComponents {
-        let data = try data.mapValues { value in
-            if let value = value as? String {
-                return value
-            } else {
-                return try value.formQueryEncoded()
-            }
-        }
-
+        let data = try toDictionary()
         var components = URLComponents()
         components.queryItems = data.map {
             URLQueryItem(name: $0.key, value: $0.value)
@@ -179,6 +172,16 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         
         return components
     }
+    
+    public func toDictionary() throws -> [String: String] {
+            return try data.mapValues { value in
+                if let value = value as? String {
+                    return value
+                } else {
+                    return try value.formQueryEncoded()
+                }
+            }
+        }
 
     @MainActor
     private func pushFormEvent(_ event: String) async throws {
@@ -269,8 +272,6 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         fileName: String,
         coordinator: LiveViewCoordinator<some RootRegistry>
     ) async throws {
-        guard let liveChannel = coordinator.liveChannel
-        else { return }
         
         let file = LiveFile(
             contents,
@@ -280,8 +281,8 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             id
         )
         if let changeEventName {
-            let replyPayload = try await coordinator.liveChannel!.channel().call(
-                event: .user(user: "event"),
+            let replyPayload = try await coordinator.call(
+                event: "event",
                 payload: .jsonPayload(json: .object(object: [
                     "type": .str(string: "form"),
                     "event": .str(string: changeEventName),
@@ -299,15 +300,16 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                             ])
                         ])
                     ])
-                ])),
-                timeout: 10_000
-            )
-            try await coordinator.handleEventReplyPayload(replyPayload)
+                ]))
+            );
+            if let payload = replyPayload {
+                try await coordinator.handleEventReplyPayload(payload)
+            }
         }
         self.fileUploads.append(.init(
             id: id,
             data: contents,
-            upload: { try await liveChannel.uploadFile(file) }
+            upload: {  try await coordinator.uploadFile(file: file) }
         ))
     }
 }
