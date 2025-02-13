@@ -11,9 +11,14 @@ import LiveViewNativeStylesheet
 @ASTDecodable("fill")
 enum FillModifier: ShapeFinalizerModifier, @preconcurrency Decodable {
     case _content(StylesheetResolvableShapeStyle, style: FillStyle.Resolvable)
+    case _style(FillStyle.Resolvable)
     
-    init(_ content: StylesheetResolvableShapeStyle, style: FillStyle.Resolvable = .__constant(.init())) {
+    init(_ content: StylesheetResolvableShapeStyle = .semantic(.foreground), style: FillStyle.Resolvable = .__constant(.init())) {
         self = ._content(content, style: style)
+    }
+    
+    init(style: FillStyle.Resolvable) {
+        self = ._style(style)
     }
     
     func body(content: Content) -> some View {
@@ -28,6 +33,8 @@ enum FillModifier: ShapeFinalizerModifier, @preconcurrency Decodable {
         switch self {
         case let ._content(content, style):
             AnyView(shape.fill(content.resolve(on: element, in: context), style: style.resolve(on: element, in: context)))
+        case let ._style(style):
+            AnyView(shape.fill(style: style.resolve(on: element, in: context)))
         }
     }
 }

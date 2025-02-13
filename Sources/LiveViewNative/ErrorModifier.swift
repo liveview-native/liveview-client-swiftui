@@ -11,7 +11,7 @@ import OSLog
 
 private let errorModifierLogger = Logger(subsystem: "LiveViewNative", category: "Stylesheet")
 
-struct ErrorModifier: ViewModifier, Error {
+struct ErrorModifier: ViewModifier, LocalizedError {
     let node: ASTNode
     let error: any Error
     
@@ -26,8 +26,16 @@ struct ErrorModifier: ViewModifier, Error {
                 errorModifierLogger.warning("""
                 Using modifier \(node.debugDescription) that failed to decode
                 \(node.annotations.debugDescription)
-                \(error)
+                \(error.localizedDescription)
                 """)
             }
+    }
+    
+    nonisolated var errorDescription: String? {
+        """
+        | \(node.debugDescription)
+        \(node.annotations.debugDescription)
+        \(error.localizedDescription)
+        """
     }
 }

@@ -19,19 +19,19 @@ public enum ASTDecodableOptions {
 }
 
 public enum ASTDecodableError: Error {
-    case _tooManyArguments
-    
-    public static var tooManyArguments: Self {
-        return ._tooManyArguments
-    }
+    case tooManyArguments
 }
 
-public struct MultipleFailures: Error {
+public struct MultipleFailures: LocalizedError {
     let errors: [any Error]
     let annotations: Annotations?
     
     public init(_ errors: [any Error], annotations: Annotations? = nil) {
         self.errors = errors
         self.annotations = annotations
+    }
+    
+    public var errorDescription: String? {
+        "\(errors.map(\.localizedDescription).joined(separator: "\n"))\(annotations.flatMap({ "\n\($0.debugDescription)" }) ?? "")"
     }
 }

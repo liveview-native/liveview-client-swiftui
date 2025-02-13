@@ -19,12 +19,15 @@ protocol ShapeFinalizerModifier: ViewModifier {
 extension BuiltinRegistry {
     enum ShapeFinalizerModifierRegistry: ShapeFinalizerModifier, @preconcurrency Decodable {
         case fill(FillModifier)
+        case stroke(StrokeModifier)
         
         init(from decoder: any Decoder) throws {
             let container = try decoder.singleValueContainer()
             
             if let modifier = try? container.decode(FillModifier.self) {
                 self = .fill(modifier)
+            } else if let modifier = try? container.decode(StrokeModifier.self) {
+                self = .stroke(modifier)
             } else {
                 throw BuiltinRegistryModifierError.unknownModifier
             }
@@ -41,7 +44,9 @@ extension BuiltinRegistry {
         ) -> AnyView where Root : RootRegistry {
             switch self {
             case .fill(let modifier):
-                AnyView(modifier.apply(to: shape, on: element, in: context))
+                return modifier.apply(to: shape, on: element, in: context)
+            case .stroke(let modifier):
+                return modifier.apply(to: shape, on: element, in: context)
             }
         }
     }
