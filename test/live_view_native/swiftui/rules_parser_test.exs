@@ -29,7 +29,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
                output
       end
 
-      test "parses modifier function definition with annotation (2)" do
+    test "parses modifier function definition with annotation (2)" do
       {line, input} = {__ENV__.line,"""
       font(.largeTitle)
       bold(true)
@@ -92,8 +92,12 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "parses a naked IME" do
       input = "font(.largeTitle)"
-
       output = {:font, [], [{:., [], [nil, :largeTitle]}]}
+
+      assert parse(input) == output
+
+      input = "background(Color.blue.opacity(0.2).blendMode(.multiply).mix(with: .orange).opacity(0.7))"
+      output = {:background, [], [{:., [], [{:., [], [{:., [], [{:., [], [{:., [], [:Color, :blue]}, {:opacity, [], [0.2]}]}, {:blendMode, [], [{:., [], [nil, :multiply]}]}]}, {:mix, [], [{:with, {:., [], [nil, :orange]}}]}]}, {:opacity, [], [0.7]}]}]}
 
       assert parse(input) == output
     end
@@ -116,8 +120,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       input = "font(color: Color.red.shadow(.thick))"
 
       output =
-        {:font, [],
-         [{:color, {:., [], [:Color, {:., [], [:red, {:shadow, [], [{:., [], [nil, :thick]}]}]}]}}]}
+        {:font, [], [{:color, {:., [], [{:., [], [:Color, :red]}, {:shadow, [], [{:., [], [nil, :thick]}]}]}}]}
 
       assert parse(input) == output
 
@@ -137,7 +140,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     test "parses naked chained IME" do
       input = "font(.largeTitle.red)"
 
-      output = {:font, [], [{:., [], [nil, {:., [], [:largeTitle, :red]}]}]}
+      output = {:font, [], [{:., [], [{:., [], [nil, :largeTitle]}, :red]}]}
 
       assert parse(input) == output
     end
@@ -181,13 +184,15 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       output =
         {:color, [],
-         [
-           {
-             :color,
-               {:., [],
-                [nil, {:., [], [:foo, {:., [], [:bar, {:., [], [{:baz, [], [1, 2]}, :qux]}]}]}]}
-           }
-         ]}
+          [
+            {
+              :color,
+                {:., [],
+                  [{:., [], [{:., [], [{:., [], [nil, :foo]}, :bar]}, {:baz, [], [1, 2]}]}, :qux]
+              }
+            }
+          ]
+        }
 
       assert parse(input) == output
     end
@@ -381,7 +386,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "gesture" do
       input = ~s{offset(x: gesture_state(:drag, .translation.width))}
-      output = {:offset, [], [{:x, {:__gesture_state__, [], [{:":", [], "drag"}, {:., [], [nil, {:., [], [:translation, :width]}]}]}}]}
+      output = {:offset, [], [{:x, {:__gesture_state__, [], [{:":", [], "drag"}, {:., [], [{:., [], [nil, :translation]}, :width]}]}}]}
 
       assert parse(input) == output
 

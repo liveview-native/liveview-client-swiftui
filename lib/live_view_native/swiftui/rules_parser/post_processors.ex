@@ -96,28 +96,31 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
 
   defp combine_chain_ast_parts(outer, inner) when is_atom(outer) do
     if Regex.match?(~r/^[A-Z]/, Atom.to_string(outer)) do
-      {:., [], [outer, inner]}
+      {:., [], [inner, outer]}
     else
       case outer do
         {:., annotations, [nil, part]} ->
-          {:., annotations, [nil, {:., annotations, [part, inner]}]}
+          {:., annotations, [{:., annotations, [nil, inner]}, part]}
 
         _ ->
-          {:., [], [outer, inner]}
+          {:., [], [inner, outer]}
       end
     end
   end
 
   defp combine_chain_ast_parts({:., annotations, [nil, part]}, inner) do
-    {:., annotations, [nil, {:., annotations, [part, inner]}]}
+    {:., annotations, [{:., annotations, [nil, inner]}, part]}
   end
 
   defp combine_chain_ast_parts(outer, inner) do
-    {:., [], [outer, inner]}
+    {:., [], [inner, outer]}
   end
 
   def chain_ast(rest, sections, context, {_line, _}, _byte_offset) do
-    sections = Enum.reduce(sections, &combine_chain_ast_parts/2)
+    sections =
+      sections
+      |> Enum.reverse()
+      |> Enum.reduce(&combine_chain_ast_parts/2)
 
     {rest, [sections], context}
   end
