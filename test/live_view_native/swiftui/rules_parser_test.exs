@@ -96,8 +96,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert parse(input) == output
 
-      input = "Color.blue.opacity(0.2).blendMode(.multiply).mix(with: .orange).opacity(0.7)"
-      output = {:., [], [{:., [], [{:., [], [{:., [], [{:., [], [:Color, :blue]}, {:opacity, [], [0.2]}]}, {:blendMode, [], [{:., [], [nil, :multiply]}]}]}, {:mix, [], [[with: {:., [], [nil, :orange]}]]}]}, {:opacity, [], [0.7]}]}
+      input = "background(Color.blue.opacity(0.2).blendMode(.multiply).mix(with: .orange).opacity(0.7))"
+      output = {:background, [], [{:., [], [{:., [], [{:., [], [{:., [], [{:., [], [:Color, :blue]}, {:opacity, [], [0.2]}]}, {:blendMode, [], [{:., [], [nil, :multiply]}]}]}, {:mix, [], [{:with, {:., [], [nil, :orange]}}]}]}, {:opacity, [], [0.7]}]}]}
 
       assert parse(input) == output
     end
@@ -182,15 +182,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     test "parses complex modifier chains" do
       input = "color(color: .foo.bar.baz(1, 2).qux)"
 
-      output =
-        {:color, [],
-         [
-           {
-             :color,
-               {:., [],
-                [nil, {:., [], [:foo, {:., [], [:bar, {:., [], [{:baz, [], [1, 2]}, :qux]}]}]}]}
-           }
-         ]}
+      output = {:color, [], [color: {:., [], [{:., [], [{:., [], [{:., [], [nil, :foo]}, :bar]}, {:baz, [], [1, 2]}]}, :qux]}]}
 
       assert parse(input) == output
     end
@@ -384,7 +376,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "gesture" do
       input = ~s{offset(x: gesture_state(:drag, .translation.width))}
-      output = {:offset, [], [{:x, {:__gesture_state__, [], [{:":", [], "drag"}, {:., [], [nil, {:., [], [:translation, :width]}]}]}}]}
+      output = {:offset, [], [{:x, {:__gesture_state__, [], [{:":", [], "drag"}, {:., [], [{:., [], [nil, :translation]}, :width]}]}}]}
 
       assert parse(input) == output
 

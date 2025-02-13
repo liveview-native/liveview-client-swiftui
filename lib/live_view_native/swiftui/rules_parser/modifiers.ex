@@ -94,7 +94,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> post_traverse({PostProcessors, :chain_ast, []})
   )
 
-  defparsecp(
+  defparsec(
     :ime,
     choice([
       parsec(:ime1),
