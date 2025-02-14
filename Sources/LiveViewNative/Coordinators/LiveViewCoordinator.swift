@@ -239,8 +239,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
 
     func bindEventListener() {
         self.eventListenerLoop = Task { [weak self, weak channel] in
-            guard let channel else { return }
-            let eventListener = channel.eventStream()
+            let eventListener = channel!.eventStream()
             for try await event in eventListener {
                 guard let self else { return }
                 guard !Task.isCancelled else { return }
