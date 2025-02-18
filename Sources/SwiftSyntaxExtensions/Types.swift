@@ -12,22 +12,25 @@ public extension TypeSyntaxProtocol {
     var isValidModifierType: Bool {
         // closures with parameters are not supported
         if let functionType = self.as(FunctionTypeSyntax.self) {
-            guard functionType.parameters.isEmpty
-            else { return false }
+            return functionType.parameters.isEmpty
+        }
+        if let tupleType = self.as(TupleTypeSyntax.self),
+           tupleType.elements.count == 1,
+           let functionType = tupleType.elements.first!.type.as(FunctionTypeSyntax.self)
+        {
+            return functionType.parameters.isEmpty
         }
         if let attributedType = self.as(AttributedTypeSyntax.self),
            let functionType = attributedType.baseType.as(FunctionTypeSyntax.self)
         {
-            guard functionType.parameters.isEmpty
-            else { return false }
+            return functionType.parameters.isEmpty
         }
         if let attributedType = self.as(AttributedTypeSyntax.self),
            let tupleType = attributedType.baseType.as(TupleTypeSyntax.self),
            tupleType.elements.count == 1,
            let functionType = tupleType.elements.first!.type.as(FunctionTypeSyntax.self)
         {
-            guard functionType.parameters.isEmpty
-            else { return false }
+            return functionType.parameters.isEmpty
         }
         
         // Tuple types can't be encoded/decoded automatically.
@@ -60,14 +63,6 @@ public extension TypeSyntaxProtocol {
         }
         if let memberType = self.as(MemberTypeSyntax.self),
            memberType.name.text.starts(with: "_")
-        {
-            return false
-        }
-        
-        // SwiftUICore.Binding is not allowed
-        if let memberType = self.as(MemberTypeSyntax.self),
-           memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUICore",
-           memberType.name.text == "Binding"
         {
             return false
         }

@@ -211,11 +211,24 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                     name: .identifier("_\(offset)"),
                     parameterClause: modifier.signature.parameterClause.parameters.isEmpty ? nil : EnumCaseParameterClauseSyntax(parameters: EnumCaseParameterListSyntax {
                         for parameter in modifier.signature.parameterClause.parameters {
-                            EnumCaseParameterSyntax(
-                                firstName: parameter.resolvedName,
-                                colon: .colonToken(),
-                                type: IdentifierTypeSyntax(name: .identifier("Any")) // types are stored as `Any` in the enum to avoid #availability issues
-                            )
+                            if parameter.type.as(IdentifierTypeSyntax.self)?.name.text == "ChangeTracked" {
+                                // this is a dynamic property, so we need to have the type explicitly provided for SwiftUI to install
+                                // but the generic argument must be erased. we use `AnyEquatableEncodable` to meet the required conformances.
+                                EnumCaseParameterSyntax(
+                                    firstName: parameter.resolvedName,
+                                    colon: .colonToken(),
+                                    type: IdentifierTypeSyntax(name: .identifier("ChangeTracked"), genericArgumentClause: GenericArgumentClauseSyntax {
+                                        GenericArgumentSyntax(argument: IdentifierTypeSyntax(name: .identifier("AnyEquatableEncodable")))
+                                    })
+                                )
+                            } else {
+                                // other types are stored as `Any` in the enum to avoid #availability issues
+                                EnumCaseParameterSyntax(
+                                    firstName: parameter.resolvedName,
+                                    colon: .colonToken(),
+                                    type: IdentifierTypeSyntax(name: .identifier("Any"))
+                                )
+                            }
                         }
                     })
                 )
@@ -239,10 +252,23 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                                 rightParen: .rightParenToken()
                             ) {
                                 for parameter in modifier.signature.parameterClause.parameters {
-                                    LabeledExprSyntax(
-                                        label: parameter.secondName?.text ?? parameter.firstName.text,
-                                        expression: DeclReferenceExprSyntax(baseName: parameter.resolvedName)
-                                    )
+                                    if parameter.type.as(IdentifierTypeSyntax.self)?.name.text == "ChangeTracked" {
+                                        // ChangeTracked should erase its generic value before storing with `.erasedToAnyEquatableEncodable()`
+                                        LabeledExprSyntax(
+                                            label: parameter.secondName?.text ?? parameter.firstName.text,
+                                            expression: FunctionCallExprSyntax(
+                                                callee: MemberAccessExprSyntax(
+                                                    base: DeclReferenceExprSyntax(baseName: parameter.resolvedName),
+                                                    name: .identifier("erasedToAnyEquatableEncodable")
+                                                )
+                                            )
+                                        )
+                                    } else {
+                                        LabeledExprSyntax(
+                                            label: parameter.secondName?.text ?? parameter.firstName.text,
+                                            expression: DeclReferenceExprSyntax(baseName: parameter.resolvedName)
+                                        )
+                                    }
                                 }
                             }
                         )
@@ -412,7 +438,10 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                     }
                     
                     EnumDeclSyntax(
-                        name: TokenSyntax.identifier("__Clause")
+                        name: TokenSyntax.identifier("__Clause"),
+                        inheritanceClause: InheritanceClauseSyntax {
+                            InheritedTypeSyntax(type: IdentifierTypeSyntax(name: .identifier("DynamicProperty")))
+                        }
                     ) {
                         enumCase
                     }

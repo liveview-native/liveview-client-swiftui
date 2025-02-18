@@ -144,9 +144,46 @@ public extension FunctionParameterSyntax {
                         ))
                     }
                 )
+            } else if attributeReferenceType.genericArgumentClause!.arguments.first!.argument.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text == "Event" {
+                // `Event` should be converted into a closure that calls the `Event` as a function.
+                // { resolvedValue?.wrappedValue() }
+                return ExprSyntax(
+                    ClosureExprSyntax {
+                        CodeBlockItemSyntax(item: .expr(
+                            ExprSyntax(FunctionCallExprSyntax(
+                                calledExpression: MemberAccessExprSyntax(
+                                    base: OptionalChainingExprSyntax(expression: resolvedAttribute),
+                                    period: .periodToken(),
+                                    name: .identifier("wrappedValue")
+                                ),
+                                leftParen: .leftParenToken(),
+                                rightParen: .rightParenToken()
+                            ) {
+                                // no arguments
+                            })
+                        ))
+                    }
+                )
             } else {
                 return ExprSyntax(resolvedAttribute)
             }
+        } else if let changeTrackedType = self.type.as(IdentifierTypeSyntax.self) ?? self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self),
+                  changeTrackedType.name.text == "ChangeTracked"
+        { // ChangeTracked should use `.castProjectedValue(type: T.self)`
+            return ExprSyntax(FunctionCallExprSyntax(
+                callee: MemberAccessExprSyntax(
+                    base: DeclReferenceExprSyntax(baseName: self.resolvedName),
+                    name: .identifier("castProjectedValue")
+                )
+            ) {
+                LabeledExprSyntax(
+                    label: "type",
+                    expression: MemberAccessExprSyntax(
+                        base: TypeExprSyntax(type: changeTrackedType.genericArgumentClause!.arguments.first!.argument),
+                        name: .identifier("self")
+                    )
+                )
+            })
         } else if self.type.isResolvableType {
             // value.resolve(on: __element, in: __context)
             return ExprSyntax(FunctionCallExprSyntax.resolveAttributeReference(parameterReference))

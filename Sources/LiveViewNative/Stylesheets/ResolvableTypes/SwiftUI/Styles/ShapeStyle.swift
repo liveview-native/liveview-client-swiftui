@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
-enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurrency ShapeStyle, @preconcurrency Decodable {
+indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurrency ShapeStyle, @preconcurrency Decodable {
     typealias Resolved = AnyShapeStyle
     
     case color(Color.Resolvable)
@@ -20,6 +20,108 @@ enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurrency Shape
     case imagePaint(ImagePaint.Resolvable)
     case hierarchical(HierarchicalShapeStyle.Resolvable)
     case semantic(SemanticShapeStyle)
+    case modified(ModifiedShapeStyle)
+    
+    struct ModifiedShapeStyle: StylesheetResolvable, @preconcurrency Decodable {
+        let base: StylesheetResolvableShapeStyle
+        let modifier: Modifier
+        
+        enum Modifier: @preconcurrency Decodable {
+            case hierarchical(HierarchicalModifier)
+            case blendMode(BlendModeModifier)
+            case opacity(OpacityModifier)
+            case shadow(ShadowModifier)
+            
+            @ASTDecodable("blendMode")
+            struct BlendModeModifier: @preconcurrency Decodable {
+                let blendMode: BlendMode.Resolvable
+                
+                init(_ blendMode: BlendMode.Resolvable) {
+                    self.blendMode = blendMode
+                }
+            }
+            
+            @ASTDecodable("opacity")
+            struct OpacityModifier: @preconcurrency Decodable {
+                let opacity: Double.Resolvable
+                
+                init(_ opacity: Double.Resolvable) {
+                    self.opacity = opacity
+                }
+            }
+            
+            @ASTDecodable("shadow")
+            struct ShadowModifier: @preconcurrency Decodable {
+                let style: ShadowStyle.Resolvable
+                
+                init(_ style: ShadowStyle.Resolvable) {
+                    self.style = style
+                }
+            }
+            
+            enum HierarchicalModifier: String, Decodable {
+                case secondary
+                case tertiary
+                case quaternary
+                case quinary
+            }
+            
+            init(from decoder: any Decoder) throws {
+                let container = try decoder.singleValueContainer()
+                
+                if let modifier = try? container.decode(HierarchicalModifier.self) {
+                    self = .hierarchical(modifier)
+                } else if let modifier = try? container.decode(BlendModeModifier.self) {
+                    self = .blendMode(modifier)
+                } else if let modifier = try? container.decode(OpacityModifier.self) {
+                    self = .opacity(modifier)
+                } else {
+                    self = .shadow(try container.decode(ShadowModifier.self))
+                }
+            }
+        }
+        
+        init(from decoder: any Decoder) throws {
+            var container = try decoder.unkeyedContainer()
+            
+            _ = try container.decode(ASTNode.Identifiers.MemberAccess.self)
+            let annotations = try container.decode(Annotations.self)
+            var arguments = try container.nestedUnkeyedContainer()
+            
+            self.base = try arguments.decode(StylesheetResolvableShapeStyle.self)
+            self.modifier = try arguments.decode(Modifier.self)
+        }
+        
+        func resolve(
+            on element: ElementNode,
+            in context: LiveContext<some RootRegistry>
+        ) -> AnyShapeStyle {
+            let base = base.resolve(on: element, in: context)
+            switch modifier {
+            case let .hierarchical(hierarchical):
+                if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+                    switch hierarchical {
+                    case .secondary:
+                        return AnyShapeStyle(base.secondary)
+                    case .tertiary:
+                        return AnyShapeStyle(base.tertiary)
+                    case .quaternary:
+                        return AnyShapeStyle(base.quaternary)
+                    case .quinary:
+                        return AnyShapeStyle(base.quinary)
+                    }
+                } else {
+                    return base
+                }
+            case let .blendMode(blendMode):
+                return AnyShapeStyle(base.blendMode(blendMode.blendMode.resolve(on: element, in: context)))
+            case let .opacity(opacity):
+                return AnyShapeStyle(base.opacity(opacity.opacity.resolve(on: element, in: context)))
+            case let .shadow(shadow):
+                return AnyShapeStyle(base.shadow(shadow.style.resolve(on: element, in: context)))
+            }
+        }
+    }
     
     @ASTDecodable("ShapeStyle")
     enum MaterialShapeStyle: StylesheetResolvable, @preconcurrency Decodable {
@@ -139,6 +241,9 @@ enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurrency Shape
         } else if let semantic = try? container.decode(SemanticShapeStyle.self) {
             self = .semantic(semantic)
             return
+        } else if let modified = try? container.decode(ModifiedShapeStyle.self) {
+            self = .modified(modified)
+            return
         }
         
         throw MultipleFailures([])
@@ -168,6 +273,8 @@ extension StylesheetResolvableShapeStyle {
             return AnyShapeStyle(imagePaint.resolve(on: element, in: context))
         case let .material(material):
             return AnyShapeStyle(material.resolve(on: element, in: context))
+        case let .modified(modified):
+            return modified.resolve(on: element, in: context)
         }
     }
 }
@@ -435,6 +542,64 @@ extension ImagePaint {
                     image: image.resolve(on: element, in: context),
                     sourceRect: sourceRect.resolve(on: element, in: context),
                     scale: scale.resolve(on: element, in: context)
+                )
+            }
+        }
+    }
+}
+
+extension ShadowStyle {
+    @ASTDecodable("ShadowStyle")
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+        case __constant(ShadowStyle)
+        case _drop(
+            color: Color.Resolvable,
+            radius: CGFloat.Resolvable,
+            x: CGFloat.Resolvable,
+            y: CGFloat.Resolvable
+        )
+        case _inner(
+            color: Color.Resolvable,
+            radius: CGFloat.Resolvable,
+            x: CGFloat.Resolvable,
+            y: CGFloat.Resolvable
+        )
+        
+        static func drop(
+            color: Color.Resolvable = .__constant(Color(.sRGBLinear, white: 0, opacity: 0.33)),
+            radius: CGFloat.Resolvable,
+            x: CGFloat.Resolvable = .__constant(0),
+            y: CGFloat.Resolvable = .__constant(0)
+        ) -> Self {
+            ._drop(color: color, radius: radius, x: x, y: y)
+        }
+        
+        static func inner(
+            color: Color.Resolvable = .__constant(Color(.sRGBLinear, white: 0, opacity: 0.55)),
+            radius: CGFloat.Resolvable,
+            x: CGFloat.Resolvable = .__constant(0),
+            y: CGFloat.Resolvable = .__constant(0)
+        ) -> Self {
+            ._inner(color: color, radius: radius, x: x, y: y)
+        }
+        
+        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> ShadowStyle where R : RootRegistry {
+            switch self {
+            case .__constant(let style):
+                return style
+            case ._drop(let color, let radius, let x, let y):
+                return .drop(
+                    color: color.resolve(on: element, in: context),
+                    radius: radius.resolve(on: element, in: context),
+                    x: x.resolve(on: element, in: context),
+                    y: y.resolve(on: element, in: context)
+                )
+            case ._inner(let color, let radius, let x, let y):
+                return .inner(
+                    color: color.resolve(on: element, in: context),
+                    radius: radius.resolve(on: element, in: context),
+                    x: x.resolve(on: element, in: context),
+                    y: y.resolve(on: element, in: context)
                 )
             }
         }

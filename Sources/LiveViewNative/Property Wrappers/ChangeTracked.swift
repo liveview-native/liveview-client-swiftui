@@ -9,6 +9,105 @@ import SwiftUI
 import LiveViewNativeCore
 import Combine
 
+private extension Equatable {
+    func equal(to other: Any) -> Bool {
+        return self == (other as! Self)
+    }
+}
+
+/// A type used to erase the generic argument of a `ChangeTracked` value.
+/// We need to erase the types in modifier clause enums.
+struct AnyEquatableEncodable: Encodable, Equatable {
+    let value: any Encodable & Equatable
+    
+    func encode(to encoder: any Encoder) throws {
+        try value.encode(to: encoder)
+    }
+    
+    static func == (lhs: AnyEquatableEncodable, rhs: AnyEquatableEncodable) -> Bool {
+        lhs.value.equal(to: rhs.value)
+    }
+}
+
+extension ChangeTracked where Value == AnyEquatableEncodable {
+    func castProjectedValue<T: Encodable & Equatable>(type: T.Type) -> Binding<T> {
+        Binding {
+            self.wrappedValue.value as! T
+        } set: { (newValue: T) in
+            self.wrappedValue = .init(value: newValue)
+        }
+    }
+}
+
+extension ChangeTracked where Value: AttributeDecodable {
+    func erasedToAnyEquatableEncodable() -> ChangeTracked<AnyEquatableEncodable> {
+        let localValue = self._localValue.wrappedValue as! ElementLocalValue
+        let erasedLocalValue = ErasedLocalValue(wrappedValue: localValue.value, attribute: localValue.attribute, sendChangeEvent: localValue.sendChangeEvent, decoder: { attribute, element in
+            .init(value: try Value(from: attribute, on: element))
+        })
+        return ChangeTracked<AnyEquatableEncodable>(localValue: erasedLocalValue)
+    }
+}
+
+final class ErasedLocalValue: ChangeTracked<AnyEquatableEncodable>.LocalValue {
+    var cancellable: AnyCancellable?
+    var didSendCancellable: AnyCancellable?
+    
+    let attribute: AttributeName
+    let sendChangeEvent: Bool
+    let decoder: (Attribute?, ElementNode) throws -> AnyEquatableEncodable
+    
+    private var previousValue: AnyEquatableEncodable?
+    
+    init<Value: Encodable & Equatable>(
+        wrappedValue: Value? = nil,
+        attribute: AttributeName,
+        sendChangeEvent: Bool,
+        decoder: @escaping (Attribute?, ElementNode) throws -> AnyEquatableEncodable
+    ) {
+        self.attribute = attribute
+        self.sendChangeEvent = sendChangeEvent
+        self.decoder = decoder
+        super.init(value: wrappedValue.flatMap({ .init(value: $0) }))
+    }
+    
+    override func bind(
+        to changeTracked: ChangeTracked<AnyEquatableEncodable>
+    ) {
+        if let value = try? decoder(changeTracked.element.attribute(named: self.attribute), changeTracked.element),
+           value != self.previousValue
+        {
+            self.value = value
+            self.previousValue = value
+        }
+        cancellable = localValueChanged
+            .sink(receiveValue: { [weak self] localValue in
+                Task { @MainActor [weak self] in
+                    self?.objectWillChange.send()
+                }
+                self?.value = localValue
+                Task { [weak self] in
+                    guard let self,
+                          self.sendChangeEvent
+                    else { return }
+                    try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed))
+                }
+            })
+        
+        // set current value to previousValue and trigger update to sync with attribute value
+        // (may be delayed from localValueChanged due to debounce/throttle)
+        didSendCancellable = changeTracked.event.owner.handler.didSendSubject
+            .sink { [weak self] _ in
+                guard let self
+                else { return }
+                self.previousValue = self.value
+                Task { @MainActor [weak self] in
+                    self?.objectWillChange.send()
+                }
+            }
+    }
+}
+
 /// Allows client-side state changes, which send `phx-change` events to the server.
 ///
 /// ## Stylesheets
@@ -67,15 +166,25 @@ public struct ChangeTracked<Value: Encodable & Equatable>: @preconcurrency Dynam
     public init() {
         self._localValue = .init(wrappedValue: LocalValue())
     }
+    
+    init(localValue: LocalValue) {
+        self._localValue = .init(wrappedValue: localValue)
+    }
 }
 
-extension ChangeTracked where Value: AttributeDecodable {
+extension ChangeTracked: @preconcurrency Decodable where Value: AttributeDecodable {
     public init(attribute: AttributeName, sendChangeEvent: Bool = true) {
         self._localValue = .init(wrappedValue: ElementLocalValue(attribute: attribute, sendChangeEvent: sendChangeEvent))
     }
     
     public init(wrappedValue: Value, attribute: AttributeName, sendChangeEvent: Bool = true) {
         self._localValue = .init(wrappedValue: ElementLocalValue(wrappedValue: wrappedValue, attribute: attribute, sendChangeEvent: sendChangeEvent))
+    }
+    
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let attribute = try container.decode(AttributeName.self)
+        self._localValue = .init(wrappedValue: ElementLocalValue(attribute: attribute, sendChangeEvent: true))
     }
     
     final class ElementLocalValue: LocalValue {

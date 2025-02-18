@@ -7,6 +7,7 @@
 
 import Foundation
 import LiveViewNativeStylesheet
+import LiveViewNativeCore
 
 extension Calendar {
     @ASTDecodable("Calendar")
@@ -234,5 +235,21 @@ extension AttributedString.Resolvable {
         case let .__constant(value):
             return value
         }
+    }
+}
+
+struct StylesheetResolvableLocalizedError: @preconcurrency Decodable, StylesheetResolvable, LocalizedError, @preconcurrency AttributeDecodable {
+    let errorDescription: String?
+    
+    init(from decoder: any Decoder) throws {
+        self.errorDescription = try decoder.singleValueContainer().decode(String?.self)
+    }
+    
+    func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Self where R : RootRegistry {
+        return self
+    }
+    
+    init(from attribute: Attribute?, on element: ElementNode) throws {
+        self.errorDescription = attribute?.value
     }
 }
