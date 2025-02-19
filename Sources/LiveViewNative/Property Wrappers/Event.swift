@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import LiveViewNativeCore
+import LiveViewNativeStylesheet
 import AsyncAlgorithms
 
 /// A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.
@@ -67,7 +68,7 @@ import AsyncAlgorithms
 ///- ``EventHandler``
 @MainActor
 @propertyWrapper
-public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable, @preconcurrency AttributeDecodable {
+public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable, @preconcurrency AttributeDecodable, @preconcurrency ExpressibleByNilLiteral {
     @ObservedElement private var element: ElementNode
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @Environment(\.eventConfirmation) private var eventConfirmation
@@ -285,6 +286,16 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
         self.params = nil
     }
     
+    public init(nilLiteral: ()) {
+        self.event = nil
+        self.name = nil
+        self.type = "click"
+        self.target = nil
+        self.debounce = nil
+        self.throttle = nil
+        self.params = nil
+    }
+    
     /// Create an event reference as an argument to a modifier.
     ///
     /// For simple events, pass a string value.
@@ -322,26 +333,32 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
     /// * ``debounce``
     /// * ``throttle``
     public init(from decoder: Decoder) throws {
-        if let singleValue = try? decoder.singleValueContainer(),
-           singleValue.decodeNil()
-        {
-            self.event = nil
-            self.name = nil
-            self.type = "click"
-            self.target = nil
-            self.debounce = nil
-            self.throttle = nil
-            self.params = nil
-        } else {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            
-            self.event = try container.decodeIfPresent(String.self, forKey: .event)
-            self.name = nil
-            self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? "click"
-            self.target = try container.decodeIfPresent(Int.self, forKey: .target)
-            self.debounce = try container.decodeIfPresent(Double.self, forKey: .debounce)
-            self.throttle = try container.decodeIfPresent(Double.self, forKey: .throttle)
-            self.params = try container.decodeIfPresent(String.self, forKey: .params).flatMap({ try? JSONSerialization.jsonObject(with: Data($0.utf8)) })
+        let container = try decoder.singleValueContainer()
+        
+        let value = try container.decode(Resolvable.self)
+        self.name = nil
+        self.event = value.event
+        self.type = value.type
+        self.target = value.target
+        self.debounce = value.debounce
+        self.throttle = value.throttle
+        self.params = nil
+    }
+    
+    @ASTDecodable("__event__")
+    struct Resolvable: @preconcurrency Decodable {
+        let event: String
+        let type: String
+        let target: Int?
+        let debounce: Double?
+        let throttle: Double?
+        
+        init(_ event: String, type: String = "click", target: Int? = nil, debounce: Double? = nil, throttle: Double? = nil) {
+            self.event = event
+            self.type = type
+            self.target = target
+            self.debounce = debounce
+            self.throttle = throttle
         }
     }
     

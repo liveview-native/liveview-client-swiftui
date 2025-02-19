@@ -221,6 +221,13 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                                         GenericArgumentSyntax(argument: IdentifierTypeSyntax(name: .identifier("AnyEquatableEncodable")))
                                     })
                                 )
+                            } else if parameter.type.as(IdentifierTypeSyntax.self)?.name.text == "Event" {
+                                // this is a dynamic property, so we need to have the type explicitly provided for SwiftUI to install
+                                EnumCaseParameterSyntax(
+                                    firstName: parameter.resolvedName,
+                                    colon: .colonToken(),
+                                    type: parameter.type
+                                )
                             } else {
                                 // other types are stored as `Any` in the enum to avoid #availability issues
                                 EnumCaseParameterSyntax(

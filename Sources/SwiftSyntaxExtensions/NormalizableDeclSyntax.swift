@@ -141,7 +141,6 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
-                            .makeAttributeReference()
                     }
                     if let optionalType = parameter.type.as(OptionalTypeSyntax.self),
                        let tupleType = optionalType.wrappedType.as(TupleTypeSyntax.self),
@@ -153,8 +152,7 @@ public extension NormalizableDeclSyntax {
                         guard functionType.returnClause.type.isVoid
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
-                            .with(\.type, TypeSyntax(OptionalTypeSyntax(wrappedType: IdentifierTypeSyntax(name: .identifier("Event")))))
-                            .makeAttributeReference()
+                            .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
                     }
                     if let attributedType = parameter.type.as(AttributedTypeSyntax.self),
                        let functionType = attributedType.baseType.as(FunctionTypeSyntax.self)
@@ -165,7 +163,6 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
-                            .makeAttributeReference()
                     }
                     if let attributedType = parameter.type.as(AttributedTypeSyntax.self),
                        let tupleType = attributedType.baseType.as(TupleTypeSyntax.self),
@@ -178,7 +175,6 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
-                            .makeAttributeReference()
                     }
                     // [S] where S == String -> [String]
                     // [S] where S: Protocol -> [StylesheetResolvableProtocol]
