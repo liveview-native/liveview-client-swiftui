@@ -30,6 +30,9 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionC
 /// - ``LiveConnectionError``
 @MainActor
 public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
+    @Published public var showEventConfirmation: Bool = false
+    @Published public var eventConfirmationTransaction: EventConfirmationTransaction?
+    
     /// The current state of the live view connection.
     @Published public private(set) var state = LiveSessionState.setup
     
@@ -109,18 +112,33 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             Task {
                 try await prev.last?.coordinator.disconnect()
                 if prev.count > next.count {
-                    // back navigation (we could be going back multiple pages at once, so use `traverseTo` instead of `back`)
                     let targetEntry = self.liveSocket!.getEntries()[next.count - 1]
                     next.last?.coordinator.join(
-                        try await self.liveSocket!.traverseTo(targetEntry.id, next.last!.coordinator.liveChannel, nil)
+                        try await self.liveSocket!.traverseTo(targetEntry.id,
+                                                              .some([
+                                                                  "_format": .str(string: LiveSessionParameters.platform),
+                                                                  "_interface": .object(object: LiveSessionParameters.platformParams)
+                                                              ]),
+                                                              nil)
                     )
                 } else if next.count > prev.count && prev.count > 0 {
                     // forward navigation (from `redirect` or `<NavigationLink>`)
                     next.last?.coordinator.join(
-                        try await self.liveSocket!.navigate(next.last!.url.absoluteString, next.last!.coordinator.liveChannel, NavOptions(action: .push))
+                        try await self.liveSocket!.navigate(next.last!.url.absoluteString,
+                                                            .some([
+                                                                "_format": .str(string: LiveSessionParameters.platform),
+                                                                "_interface": .object(object: LiveSessionParameters.platformParams)
+                                                            ]),
+                                                            NavOptions(action: .push))
                     )
                 } else if next.count == prev.count {
-                    guard let liveChannel = try await self.liveSocket?.navigate(next.last!.url.absoluteString, next.last!.coordinator.liveChannel, NavOptions(action: .replace))
+                    guard let liveChannel =
+                            try await self.liveSocket?.navigate(next.last!.url.absoluteString,
+                                                                .some([
+                                                                    "_format": .str(string: LiveSessionParameters.platform),
+                                                                    "_interface": .object(object: LiveSessionParameters.platformParams)
+                                                                    ]),
+                                                                   NavOptions(action: .replace))
                     else { return }
                     next.last?.coordinator.join(liveChannel)
                 }
@@ -152,7 +170,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     deinit {
-        self.liveReloadListenerLoop?.cancel()
+        let socket = socket
+        let liveReloadChannel = liveReloadChannel
+        Task {
+            do {
+                try await socket?.shutdown()
+            }
+            do {
+                try await liveReloadChannel?.shutdownParentSocket()
+            }
+        }
     }
 
     /// Connects this coordinator to the LiveView channel.
@@ -183,12 +210,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             let headers = (configuration.headers ?? [:])
                 .merging(additionalHeaders ?? [:]) { $1 }
             
+            if let socket {
+                try await socket.shutdown()
+            }
+            
             self.liveSocket = try await LiveSocket(
                 originalURL.absoluteString,
                 LiveSessionParameters.platform,
                 ConnectOpts(
                     headers: headers,
-                    body: httpBody.flatMap({ String(data: $0, encoding: .utf8) }),
+                    body: httpBody,
                     method: httpMethod.flatMap(Method.init(_:)),
                     timeoutMs: 10_000
                 )
@@ -241,6 +272,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             self.state = .connected
             
+            if let liveReloadChannel {
+                try await liveReloadChannel.shutdownParentSocket()
+                self.liveReloadChannel = nil
+            }
+            
             if self.liveSocket!.hasLiveReload() {
                 self.liveReloadChannel = try await self.liveSocket!.joinLivereloadChannel()
                 bindLiveReloadListener()
@@ -255,9 +291,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.liveReloadListener = eventListener
         self.liveReloadListenerLoop = Task { @MainActor [weak self] in
             for try await event in eventListener {
-                guard let self else { return }
                 switch event.event {
                 case .user(user: "assets_change"):
+                    guard let self else { return }
                     try await self.disconnect()
                     self.navigationPath = [.init(url: self.url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
                     try await self.connect()
@@ -265,6 +301,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     continue
                 }
             }
+            
         }
     }
 
@@ -284,11 +321,21 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 
                 self.navigationPath = [self.navigationPath.first!]
             }
-            try await self.liveReloadChannel?.channel().leave()
+            
+            if let liveReloadListenerLoop {
+                liveReloadListenerLoop.cancel()
+            }
+            
+            if self.liveReloadChannel?.channel().status() == .joined {
+                try await self.liveReloadChannel?.shutdownParentSocket()
+            }
+            
             self.liveReloadChannel = nil
-            try await self.socket?.disconnect()
+            
+            try await self.socket?.shutdown()
             self.socket = nil
             self.liveSocket = nil
+            self.liveReloadListener = nil
             self.state = .disconnected
         } catch {
             self.state = .connectionFailed(error)
@@ -306,7 +353,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             self.url = url
             self.navigationPath = [.init(url: self.url, coordinator: self.navigationPath.first!.coordinator, navigationTransition: nil, pendingView: nil)]
         }
-        try await self.connect(httpMethod: httpMethod, httpBody: httpBody, additionalHeaders: headers)
+        await self.connect(httpMethod: httpMethod, httpBody: httpBody, additionalHeaders: headers)
 //        do {
 //            if let url {
 //                try await self.disconnect(preserveNavigationPath: false)

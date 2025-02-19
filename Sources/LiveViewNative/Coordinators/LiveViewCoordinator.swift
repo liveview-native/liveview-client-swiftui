@@ -78,8 +78,24 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     deinit {
-        self.eventListenerLoop?.cancel()
-        self.statusListenerLoop?.cancel()
+        let channel = channel
+        Task {
+            do {
+                try await channel?.shutdown()
+            }
+        }
+        
+        if let eventListenerLoop {
+            if !eventListenerLoop.isCancelled {
+                eventListenerLoop.cancel()
+            }
+        }
+        
+        if let statusListenerLoop {
+            if !statusListenerLoop.isCancelled {
+                statusListenerLoop.cancel()
+            }
+        }
     }
 
     /// Pushes a LiveView event with the given name and payload to the server.
@@ -238,9 +254,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
 
     func bindEventListener() {
-        self.eventListenerLoop = Task { [weak self, weak channel] in
-            guard let channel else { return }
-            let eventListener = channel.eventStream()
+        self.eventListenerLoop = Task { [weak self, unowned channel] in
+            let eventListener = channel!.eventStream()
             for try await event in eventListener {
                 guard let self else { return }
                 guard !Task.isCancelled else { return }
@@ -307,6 +322,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         let channel = liveChannel.channel()
         self.channel = channel
         
+        if statusListenerLoop != nil && !statusListenerLoop!.isCancelled {
+            statusListenerLoop?.cancel()
+        }
+        
         statusListenerLoop = Task { @MainActor [weak self, unowned channel] in
             let statusListener = channel.statusStream()
             for try await status in statusListener {
@@ -340,6 +359,20 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     func disconnect() async throws {
         try await self.channel?.leave()
+        try await self.channel?.shutdown()
+        
+        if let eventListenerLoop {
+            if !eventListenerLoop.isCancelled {
+                eventListenerLoop.cancel()
+            }
+        }
+        
+        if let statusListenerLoop {
+            if !statusListenerLoop.isCancelled {
+                statusListenerLoop.cancel()
+            }
+        }
+
         self.eventListenerLoop = nil
         self.statusListenerLoop = nil
         self.liveChannel = nil
