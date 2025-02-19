@@ -71,7 +71,7 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
     @ObservedElement private var element: ElementNode
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @Environment(\.eventConfirmation) private var eventConfirmation
-    @StateObject var handler = Handler()
+    @StateObject var handler = EventHandler()
     /// The name of the event to send.
     @_documentation(visibility: public)
     private let event: String?
@@ -132,20 +132,29 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
     }
     
     @MainActor
-    final class Handler: ObservableObject {
+    public final class EventHandler: ObservableObject {
         let channel = AsyncChannel<EventPayload>()
         
         struct EventPayload: @unchecked Sendable {
             let type: String
             let event: String
-            let payload: Any
+            var payload: Any?
             let target: Int?
+            
+            let confirm: String?
+            let eventConfirmation: ((String) async -> Bool)?
         }
         
         private var handlerTask: Task<(), Error>?
         
         private var debounce: Double?
         var throttle: Double?
+        
+        public var event: String? {
+            payload?.event
+        }
+        
+        var payload: EventPayload?
         
         let didSendSubject = PassthroughSubject<Void, Never>()
         
@@ -187,6 +196,43 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
                     }
                 }
             }
+        }
+        
+        public func callAsFunction(value: Any = [String:String](), didSend: (() -> Void)? = nil) {
+            Task {
+                try await self.callAsFunction(value: value)
+                didSend?()
+            }
+        }
+        
+        public func callAsFunction(value: Any = [String:String]()) async throws {
+            guard var payload else {
+                return
+            }
+            if let confirm = payload.confirm,
+               let eventConfirmation = payload.eventConfirmation
+            {
+                guard await eventConfirmation(confirm) else { return }
+            }
+            if payload.payload == nil {
+                payload.payload = value
+            }
+            await channel.send(payload)
+        }
+        
+        public func callAsFunction<R: RootRegistry>(value: Any = [String:String](), in context: LiveContext<R>) async throws {
+            guard var payload else {
+                return
+            }
+            if let confirm = payload.confirm,
+               let eventConfirmation = payload.eventConfirmation
+            {
+                guard await eventConfirmation(confirm) else { return }
+            }
+            if payload.payload == nil {
+                payload.payload = value
+            }
+            await channel.send(payload)
         }
     }
     
@@ -319,7 +365,7 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
     /// }
     /// ```
     public var wrappedValue: EventHandler {
-        EventHandler(owner: self)
+        handler
     }
     
     /// A closure that triggers the event without any additional payload or waiting for completion.
@@ -328,64 +374,21 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
     }
     
     public func update() {
-        handler.update(coordinator: coordinatorEnvironment, debounce: debounce ?? debounceAttribute?.milliseconds, throttle: throttle ?? throttleAttribute)
-    }
-    
-    /// An action that you invoke to send an event to the server.
-    @MainActor
-    public struct EventHandler {
-        let owner: Event
-        
-        var event: String? {
-            owner.event ?? owner.name.flatMap(owner.element.attributeValue(for:))
-        }
-        
-        public func callAsFunction(value: Any = [String:String](), didSend: (() -> Void)? = nil) {
-            Task {
-                try await self.callAsFunction(value: value)
-                didSend?()
-            }
-        }
-        
-        public func callAsFunction(value: Any = [String:String]()) async throws {
-            guard let event else {
-                return
-            }
-            if let confirm = try owner.element.attributeValue(for: "data-confirm"),
-               let eventConfirmation = owner.eventConfirmation
-            {
-                guard await eventConfirmation(confirm, owner.element) else { return }
-            }
-            await owner.handler.channel.send(.init(
-                type: owner.type,
+        if let event = self.event ?? self.name.flatMap({ element.attributeValue(for: $0) }) {
+            handler.payload = .init(
+                type: self.type,
                 event: event,
-                payload: owner.params ?? value,
-                target: owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init)
-            ))
-        }
-        
-        public func callAsFunction<R: RootRegistry>(value: Any = [String:String](), in context: LiveContext<R>) async throws {
-            guard let event else {
-                return
-            }
-            if let confirm = try owner.element.attributeValue(for: "data-confirm"),
-               let eventConfirmation = owner.eventConfirmation
-            {
-                guard await eventConfirmation(confirm, owner.element) else { return }
-            }
-            let handler = Handler()
-            handler.update(
-                coordinator: CoordinatorEnvironment(context.coordinator, document: context.coordinator.document!),
-                debounce: owner.debounce,
-                throttle: owner.throttle
+                payload: self.params,
+                target: self.target,
+                confirm: self.element.attributeValue(for: "data-confirm"),
+                eventConfirmation: self.eventConfirmation.flatMap { eventConfirmation in
+                    { message in
+                        await eventConfirmation(message, self.element)
+                    }
+                }
             )
-            await handler.channel.send(.init(
-                type: owner.type,
-                event: event,
-                payload: owner.params ?? value,
-                target: owner.target
-            ))
         }
+        handler.update(coordinator: coordinatorEnvironment, debounce: debounce ?? debounceAttribute?.milliseconds, throttle: throttle ?? throttleAttribute)
     }
 }
 

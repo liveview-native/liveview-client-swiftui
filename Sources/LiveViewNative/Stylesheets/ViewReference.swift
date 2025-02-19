@@ -87,7 +87,7 @@ public struct TextReference: @preconcurrency Decodable, @preconcurrency Attribut
         resolveTemplate(on: element, in: context).flatMap({
             TextView<R>(element: $0, overrideStylesheet: context.coordinator.session.stylesheet).body
         })
-            ?? SwiftUI.Text("")
+        ?? SwiftUI.Text(value)
     }
     
     public init(from attribute: Attribute?, on element: ElementNode) throws {

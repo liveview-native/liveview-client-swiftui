@@ -41,6 +41,8 @@ extension ChangeTracked where Value == AnyEquatableEncodable {
 
 extension ChangeTracked where Value: AttributeDecodable {
     func erasedToAnyEquatableEncodable() -> ChangeTracked<AnyEquatableEncodable> {
+        // FIXME: this causes a runtime warning about access StateObject without being installed
+        // technically this is fine, but we should find a way to prevent the warning.
         let localValue = self._localValue.wrappedValue as! ElementLocalValue
         let erasedLocalValue = ErasedLocalValue(wrappedValue: localValue.value, attribute: localValue.attribute, sendChangeEvent: localValue.sendChangeEvent, decoder: { attribute, element in
             .init(value: try Value(from: attribute, on: element))
@@ -74,6 +76,7 @@ final class ErasedLocalValue: ChangeTracked<AnyEquatableEncodable>.LocalValue {
     override func bind(
         to changeTracked: ChangeTracked<AnyEquatableEncodable>
     ) {
+        let event = changeTracked.event
         if let value = try? decoder(changeTracked.element.attribute(named: self.attribute), changeTracked.element),
            value != self.previousValue
         {
@@ -86,21 +89,19 @@ final class ErasedLocalValue: ChangeTracked<AnyEquatableEncodable>.LocalValue {
                     self?.objectWillChange.send()
                 }
                 self?.value = localValue
-                Task { [weak self] in
-                    guard let self,
-                          self.sendChangeEvent
+                Task { [weak self, weak event] in
+                    guard self?.sendChangeEvent == true,
+                          let attributeName = self?.attribute.rawValue
                     else { return }
-                    try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed))
+                    try await event?(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([attributeName: localValue]), options: .fragmentsAllowed))
                 }
             })
         
         // set current value to previousValue and trigger update to sync with attribute value
         // (may be delayed from localValueChanged due to debounce/throttle)
-        didSendCancellable = changeTracked.event.owner.handler.didSendSubject
+        didSendCancellable = event.didSendSubject
             .sink { [weak self] _ in
-                guard let self
-                else { return }
-                self.previousValue = self.value
+                self?.previousValue = self?.value
                 Task { @MainActor [weak self] in
                     self?.objectWillChange.send()
                 }
@@ -205,6 +206,7 @@ extension ChangeTracked: @preconcurrency Decodable where Value: AttributeDecodab
         override func bind(
             to changeTracked: ChangeTracked<Value>
         ) {
+            let event = changeTracked.event
             if let value = try? changeTracked.element.attributeValue(Value.self, for: self.attribute),
                value != self.previousValue
             {
@@ -217,21 +219,19 @@ extension ChangeTracked: @preconcurrency Decodable where Value: AttributeDecodab
                         self?.objectWillChange.send()
                     }
                     self?.value = localValue
-                    Task { [weak self] in
-                        guard let self,
-                              self.sendChangeEvent
+                    Task { [weak self, weak event] in
+                        guard self?.sendChangeEvent == true,
+                              let attributeName = self?.attribute.rawValue
                         else { return }
-                        try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed))
+                        try await event?(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([attributeName: localValue]), options: .fragmentsAllowed))
                     }
                 })
             
             // set current value to previousValue and trigger update to sync with attribute value
             // (may be delayed from localValueChanged due to debounce/throttle)
-            didSendCancellable = changeTracked.event.owner.handler.didSendSubject
+            didSendCancellable = event.didSendSubject
                 .sink { [weak self] _ in
-                    guard let self
-                    else { return }
-                    self.previousValue = self.value
+                    self?.previousValue = self?.value
                     Task { @MainActor [weak self] in
                         self?.objectWillChange.send()
                     }
@@ -273,6 +273,7 @@ extension ChangeTracked where Value: FormValue {
         override func bind(
             to changeTracked: ChangeTracked<Value>
         ) {
+            let event = changeTracked.event
             if let value = attributeValue(on: changeTracked.element),
                value != self.previousValue
             {
@@ -298,7 +299,7 @@ extension ChangeTracked where Value: FormValue {
             
             // set current value to previousValue and trigger update to sync with attribute value
             // (may be delayed from localValueChanged due to debounce/throttle)
-            didSendCancellable = changeTracked.event.owner.handler.didSendSubject
+            didSendCancellable = event.didSendSubject
                 .sink { @MainActor [weak self] _ in
                     guard let self
                     else { return }
