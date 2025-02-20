@@ -25,6 +25,8 @@ import LiveViewNativeCore
 public struct LiveContext<R: RootRegistry>: DynamicProperty {
     @Environment(\.anyLiveContextStorage) private var anyStorage
     
+    @Environment(\.namespaces) var namespaces
+    
     @Environment(\.gestureState) private var environmentGestureState
     internal var overrideGestureState: GestureState<[String:Any]>?
     /// The `GestureState` value in the environment.

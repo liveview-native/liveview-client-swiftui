@@ -53,7 +53,7 @@ struct LabeledContent<Root: RootRegistry>: View {
         SwiftUI.Group {
             if format != nil {
                 SwiftUI.LabeledContent {
-                    Text<Root>()
+                    TextView<Root>()
                 } label: {
                     $liveElement.children()
                 }

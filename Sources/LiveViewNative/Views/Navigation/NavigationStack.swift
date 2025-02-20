@@ -27,14 +27,16 @@ struct NavigationStack<Root: RootRegistry>: View {
                 $liveElement.children()
             }
             .navigationDestination(for: LiveNavigationEntry<Root>.self) { destination in
-                if #available(iOS 18.0, watchOS 11.0, tvOS 18.0, macOS 15.0, visionOS 2.0, *),
-                   let transition = destination.navigationTransition as? _AnyNavigationTransition
-                {
-                    NavStackEntryView(destination)
-                        .navigationTransition(transition)
-                } else {
-                    NavStackEntryView(destination)
-                }
+                // FIXME: navigationTransition
+//                if #available(iOS 18.0, watchOS 11.0, tvOS 18.0, macOS 15.0, visionOS 2.0, *),
+//                   let transition = destination.navigationTransition as? _AnyNavigationTransition
+//                {
+//                    NavStackEntryView(destination)
+//                        .navigationTransition(transition)
+//                } else {
+//                    NavStackEntryView(destination)
+//                }
+                NavStackEntryView(destination)
             }
         }
     }
