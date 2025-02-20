@@ -323,10 +323,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 self.navigationPath = [self.navigationPath.first!]
             }
             
-            if let liveReloadListenerLoop {
-                liveReloadListenerLoop.cancel()
-            }
-            
             if self.liveReloadChannel?.channel().status() == .joined {
                 try await self.liveReloadChannel?.shutdownParentSocket()
             }
