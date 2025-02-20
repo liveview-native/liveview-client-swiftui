@@ -312,9 +312,18 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 } else {
                     self?.elementChanged(patch.node).send()
                 }
-            case .nodeElement:
+            case let .nodeElement(element):
                 // when a single element changes, send an update only to that element.
-                self?.elementChanged(patch.node).send()
+                switch patch.changeType {
+                case .add, .remove, .replace:
+                    if let parent = patch.parent {
+                        self?.elementChanged(parent).send()
+                    } else {
+                        self?.elementChanged(patch.node).send()
+                    }
+                case .change:
+                    self?.elementChanged(patch.node).send()
+                }
             }
         }
         self.document?.setEventHandler(handler)
