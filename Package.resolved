@@ -1,13 +1,13 @@
 {
-  "originHash" : "449e8d33f462d512a7e51a7c6f0147c81461e1ae5c5cc26415c5e97bf4dfc9a1",
+  "originHash" : "4dd8c7cbc917ecfea85da314dc244366302002117a41d066ce90dade52deba33",
   "pins" : [
     {
       "identity" : "liveview-native-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/liveview-native/liveview-native-core",
       "state" : {
-        "revision" : "369503f39d7f257ac3361a1b7104ab14015c721c",
-        "version" : "0.4.0"
+        "revision" : "7b490ee3ab76c7e83220e7255ad5b0d9d901a767",
+        "version" : "0.4.1-rc-1"
       }
     },
     {

@@ -40,14 +40,22 @@ extension ChangeTracked where Value == AnyEquatableEncodable {
 }
 
 extension ChangeTracked where Value: AttributeDecodable {
-    func erasedToAnyEquatableEncodable() -> ChangeTracked<AnyEquatableEncodable> {
-        // FIXME: this causes a runtime warning about access StateObject without being installed
-        // technically this is fine, but we should find a way to prevent the warning.
-        let localValue = self._localValue.wrappedValue as! ElementLocalValue
-        let erasedLocalValue = ErasedLocalValue(wrappedValue: localValue.value, attribute: localValue.attribute, sendChangeEvent: localValue.sendChangeEvent, decoder: { attribute, element in
-            .init(value: try Value(from: attribute, on: element))
-        })
-        return ChangeTracked<AnyEquatableEncodable>(localValue: erasedLocalValue)
+    @MainActor
+    struct Resolvable: @preconcurrency Decodable {
+        let attribute: AttributeName
+        
+        init(from decoder: any Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let attribute = try container.decode(AttributeName.self)
+            self.attribute = attribute
+        }
+        
+        func erasedToAnyEquatableEncodable() -> ChangeTracked<AnyEquatableEncodable> {
+            let erasedLocalValue = ErasedLocalValue(attribute: attribute, decoder: { attribute, element in
+                .init(value: try Value(from: attribute, on: element))
+            })
+            return ChangeTracked<AnyEquatableEncodable>(localValue: erasedLocalValue)
+        }
     }
 }
 
@@ -56,21 +64,17 @@ final class ErasedLocalValue: ChangeTracked<AnyEquatableEncodable>.LocalValue {
     var didSendCancellable: AnyCancellable?
     
     let attribute: AttributeName
-    let sendChangeEvent: Bool
     let decoder: (Attribute?, ElementNode) throws -> AnyEquatableEncodable
     
     private var previousValue: AnyEquatableEncodable?
     
-    init<Value: Encodable & Equatable>(
-        wrappedValue: Value? = nil,
+    init(
         attribute: AttributeName,
-        sendChangeEvent: Bool,
         decoder: @escaping (Attribute?, ElementNode) throws -> AnyEquatableEncodable
     ) {
         self.attribute = attribute
-        self.sendChangeEvent = sendChangeEvent
         self.decoder = decoder
-        super.init(value: wrappedValue.flatMap({ .init(value: $0) }))
+        super.init(value: nil)
     }
     
     override func bind(
@@ -90,8 +94,7 @@ final class ErasedLocalValue: ChangeTracked<AnyEquatableEncodable>.LocalValue {
                 }
                 self?.value = localValue
                 Task { [weak self, weak event] in
-                    guard self?.sendChangeEvent == true,
-                          let attributeName = self?.attribute.rawValue
+                    guard let attributeName = self?.attribute.rawValue
                     else { return }
                     try await event?(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([attributeName: localValue]), options: .fragmentsAllowed))
                 }

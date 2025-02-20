@@ -211,7 +211,7 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                     name: .identifier("_\(offset)"),
                     parameterClause: modifier.signature.parameterClause.parameters.isEmpty ? nil : EnumCaseParameterClauseSyntax(parameters: EnumCaseParameterListSyntax {
                         for parameter in modifier.signature.parameterClause.parameters {
-                            if parameter.type.as(IdentifierTypeSyntax.self)?.name.text == "ChangeTracked" {
+                            if parameter.type.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text == "ChangeTracked" {
                                 // this is a dynamic property, so we need to have the type explicitly provided for SwiftUI to install
                                 // but the generic argument must be erased. we use `AnyEquatableEncodable` to meet the required conformances.
                                 EnumCaseParameterSyntax(
@@ -259,8 +259,8 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                                 rightParen: .rightParenToken()
                             ) {
                                 for parameter in modifier.signature.parameterClause.parameters {
-                                    if parameter.type.as(IdentifierTypeSyntax.self)?.name.text == "ChangeTracked" {
-                                        // ChangeTracked should erase its generic value before storing with `.erasedToAnyEquatableEncodable()`
+                                    if parameter.type.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text == "ChangeTracked" {
+                                        // ChangeTracked<_>.Resolved should erase its generic value before storing with `.erasedToAnyEquatableEncodable()`
                                         LabeledExprSyntax(
                                             label: parameter.secondName?.text ?? parameter.firstName.text,
                                             expression: FunctionCallExprSyntax(

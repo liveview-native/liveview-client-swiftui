@@ -147,7 +147,7 @@ public extension FunctionParameterSyntax {
                     ))
                 }
             )
-        } else if let changeTrackedType = self.type.as(IdentifierTypeSyntax.self) ?? self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self),
+        } else if let changeTrackedType = self.type.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self) ?? self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self),
                   changeTrackedType.name.text == "ChangeTracked"
         { // ChangeTracked should use `.castProjectedValue(type: T.self)`
             return ExprSyntax(FunctionCallExprSyntax(

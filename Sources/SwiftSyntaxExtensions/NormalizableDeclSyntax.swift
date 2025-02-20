@@ -208,73 +208,79 @@ public extension NormalizableDeclSyntax {
                                 .makeAttributeReference()
                         }
                     }
-                    // Binding -> ChangeTracked
+                    // Binding -> ChangeTracked<_>.Resolved
                     if let memberType: MemberTypeSyntax = parameter.type.as(MemberTypeSyntax.self) ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self),
                        memberType.name.text == "Binding"
                     {
                         return parameter
-                            .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("ChangeTracked"), genericArgumentClause: GenericArgumentClauseSyntax {
-                                let type = memberType.genericArgumentClause!.arguments.first!.argument
-                                if let identifierType = type.as(IdentifierTypeSyntax.self),
-                                          let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
-                                    switch requirement.requirement {
-                                    case let .sameTypeRequirement(sameType):
-                                        guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
-                                        else { return nil }
-                                        return sameType.rightType
-                                    case let .conformanceRequirement(conformance):
-                                        guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
-                                        else { return nil }
-                                        return conformance.rightType.erasedType()
-                                    default:
-                                        return nil
+                            .with(\.type, TypeSyntax(MemberTypeSyntax(
+                                baseType: IdentifierTypeSyntax(name: .identifier("ChangeTracked"), genericArgumentClause: GenericArgumentClauseSyntax {
+                                    let type = memberType.genericArgumentClause!.arguments.first!.argument
+                                    if let identifierType = type.as(IdentifierTypeSyntax.self),
+                                       let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
+                                           switch requirement.requirement {
+                                           case let .sameTypeRequirement(sameType):
+                                               guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                               else { return nil }
+                                               return sameType.rightType
+                                           case let .conformanceRequirement(conformance):
+                                               guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                               else { return nil }
+                                               return conformance.rightType.erasedType()
+                                           default:
+                                               return nil
+                                           }
+                                       }).first {
+                                        GenericArgumentSyntax(argument: genericType)
+                                    } else if let identifierType = type.as(IdentifierTypeSyntax.self),
+                                              let genericType = genericParameterClause?.parameters.lazy.compactMap({ genericParameter -> TypeSyntax? in
+                                                  guard genericParameter.name.text == identifierType.name.text
+                                                  else { return nil }
+                                                  return genericParameter.inheritedType ?? TypeSyntax(IdentifierTypeSyntax(name: .identifier("String"))) // if there is no type constraint, use a string
+                                              }).first {
+                                        GenericArgumentSyntax(argument: genericType)
+                                    } else {
+                                        GenericArgumentSyntax(argument: type)
                                     }
-                                }).first {
-                                    GenericArgumentSyntax(argument: genericType)
-                                } else if let identifierType = type.as(IdentifierTypeSyntax.self),
-                                          let genericType = genericParameterClause?.parameters.lazy.compactMap({ genericParameter -> TypeSyntax? in
-                                    guard genericParameter.name.text == identifierType.name.text
-                                    else { return nil }
-                                    return genericParameter.inheritedType ?? TypeSyntax(IdentifierTypeSyntax(name: .identifier("String"))) // if there is no type constraint, use a string
-                                }).first {
-                                    GenericArgumentSyntax(argument: genericType)
-                                } else {
-                                    GenericArgumentSyntax(argument: type)
-                                }
-                            })))
+                                }),
+                                name: .identifier("Resolvable")
+                            )))
                     } else if let identifierType: IdentifierTypeSyntax = parameter.type.as(IdentifierTypeSyntax.self) ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self),
                               identifierType.name.text == "Binding"
                     {
                         return parameter
-                            .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("ChangeTracked"), genericArgumentClause: GenericArgumentClauseSyntax {
-                                let type = identifierType.genericArgumentClause!.arguments.first!.argument
-                                if let identifierType = type.as(IdentifierTypeSyntax.self),
-                                          let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
-                                    switch requirement.requirement {
-                                    case let .sameTypeRequirement(sameType):
-                                        guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
-                                        else { return nil }
-                                        return sameType.rightType
-                                    case let .conformanceRequirement(conformance):
-                                        guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
-                                        else { return nil }
-                                        return conformance.rightType.erasedType()
-                                    default:
-                                        return nil
+                            .with(\.type, TypeSyntax(MemberTypeSyntax(
+                                baseType: IdentifierTypeSyntax(name: .identifier("ChangeTracked"), genericArgumentClause: GenericArgumentClauseSyntax {
+                                    let type = identifierType.genericArgumentClause!.arguments.first!.argument
+                                    if let identifierType = type.as(IdentifierTypeSyntax.self),
+                                       let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
+                                           switch requirement.requirement {
+                                           case let .sameTypeRequirement(sameType):
+                                               guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                               else { return nil }
+                                               return sameType.rightType
+                                           case let .conformanceRequirement(conformance):
+                                               guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                               else { return nil }
+                                               return conformance.rightType.erasedType()
+                                           default:
+                                               return nil
+                                           }
+                                       }).first {
+                                        GenericArgumentSyntax(argument: genericType)
+                                    } else if let identifierType = type.as(IdentifierTypeSyntax.self),
+                                              let genericType = genericParameterClause?.parameters.lazy.compactMap({ genericParameter -> TypeSyntax? in
+                                                  guard genericParameter.name.text == identifierType.name.text
+                                                  else { return nil }
+                                                  return genericParameter.inheritedType ?? TypeSyntax(IdentifierTypeSyntax(name: .identifier("String"))) // if there is no type constraint, use a string
+                                              }).first {
+                                        GenericArgumentSyntax(argument: genericType)
+                                    } else {
+                                        GenericArgumentSyntax(argument: type)
                                     }
-                                }).first {
-                                    GenericArgumentSyntax(argument: genericType)
-                                } else if let identifierType = type.as(IdentifierTypeSyntax.self),
-                                          let genericType = genericParameterClause?.parameters.lazy.compactMap({ genericParameter -> TypeSyntax? in
-                                    guard genericParameter.name.text == identifierType.name.text
-                                    else { return nil }
-                                    return genericParameter.inheritedType ?? TypeSyntax(IdentifierTypeSyntax(name: .identifier("String"))) // if there is no type constraint, use a string
-                                }).first {
-                                    GenericArgumentSyntax(argument: genericType)
-                                } else {
-                                    GenericArgumentSyntax(argument: type)
-                                }
-                            })))
+                                }),
+                                name: .identifier("Resolvable")
+                            )))
                     }
                     
                     if parameter.type.isPrimitiveDecodable { // AttributeReference<T>
