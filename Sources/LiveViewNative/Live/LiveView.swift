@@ -230,6 +230,9 @@ public struct LiveView<
         .environment(\.stylesheet, session.stylesheet ?? .init(content: [], classes: [:]))
         .environment(\.reconnectLiveView, .init(baseURL: session.url, action: session.reconnect))
         .environmentObject(session)
+        .task {
+            await session.connect()
+        }
         .onChange(of: scenePhase) { newValue in
             guard case .active = newValue
             else { return }
