@@ -187,7 +187,7 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
             case .tint:
                 return AnyShapeStyle(TintShapeStyle())
             case .placeholder:
-                if #available(iOS 17.0, macOS 10.15, tvOS 17.0, watchOS 10.0, *) {
+                if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
                     return AnyShapeStyle(PlaceholderTextShapeStyle())
                 } else {
                     return AnyShapeStyle(ForegroundStyle())

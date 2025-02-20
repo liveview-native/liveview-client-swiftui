@@ -61,7 +61,11 @@ extension View {
         case ._zoom(let sourceID, let namespace):
             fatalError()
         case ._zoomResolved(let sourceID, let namespace):
+            #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
             self.navigationTransition(ZoomNavigationTransition.zoom(sourceID: sourceID, in: namespace))
+            #else
+            self
+            #endif
         }
     }
 }

@@ -48,5 +48,7 @@ let denylist = [
     
     "defaultAppStorage",
     
-    "itemProvider"
+    "itemProvider",
+    
+    "touchBar"
 ]

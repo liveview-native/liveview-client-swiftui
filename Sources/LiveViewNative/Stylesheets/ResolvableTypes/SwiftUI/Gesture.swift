@@ -267,6 +267,7 @@ extension StylesheetResolvableGesture: @preconcurrency AttributeDecodable {
     }
 }
 
+#if os(iOS)
 @ASTDecodable("UIGestureRecognizerRepresentable")
 enum StylesheetResolvableUIGestureRecognizerRepresentable: @preconcurrency UIGestureRecognizerRepresentable, StylesheetResolvable, @preconcurrency Decodable {
     case drag
@@ -288,6 +289,7 @@ extension StylesheetResolvableUIGestureRecognizerRepresentable: @preconcurrency 
         fatalError()
     }
 }
+#endif
 
 extension EnvironmentValues {
     enum GestureStateKey: @preconcurrency EnvironmentKey {

@@ -13,10 +13,16 @@ import LiveViewNativeCore
 enum StylesheetResolvableTabViewStyle: StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     
-    #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+    @available(macOS, unavailable)
     case page
+
+    #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
     case _page(indexDisplayMode: AttributeReference<PageTabViewStyle.IndexDisplayMode.Resolvable>)
     case _pageResolved(indexDisplayMode: PageTabViewStyle.IndexDisplayMode)
+    #endif
+    
+    #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+    @available(macOS, unavailable)
     static func page(indexDisplayMode: AttributeReference<PageTabViewStyle.IndexDisplayMode.Resolvable>) -> Self {
         ._page(indexDisplayMode: indexDisplayMode)
     }

@@ -62,6 +62,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private var eventListenerLoop: Task<(), any Error>?
 //    private var statusListener: Channel.StatusStream?
     private var statusListenerLoop: Task<(), any Error>?
+    
+    private var patchHandlerCancellable: AnyCancellable?
 
     private(set) internal var liveViewModel = LiveViewModel()
     
@@ -296,7 +298,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
-    var patchHandlerCancellable: AnyCancellable?
     func bindDocumentListener() {
         let handler = SimplePatchHandler()
         patchHandlerCancellable = handler.patchEventSubject.sink { [weak self] patch in

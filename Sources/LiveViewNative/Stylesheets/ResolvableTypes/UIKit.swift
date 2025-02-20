@@ -5,6 +5,7 @@
 //  Created by Carson Katri on 1/30/25.
 //
 
+#if canImport(UIKit)
 import UIKit
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
@@ -396,3 +397,4 @@ extension UIKeyboardType: @preconcurrency AttributeDecodable {
         }
     }
 }
+#endif
