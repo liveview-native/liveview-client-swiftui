@@ -298,6 +298,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     try await self.disconnect()
                     self.navigationPath = [.init(url: self.url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
                     try await self.connect()
+                    return
                 default:
                     continue
                 }
@@ -321,10 +322,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
                 
                 self.navigationPath = [self.navigationPath.first!]
-            }
-            
-            if let liveReloadListenerLoop {
-                liveReloadListenerLoop.cancel()
             }
             
             if self.liveReloadChannel?.channel().status() == .joined {
