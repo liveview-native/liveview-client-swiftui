@@ -298,7 +298,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     try await self.disconnect()
                     self.navigationPath = [.init(url: self.url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
                     try await self.connect()
-                    return
                 default:
                     continue
                 }
