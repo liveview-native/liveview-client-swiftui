@@ -40,7 +40,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     public private(set) var url: URL
     
     private var lastReloadTime = Date.distantPast
-    let debounceTime = 0.300
+    let debounceTime : TimeInterval =  0.5
     
     /// The current navigation path this live view is rendering.
     @Published public internal(set) var navigationPath = [LiveNavigationEntry<R>]()
