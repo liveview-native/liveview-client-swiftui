@@ -39,6 +39,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// The current URL this live view is connected to.
     public private(set) var url: URL
     
+    private var lastReloadTime = Date.distantPast
+    let debounceTime = 0.300
+    
     /// The current navigation path this live view is rendering.
     @Published public internal(set) var navigationPath = [LiveNavigationEntry<R>]()
     
@@ -52,7 +55,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     var socket: LiveViewNativeCore.Socket?
 
     private var liveReloadChannel: LiveViewNativeCore.LiveChannel?
-    private var liveReloadListener: Channel.EventStream?
     private var liveReloadListenerLoop: Task<(), any Error>?
     
     private var cancellables = Set<AnyCancellable>()
@@ -288,18 +290,25 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     func bindLiveReloadListener() {
-        let eventListener = self.liveReloadChannel!.channel().eventStream()
-        self.liveReloadListener = eventListener
+        let eventListener = self.liveReloadChannel!.channel().events()
         self.liveReloadListenerLoop = Task { @MainActor [weak self] in
-            for try await event in eventListener {
-                switch event.event {
-                case .user(user: "assets_change"):
-                    guard let self else { return }
-                    try await self.disconnect()
-                    self.navigationPath = [.init(url: self.url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
-                    try await self.connect()
-                default:
+            while !Task.isCancelled {
+                let event =  try await eventListener.event()
+                guard let self else { return }
+                let currentTime = Date()
+                
+                guard currentTime.timeIntervalSince(lastReloadTime) >= debounceTime else {
                     continue
+                }
+                
+                if case .user(user: "assets_change") = event.event {
+                    Task { @MainActor in
+                        await self.disconnect()
+                        self.navigationPath = [.init(url: self.url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
+                        await self.connect()
+                        self.lastReloadTime = Date()
+                    }
+                    return
                 }
             }
             
@@ -327,12 +336,15 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 try await self.liveReloadChannel?.shutdownParentSocket()
             }
             
+            if let liveReloadListenerLoop {
+                liveReloadListenerLoop.cancel()
+            }
+            
             self.liveReloadChannel = nil
             
             try await self.socket?.shutdown()
             self.socket = nil
             self.liveSocket = nil
-            self.liveReloadListener = nil
             self.state = .disconnected
         } catch {
             self.state = .connectionFailed(error)
