@@ -160,7 +160,7 @@ public struct FormState<Value: FormValue> {
                     newValue,
                     forName: elementName,
                     changeEvent: sendChangeEvents
-                        ? (element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? _changeEvent : nil)
+                        ? (element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? changeEvent : nil)
                         : nil
                 )
             }
@@ -231,7 +231,7 @@ public struct FormState<Value: FormValue> {
             try await formModel.sendChangeEvent(
                 value,
                 for: elementName,
-                event: element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? _changeEvent : nil
+                event: element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? changeEvent : nil
             )
         }
     }

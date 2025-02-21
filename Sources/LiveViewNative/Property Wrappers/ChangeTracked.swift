@@ -290,7 +290,7 @@ extension ChangeTracked where Value: FormValue {
                         self?.objectWillChange.send()
                     }
                     self?.value = localValue
-                    if changeTracked._event.debounceAttribute != .blur { // the input element should call `pushChangeEvent` when it loses focus.
+                    if changeTracked.event.debounce != .blur { // the input element should call `pushChangeEvent` when it loses focus.
                         Task { [weak self] in
                             guard let self,
                                   self.sendChangeEvent

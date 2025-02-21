@@ -99,7 +99,7 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
     @_documentation(visibility: public)
     private let params: Any?
     
-    var debounceAttribute: Debounce? {
+    private var debounceAttribute: Debounce? {
         try? element.attributeValue(Debounce.self, for: "phx-debounce")
     }
     private var throttleAttribute: Double? {
@@ -148,7 +148,7 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
         
         private var handlerTask: Task<(), Error>?
         
-        private var debounce: Double?
+        var debounce: Debounce?
         var throttle: Double?
         
         public var event: String? {
@@ -165,14 +165,14 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
             self.handlerTask?.cancel()
         }
         
-        func update(coordinator: CoordinatorEnvironment?, debounce: Double?, throttle: Double?) {
+        func update(coordinator: CoordinatorEnvironment?, debounce: Debounce?, throttle: Double?) {
             guard handlerTask == nil || debounce != self.debounce || throttle != self.throttle
             else { return }
             handlerTask?.cancel()
             self.debounce = debounce
             self.throttle = throttle
             let pushEvent = coordinator?.pushEvent
-            if let debounce = debounce {
+            if let debounce = debounce?.milliseconds {
                 handlerTask = Task { [weak channel, weak didSendSubject, pushEvent] in
                     guard let channel else { return }
                     for await event in channel.debounce(for: .milliseconds(debounce)) {
@@ -405,7 +405,8 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable,
                 }
             )
         }
-        handler.update(coordinator: coordinatorEnvironment, debounce: debounce ?? debounceAttribute?.milliseconds, throttle: throttle ?? throttleAttribute)
+        
+        handler.update(coordinator: coordinatorEnvironment, debounce: debounce.flatMap({ .milliseconds($0) }) ?? debounceAttribute, throttle: throttle ?? throttleAttribute)
     }
 }
 
