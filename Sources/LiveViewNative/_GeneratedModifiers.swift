@@ -16971,6 +16971,7 @@ case let ._FocusScopeModifier(modifier):
             
             let context: ParseableModifierContext
             
+            @MainActor
             func parse(_ input: inout Substring.UTF8View) throws -> Output {
                 let parsers = [
                     _accentColorModifier<R>.name: _accentColorModifier<R>.parser(in: context).map({ Output.chunk0(.accentColor($0)) }).eraseToAnyParser(),

@@ -355,7 +355,8 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: @
         public var document: Document? {
             context.coordinator.document
         }
-        
+      
+        @MainActor
         func value<OtherBuilder: ContentBuilder>(for _: OtherBuilder.Type = OtherBuilder.self) -> ContentBuilderContext<R, OtherBuilder>.Value {
             return .init(
                 coordinatorEnvironment: coordinatorEnvironment,
@@ -376,6 +377,7 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: @
         stylesheetResolver.resolvedStylesheet = stylesheet.flatMap({ try? Self.resolveStylesheet($0) }) ?? [:]
     }
     
+    @MainActor
     static func resolveStylesheet(
         _ stylesheet: Stylesheet<R>
     ) throws -> [String:[BuilderModifierContainer<Builder>]] {
