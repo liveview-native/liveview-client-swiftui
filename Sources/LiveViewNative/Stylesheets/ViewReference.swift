@@ -182,7 +182,7 @@ struct _TextReferenceObserver: ViewModifier {
 /// <ToolbarItem template="item2" />
 /// ```
 @_documentation(visibility: public)
-struct ToolbarContentReference: @preconcurrency Decodable {
+struct ToolbarContentReference: @preconcurrency Decodable, @preconcurrency AttributeDecodable {
     let value: [String]
     
     init(from decoder: any Decoder) throws {
@@ -193,6 +193,12 @@ struct ToolbarContentReference: @preconcurrency Decodable {
         } else {
             self.value = try container.decode([AtomLiteral].self).map(\.value)
         }
+    }
+    
+    init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.value = [value]
     }
     
     @MainActor
@@ -223,7 +229,7 @@ struct ToolbarContentReference: @preconcurrency Decodable {
 /// <ToolbarItem template="item2" id="item2" />
 /// ```
 @_documentation(visibility: public)
-struct CustomizableToolbarContentReference: @preconcurrency Decodable {
+struct CustomizableToolbarContentReference: @preconcurrency Decodable, @preconcurrency AttributeDecodable {
     let value: [String]
     
     init(from decoder: any Decoder) throws {
@@ -234,6 +240,12 @@ struct CustomizableToolbarContentReference: @preconcurrency Decodable {
         } else {
             self.value = try container.decode([AtomLiteral].self).map(\.value)
         }
+    }
+    
+    init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.value = [value]
     }
     
     @MainActor

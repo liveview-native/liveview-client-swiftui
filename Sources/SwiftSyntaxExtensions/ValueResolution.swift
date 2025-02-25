@@ -29,6 +29,27 @@ public extension FunctionParameterSyntax {
         })
     }
     
+    /// Checks if this parameter is augmented with the `@ToolbarContentBuilder` result builder.
+    var isToolbarContentBuilder: Bool {
+        return attributes.contains(where: {
+            switch $0 {
+            case let .attribute(attribute):
+                if let memberType = attribute.attributeName.as(MemberTypeSyntax.self) {
+                    // @SwiftUI.ToolbarContentBuilder
+                    return memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
+                        && memberType.name.text == "ToolbarContentBuilder"
+                } else if let type = attribute.attributeName.as(IdentifierTypeSyntax.self) {
+                    // @ToolbarContentBuilder
+                    return type.name.text == "ToolbarContentBuilder"
+                } else {
+                    return false
+                }
+            default:
+                return false
+            }
+        })
+    }
+    
     /// Wraps this parameter's type with `AttributeReference<_>`.
     func makeAttributeReference() -> Self {
         return with(\.type, TypeSyntax(
@@ -115,7 +136,8 @@ public extension FunctionParameterSyntax {
             {
                 resolvedAttribute = FunctionCallExprSyntax.resolveAttributeReference(resolvedAttribute)
             }
-            if attributeReferenceType.genericArgumentClause!.arguments.first!.argument.as(IdentifierTypeSyntax.self)?.name.text == "ViewReference" {
+            if let typeName = attributeReferenceType.genericArgumentClause!.arguments.first!.argument.as(IdentifierTypeSyntax.self)?.name.text,
+               typeName == "ViewReference" || typeName == "ToolbarContentReference" || typeName == "CustomizableToolbarContentReference" {
                 // `ViewReference` should be converted into a closure that resolves the `ViewReference`.
                 return ExprSyntax(
                     ClosureExprSyntax {

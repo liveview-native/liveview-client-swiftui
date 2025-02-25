@@ -188,6 +188,14 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
             .filter(\.isPublic)
             .filter({ !denylist.contains($0.name.text) })
         {
+            // special case for `toolbar` to exclude `ViewReference` clauses.
+            if modifier.name.text == "toolbar" {
+                guard !modifier.signature.parameterClause.parameters.contains(where: {
+                    return $0.type.as(IdentifierTypeSyntax.self)?.genericArgumentClause?.arguments.first?.argument.as(IdentifierTypeSyntax.self)?.name.text == "ViewReference"
+                })
+                else { continue }
+            }
+            
             // the 2nd member is always the enum decl
             // 1st member is the body(content:) block
             let offset = modifiers[modifier.name.text]?.memberBlock.members

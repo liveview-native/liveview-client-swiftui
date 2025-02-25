@@ -38,7 +38,7 @@ public extension NormalizableDeclSyntax {
                 ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self)
                 ?? (parameter.type.as(AttributedTypeSyntax.self)?.baseType ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType)?.as(TupleTypeSyntax.self)?.elements.first?.type.as(FunctionTypeSyntax.self)
             {
-                guard functionType.returnClause.type.isVoid || parameter.isViewBuilder
+                guard functionType.returnClause.type.isVoid || parameter.isViewBuilder || parameter.isToolbarContentBuilder
                 else { return false }
             }
                
@@ -133,6 +133,31 @@ public extension NormalizableDeclSyntax {
                             .with(\.attributes, AttributeListSyntax())
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("ViewReference"))))
                             .makeAttributeReference()
+                    }
+                    if parameter.isToolbarContentBuilder {
+                        if let returnType = parameter.type.as(FunctionTypeSyntax.self)?.returnClause.type.as(IdentifierTypeSyntax.self),
+                           let genericType  = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
+                               switch requirement.requirement {
+                               case let .conformanceRequirement(conformance):
+                                   guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == returnType.name.text
+                                   else { return nil }
+                                   return conformance.rightType
+                               default:
+                                   return nil
+                               }
+                           }).first,
+                           genericType.as(MemberTypeSyntax.self)?.name.text == "CustomizableToolbarContent"
+                        {
+                            return parameter
+                                .with(\.attributes, AttributeListSyntax())
+                                .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("CustomizableToolbarContentReference"))))
+                                .makeAttributeReference()
+                        } else {
+                            return parameter
+                                .with(\.attributes, AttributeListSyntax())
+                                .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("ToolbarContentReference"))))
+                                .makeAttributeReference()
+                        }
                     }
                     if let functionType = parameter.type.as(FunctionTypeSyntax.self) {
                         // closures that return values other than `Void` are not supported.
