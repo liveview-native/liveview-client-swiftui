@@ -162,13 +162,6 @@ let package = Package(
             name: "LiveViewNativeStylesheetTests",
             dependencies: ["LiveViewNativeStylesheet", "LiveViewNative"]
         ),
-        .testTarget(
-            name: "LiveViewNativeStylesheetMacrosTests",
-            dependencies: [
-                "LiveViewNativeStylesheetMacros",
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-            ]
-        ),
         
         // Helpers
         .target(

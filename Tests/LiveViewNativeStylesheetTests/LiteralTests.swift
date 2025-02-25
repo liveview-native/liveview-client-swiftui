@@ -11,32 +11,13 @@ import SwiftUI
 
 final class LiteralTests: XCTestCase {
     func testAtomLiteral() throws {
-        XCTAssertEqual(try AtomLiteral().parse(":value"), "value")
-        XCTAssertEqual(try AtomLiteral().parse(#":"my-value""#), "my-value")
-    }
-    
-    func testListLiteral() throws {
-        XCTAssertEqual(try ListLiteral { StringLiteral() }.parse(#"["a", "b"]"#), ["a", "b"])
-        XCTAssertEqual(try ListLiteral { AtomLiteral() }.parse("[:a, :b]"), ["a", "b"])
         XCTAssertEqual(
-            try ListLiteral {
-                ListLiteral {
-                    StringLiteral()
-                }
-            }.parse(#"[["a", "b"], ["c"]]"#),
-            [["a", "b"], ["c"]]
+            try JSONDecoder().decode(AtomLiteral.self, from: Data(#"[":", {}, "value"]"#.utf8)).value,
+            AtomLiteral("value").value
         )
-    }
-    
-    func testNilLiteral() throws {
-        XCTAssertNoThrow(try NilLiteral().parse("nil"))
-        XCTAssertThrowsError(try NilLiteral().parse("null"))
-    }
-    
-    func testStringLiteral() throws {
-        XCTAssertEqual(try StringLiteral().parse(#""Hello, world!""#), "Hello, world!")
-        XCTAssertEqual(try StringLiteral().parse(#""\"Hello, world!\"""#), "\"Hello, world!\"")
-        XCTAssertEqual(try StringLiteral().parse(#""\\n""#), "\\n")
-        XCTAssertEqual(try StringLiteral().parse(#""\/\b\f\n\r\t""#), "/\u{8}\u{c}\n\r\t")
+        XCTAssertEqual(
+            try JSONDecoder().decode(AtomLiteral.self, from: Data(#"[":", {}, "my-value"]"#.utf8)).value,
+            AtomLiteral("my-value").value
+        )
     }
 }
