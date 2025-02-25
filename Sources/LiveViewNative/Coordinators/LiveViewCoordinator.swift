@@ -315,12 +315,17 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             case let .nodeElement(element):
                 // when a single element changes, send an update only to that element.
                 switch patch.changeType {
-                case .add, .remove, .replace:
+                case .add, .remove:
                     if let parent = patch.parent {
                         self?.elementChanged(parent).send()
                     } else {
                         self?.elementChanged(patch.node).send()
                     }
+                case .replace:
+                    if let parent = patch.parent {
+                        self?.elementChanged(parent).send()
+                    }
+                    self?.elementChanged(patch.node).send()
                 case .change:
                     self?.elementChanged(patch.node).send()
                 }
