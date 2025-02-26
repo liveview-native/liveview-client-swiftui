@@ -5,6 +5,7 @@
 //  Created by Carson Katri on 2/4/25.
 //
 
+#if os(iOS) || os(macOS) || os(visionOS)
 import SwiftUI
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
@@ -40,3 +41,4 @@ extension StylesheetResolvableDisclosureGroupStyle {
         }
     }
 }
+#endif

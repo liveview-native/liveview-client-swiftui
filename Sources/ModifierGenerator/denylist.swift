@@ -50,5 +50,7 @@ let denylist = [
     
     "itemProvider",
     
-    "touchBar"
+    "touchBar",
+    
+    "pageCommand"
 ]

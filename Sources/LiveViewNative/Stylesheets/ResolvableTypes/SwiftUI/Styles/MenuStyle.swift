@@ -5,6 +5,7 @@
 //  Created by Carson Katri on 1/30/25.
 //
 
+#if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
 import SwiftUI
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
@@ -24,9 +25,17 @@ extension StylesheetResolvableMenuStyle {
     func makeBody(configuration: Configuration) -> some View {
         switch self {
         case .automatic:
-            SwiftUI.Menu(configuration).menuStyle(.automatic)
+            if #available(iOS 14.0, macOS 11.0, tvOS 17.0, *) {
+                SwiftUI.Menu(configuration).menuStyle(.automatic)
+            } else {
+                EmptyView()
+            }
         case .button:
-            SwiftUI.Menu(configuration).menuStyle(.button)
+            if #available(iOS 14.0, macOS 11.0, tvOS 17.0, *) {
+                SwiftUI.Menu(configuration).menuStyle(.button)
+            } else {
+                EmptyView()
+            }
         }
     }
 }
@@ -43,3 +52,4 @@ extension StylesheetResolvableMenuStyle: @preconcurrency AttributeDecodable {
         }
     }
 }
+#endif

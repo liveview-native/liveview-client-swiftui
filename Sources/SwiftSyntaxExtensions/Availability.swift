@@ -166,7 +166,7 @@ public extension AttributeListSyntax {
         @CodeBlockItemListBuilder itemsBuilder: () -> CodeBlockItemListSyntax,
         @CodeBlockItemListBuilder elseBody: () -> CodeBlockItemListSyntax
     ) -> CodeBlockItemListSyntax {
-        if let availabilityCheck = self.lazy.filter(\.isVersionAvailability).compactMap({ (attribute) -> AvailabilityArgumentListSyntax? in
+        if let availabilityCheck = self.lazy.filter(\.isVersionAvailability).reversed().compactMap({ (attribute) -> AvailabilityArgumentListSyntax? in
             guard case let .attribute(attribute) = attribute else { return nil }
             return attribute.arguments?.as(AvailabilityArgumentListSyntax.self)
         }).first {

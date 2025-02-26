@@ -5,14 +5,23 @@
 //  Created by Carson Katri on 1/30/25.
 //
 
+#if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
 import SwiftUI
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @ASTDecodable("DatePickerStyle")
+@available(iOS 13.0, macOS 10.15, watchOS 10.0, *)
 enum StylesheetResolvableDatePickerStyle: @preconcurrency DatePickerStyle, StylesheetResolvable, @preconcurrency Decodable {
     case automatic
+    #if os(iOS) || os(macOS) || os(visionOS)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
     case compact
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    case graphical
+    #endif
     #if os(macOS)
     @available(iOS, unavailable)
     @available(tvOS, unavailable)
@@ -20,7 +29,6 @@ enum StylesheetResolvableDatePickerStyle: @preconcurrency DatePickerStyle, Style
     @available(visionOS, unavailable)
     case field
     #endif
-    case graphical
     #if os(macOS)
     @available(iOS, unavailable)
     @available(tvOS, unavailable)
@@ -35,6 +43,7 @@ enum StylesheetResolvableDatePickerStyle: @preconcurrency DatePickerStyle, Style
     #endif
 }
 
+@available(iOS 13.0, macOS 10.15, watchOS 10.0, *)
 extension StylesheetResolvableDatePickerStyle {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Self {
         return self
@@ -45,14 +54,16 @@ extension StylesheetResolvableDatePickerStyle {
         switch self {
         case .automatic:
             DefaultDatePickerStyle().makeBody(configuration: configuration)
+        #if os(iOS) || os(macOS) || os(visionOS)
         case .compact:
             CompactDatePickerStyle().makeBody(configuration: configuration)
+        case .graphical:
+            GraphicalDatePickerStyle().makeBody(configuration: configuration)
+        #endif
         #if os(macOS)
         case .field:
             FieldDatePickerStyle().makeBody(configuration: configuration)
         #endif
-        case .graphical:
-            GraphicalDatePickerStyle().makeBody(configuration: configuration)
         #if os(macOS)
         case .stepperField:
             StepperFieldDatePickerStyle().makeBody(configuration: configuration)
@@ -65,19 +76,22 @@ extension StylesheetResolvableDatePickerStyle {
     }
 }
 
+@available(iOS 13.0, macOS 10.15, watchOS 10.0, *)
 extension StylesheetResolvableDatePickerStyle: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":
             self = .automatic
+        #if os(iOS) || os(macOS) || os(visionOS)
         case "compact":
             self = .compact
+        case "graphical":
+            self = .graphical
+        #endif
         #if os(macOS)
         case "field":
             self = .field
         #endif
-        case "graphical":
-            self = .graphical
         #if os(macOS)
         case "stepperField":
             self = .stepperField
@@ -91,3 +105,4 @@ extension StylesheetResolvableDatePickerStyle: @preconcurrency AttributeDecodabl
         }
     }
 }
+#endif

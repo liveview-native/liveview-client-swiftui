@@ -5,6 +5,7 @@
 //  Created by Carson Katri on 1/30/25.
 //
 
+#if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
 import QuartzCore
 import LiveViewNativeStylesheet
 
@@ -24,3 +25,4 @@ extension CATransform3D.Resolvable {
         }
     }
 }
+#endif

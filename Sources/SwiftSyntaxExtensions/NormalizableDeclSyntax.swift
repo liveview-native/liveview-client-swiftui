@@ -123,6 +123,65 @@ public extension NormalizableDeclSyntax {
                                 .makeAttributeReference()
                         }
                     }
+                    if let memberType = parameter.type.as(MemberTypeSyntax.self),
+                       let identifierType = memberType.baseType.as(IdentifierTypeSyntax.self) {
+                        if let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
+                            switch requirement.requirement {
+                            case let .sameTypeRequirement(sameType):
+                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                else { return nil }
+                                return sameType.rightType
+                            case let .conformanceRequirement(conformance):
+                                guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                else { return nil }
+                                return conformance.rightType.erasedType()
+                            default:
+                                return nil
+                            }
+                        }).first {
+                            return parameter
+                                .with(\.type, TypeSyntax(memberType.with(\.baseType, genericType)))
+                                .makeAttributeReference()
+                        } else if let genericType = genericParameterClause?.parameters.lazy.compactMap({ genericParameter -> TypeSyntax? in
+                            guard genericParameter.name.text == identifierType.name.text
+                            else { return nil }
+                            return genericParameter.inheritedType ?? TypeSyntax(IdentifierTypeSyntax(name: .identifier("String"))) // if there is no type constraint, use a string
+                        }).first {
+                            return parameter
+                                .with(\.type, TypeSyntax(memberType.with(\.baseType, genericType.erasedType())))
+                                .makeAttributeReference()
+                        }
+                    }
+                    if let optionalType = parameter.type.as(OptionalTypeSyntax.self),
+                       let memberType = optionalType.wrappedType.as(MemberTypeSyntax.self),
+                       let identifierType = memberType.baseType.as(IdentifierTypeSyntax.self) {
+                        if let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
+                            switch requirement.requirement {
+                            case let .sameTypeRequirement(sameType):
+                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                else { return nil }
+                                return sameType.rightType
+                            case let .conformanceRequirement(conformance):
+                                guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                else { return nil }
+                                return conformance.rightType.erasedType()
+                            default:
+                                return nil
+                            }
+                        }).first {
+                            return parameter
+                                .with(\.type, TypeSyntax(optionalType.with(\.wrappedType, TypeSyntax(memberType.with(\.baseType, genericType)))))
+                                .makeAttributeReference()
+                        } else if let genericType = genericParameterClause?.parameters.lazy.compactMap({ genericParameter -> TypeSyntax? in
+                            guard genericParameter.name.text == identifierType.name.text
+                            else { return nil }
+                            return genericParameter.inheritedType ?? TypeSyntax(IdentifierTypeSyntax(name: .identifier("String"))) // if there is no type constraint, use a string
+                        }).first {
+                            return parameter
+                                .with(\.type, TypeSyntax(optionalType.with(\.wrappedType, TypeSyntax(memberType.with(\.baseType, genericType.erasedType())))))
+                                .makeAttributeReference()
+                        }
+                    }
                     if let someType = parameter.type.as(SomeOrAnyTypeSyntax.self)?.constraint {
                         return parameter
                             .with(\.type, someType.erasedType())
@@ -413,6 +472,7 @@ public extension TypeSyntax {
     ///
     /// The following protocols will be converted to a single concrete type:
     /// - `BinaryFloatingPoint` -> `Double`
+    /// - `BinaryInteger` -> `Int`
     /// - `Equatable` -> `String`
     /// - `Hashable` -> `String`
     /// - `Identifiable` -> `String`
@@ -425,6 +485,8 @@ public extension TypeSyntax {
         if let identifierType = self.as(IdentifierTypeSyntax.self) {
             if identifierType.name.text == "BinaryFloatingPoint" {
                 return TypeSyntax(IdentifierTypeSyntax(name: .identifier("Double")))
+            } else if identifierType.name.text == "BinaryInteger" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("Int")))
             } else if identifierType.name.text == "Equatable" {
                 return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
             } else if identifierType.name.text == "Hashable" {
@@ -441,6 +503,8 @@ public extension TypeSyntax {
         } else if let memberType = self.as(MemberTypeSyntax.self) {
             if memberType.name.text == "BinaryFloatingPoint" {
                 return TypeSyntax(IdentifierTypeSyntax(name: .identifier("Double")))
+            } else if memberType.name.text == "BinaryInteger" {
+                return TypeSyntax(IdentifierTypeSyntax(name: .identifier("Int")))
             } else if memberType.name.text == "Equatable" {
                 return TypeSyntax(IdentifierTypeSyntax(name: .identifier("String")))
             } else if memberType.name.text == "Hashable" {

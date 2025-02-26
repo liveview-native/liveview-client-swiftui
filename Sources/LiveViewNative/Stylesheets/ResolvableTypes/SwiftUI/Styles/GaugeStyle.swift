@@ -5,6 +5,7 @@
 //  Created by Carson Katri on 1/30/25.
 //
 
+#if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
 import SwiftUI
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
@@ -73,3 +74,4 @@ extension StylesheetResolvableGaugeStyle: @preconcurrency AttributeDecodable {
         }
     }
 }
+#endif

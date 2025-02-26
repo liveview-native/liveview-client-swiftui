@@ -72,7 +72,11 @@ extension StylesheetResolvablePrimitiveButtonStyle {
         case .borderedProminent:
             SwiftUI.Button(configuration).buttonStyle(.borderedProminent)
         case .borderless:
-            SwiftUI.Button(configuration).buttonStyle(.borderless)
+            if #available(iOS 13.0, macOS 10.15, tvOS 17.0, watchOS 8.0, *) {
+                SwiftUI.Button(configuration).buttonStyle(.borderless)
+            } else {
+                SwiftUI.Button(configuration).buttonStyle(.automatic)
+            }
         #if os(tvOS)
         case .card:
             SwiftUI.Button(configuration).buttonStyle(.card)

@@ -130,22 +130,32 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
         case thinMaterial
         case ultraThinMaterial
         case ultraThickMaterial
+        #if os(iOS) || os(macOS) || os(visionOS)
+        @available(tvOS, unavailable)
+        @available(watchOS, unavailable)
         case bar
+        #endif
         
         func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Material where R : RootRegistry {
-            switch self {
-            case .regularMaterial:
-                return .regular
-            case .thickMaterial:
-                return .thick
-            case .thinMaterial:
-                return .thin
-            case .ultraThinMaterial:
-                return .ultraThin
-            case .ultraThickMaterial:
-                return .ultraThick
-            case .bar:
-                return .bar
+            if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 10.0, *) {
+                switch self {
+                case .regularMaterial:
+                    return .regular
+                case .thickMaterial:
+                    return .thick
+                case .thinMaterial:
+                    return .thin
+                case .ultraThinMaterial:
+                    return .ultraThin
+                case .ultraThickMaterial:
+                    return .ultraThick
+                #if os(iOS) || os(macOS) || os(visionOS)
+                case .bar:
+                    return .bar
+                #endif
+                }
+            } else {
+                fatalError("`Material` is not supported on this platform/version")
             }
         }
     }
@@ -154,7 +164,9 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
     enum SemanticShapeStyle: @preconcurrency Decodable {
         case foreground
         case background
-        #if os(iOS) || os(macOS)
+        #if os(iOS) || os(macOS) || os(visionOS)
+        @available(tvOS, unavailable)
+        @available(watchOS, unavailable)
         case selection
         #endif
         case separator
@@ -170,7 +182,7 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
                 return AnyShapeStyle(ForegroundStyle())
             case .background:
                 return AnyShapeStyle(BackgroundStyle())
-            #if os(iOS) || os(macOS)
+            #if os(iOS) || os(macOS) || os(visionOS)
             case .selection:
                 if #available(iOS 15.0, macOS 10.15, *) {
                     return AnyShapeStyle(SelectionShapeStyle())
@@ -305,7 +317,11 @@ extension HierarchicalShapeStyle {
             case .quaternary:
                 return .quaternary
             case .quinary:
-                return .quinary
+                if #available(iOS 16, macOS 12, tvOS 17, watchOS 10, *) {
+                    return .quinary
+                } else {
+                    return .quaternary
+                }
             }
         }
     }

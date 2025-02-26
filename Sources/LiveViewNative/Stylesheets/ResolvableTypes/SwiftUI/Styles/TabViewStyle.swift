@@ -15,6 +15,27 @@ enum StylesheetResolvableTabViewStyle: StylesheetResolvable, @preconcurrency Dec
     
     @available(macOS, unavailable)
     case page
+    
+    #if os(watchOS)
+    @available(watchOS 10, *)
+    @available(iOS, unavailable)
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(visionOS, unavailable)
+    case verticalPage
+    
+    case _verticalPage(transitionStyle: Any)
+    case _verticalPageResolved(transitionStyle: Any)
+    
+    @available(watchOS 10, *)
+    @available(iOS, unavailable)
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(visionOS, unavailable)
+    static func verticalPage(transitionStyle: AttributeReference<VerticalPageTabViewStyle.TransitionStyle.Resolvable>) -> Self {
+        ._verticalPage(transitionStyle: transitionStyle)
+    }
+    #endif
 
     #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
     case _page(indexDisplayMode: AttributeReference<PageTabViewStyle.IndexDisplayMode.Resolvable>)
@@ -47,6 +68,7 @@ extension PageTabViewStyle.IndexDisplayMode.Resolvable: @preconcurrency Attribut
 #endif
 
 #if os(watchOS)
+@available(watchOS 10, *)
 extension VerticalPageTabViewStyle.TransitionStyle.Resolvable: @preconcurrency AttributeDecodable {
     init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
@@ -80,7 +102,11 @@ extension StylesheetResolvableTabViewStyle {
         case .verticalPage:
             return self
         case let ._verticalPage(transitionStyle):
-            return ._verticalPageResolved(transitionStyle: transitionStyle.resolve(on: element, in: context).resolve(on: element, in: context))
+            if #available(watchOS 10, *) {
+                return ._verticalPageResolved(transitionStyle: (transitionStyle as! AttributeReference<VerticalPageTabViewStyle.TransitionStyle.Resolvable>).resolve(on: element, in: context).resolve(on: element, in: context))
+            } else {
+                return self
+            }
         case ._verticalPageResolved:
             return self
         #endif
@@ -105,9 +131,17 @@ extension View {
         #endif
         #if os(watchOS)
         case .verticalPage:
-            self.tabViewStyle(VerticalPageTabViewStyle.verticalPage)
+            if #available(watchOS 10, *) {
+                self.tabViewStyle(VerticalPageTabViewStyle.verticalPage)
+            } else {
+                self
+            }
         case let ._verticalPageResolved(transitionStyle):
-            self.tabViewStyle(VerticalPageTabViewStyle.verticalPage(transitionStyle: transitionStyle))
+            if #available(watchOS 10, *) {
+                self.tabViewStyle(VerticalPageTabViewStyle.verticalPage(transitionStyle: transitionStyle as! VerticalPageTabViewStyle.TransitionStyle))
+            } else {
+                self
+            }
         case ._verticalPage:
             fatalError()
         #endif

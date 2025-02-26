@@ -13,7 +13,11 @@ import LiveViewNativeCore
 enum StylesheetResolvableTextFieldStyle: StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case plain
+    #if os(iOS) || os(macOS) || os(visionOS)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
     case roundedBorder
+    #endif
     #if os(macOS)
     @available(iOS, unavailable)
     @available(tvOS, unavailable)
@@ -38,8 +42,10 @@ extension View {
             self.textFieldStyle(.automatic)
         case .plain:
             self.textFieldStyle(.plain)
+        #if os(iOS) || os(macOS) || os(visionOS)
         case .roundedBorder:
             self.textFieldStyle(.roundedBorder)
+        #endif
         #if os(macOS)
         case .squareBorder:
             self.textFieldStyle(.squareBorder)
@@ -55,8 +61,10 @@ extension StylesheetResolvableTextFieldStyle: @preconcurrency AttributeDecodable
             self = .automatic
         case "plain":
             self = .plain
+        #if os(iOS) || os(macOS) || os(visionOS)
         case "roundedBorder":
             self = .roundedBorder
+        #endif
         #if os(macOS)
         case "squareBorder":
             self = .squareBorder

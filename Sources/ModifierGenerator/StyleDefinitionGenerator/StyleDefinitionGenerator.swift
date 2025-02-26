@@ -206,8 +206,8 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                 .filter({ $0.decl.is(EnumCaseDeclSyntax.self) })
                 .count ?? 0
             
-            let modifierAvailability = modifier.attributes.filter(\.isAvailability)
-            let availability = modifierAvailability.isEmpty ? extensionAvailability : modifierAvailability
+            var availability = modifier.attributes.filter(\.isAvailability)
+            availability.insert(contentsOf: extensionAvailability, at: availability.startIndex)
             
             let usesGestureState = modifier.signature.parameterClause.parameters.contains(where: {
                 $0.type.as(IdentifierTypeSyntax.self)?.genericArgumentClause?.arguments.first?.argument.as(IdentifierTypeSyntax.self)?.name.text == "StylesheetResolvableGesture"

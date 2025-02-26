@@ -13,7 +13,6 @@ import LiveViewNativeCore
 enum StylesheetResolvablePickerStyle: StylesheetResolvable, @preconcurrency Decodable {
     case automatic
     case inline
-    case menu
     #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
     @available(macOS, unavailable)
     case navigationLink
@@ -30,7 +29,12 @@ enum StylesheetResolvablePickerStyle: StylesheetResolvable, @preconcurrency Deco
     @available(visionOS, unavailable)
     case radioGroup
     #endif
+    #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
+    @available(watchOS, unavailable)
+    case menu
+    @available(watchOS, unavailable)
     case segmented
+    #endif
     #if os(iOS) || os(visionOS) || os(watchOS)
     @available(macOS, unavailable)
     @available(tvOS, unavailable)
@@ -51,8 +55,12 @@ extension StylesheetResolvablePickerStyle: @preconcurrency AttributeDecodable {
             self = .automatic
         case "inline":
             self = .inline
+        #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
         case "menu":
             self = .menu
+        case "segmented":
+            self = .segmented
+        #endif
         #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case "navigationLink":
             self = .navigationLink
@@ -65,8 +73,6 @@ extension StylesheetResolvablePickerStyle: @preconcurrency AttributeDecodable {
         case "radioGroup":
             self = .radioGroup
         #endif
-        case "segmented":
-            self = .segmented
         #if os(iOS) || os(visionOS) || os(watchOS)
         case "wheel":
             self = .wheel
@@ -86,8 +92,16 @@ extension View {
             self.pickerStyle(DefaultPickerStyle.automatic)
         case .inline:
             self.pickerStyle(InlinePickerStyle.inline)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
         case .menu:
-            self.pickerStyle(MenuPickerStyle.menu)
+            if #available(iOS 14.0, macOS 11.0, tvOS 17.0, *) {
+                self.pickerStyle(MenuPickerStyle.menu)
+            } else {
+                self.pickerStyle(DefaultPickerStyle.automatic)
+            }
+        case .segmented:
+            self.pickerStyle(SegmentedPickerStyle.segmented)
+        #endif
         #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case .navigationLink:
             self.pickerStyle(NavigationLinkPickerStyle.navigationLink)
@@ -104,8 +118,6 @@ extension View {
         case .radioGroup:
             self.pickerStyle(RadioGroupPickerStyle.radioGroup)
         #endif
-        case .segmented:
-            self.pickerStyle(SegmentedPickerStyle.segmented)
         #if os(iOS) || os(visionOS) || os(watchOS)
         case .wheel:
             self.pickerStyle(WheelPickerStyle.wheel)

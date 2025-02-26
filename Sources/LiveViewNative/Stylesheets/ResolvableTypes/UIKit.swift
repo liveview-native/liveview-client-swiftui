@@ -10,6 +10,7 @@ import UIKit
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
+#if os(iOS) || os(tvOS) || os(visionOS)
 extension UITextContentType {
     @ASTDecodable("UITextContentType")
     enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
@@ -114,97 +115,97 @@ extension UITextContentType.Resolvable {
         case .telephoneNumber:
             return .telephoneNumber
         case .cellularEID:
-            if #available(iOS 17.4, *) {
+            if #available(iOS 17.4, tvOS 17.4, *) {
                 return .cellularEID
             } else {
                 fatalError()
             }
         case .cellularIMEI:
-            if #available(iOS 17.4, *) {
+            if #available(iOS 17.4, tvOS 17.4, *) {
                 return .cellularIMEI
             } else {
                 fatalError()
             }
         case .creditCardNumber:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .creditCardNumber
             } else {
                 fatalError()
             }
         case .creditCardExpiration:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .creditCardExpiration
             } else {
                 fatalError()
             }
         case .creditCardExpirationMonth:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .creditCardExpirationMonth
             } else {
                 fatalError()
             }
         case .creditCardExpirationYear:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .creditCardExpirationYear
             } else {
                 fatalError()
             }
         case .creditCardSecurityCode:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .creditCardSecurityCode
             } else {
                 fatalError()
             }
         case .creditCardType:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .creditCardType
             } else {
                 fatalError()
             }
         case .creditCardName:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .creditCardName
             } else {
                 fatalError()
             }
         case .creditCardGivenName:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .creditCardGivenName
             } else {
                 fatalError()
             }
         case .creditCardMiddleName:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .creditCardMiddleName
             } else {
                 fatalError()
             }
         case .creditCardFamilyName:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .creditCardFamilyName
             } else {
                 fatalError()
             }
         case .birthdate:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .birthdate
             } else {
                 fatalError()
             }
         case .birthdateDay:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .birthdateDay
             } else {
                 fatalError()
             }
         case .birthdateMonth:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .birthdateMonth
             } else {
                 fatalError()
             }
         case .birthdateYear:
-            if #available(iOS 17, *) {
+            if #available(iOS 17, tvOS 17, *) {
                 return .birthdateYear
             } else {
                 fatalError()
@@ -315,7 +316,9 @@ extension UITextContentType.Resolvable: @preconcurrency AttributeDecodable {
         }
     }
 }
+#endif
 
+#if os(iOS) || os(tvOS) || os(visionOS)
 extension UIKeyboardType {
     @ASTDecodable("UIKeyboardType")
     enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
@@ -397,4 +400,6 @@ extension UIKeyboardType: @preconcurrency AttributeDecodable {
         }
     }
 }
+#endif
+
 #endif

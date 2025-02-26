@@ -15,27 +15,21 @@ struct ModifierGenerator: ParsableCommand {
     // Note: This file is auto-generated from the `ModifierGeneratorPlugin`.
     import SwiftUI
     import Spatial
+    import Symbols
     import LiveViewNativeStylesheet
     
     """#
     
     func run() throws {
-        // remove the SDK part of the path.
-        // /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk
-        // /Applications/Xcode.app/Contents/Developer/Platforms/
         guard let sdkRoot = ProcessInfo.processInfo.environment["SDKROOT"]
-            .flatMap({
-                URL(filePath: $0)
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-            })
+            .flatMap({ URL(filePath: $0) })
         else { throw ModifierGeneratorError.missingSDKROOT }
         
-        // get the `.swiftinterface` files from the XROS SDK.
-        let swiftUICoreInterface = sdkRoot.appending(path: "XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUICore.framework/Modules/SwiftUICore.swiftmodule/arm64e-apple-xros.swiftinterface")
-        let swiftUIInterface = sdkRoot.appending(path: "XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64e-apple-xros.swiftinterface")
+        // get the `.swiftinterface` files from the matching SDK.
+        let swiftUICoreInterface = try FileManager.default.contentsOfDirectory(at: sdkRoot.appending(path: "System/Library/Frameworks/SwiftUICore.framework/Modules/SwiftUICore.swiftmodule"), includingPropertiesForKeys: nil)
+            .first(where: { $0.pathExtension == "swiftinterface" })!
+        let swiftUIInterface = try FileManager.default.contentsOfDirectory(at: sdkRoot.appending(path: "System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule"), includingPropertiesForKeys: nil)
+            .first(where: { $0.pathExtension == "swiftinterface" })!
         
         // walk the SwiftUICore interface file.
         let swiftUICoreGenerator = StyleDefinitionGenerator(moduleName: "SwiftUICore")

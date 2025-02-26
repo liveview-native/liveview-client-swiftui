@@ -35,15 +35,24 @@ enum StylesheetResolvableListStyle: StylesheetResolvable, @preconcurrency Decoda
     @available(macOS, unavailable)
     @available(watchOS, unavailable)
     case grouped
-    @available(macOS, unavailable)
+    #endif
+    #if os(iOS) || os(macOS) || os(visionOS)
     @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
     case inset
+    #endif
+    #if os(iOS) || os(visionOS)
     @available(macOS, unavailable)
     @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
     case insetGrouped
     #endif
     case plain
+    #if os(iOS) || os(macOS) || os(visionOS)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
     case sidebar
+    #endif
 }
 
 extension StylesheetResolvableListStyle {
@@ -72,6 +81,8 @@ extension View {
         #if os(iOS) || os(tvOS) || os(visionOS)
         case .grouped:
             self.listStyle(.grouped)
+        #endif
+        #if os(iOS) || os(macOS)
         case .inset:
             self.listStyle(.inset)
         case .insetGrouped:
@@ -79,8 +90,10 @@ extension View {
         #endif
         case .plain:
             self.listStyle(.plain)
+        #if os(iOS) || os(macOS) || os(visionOS)
         case .sidebar:
             self.listStyle(.sidebar)
+        #endif
         }
     }
 }
@@ -103,15 +116,21 @@ extension StylesheetResolvableListStyle: @preconcurrency AttributeDecodable {
         #if os(iOS) || os(tvOS) || os(visionOS)
         case "grouped":
             self = .grouped
+        #endif
+        #if os(iOS) || os(macOS) || os(visionOS)
         case "inset":
             self = .inset
+        #endif
+        #if os(iOS) || os(visionOS)
         case "insetGrouped":
             self = .insetGrouped
         #endif
         case "plain":
             self = .plain
+        #if os(iOS) || os(macOS) || os(visionOS)
         case "sidebar":
             self = .sidebar
+        #endif
         default:
             throw AttributeDecodingError.badValue(Self.self)
         }

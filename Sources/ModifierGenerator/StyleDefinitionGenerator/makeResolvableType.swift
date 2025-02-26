@@ -20,11 +20,14 @@ extension StyleDefinitionGenerator {
             let extensionAttributes = extensionDecl.attributes.filter(\.isAvailability)
             return extensionDecl.memberBlock.members.map { (member: MemberBlockItemSyntax) -> MemberBlockItemSyntax in
                 if var initDecl = member.decl.as(InitializerDeclSyntax.self) {
-                    initDecl.attributes.append(contentsOf: extensionAttributes)
+                    initDecl.attributes.insert(contentsOf: extensionAttributes, at: initDecl.attributes.startIndex)
                     return member.with(\.decl, DeclSyntax(initDecl))
                 } else if var functionDecl = member.decl.as(FunctionDeclSyntax.self) {
-                    functionDecl.attributes.append(contentsOf: extensionAttributes)
+                    functionDecl.attributes.insert(contentsOf: extensionAttributes, at: functionDecl.attributes.startIndex)
                     return member.with(\.decl, DeclSyntax(functionDecl))
+                } else if var variableDecl = member.decl.as(VariableDeclSyntax.self) {
+                    variableDecl.attributes.insert(contentsOf: extensionAttributes, at: variableDecl.attributes.startIndex)
+                    return member.with(\.decl, DeclSyntax(variableDecl))
                 } else {
                     return member
                 }

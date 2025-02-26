@@ -12,11 +12,15 @@ import LiveViewNativeCore
 indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency Decodable {
     case modified(Self, StylesheetResolvableGestureModifier)
     case tap(_TapGesture)
+    #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
     case drag(_DragGesture)
     case spatialTap(_SpatialTapGesture)
+    #endif
     case longPress(_LongPressGesture)
+    #if os(iOS) || os(macOS) || os(visionOS)
     case magnify(Any)
     case rotate(Any)
+    #endif
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -31,6 +35,7 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
             return
         }
         
+        #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
         if let gesture = try? container.decode(_DragGesture.self) {
             self = .drag(gesture)
             return
@@ -40,12 +45,14 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
             self = .spatialTap(gesture)
             return
         }
+        #endif
         
         if let gesture = try? container.decode(_LongPressGesture.self) {
             self = .longPress(gesture)
             return
         }
         
+        #if os(iOS) || os(macOS) || os(visionOS)
         if #available(iOS 17.0, macOS 14.0, *) {
             if let gesture = try? container.decode(_MagnifyGesture.self) {
                 self = .magnify(gesture)
@@ -57,6 +64,7 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
                 return
             }
         }
+        #endif
         
         throw BuiltinRegistryModifierError.unknownModifier
     }
@@ -71,6 +79,7 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
                 tap.resolve(on: element, in: context)
                     .map({ $0 as Any })
             )
+        #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
         case let .drag(drag):
             return AnyGesture(
                 drag.resolve(on: element, in: context)
@@ -81,11 +90,13 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
                 spatialTap.resolve(on: element, in: context)
                     .map({ $0 as Any })
             )
+        #endif
         case let .longPress(longPress):
             return AnyGesture(
                 longPress.resolve(on: element, in: context)
                     .map({ $0 as Any })
             )
+        #if os(iOS) || os(macOS) || os(visionOS)
         case let .magnify(magnify):
             if #available(iOS 17.0, macOS 14.0, *) {
                 return AnyGesture(
@@ -104,6 +115,7 @@ indirect enum StylesheetResolvableGesture: StylesheetResolvable, @preconcurrency
             } else {
                 fatalError("RotateGesture is not available")
             }
+        #endif
         }
     }
 }
@@ -149,6 +161,7 @@ indirect enum StylesheetResolvableGestureModifier: @preconcurrency Decodable {
     }
 }
 
+#if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
 @ASTDecodable("DragGesture")
 struct _DragGesture: @preconcurrency Decodable, StylesheetResolvable {
     let minimumDistance: CGFloat.Resolvable
@@ -169,6 +182,7 @@ struct _DragGesture: @preconcurrency Decodable, StylesheetResolvable {
         )
     }
 }
+#endif
 
 @ASTDecodable("TapGesture")
 struct _TapGesture: @preconcurrency Decodable, StylesheetResolvable {
@@ -183,6 +197,7 @@ struct _TapGesture: @preconcurrency Decodable, StylesheetResolvable {
     }
 }
 
+#if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
 @ASTDecodable("SpatialTapGesture")
 struct _SpatialTapGesture: @preconcurrency Decodable, StylesheetResolvable {
     let count: AttributeReference<Int>
@@ -203,6 +218,7 @@ struct _SpatialTapGesture: @preconcurrency Decodable, StylesheetResolvable {
         )
     }
 }
+#endif
 
 @ASTDecodable("LongPressGesture")
 struct _LongPressGesture: @preconcurrency Decodable, StylesheetResolvable {
@@ -218,13 +234,18 @@ struct _LongPressGesture: @preconcurrency Decodable, StylesheetResolvable {
     }
     
     func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> LongPressGesture where R : RootRegistry {
+        #if os(tvOS)
+        LongPressGesture(minimumDuration: minimumDuration.resolve(on: element, in: context))
+        #else
         LongPressGesture(
             minimumDuration: minimumDuration.resolve(on: element, in: context),
             maximumDistance: maximumDistance.resolve(on: element, in: context)
         )
+        #endif
     }
 }
 
+#if os(iOS) || os(macOS) || os(visionOS)
 @ASTDecodable("MagnifyGesture")
 @available(iOS 17.0, macOS 14.0, *)
 struct _MagnifyGesture: @preconcurrency Decodable, StylesheetResolvable {
@@ -242,7 +263,9 @@ struct _MagnifyGesture: @preconcurrency Decodable, StylesheetResolvable {
         )
     }
 }
+#endif
 
+#if os(iOS) || os(macOS) || os(visionOS)
 @ASTDecodable("RotateGesture")
 @available(iOS 17.0, macOS 14.0, *)
 struct _RotateGesture: @preconcurrency Decodable, StylesheetResolvable {
@@ -260,6 +283,7 @@ struct _RotateGesture: @preconcurrency Decodable, StylesheetResolvable {
         )
     }
 }
+#endif
 
 extension StylesheetResolvableGesture: @preconcurrency AttributeDecodable {
     nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
