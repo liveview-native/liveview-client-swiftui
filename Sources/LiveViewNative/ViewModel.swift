@@ -37,7 +37,7 @@ public class LiveViewModel: ObservableObject {
         self.forms.removeAll()
     }
     
-    func fileUpload(id: String) -> FormModel.FileUpload? {
+    public func fileUpload(id: String) -> FormModel.FileUpload? {
         for (_, form) in forms {
             guard let file = form.fileUploads.first(where: { $0.id == id })
             else { continue }
@@ -71,9 +71,9 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     var formWillSubmit = PassthroughSubject<(), Never>()
     
     var fileUploads: [FileUpload] = []
-    struct FileUpload {
-        let id: String
-        let data: Data
+    public struct FileUpload: Identifiable {
+        public let id: String
+        public let data: Data
         let upload: () async throws -> ()
     }
     
