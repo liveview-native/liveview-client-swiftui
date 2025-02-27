@@ -82,15 +82,14 @@ extension View {
         case .grouped:
             self.listStyle(.grouped)
         #endif
-        #if os(iOS) || os(macOS)
+        #if os(iOS) || os(macOS) || os(visionOS)
         case .inset:
             self.listStyle(.inset)
+        #endif
             
         #if os(iOS) || os(visionOS)
         case .insetGrouped:
             self.listStyle(.insetGrouped)
-        #endif
-            
         #endif
         case .plain:
             self.listStyle(.plain)
