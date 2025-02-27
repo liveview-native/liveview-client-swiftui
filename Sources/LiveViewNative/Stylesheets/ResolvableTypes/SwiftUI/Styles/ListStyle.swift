@@ -85,8 +85,12 @@ extension View {
         #if os(iOS) || os(macOS)
         case .inset:
             self.listStyle(.inset)
+            
+        #if os(iOS) || os(visionOS)
         case .insetGrouped:
             self.listStyle(.insetGrouped)
+        #endif
+            
         #endif
         case .plain:
             self.listStyle(.plain)
