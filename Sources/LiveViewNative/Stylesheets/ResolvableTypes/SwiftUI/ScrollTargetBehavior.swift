@@ -11,23 +11,15 @@ import LiveViewNativeCore
 
 @ASTDecodable("ScrollTargetBehavior")
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-enum StylesheetResolvableScrollTargetBehavior: @preconcurrency ScrollTargetBehavior, StylesheetResolvable, @preconcurrency Decodable {
-    case _resolved(any ScrollTargetBehavior)
-    
+enum StylesheetResolvableScrollTargetBehavior: StylesheetResolvable, @preconcurrency Decodable {
     case paging
     case viewAligned
     case _viewAligned(limitBehavior: Any)
+    case _viewAlignedResolved(limitBehavior: Any)
     
     @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
     static func viewAligned(limitBehavior: AttributeReference<ViewAlignedScrollTargetBehavior.LimitBehavior.Resolvable>) -> Self {
         ._viewAligned(limitBehavior: limitBehavior)
-    }
-    
-    func updateTarget(_ target: inout ScrollTarget, context: TargetContext) {
-        guard case let ._resolved(resolved) = self
-        else { fatalError() }
-        
-        resolved.updateTarget(&target, context: context)
     }
 }
 
@@ -64,16 +56,16 @@ extension StylesheetResolvableScrollTargetBehavior {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Self {
         switch self {
         case .paging:
-            return ._resolved(.paging)
+            return self
         case .viewAligned:
-            return ._resolved(.viewAligned)
+            return self
         case ._viewAligned(let limitBehavior):
-            return ._resolved(.viewAligned(
+            return ._viewAlignedResolved(
                 limitBehavior: (limitBehavior as! AttributeReference<ViewAlignedScrollTargetBehavior.LimitBehavior.Resolvable>)
                     .resolve(on: element, in: context)
                     .resolve(on: element, in: context)
-            ))
-        case ._resolved:
+            )
+        case ._viewAlignedResolved:
             return self
         }
     }
@@ -89,6 +81,24 @@ extension StylesheetResolvableScrollTargetBehavior: @preconcurrency AttributeDec
             self = .viewAligned
         default:
             throw AttributeDecodingError.badValue(Self.self)
+        }
+    }
+}
+
+@available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
+extension View {
+    @_disfavoredOverload
+    @ViewBuilder
+    func scrollTargetBehavior(_ behavior: StylesheetResolvableScrollTargetBehavior) -> some View {
+        switch behavior {
+        case .paging:
+            self.scrollTargetBehavior(.paging)
+        case .viewAligned:
+            self.scrollTargetBehavior(.viewAligned)
+        case ._viewAligned:
+            fatalError()
+        case ._viewAlignedResolved(let limitBehavior):
+            self.scrollTargetBehavior(.viewAligned(limitBehavior: limitBehavior as! ViewAlignedScrollTargetBehavior.LimitBehavior))
         }
     }
 }
