@@ -153,7 +153,6 @@ struct TextField<Root: RootRegistry>: TextFieldProtocol {
                 $liveElement.element.buildPhxValuePayload()
                     .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
             )
-            Task { try await _text.handleBlur() }
         }
     }
     

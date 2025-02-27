@@ -28,11 +28,8 @@ let package = Package(
         .package(url: "https://github.com/liveview-native/liveview-native-core", exact: "0.4.1-rc-1"),
         
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
-        .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.2.0"),
         
         .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.1"),
-        
-        .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.13.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -46,7 +43,8 @@ let package = Package(
                 "LiveViewNativeStylesheet"
             ],
             plugins: [
-                .plugin(name: "BuiltinRegistryGeneratorPlugin")
+                .plugin(name: "BuiltinRegistryGeneratorPlugin"),
+                .plugin(name: "ModifierGeneratorPlugin"),
             ]
         ),
         .testTarget(
@@ -58,16 +56,7 @@ let package = Package(
             dependencies: ["LiveViewNative"]
         ),
         
-        .executableTarget(
-            name: "ModifierGenerator",
-            dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "SwiftSyntax", package: "swift-syntax"),
-                .product(name: "SwiftParser", package: "swift-syntax"),
-                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
-            ]
-        ),
-
+        // Builtin Registry
         .executableTarget(
             name: "BuiltinRegistryGenerator",
             dependencies: [
@@ -79,7 +68,8 @@ let package = Package(
             capability: .buildTool(),
             dependencies: [.target(name: "BuiltinRegistryGenerator")]
         ),
-
+        
+        // Tools
         .executableTarget(
             name: "DocumentationExtensionGenerator",
             dependencies: [.product(name: "ArgumentParser", package: "swift-argument-parser")]
@@ -106,6 +96,7 @@ let package = Package(
             dependencies: []
         ),
         
+        // Macros
         .macro(
             name: "LiveViewNativeMacros",
             dependencies: [
@@ -121,11 +112,43 @@ let package = Package(
             ]
         ),
         
+        // Modifier Generator
+        .executableTarget(
+            name: "ModifierGenerator",
+            dependencies: [
+                "ASTDecodableImplementation",
+                "SwiftSyntaxExtensions",
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+                .product(name: "SwiftParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+            ]
+        ),
+        .plugin(
+            name: "ModifierGeneratorPlugin",
+            capability: .buildTool(),
+            dependencies: [.target(name: "ModifierGenerator")]
+        ),
+        
+        // Stylesheet
+        .target(
+            name: "ASTDecodableImplementation",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+                "SwiftSyntaxExtensions",
+            ]
+        ),
         .macro(
             name: "LiveViewNativeStylesheetMacros",
             dependencies: [
+                "ASTDecodableImplementation",
+                
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+                "SwiftSyntaxExtensions",
             ]
         ),
         .target(
@@ -133,18 +156,19 @@ let package = Package(
             dependencies: [
                 "LiveViewNativeStylesheetMacros",
                 .product(name: "LiveViewNativeCore", package: "liveview-native-core"),
-                .product(name: "Parsing", package: "swift-parsing"),
             ]
         ),
         .testTarget(
             name: "LiveViewNativeStylesheetTests",
             dependencies: ["LiveViewNativeStylesheet", "LiveViewNative"]
         ),
-        .testTarget(
-            name: "LiveViewNativeStylesheetMacrosTests",
+        
+        // Helpers
+        .target(
+            name: "SwiftSyntaxExtensions",
             dependencies: [
-                "LiveViewNativeStylesheetMacros",
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
             ]
         ),
     ]

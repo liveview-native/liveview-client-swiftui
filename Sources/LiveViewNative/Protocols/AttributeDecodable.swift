@@ -7,6 +7,7 @@
 
 import SwiftUI
 import LiveViewNativeCore
+import LiveViewNativeStylesheet
 
 /// A type that conforms to this protocol can be decoded from a DOM attribute key/value pair.
 ///
@@ -100,8 +101,98 @@ extension Double: AttributeDecodable {
     }
 }
 
+/// Decodes a float from an attribute, if it is present.
+extension Float: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
 /// Decodes an integer from an attribute, if it is present.
 extension Int: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
+/// Decodes an integer from an attribute, if it is present.
+extension Int8: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
+/// Decodes an integer from an attribute, if it is present.
+extension Int16: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
+/// Decodes an integer from an attribute, if it is present.
+extension Int32: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
+/// Decodes an integer from an attribute, if it is present.
+extension Int64: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
+/// Decodes an integer from an attribute, if it is present.
+extension UInt: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
+/// Decodes an integer from an attribute, if it is present.
+extension UInt8: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
+/// Decodes an integer from an attribute, if it is present.
+extension UInt16: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
+/// Decodes an integer from an attribute, if it is present.
+extension UInt32: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
+/// Decodes an integer from an attribute, if it is present.
+extension UInt64: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
@@ -138,5 +229,93 @@ extension SwiftUI.Color: AttributeDecodable {
 extension CoreFoundation.CGFloat: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         self.init(try Double.init(from: attribute, on: element))
+    }
+}
+
+extension CoreFoundation.CGSize: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self = try makeJSONDecoder().decode(Self.self, from: Data(value.utf8))
+    }
+}
+
+extension SIMD2: AttributeDecodable where Self: Decodable {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self = try makeJSONDecoder().decode(Self.self, from: Data(value.utf8))
+    }
+}
+
+extension ClosedRange: AttributeDecodable where Bound: Decodable {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        let bounds = try makeJSONDecoder().decode(CodableClosedRange.self, from: Data(value.utf8))
+        self = bounds.lowerBound...bounds.upperBound
+    }
+    
+    private struct CodableClosedRange: Decodable {
+        let lowerBound: Bound
+        let upperBound: Bound
+    }
+}
+
+extension PartialRangeThrough: AttributeDecodable where Bound: Decodable {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        let bounds = try makeJSONDecoder().decode(CodablePartialRangeThrough.self, from: Data(value.utf8))
+        self = ...bounds.upperBound
+    }
+    
+    private struct CodablePartialRangeThrough: Decodable {
+        let upperBound: Bound
+    }
+}
+
+extension PartialRangeFrom: AttributeDecodable where Bound: Decodable {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        let bounds = try makeJSONDecoder().decode(CodablePartialRangeFrom.self, from: Data(value.utf8))
+        self = bounds.lowerBound...
+    }
+    
+    private struct CodablePartialRangeFrom: Decodable {
+        let lowerBound: Bound
+    }
+}
+
+extension Data: AttributeDecodable {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self = try makeJSONDecoder().decode(Data.self, from: Data(value.utf8))
+    }
+}
+
+extension URL: AttributeDecodable {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self = try URL(value, strategy: .url)
+    }
+}
+
+extension Set: AttributeDecodable where Element: AttributeDecodable & Decodable {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self = try makeJSONDecoder().decode(Self.self, from: Data(value.utf8))
+    }
+}
+
+extension AtomLiteral: AttributeDecodable {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self.init(value)
     }
 }

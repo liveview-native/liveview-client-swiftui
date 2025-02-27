@@ -100,8 +100,8 @@ struct ImageView<Root: RootRegistry>: View {
     public var body: SwiftUI.Image? {
         image.flatMap({ (image: SwiftUI.Image) -> SwiftUI.Image in
             return modifiers.reduce(image) { result, modifier in
-                if case let ._anyImageModifier(imageModifier) = modifier {
-                    return imageModifier.apply(to: result, on: $liveElement.element)
+                if case let ._imageModifier(imageModifier) = modifier {
+                    return imageModifier.apply(to: result, on: $liveElement.element, in: $liveElement.context)
                 } else {
                     return result
                 }
@@ -155,7 +155,7 @@ struct ImageView<Root: RootRegistry>: View {
         if let labelNode = $liveElement.childNodes.first {
             switch labelNode.data() {
             case let .nodeElement(element):
-                return Text<Root>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: _modifiers.overrideStylesheet).body
+                return TextView<Root>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: _modifiers.overrideStylesheet).body
             case let .leaf(label):
                 return .init(label)
             case .root:

@@ -23,12 +23,12 @@ import LiveViewNativeCore
 ///
 /// The attribute will be automatically decoded to the correct type using the conformance to ``AttributeDecodable``.
 @MainActor
-public struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: ParseableModifierValue {
+public struct AttributeReference<Value: Decodable & AttributeDecodable>: @preconcurrency Decodable, StylesheetResolvable {
     enum Storage {
         case constant(Value)
         case reference(AttributeName)
         case gestureState(
-            String,
+            AtomLiteral,
             GestureStateReference.PropertyReference,
             defaultValue: Value?,
             min: CGFloat?,
@@ -48,15 +48,23 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
         self.storage = storage
     }
     
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            Value.parser(in: context).map(Storage.constant)
-            AttributeName.parser(in: context).map(Storage.reference)
-            GestureStateReference.parser(in: context).map(\.value)
-        }
-        .map(Self.init)
+    public static func constant(_ value: Value) -> Self {
+        .init(value)
     }
     
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        
+        if let attributeName = try? container.decode(AttributeName.self) {
+            self.storage = .reference(attributeName)
+        } else if let gestureStateReference = try? container.decode(GestureStateReference.self) {
+            self.storage = gestureStateReference.value
+        } else {
+            self.storage = .constant(try container.decode(Value.self))
+        }
+    }
+    
+    @MainActor
     public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Value {
         switch storage {
         case .constant(let value):
@@ -81,24 +89,30 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
                     return value as! Value
                 }
             }
-            let defaultValue: Value = defaultValue ?? castValue(0.0)
+            let defaultValue: Value = defaultValue ?? (Value.self == CGSize.self ? CGSize(width: 0, height: 0) as! Value : castValue(0.0))
             
-            guard let value = context.gestureState.wrappedValue[name]
+            guard let value = context.gestureState.wrappedValue[name.value]
             else { return defaultValue }
             
             switch body.base {
             case .translation:
                 #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
-                guard let value = value as? DragGesture.Value,
-                      let member = body.member
+                guard let value = value as? DragGesture.Value
                 else { return defaultValue }
-                switch member {
-                case .width:
-                    return castValue(value.translation.width)
-                case .height:
-                    return castValue(value.translation.height)
-                default:
-                    return defaultValue
+                if let member = body.member {
+                    switch member {
+                    case .width:
+                        return castValue(value.translation.width)
+                    case .height:
+                        return castValue(value.translation.height)
+                    default:
+                        return defaultValue
+                    }
+                } else {
+                    return CGSize(
+                        width: (value.translation.width + offset) * scale,
+                        height: (value.translation.height + offset) * scale
+                    ) as! Value
                 }
                 #else
                 return defaultValue
@@ -143,9 +157,23 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
                 #if os(iOS) || os(macOS)
                 if #available(iOS 17.0, macOS 14.0, *) {
                     if let value = value as? MagnifyGesture.Value {
-                        return value.startAnchor as! Value
+                        switch body.member {
+                        case .x:
+                            return value.startAnchor.x as! Value
+                        case .y:
+                            return value.startAnchor.y as! Value
+                        default:
+                            return value.startAnchor as! Value
+                        }
                     } else if let value = value as? RotateGesture.Value {
-                        return value.startAnchor as! Value
+                        switch body.member {
+                        case .x:
+                            return value.startAnchor.x as! Value
+                        case .y:
+                            return value.startAnchor.y as! Value
+                        default:
+                            return value.startAnchor as! Value
+                        }
                     } else {
                         return defaultValue
                     }
@@ -159,15 +187,27 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
         }
     }
     
-    @ParseableExpression
-    struct GestureStateReference {
-        static var name: String { "__gesture_state__" }
-        
+    @ASTDecodable("__gesture_state__")
+    @MainActor struct GestureStateReference: @preconcurrency Decodable {
         let value: Storage
         
-        struct PropertyReference: ParseableModifierValue {
+        @ASTDecodable("PropertyReference")
+        @MainActor struct PropertyReference: @preconcurrency Decodable {
             let base: Base
             let member: Member?
+            
+            static var translation: Self { .init(base: .translation, member: nil) }
+            static var magnification: Self { .init(base: .magnification, member: nil) }
+            static var rotation: Self { .init(base: .rotation, member: nil) }
+            static var startAnchor: Self { .init(base: .startAnchor, member: nil) }
+            
+            var width: Self { .init(base: base, member: .width) }
+            var height: Self { .init(base: base, member: .height) }
+            var radians: Self { .init(base: base, member: .radians) }
+            var degrees: Self { .init(base: base, member: .degrees) }
+            
+            var x: Self { .init(base: base, member: .x) }
+            var y: Self { .init(base: base, member: .y) }
             
             enum Base: String, CaseIterable {
                 case translation
@@ -178,37 +218,21 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
                 
                 case startAnchor
             }
+            
             enum Member: String, CaseIterable {
                 case width
                 case height
                 
                 case radians
                 case degrees
-            }
-            
-            static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-                MemberExpression {
-                    NilLiteral()
-                } member: {
-                    OneOf {
-                        MemberExpression {
-                            EnumParser<Base>()
-                        } member: {
-                            EnumParser<Member>()
-                        }
-                        .map { (base, member) in
-                            Self.init(base: base, member: member)
-                        }
-                        EnumParser<Base>()
-                            .map({ Self.init(base: $0, member: nil) })
-                    }
-                }
-                .map(\.member)
+                
+                case x
+                case y
             }
         }
         
         init(
-            _ name: String,
+            _ name: AtomLiteral,
             _ body: PropertyReference,
             defaultValue: Value? = nil,
             min: CGFloat? = nil,
@@ -240,11 +264,17 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
     }
 }
 
-extension AttributeName: ParseableModifierValue {
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        ASTNode("__attr__", in: context) {
-            String.parser(in: context)
-        }
-        .map({ Self.init(rawValue: $1)! })
+extension AttributeName: @retroactive Decodable {
+    public init(from decoder: any Decoder) throws {
+        // ["__attr__", { ... }, "attribute-name"]
+        var container = try decoder.unkeyedContainer()
+        _ = try container.decode(Attr.self)
+        _ = try container.decode(Annotations.self)
+        
+        self = .init(rawValue: try container.decode(String.self))!
+    }
+    
+    private enum Attr: String, Decodable {
+        case attr = "__attr__"
     }
 }

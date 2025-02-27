@@ -16,8 +16,24 @@ import LiveViewNativeCore
 /// <Text template="view1" />
 /// <ScrollView template="view2" />
 /// ```
-public struct ViewReference: ParseableModifierValue {
+public struct ViewReference: @preconcurrency Decodable, @preconcurrency AttributeDecodable {
     let value: [String]
+    
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        
+        if let value = try? container.decode(AtomLiteral.self).value {
+            self.value = [value]
+        } else {
+            self.value = try container.decode([AtomLiteral].self).map(\.value)
+        }
+    }
+    
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.value = [value]
+    }
 
     @MainActor
     public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> some View {
@@ -33,18 +49,6 @@ public struct ViewReference: ParseableModifierValue {
             }
         }
     }
-
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            AtomLiteral().map({
-                Self.init(value: [$0])
-            })
-            ListLiteral {
-                AtomLiteral()
-            }
-            .map(Self.init(value:))
-        }
-    }
 }
 
 /// A type reference that is resolved inline (an argument that accepts `some View`, not `() -> some View`)
@@ -52,9 +56,26 @@ public struct ViewReference: ParseableModifierValue {
 /// See ``ViewReference`` for more details.
 typealias InlineViewReference = ViewReference
 
+extension Optional where Wrapped == ViewReference {
+    @MainActor
+    @ViewBuilder
+    public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> some View {
+        switch self {
+        case .none:
+            EmptyView()
+        case .some(let wrapped):
+            wrapped.resolve(on: element, in: context)
+        }
+    }
+}
+
 /// A ``ViewReference`` that only resolves to `SwiftUI.Text`.
-public struct TextReference: ParseableModifierValue {
+public struct TextReference: @preconcurrency Decodable, @preconcurrency AttributeDecodable, StylesheetResolvable {
     let value: String
+    
+    public init(from decoder: any Decoder) throws {
+        self.value = try decoder.singleValueContainer().decode(AtomLiteral.self).value
+    }
     
     @MainActor
     public func resolveTemplate<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> ElementNode? {
@@ -64,13 +85,15 @@ public struct TextReference: ParseableModifierValue {
     @MainActor
     public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         resolveTemplate(on: element, in: context).flatMap({
-            Text<R>(element: $0, overrideStylesheet: context.coordinator.session.stylesheet).body
+            TextView<R>(element: $0, overrideStylesheet: context.coordinator.session.stylesheet).body
         })
-            ?? SwiftUI.Text("")
+        ?? SwiftUI.Text(value)
     }
-
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        AtomLiteral().map({ Self.init(value: $0) })
+    
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.value = value
     }
 }
 
@@ -159,9 +182,26 @@ struct _TextReferenceObserver: ViewModifier {
 /// <ToolbarItem template="item2" />
 /// ```
 @_documentation(visibility: public)
-struct ToolbarContentReference: ParseableModifierValue {
+struct ToolbarContentReference: @preconcurrency Decodable, @preconcurrency AttributeDecodable {
     let value: [String]
     
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        
+        if let value = try? container.decode(AtomLiteral.self).value {
+            self.value = [value]
+        } else {
+            self.value = try container.decode([AtomLiteral].self).map(\.value)
+        }
+    }
+    
+    init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.value = [value]
+    }
+    
+    @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> some ToolbarContent {
         ToolbarTreeBuilder<R>().fromNodes(
             value.reduce(into: [LiveViewNativeCore.Node]()) {
@@ -169,18 +209,6 @@ struct ToolbarContentReference: ParseableModifierValue {
             },
             context: context.storage
         )
-    }
-
-    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            AtomLiteral().map({
-                Self.init(value: [$0])
-            })
-            ListLiteral {
-                AtomLiteral()
-            }
-            .map(Self.init(value:))
-        }
     }
 }
 
@@ -201,9 +229,26 @@ struct ToolbarContentReference: ParseableModifierValue {
 /// <ToolbarItem template="item2" id="item2" />
 /// ```
 @_documentation(visibility: public)
-struct CustomizableToolbarContentReference: ParseableModifierValue {
+struct CustomizableToolbarContentReference: @preconcurrency Decodable, @preconcurrency AttributeDecodable {
     let value: [String]
     
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        
+        if let value = try? container.decode(AtomLiteral.self).value {
+            self.value = [value]
+        } else {
+            self.value = try container.decode([AtomLiteral].self).map(\.value)
+        }
+    }
+    
+    init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.value = [value]
+    }
+    
+    @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> some CustomizableToolbarContent {
         CustomizableToolbarTreeBuilder<R>().fromNodes(
             value.reduce(into: [LiveViewNativeCore.Node]()) {
@@ -211,18 +256,6 @@ struct CustomizableToolbarContentReference: ParseableModifierValue {
             },
             context: context.storage
         )
-    }
-
-    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            AtomLiteral().map({
-                Self.init(value: [$0])
-            })
-            ListLiteral {
-                AtomLiteral()
-            }
-            .map(Self.init(value:))
-        }
     }
 }
 

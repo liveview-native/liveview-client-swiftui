@@ -106,7 +106,7 @@ public struct FormState<Value: FormValue> {
     ///
     /// - Parameter bindingName: The name of the optional live binding storage value.
     /// - Parameter sendChangeEvents: If `true`, changes to the form state's value will send an event to the server if the element has a `phx-change` attribute.
-    /// 
+    ///
     /// ## Example
     /// ```swift
     /// struct MyView: View {
@@ -160,7 +160,7 @@ public struct FormState<Value: FormValue> {
                     newValue,
                     forName: elementName,
                     changeEvent: sendChangeEvents
-                        ? (element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? _changeEvent : nil)
+                        ? (element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? changeEvent : nil)
                         : nil
                 )
             }
@@ -192,6 +192,7 @@ public struct FormState<Value: FormValue> {
                     data.bind(
                         formModel,
                         to: _element,
+                        context: coordinator,
                         elementName: elementName,
                         attribute: valueAttribute,
                         defaultValue: defaultValue,
@@ -214,25 +215,6 @@ public struct FormState<Value: FormValue> {
             data.localValue = initialValue
         default:
             break
-        }
-    }
-    
-    /// Call this function when the form control loses focus.
-    public func handleBlur() async throws {
-        switch data.mode {
-        case .unknown:
-            break
-        case .local:
-            break
-        case .form(let formModel):
-            guard let elementName = element.attributeValue(for: "name"),
-                  let value = formModel[elementName]
-            else { return }
-            try await formModel.sendChangeEvent(
-                value,
-                for: elementName,
-                event: element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? _changeEvent : nil
-            )
         }
     }
 }
@@ -262,6 +244,7 @@ private class FormStateData<Value: FormValue>: ObservableObject {
     func bind(
         _ formModel: FormModel,
         to element: ObservedElement,
+        context: CoordinatorEnvironment?,
         elementName: String,
         attribute: AttributeName,
         defaultValue: Value,
@@ -276,11 +259,13 @@ private class FormStateData<Value: FormValue>: ObservableObject {
         // When the element updates from the server, sync the new value into the form.
         elementCancellable = element.projectedValue
             .receive(on: DispatchQueue.main)
-            .sink { [weak formModel, weak self] _ in
+            .sink { [weak formModel, weak self] nodeRef in
                 // ignore server updates if the field is focused.
                 guard !isFocused.wrappedValue && !isEditing.wrappedValue else { return }
                 formModel?.setServerValue(
-                    element.wrappedValue.attribute(named: attribute)
+                    // get the node directly, the `ObservedElement` does not
+                    // necessarily update its resolved value before this is called
+                    context?.document?.getNode(nodeRef).getAttribute(attribute)
                         .flatMap { Value.fromAttribute($0, on: element.wrappedValue) }
                         ?? defaultValue,
                     forName: elementName
