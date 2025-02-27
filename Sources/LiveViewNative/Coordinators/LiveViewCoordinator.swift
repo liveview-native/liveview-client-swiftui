@@ -62,6 +62,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private var eventListenerLoop: Task<(), any Error>?
 //    private var statusListener: Channel.StatusStream?
     private var statusListenerLoop: Task<(), any Error>?
+    
+    private var patchHandlerCancellable: AnyCancellable?
 
     private(set) internal var liveViewModel = LiveViewModel()
     
@@ -78,8 +80,24 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     deinit {
-        self.eventListenerLoop?.cancel()
-        self.statusListenerLoop?.cancel()
+        let channel = channel
+        Task {
+            do {
+                try await channel?.shutdown()
+            }
+        }
+        
+        if let eventListenerLoop {
+            if !eventListenerLoop.isCancelled {
+                eventListenerLoop.cancel()
+            }
+        }
+        
+        if let statusListenerLoop {
+            if !statusListenerLoop.isCancelled {
+                statusListenerLoop.cancel()
+            }
+        }
     }
 
     /// Pushes a LiveView event with the given name and payload to the server.
@@ -245,9 +263,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
 
     func bindEventListener() {
-        self.eventListenerLoop = Task { [weak self, weak channel] in
-            guard let channel else { return }
-            let eventListener = channel.eventStream()
+        self.eventListenerLoop = Task { [weak self, unowned channel] in
+            let eventListener = channel!.eventStream()
             for try await event in eventListener {
                 guard let self else { return }
                 guard !Task.isCancelled else { return }
@@ -289,30 +306,49 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     func bindDocumentListener() {
-        self.document?.on(.changed) { [weak self] nodeRef, nodeData, parent in
-            guard let self else { return }
-            switch nodeData {
+        let handler = SimplePatchHandler()
+        patchHandlerCancellable = handler.patchEventSubject.sink { [weak self] patch in
+            switch patch.data {
             case .root:
                 // when the root changes, update the `NavStackEntry` itself.
-                self.objectWillChange.send()
+                self?.objectWillChange.send()
             case .leaf:
                 // text nodes don't have their own views, changes to them need to be handled by the parent Text view
-                if let parent {
-                    self.elementChanged(nodeRef).send()
+                if let parent = patch.parent {
+                    self?.elementChanged(parent).send()
                 } else {
-                    self.elementChanged(nodeRef).send()
+                    self?.elementChanged(patch.node).send()
                 }
-            case .nodeElement:
+            case let .nodeElement(element):
                 // when a single element changes, send an update only to that element.
-                self.elementChanged(nodeRef).send()
+                switch patch.changeType {
+                case .add, .remove:
+                    if let parent = patch.parent {
+                        self?.elementChanged(parent).send()
+                    } else {
+                        self?.elementChanged(patch.node).send()
+                    }
+                case .replace:
+                    if let parent = patch.parent {
+                        self?.elementChanged(parent).send()
+                    }
+                    self?.elementChanged(patch.node).send()
+                case .change:
+                    self?.elementChanged(patch.node).send()
+                }
             }
         }
+        self.document?.setEventHandler(handler)
     }
 
     func join(_ liveChannel: LiveViewNativeCore.LiveChannel) {
         self.liveChannel = liveChannel
         let channel = liveChannel.channel()
         self.channel = channel
+        
+        if statusListenerLoop != nil && !statusListenerLoop!.isCancelled {
+            statusListenerLoop?.cancel()
+        }
         
         statusListenerLoop = Task { @MainActor [weak self, unowned channel] in
             let statusListener = channel.statusStream()
@@ -347,6 +383,20 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     func disconnect() async throws {
         try await self.channel?.leave()
+        try await self.channel?.shutdown()
+        
+        if let eventListenerLoop {
+            if !eventListenerLoop.isCancelled {
+                eventListenerLoop.cancel()
+            }
+        }
+        
+        if let statusListenerLoop {
+            if !statusListenerLoop.isCancelled {
+                statusListenerLoop.cancel()
+            }
+        }
+
         self.eventListenerLoop = nil
         self.statusListenerLoop = nil
         self.liveChannel = nil

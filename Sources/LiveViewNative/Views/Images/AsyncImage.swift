@@ -61,7 +61,7 @@ struct AsyncImage<Root: RootRegistry>: View {
             }
         } else if error {
             if case let .failure(error) = phase {
-                Text<Root>(text: SwiftUI.Text(verbatim: error.localizedDescription))
+                TextView<Root>(text: SwiftUI.Text(verbatim: error.localizedDescription))
             }
         } else {
             asyncImage

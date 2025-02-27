@@ -8,8 +8,8 @@ defmodule LiveViewNative.SwiftUI.Component do
   use LiveViewNative.Component
 
   defmacro __using__(_) do
-    quote location: :keep do
-      import LiveViewNative.Component, only: [sigil_LVN: 2]
+    quote do
+      import unquote(__MODULE__)
     end
   end
 
@@ -164,24 +164,24 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   )
 
-  # attr(:method, :string,
-  #   default: "get",
-  #   doc: """
-  #   The HTTP method to use with the link. This is intended for usage outside of LiveView
-  #   and therefore only works with the `href={...}` attribute. It has no effect on `patch`
-  #   and `navigate` instructions.
+  attr(:method, :string,
+    default: "get",
+    doc: """
+    The HTTP method to use with the link. This is intended for usage outside of LiveView
+    and therefore only works with the `href={...}` attribute. It has no effect on `patch`
+    and `navigate` instructions.
 
-  #   In case the method is not `get`, the link is generated inside the form which sets the proper
-  #   information. In order to submit the form, JavaScript must be enabled in the browser.
-  #   """
-  # )
+    In case the method is not `get`, the link is generated inside the form which sets the proper
+    information. In order to submit the form, JavaScript must be enabled in the browser.
+    """
+  )
 
-  # attr(:csrf_token, :any,
-  #   default: true,
-  #   doc: """
-  #   A boolean or custom token to use for links with an HTTP method other than `get`.
-  #   """
-  # )
+  attr(:csrf_token, :any,
+    default: true,
+    doc: """
+    A boolean or custom token to use for links with an HTTP method other than `get`.
+    """
+  )
 
   attr(:rest, :global,
     # include: ~w(download hreflang referrerpolicy rel target type),
@@ -198,7 +198,7 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   )
 
-  def link(%{navigate: to} = assigns) when is_binary(to) do
+  def link(%{navigate: to} = assigns, _interface) when is_binary(to) do
     ~LVN"""
     <NavigationLink
       destination={@navigate}
@@ -211,7 +211,7 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   end
 
-  def link(%{patch: to} = assigns) when is_binary(to) do
+  def link(%{patch: to} = assigns, _interface) when is_binary(to) do
     ~LVN"""
     <NavigationLink
       destination={@patch}
@@ -224,7 +224,7 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   end
 
-  def link(%{href: href} = assigns) when href != "#" and not is_nil(href) do
+  def link(%{href: href} = assigns, _interface) when href != "#" and not is_nil(href) do
     href = Phoenix.LiveView.Utils.valid_destination!(href, "<.link>")
     assigns = assign(assigns, :href, href)
 
@@ -235,7 +235,7 @@ defmodule LiveViewNative.SwiftUI.Component do
     """
   end
 
-  def link(%{} = assigns) do
+  def link(%{} = assigns, _interface) do
     ~LVN"""
     <NavigationLink destination="#" {@rest}>
       <%= render_slot(@inner_block) %>
@@ -288,7 +288,7 @@ defmodule LiveViewNative.SwiftUI.Component do
 
   attr :rest, :global, include: ~w(webkitdirectory required disabled capture form)
 
-  def live_file_input(%{upload: upload} = assigns) do
+  def live_file_input(%{upload: upload} = assigns, _interface) do
     assigns = assign_new(assigns, :accept, fn -> upload.accept != :any && upload.accept end)
 
     ~LVN"""
@@ -349,7 +349,7 @@ defmodule LiveViewNative.SwiftUI.Component do
 
   attr :rest, :global, []
 
-  def live_img_preview(assigns) do
+  def live_img_preview(assigns, _interface) do
     ~LVN"""
     <Image
       id={@id || "phx-preview-#{@entry.ref}"}

@@ -101,8 +101,8 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// This method has no effect if the `<form>` does not have a `phx-change` event configured.
     ///
     /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
-    public func sendChangeEvent(_ value: any FormValue, for name: String, event: Event?) async throws {
-        guard let event = sendChangeEventForFormElement(value, for: name, event?.wrappedValue.callAsFunction)
+    public func sendChangeEvent(_ value: any FormValue, for name: String, event: Event.EventHandler?) async throws {
+        guard let event = sendChangeEventForFormElement(value, for: name, event?.callAsFunction)
                 ?? sendChangeEventForForm(for: name, changeEvent) else { return }
         
         try await event()
@@ -201,7 +201,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         }
     }
     
-    public func setValue(_ value: (some FormValue)?, forName name: String, changeEvent: Event?) {
+    public func setValue(_ value: (some FormValue)?, forName name: String, changeEvent: Event.EventHandler?) {
         let existing = data[name]
         if let existing,
            let value,
@@ -216,7 +216,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             return
         }
         data[name] = value
-        if changeEvent?.debounceAttribute != .blur,
+        if changeEvent?.debounce != .blur,
            let value
         {
             Task {

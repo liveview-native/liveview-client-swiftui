@@ -76,6 +76,11 @@ public macro LiveView<
     @ViewBuilder content: @escaping (LiveViewPhase<EmptyRegistry>) -> PhaseView = { (_: LiveViewPhase<EmptyRegistry>) -> Never in fatalError() }
 ) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
 
+public struct EventConfirmationTransaction: Sendable {
+    let message: String
+    let callback: @Sendable (sending Bool) -> ()
+}
+
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
 /// The `LiveView` attempts to connect immediately when it appears.
@@ -150,12 +155,6 @@ public struct LiveView<
     let reconnectingView: (_ConnectedContent<R>, Bool) -> ReconnectingView
     let errorView: (Error) -> ErrorView
     
-    @State private var showEventConfirmation: Bool = false
-    @State private var eventConfirmationTransaction: EventConfirmationTransaction?
-    struct EventConfirmationTransaction: Sendable {
-        let message: String
-        let callback: @Sendable (sending Bool) -> ()
-    }
     
     @MainActor
     @ViewBuilder
@@ -245,17 +244,21 @@ public struct LiveView<
             }
         }
         // data-confirm
-        .environment(\.eventConfirmation, session.configuration.eventConfirmation ?? { message, _ in
+        .environment(\.eventConfirmation, session.configuration.eventConfirmation ?? { [weak session] message, _ in
             return await withCheckedContinuation { continuation in
-                eventConfirmationTransaction = EventConfirmationTransaction(message: message, callback: continuation.resume(returning:))
-                showEventConfirmation = true
+                if let session = session {
+                    session.eventConfirmationTransaction = EventConfirmationTransaction(message: message, callback: continuation.resume(returning:))
+                    session.showEventConfirmation = true
+                } else {
+                    continuation.resume(returning: false)
+                }
             }
         })
         .confirmationDialog(
-            eventConfirmationTransaction?.message ?? "",
-            isPresented: $showEventConfirmation,
+            session.eventConfirmationTransaction?.message ?? "",
+            isPresented: $session.showEventConfirmation,
             titleVisibility: .visible,
-            presenting: eventConfirmationTransaction
+            presenting: session.eventConfirmationTransaction
         ) { transaction in
             SwiftUI.Button("OK") {
                 transaction.callback(true)
@@ -265,6 +268,7 @@ public struct LiveView<
             }
         }
     }
+    
 }
 
 /// The `<div data-phx-main>` element.

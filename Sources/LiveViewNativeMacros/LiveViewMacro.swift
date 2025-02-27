@@ -71,6 +71,10 @@ extension LiveViewMacro: ExpressionMacro {
         { () -> AnyView in
             enum \(registryName): AggregateRegistry {
                 \(registries)
+        
+                nonisolated init(from decoder: any Decoder) throws {
+                    fatalError()
+                }
             }
         
             return AnyView(LiveView(registry: \(registryName).self, \(liveViewArguments))\(raw: node.trailingClosure?.description ?? "")\(node.additionalTrailingClosures))

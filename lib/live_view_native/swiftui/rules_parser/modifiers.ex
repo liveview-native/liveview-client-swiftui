@@ -9,7 +9,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
 
   defcombinator(
     :key_value_list,
-    enclosed("[", key_value_pairs(generate_error?: true, allow_empty?: false), "]",
+    enclosed("[", wrap(key_value_pairs(generate_error?: true, allow_empty?: false)), "]",
       allow_empty?: false,
       error_parser: non_whitespace(also_ignore: String.to_charlist(")],"))
     )
@@ -281,8 +281,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   defparsec(
     :modifier,
     ignore_whitespace()
+    |> optional(ignore_dot())
     |> concat(modifier_name())
     |> concat(modifier_brackets.(nested: false))
+    |> optional(ignore_semicolon())
     |> post_traverse({PostProcessors, :to_function_call_ast, []}),
     export_combinator: true
   )

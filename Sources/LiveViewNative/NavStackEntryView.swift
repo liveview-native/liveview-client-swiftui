@@ -49,10 +49,11 @@ struct NavStackEntryView<R: RootRegistry>: View {
                 if coordinator.state.isConnected || coordinator.state.isPending,
                    let document = coordinator.document
                 {
+                    let transition = coordinator.session.configuration.transition
                     coordinator.builder.fromNodes(document[document.root()].children(), coordinator: coordinator, url: coordinator.url)
                         .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: document))
                         .disabled(coordinator.state.isPending)
-                        .transition(coordinator.session.configuration.transition ?? .identity)
+                        .transition(transition ?? .identity)
                         .id(ObjectIdentifier(document))
                 } else {
                     switch phase {

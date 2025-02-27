@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import LiveViewNativeCore
+import LiveViewNativeStylesheet
 import AsyncAlgorithms
 
 /// A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.
@@ -67,11 +68,11 @@ import AsyncAlgorithms
 ///- ``EventHandler``
 @MainActor
 @propertyWrapper
-public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable {
+public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable, @preconcurrency AttributeDecodable, @preconcurrency ExpressibleByNilLiteral {
     @ObservedElement private var element: ElementNode
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @Environment(\.eventConfirmation) private var eventConfirmation
-    @StateObject var handler = Handler()
+    @StateObject var handler = EventHandler()
     /// The name of the event to send.
     @_documentation(visibility: public)
     private let event: String?
@@ -98,11 +99,17 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
     @_documentation(visibility: public)
     private let params: Any?
     
-    var debounceAttribute: Debounce? {
+    private var debounceAttribute: Debounce? {
         try? element.attributeValue(Debounce.self, for: "phx-debounce")
     }
     private var throttleAttribute: Double? {
         try? element.attributeValue(Double.self, for: "phx-throttle")
+    }
+    
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.init(AttributeName(rawValue: value)!, type: "click")
     }
     
     enum Debounce: AttributeDecodable, Equatable {
@@ -126,20 +133,29 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
     }
     
     @MainActor
-    final class Handler: ObservableObject {
+    public final class EventHandler: ObservableObject {
         let channel = AsyncChannel<EventPayload>()
         
         struct EventPayload: @unchecked Sendable {
             let type: String
             let event: String
-            let payload: Any
+            var payload: Any?
             let target: Int?
+            
+            let confirm: String?
+            let eventConfirmation: ((String) async -> Bool)?
         }
         
         private var handlerTask: Task<(), Error>?
         
-        private var debounce: Double?
+        var debounce: Debounce?
         var throttle: Double?
+        
+        public var event: String? {
+            payload?.event
+        }
+        
+        var payload: EventPayload?
         
         let didSendSubject = PassthroughSubject<Void, Never>()
         
@@ -149,14 +165,14 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
             self.handlerTask?.cancel()
         }
         
-        func update(coordinator: CoordinatorEnvironment?, debounce: Double?, throttle: Double?) {
+        func update(coordinator: CoordinatorEnvironment?, debounce: Debounce?, throttle: Double?) {
             guard handlerTask == nil || debounce != self.debounce || throttle != self.throttle
             else { return }
             handlerTask?.cancel()
             self.debounce = debounce
             self.throttle = throttle
             let pushEvent = coordinator?.pushEvent
-            if let debounce = debounce {
+            if let debounce = debounce?.milliseconds {
                 handlerTask = Task { [weak channel, weak didSendSubject, pushEvent] in
                     guard let channel else { return }
                     for await event in channel.debounce(for: .milliseconds(debounce)) {
@@ -181,6 +197,43 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
                     }
                 }
             }
+        }
+        
+        public func callAsFunction(value: Any = [String:String](), didSend: (() -> Void)? = nil) {
+            Task {
+                try await self.callAsFunction(value: value)
+                didSend?()
+            }
+        }
+        
+        public func callAsFunction(value: Any = [String:String]()) async throws {
+            guard var payload else {
+                return
+            }
+            if let confirm = payload.confirm,
+               let eventConfirmation = payload.eventConfirmation
+            {
+                guard await eventConfirmation(confirm) else { return }
+            }
+            if payload.payload == nil {
+                payload.payload = value
+            }
+            await channel.send(payload)
+        }
+        
+        public func callAsFunction<R: RootRegistry>(value: Any = [String:String](), in context: LiveContext<R>) async throws {
+            guard var payload else {
+                return
+            }
+            if let confirm = payload.confirm,
+               let eventConfirmation = payload.eventConfirmation
+            {
+                guard await eventConfirmation(confirm) else { return }
+            }
+            if payload.payload == nil {
+                payload.payload = value
+            }
+            await channel.send(payload)
         }
     }
     
@@ -233,6 +286,16 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
         self.params = nil
     }
     
+    public init(nilLiteral: ()) {
+        self.event = nil
+        self.name = nil
+        self.type = "click"
+        self.target = nil
+        self.debounce = nil
+        self.throttle = nil
+        self.params = nil
+    }
+    
     /// Create an event reference as an argument to a modifier.
     ///
     /// For simple events, pass a string value.
@@ -270,26 +333,32 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
     /// * ``debounce``
     /// * ``throttle``
     public init(from decoder: Decoder) throws {
-        if let singleValue = try? decoder.singleValueContainer(),
-           singleValue.decodeNil()
-        {
-            self.event = nil
-            self.name = nil
-            self.type = "click"
-            self.target = nil
-            self.debounce = nil
-            self.throttle = nil
-            self.params = nil
-        } else {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            
-            self.event = try container.decodeIfPresent(String.self, forKey: .event)
-            self.name = nil
-            self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? "click"
-            self.target = try container.decodeIfPresent(Int.self, forKey: .target)
-            self.debounce = try container.decodeIfPresent(Double.self, forKey: .debounce)
-            self.throttle = try container.decodeIfPresent(Double.self, forKey: .throttle)
-            self.params = try container.decodeIfPresent(String.self, forKey: .params).flatMap({ try? JSONSerialization.jsonObject(with: Data($0.utf8)) })
+        let container = try decoder.singleValueContainer()
+        
+        let value = try container.decode(Resolvable.self)
+        self.name = nil
+        self.event = value.event
+        self.type = value.type
+        self.target = value.target
+        self.debounce = value.debounce
+        self.throttle = value.throttle
+        self.params = nil
+    }
+    
+    @ASTDecodable("__event__")
+    struct Resolvable: @preconcurrency Decodable {
+        let event: String
+        let type: String
+        let target: Int?
+        let debounce: Double?
+        let throttle: Double?
+        
+        init(_ event: String, type: String = "click", target: Int? = nil, debounce: Double? = nil, throttle: Double? = nil) {
+            self.event = event
+            self.type = type
+            self.target = target
+            self.debounce = debounce
+            self.throttle = throttle
         }
     }
     
@@ -313,7 +382,7 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
     /// }
     /// ```
     public var wrappedValue: EventHandler {
-        EventHandler(owner: self)
+        handler
     }
     
     /// A closure that triggers the event without any additional payload or waiting for completion.
@@ -322,64 +391,22 @@ public struct Event: @preconcurrency DynamicProperty, @preconcurrency Decodable 
     }
     
     public func update() {
-        handler.update(coordinator: coordinatorEnvironment, debounce: debounce ?? debounceAttribute?.milliseconds, throttle: throttle ?? throttleAttribute)
-    }
-    
-    /// An action that you invoke to send an event to the server.
-    @MainActor
-    public struct EventHandler {
-        let owner: Event
-        
-        var event: String? {
-            owner.event ?? owner.name.flatMap(owner.element.attributeValue(for:))
-        }
-        
-        public func callAsFunction(value: Any = [String:String](), didSend: (() -> Void)? = nil) {
-            Task {
-                try await self.callAsFunction(value: value)
-                didSend?()
-            }
-        }
-        
-        public func callAsFunction(value: Any = [String:String]()) async throws {
-            guard let event else {
-                return
-            }
-            if let confirm = try owner.element.attributeValue(for: "data-confirm"),
-               let eventConfirmation = owner.eventConfirmation
-            {
-                guard await eventConfirmation(confirm, owner.element) else { return }
-            }
-            await owner.handler.channel.send(.init(
-                type: owner.type,
+        if let event = self.event ?? self.name.flatMap({ element.attributeValue(for: $0) }) {
+            handler.payload = .init(
+                type: self.type,
                 event: event,
-                payload: owner.params ?? value,
-                target: owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init)
-            ))
-        }
-        
-        public func callAsFunction<R: RootRegistry>(value: Any = [String:String](), in context: LiveContext<R>) async throws {
-            guard let event else {
-                return
-            }
-            if let confirm = try owner.element.attributeValue(for: "data-confirm"),
-               let eventConfirmation = owner.eventConfirmation
-            {
-                guard await eventConfirmation(confirm, owner.element) else { return }
-            }
-            let handler = Handler()
-            handler.update(
-                coordinator: CoordinatorEnvironment(context.coordinator, document: context.coordinator.document!),
-                debounce: owner.debounce,
-                throttle: owner.throttle
+                payload: self.params,
+                target: self.target,
+                confirm: self.element.attributeValue(for: "data-confirm"),
+                eventConfirmation: self.eventConfirmation.flatMap { eventConfirmation in
+                    { message in
+                        await eventConfirmation(message, self.element)
+                    }
+                }
             )
-            await handler.channel.send(.init(
-                type: owner.type,
-                event: event,
-                payload: owner.params ?? value,
-                target: owner.target
-            ))
         }
+        
+        handler.update(coordinator: coordinatorEnvironment, debounce: debounce.flatMap({ .milliseconds($0) }) ?? debounceAttribute, throttle: throttle ?? throttleAttribute)
     }
 }
 

@@ -27,9 +27,9 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
                annotations: true
              ) ==
                output
-      end
+    end
 
-      test "parses modifier function definition with annotation (2)" do
+    test "parses modifier function definition with annotation (2)" do
       {line, input} = {__ENV__.line,"""
       font(.largeTitle)
       bold(true)
@@ -40,6 +40,27 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         {:font, [file: __ENV__.file, line: line, module: __ENV__.module, source: "font(.largeTitle)"], [{:., [file: __ENV__.file, line: line, module: __ENV__.module, source: "font(.largeTitle)"], [nil, :largeTitle]}]},
         {:bold, [file: __ENV__.file, line: line + 1, module: __ENV__.module, source: "bold(true)"], [true]},
         {:italic, [file: __ENV__.file, line: line + 2, module: __ENV__.module, source: "italic(true)"], [true]}
+      ]
+
+      assert parse(input,
+          file: __ENV__.file,
+          module: __ENV__.module,
+          line: line,
+          annotations: true
+        ) == output
+    end
+
+    test "ignores leading . and trailing ;" do
+      {line, input} = {__ENV__.line,"""
+      .font(.largeTitle);
+      .bold(true);
+      .italic(true);
+      """}
+
+      output = [
+        {:font, [file: __ENV__.file, line: line, module: __ENV__.module, source: ".font(.largeTitle);"], [{:., [file: __ENV__.file, line: line, module: __ENV__.module, source: ".font(.largeTitle);"], [nil, :largeTitle]}]},
+        {:bold, [file: __ENV__.file, line: line + 1, module: __ENV__.module, source: ".bold(true);"], [true]},
+        {:italic, [file: __ENV__.file, line: line + 2, module: __ENV__.module, source: ".italic(true);"], [true]}
       ]
 
       assert parse(input,
@@ -78,22 +99,26 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "parses atoms as an argument value" do
       input = "background(content: :star_red)"
-      output = {:background, [], [[content: :star_red]]}
+      output = {:background, [], [{:content, {:":", [],"star_red"}}]}
 
       assert parse(input) == output
     end
 
     test "parses string wrapped atoms as an argument value" do
       input = "background(content: :\"star-red\")"
-      output = {:background, [], [[content: :"star-red"]]}
+      output = {:background, [], [{:content, {:":", [], "star-red"}}]}
 
       assert parse(input) == output
     end
 
     test "parses a naked IME" do
       input = "font(.largeTitle)"
-
       output = {:font, [], [{:., [], [nil, :largeTitle]}]}
+
+      assert parse(input) == output
+
+      input = "background(Color.blue.opacity(0.2).blendMode(.multiply).mix(with: .orange).opacity(0.7))"
+      output = {:background, [], [{:., [], [{:., [], [{:., [], [{:., [], [{:., [], [:Color, :blue]}, {:opacity, [], [0.2]}]}, {:blendMode, [], [{:., [], [nil, :multiply]}]}]}, {:mix, [], [{:with, {:., [], [nil, :orange]}}]}]}, {:opacity, [], [0.7]}]}]}
 
       assert parse(input) == output
     end
@@ -109,22 +134,26 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     test "parses chained IMEs" do
       input = "font(color: Color.red)"
 
-      output = {:font, [], [[color: {:., [], [:Color, :red]}]]}
+      output = {:font, [], [{:color, {:., [], [:Color, :red]}}]}
 
       assert parse(input) == output
 
       input = "font(color: Color.red.shadow(.thick))"
 
       output =
-        {:font, [],
-         [[color: {:., [], [:Color, {:., [], [:red, {:shadow, [], [{:., [], [nil, :thick]}]}]}]}]]}
+        {:font, [], [{:color, {:., [], [{:., [], [:Color, :red]}, {:shadow, [], [{:., [], [nil, :thick]}]}]}}]}
 
       assert parse(input) == output
 
       input = "foregroundStyle(Color(.displayP3, red: 0.4627, green: 0.8392, blue: 1.0).opacity(0.25))"
 
       output =
-        {:foregroundStyle, [], [{:., [], [{:Color, [], [{:., [], [nil, :displayP3]}, [red: 0.4627, green: 0.8392, blue: 1.0]]}, {:opacity, [], [0.25]}]}]}
+        {:foregroundStyle, [], [{:., [], [{:Color, [], [
+          {:., [], [nil, :displayP3]},
+          {:red, 0.4627},
+          {:green, 0.8392},
+          {:blue, 1.0}
+        ]}, {:opacity, [], [0.25]}]}]}
 
       assert parse(input) == output
     end
@@ -132,7 +161,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     test "parses naked chained IME" do
       input = "font(.largeTitle.red)"
 
-      output = {:font, [], [{:., [], [nil, {:., [], [:largeTitle, :red]}]}]}
+      output = {:font, [], [{:., [], [{:., [], [nil, :largeTitle]}, :red]}]}
 
       assert parse(input) == output
     end
@@ -147,15 +176,15 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
 
       input = ~s/Gradient(colors: [0, 1, 2])/
-      output = {:Gradient, [], [[colors: [0, 1, 2]]]}
+      output = {:Gradient, [], [{:colors, [0, 1, 2]}]}
       assert parse(input) == output
 
       input = ~s/Gradient(colors: [Color.red, Color.blue])/
-      output = {:Gradient, [], [[colors: [{:., [], [:Color, :red]}, {:., [], [:Color, :blue]}]]]}
+      output = {:Gradient, [], [{:colors, [{:., [], [:Color, :red]}, {:., [], [:Color, :blue]}]}]}
       assert parse(input) == output
 
       input = ~s/Gradient(colors: ["red", "blue"])/
-      output = {:Gradient, [], [[colors: ["red", "blue"]]]}
+      output = {:Gradient, [], [{:colors, ["red", "blue"]}]}
       assert parse(input) == output
     end
 
@@ -176,13 +205,15 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       output =
         {:color, [],
-         [
-           [
-             color:
-               {:., [],
-                [nil, {:., [], [:foo, {:., [], [:bar, {:., [], [{:baz, [], [1, 2]}, :qux]}]}]}]}
-           ]
-         ]}
+          [
+            {
+              :color,
+                {:., [],
+                  [{:., [], [{:., [], [{:., [], [nil, :foo]}, :bar]}, {:baz, [], [1, 2]}]}, :qux]
+              }
+            }
+          ]
+        }
 
       assert parse(input) == output
     end
@@ -226,7 +257,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "parses key/value pairs" do
       input = ~s|foo(bar: "baz", qux: .quux)|
-      output = {:foo, [], [[bar: "baz", qux: {:., [], [nil, :quux]}]]}
+      output = {:foo, [], [{:bar, "baz"}, {:qux, {:., [], [nil, :quux]}}]}
 
       assert parse(input) == output
     end
@@ -362,21 +393,21 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
   describe "helper functions" do
     test "event" do
       input = ~s{searchable(change: event("search-event", throttle: 10_000))}
-      output = {:searchable, [], [[change: {:__event__, [], ["search-event", [throttle: 10_000]]}]]}
+      output = {:searchable, [], [{:change, {:__event__, [], ["search-event", {:throttle, 10_000}]}}]}
 
       assert parse(input) == output
     end
 
     test "event with no arguments" do
       input = ~s{searchable(change: event("search-event"))}
-      output = {:searchable, [], [[change: {:__event__, [], ["search-event"]}]]}
+      output = {:searchable, [], [{:change, {:__event__, [], ["search-event"]}}]}
 
       assert parse(input) == output
     end
 
     test "gesture" do
       input = ~s{offset(x: gesture_state(:drag, .translation.width))}
-      output = {:offset, [], [[x: {:__gesture_state__, [], [:drag, {:., [], [nil, {:., [], [:translation, :width]}]}]}]]}
+      output = {:offset, [], [{:x, {:__gesture_state__, [], [{:":", [], "drag"}, {:., [], [{:., [], [nil, :translation]}, :width]}]}}]}
 
       assert parse(input) == output
 
@@ -569,8 +600,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert String.trim(error.description) == error_prefix
     end
 
-    test "invalid keyword pair: invalid value" do
-      input = "abc(def: 11, b: [lineWidth: 1lineWidth])"
+    test "invalid number" do
+      input = "abc(def: 11, b: 1lineWidth)"
 
       error =
         assert_raise SyntaxError, fn ->
@@ -581,8 +612,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         """
         Unsupported input:
           |
-        1 | abc(def: 11, b: [lineWidth: 1lineWidth])
-          |                              ^^^^^^^^^
+        1 | abc(def: 11, b: 1lineWidth)
+          |                  ^^^^^^^^^
           |
 
         Invalid suffix on number
@@ -592,8 +623,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert String.trim(error.description) == error_prefix
     end
 
-    test "invalid keyword pair: invalid value (2)" do
-      input = "abc(def: 11, b: [lineWidth: :1])"
+    test "invalid atom" do
+      input = "abc(def: 11, b: :1)"
 
       error =
         assert_raise SyntaxError, fn ->
@@ -604,8 +635,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         """
         Unsupported input:
           |
-        1 | abc(def: 11, b: [lineWidth: :1])
-          |                              ^
+        1 | abc(def: 11, b: :1)
+          |                  ^
           |
 
         Expected an atom, but got ‘1’
