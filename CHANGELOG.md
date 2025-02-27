@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The `data-confirm` attribute can be added to elements to show a confirmation dialog before sending an event
 - `LiveSessionCoordinator.receiveEvent(_:for:)` and `LiveViewCoordinator.receiveEvent(_:for:)` to receive events with `Decodable` type payloads
 - modifiers will ignore leading `.` and trailing `;`
+- `FileUpload` type and `LiveViewModel.fileUpload(id:)` allow you to access queued files by their `phx-upload-ref` to create previews before upload
 
 ### Changed
 
