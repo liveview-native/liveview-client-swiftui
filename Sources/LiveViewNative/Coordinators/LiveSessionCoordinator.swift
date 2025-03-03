@@ -216,6 +216,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 try await socket.shutdown()
             }
             
+            let adapter = ReconnectStrategyAdapter(self.configuration.reconnectBehavior)
+            
             self.liveSocket = try await LiveSocket(
                 originalURL.absoluteString,
                 LiveSessionParameters.platform,
@@ -225,6 +227,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     method: httpMethod.flatMap(Method.init(_:)),
                     timeoutMs: 10_000
                 )
+                adapter,
             )
             
             // save cookies to storage

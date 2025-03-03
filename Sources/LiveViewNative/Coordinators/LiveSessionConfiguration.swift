@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// An object that configures the behavior of a ``LiveSessionCoordinator``.
 public struct LiveSessionConfiguration {
@@ -99,3 +100,26 @@ public struct LiveSessionConfiguration {
         public static let never: Self = .init()
     }
 }
+
+
+public final class ReconnectStrategyAdapter: SocketReconnectStrategy {
+
+    private let behavior: LiveSessionConfiguration.ReconnectBehavior
+    
+    public init(_ behavior: LiveSessionConfiguration.ReconnectBehavior) {
+        self.behavior = behavior
+    }
+
+    public func sleepDuration(_ attempt: UInt64) -> TimeInterval {
+
+        guard let delay = behavior.delay else {
+            return TimeInterval.greatestFiniteMagnitude
+        }
+
+        let safeAttempt = min(Int(attempt), Int.max)
+        return delay(safeAttempt)
+     }
+
+
+}
+
