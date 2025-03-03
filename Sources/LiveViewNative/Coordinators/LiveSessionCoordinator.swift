@@ -226,8 +226,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     body: httpBody,
                     method: httpMethod.flatMap(Method.init(_:)),
                     timeoutMs: 10_000
-                )
-                adapter,
+                ),
+                adapter
             )
             
             // save cookies to storage
