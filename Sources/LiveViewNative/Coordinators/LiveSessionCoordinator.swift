@@ -292,6 +292,17 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
+    func overrideLiveReloadChannel(channel: LiveChannel) async throws {
+        
+        if let liveReloadChannel {
+            try await liveReloadChannel.shutdownParentSocket()
+            self.liveReloadChannel = nil
+        }
+        
+        self.liveReloadChannel = channel
+        self.bindLiveReloadListener()
+    }
+    
     func bindLiveReloadListener() {
         let eventListener = self.liveReloadChannel!.channel().events()
         self.liveReloadListenerLoop = Task { @MainActor [weak self] in
