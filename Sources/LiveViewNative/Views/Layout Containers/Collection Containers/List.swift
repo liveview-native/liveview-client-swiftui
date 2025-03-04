@@ -208,12 +208,19 @@ struct List<Root: RootRegistry>: View {
                         }
                 }
             }
+            .opacity(didAttemptRestoration ? 1 : 0) // prevent flickering when restoring
             .task {
                 defer { didAttemptRestoration = true }
                 
                 guard let id,
                       case let .id(restoreID) = $liveElement.context.coordinator.session.scrollPositions[$liveElement.context.coordinator.session.navigationPath.count, default: [:]][id]
                 else { return }
+                
+                scrollProxy.scrollTo(restoreID, anchor: .top)
+                
+                // wait for the next runloop and try to scroll again
+                // it seems that the scroll won't work if the elements are not laid-out yet
+                try! await Task.sleep(for: .nanoseconds(0))
                 
                 scrollProxy.scrollTo(restoreID, anchor: .top)
             }
