@@ -15,7 +15,7 @@ nonisolated(unsafe) fileprivate let dateTimeFormatter: ISO8601DateFormatter = {
 }()
 
 /// A formatter that parses ISO8601 dates as produced by Elixir's `Date`.
-fileprivate let dateFormatter: DateFormatter = {
+nonisolated(unsafe) fileprivate let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
     return formatter
