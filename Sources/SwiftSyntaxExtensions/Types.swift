@@ -92,6 +92,14 @@ public extension TypeSyntaxProtocol {
             return false
         }
         
+        // Foundation.Predicate is not allowed
+        if let memberType = self.as(MemberTypeSyntax.self),
+           memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Foundation",
+           memberType.name.text == "Predicate"
+        {
+            return false
+        }
+        
         // Decoder is not allowed
         if let memberType = self.as(MemberTypeSyntax.self),
            memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift",

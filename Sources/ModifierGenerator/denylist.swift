@@ -33,7 +33,6 @@ let denylist = [
     
     "onCommand",
     
-    "tag",
     "id",
     
     "task",

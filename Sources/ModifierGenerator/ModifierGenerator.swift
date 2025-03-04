@@ -23,7 +23,7 @@ struct ModifierGenerator: ParsableCommand {
     func run() throws {
         guard let sdkRoot = ProcessInfo.processInfo.environment["SDKROOT"]
             .flatMap({ URL(filePath: $0) })
-        else { throw ModifierGeneratorError.missingSDKROOT }
+        else { throw ModifierGeneratorError.missingSDKROOT(environment: ProcessInfo.processInfo.environment) }
         
         // get the `.swiftinterface` files from the matching SDK.
         let swiftUICoreInterface = try FileManager.default.contentsOfDirectory(at: sdkRoot.appending(path: "System/Library/Frameworks/SwiftUICore.framework/Modules/SwiftUICore.swiftmodule"), includingPropertiesForKeys: nil)
@@ -90,7 +90,14 @@ struct ModifierGenerator: ParsableCommand {
     }
 }
 
-enum ModifierGeneratorError: Error {
+enum ModifierGeneratorError: LocalizedError {
     /// The `SDKROOT` environment variable is missing.
-    case missingSDKROOT
+    case missingSDKROOT(environment: [String:String])
+    
+    var errorDescription: String? {
+        switch self {
+        case .missingSDKROOT(let environment):
+            "Missing SDKROOT in environment: \(environment)"
+        }
+    }
 }

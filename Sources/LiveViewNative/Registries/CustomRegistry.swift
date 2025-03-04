@@ -230,6 +230,10 @@ public protocol RootRegistry: CustomRegistry where Root == Self {
 }
 
 public struct _EmptyRegistryModifier: ViewModifier, Decodable {
+    public nonisolated init(from decoder: any Decoder) throws {
+        throw BuiltinRegistryModifierError.unknownModifier
+    }
+    
     public func body(content: Content) -> some View {
         content
     }

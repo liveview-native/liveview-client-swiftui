@@ -44,6 +44,19 @@ extension ModifierGenerator {
                         ])
                     )
                 ])
+                // case _builtinOverride(BuiltinOverrideModifiers<R>)
+                EnumCaseDeclSyntax(elements: [
+                    EnumCaseElementSyntax(
+                        name: .identifier("_builtinOverride"),
+                        parameterClause: EnumCaseParameterClauseSyntax(parameters: [
+                            EnumCaseParameterSyntax(
+                                type: IdentifierTypeSyntax(name: .identifier("BuiltinOverrideModifiers"), genericArgumentClause: GenericArgumentClauseSyntax {
+                                    GenericArgumentSyntax(argument: IdentifierTypeSyntax(name: .identifier("R")))
+                                })
+                            )
+                        ])
+                    )
+                ])
                 // case _imageModifier(ImageModifierRegistry)
                 EnumCaseDeclSyntax(elements: [
                     EnumCaseElementSyntax(
@@ -210,6 +223,87 @@ extension ModifierGenerator {
                                         
                                         SwitchCaseSyntax(label: .default(SwitchDefaultLabelSyntax())) {
                                             // try specialty modifier types
+                                            
+                                            // _customRegistry
+                                            IfExprSyntax(conditions: ConditionElementListSyntax {
+                                                ConditionElementSyntax(
+                                                    condition: .optionalBinding(OptionalBindingConditionSyntax(
+                                                        bindingSpecifier: .keyword(.let),
+                                                        pattern: IdentifierPatternSyntax(identifier: .identifier("modifier")),
+                                                        initializer: InitializerClauseSyntax(value: TryExprSyntax(
+                                                            questionOrExclamationMark: .postfixQuestionMarkToken(),
+                                                            expression: FunctionCallExprSyntax(
+                                                                callee: MemberAccessExprSyntax(
+                                                                    base: DeclReferenceExprSyntax(baseName: .identifier("container")),
+                                                                    period: .periodToken(),
+                                                                    name: .identifier("decode")
+                                                                )
+                                                            ) {
+                                                                LabeledExprSyntax(expression: MemberAccessExprSyntax(
+                                                                    base: TypeExprSyntax(type: MemberTypeSyntax(
+                                                                        baseType: IdentifierTypeSyntax(name: .identifier("R")),
+                                                                        name: .identifier("CustomModifier")
+                                                                    )),
+                                                                    period: .periodToken(),
+                                                                    name: .identifier("self")
+                                                                ))
+                                                            }
+                                                        ))
+                                                    ))
+                                                )
+                                            }) {
+                                                InfixOperatorExprSyntax(
+                                                    leftOperand: DeclReferenceExprSyntax(baseName: .identifier("self")),
+                                                    operator: AssignmentExprSyntax(),
+                                                    rightOperand: FunctionCallExprSyntax(
+                                                        callee: MemberAccessExprSyntax(name: .identifier("_customRegistry"))
+                                                    ) {
+                                                        LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("modifier")))
+                                                    }
+                                                )
+                                                ReturnStmtSyntax()
+                                            }
+                                            
+                                            // _builtinOverride
+                                            IfExprSyntax(conditions: ConditionElementListSyntax {
+                                                ConditionElementSyntax(
+                                                    condition: .optionalBinding(OptionalBindingConditionSyntax(
+                                                        bindingSpecifier: .keyword(.let),
+                                                        pattern: IdentifierPatternSyntax(identifier: .identifier("modifier")),
+                                                        initializer: InitializerClauseSyntax(value: TryExprSyntax(
+                                                            questionOrExclamationMark: .postfixQuestionMarkToken(),
+                                                            expression: FunctionCallExprSyntax(
+                                                                callee: MemberAccessExprSyntax(
+                                                                    base: DeclReferenceExprSyntax(baseName: .identifier("container")),
+                                                                    period: .periodToken(),
+                                                                    name: .identifier("decode")
+                                                                )
+                                                            ) {
+                                                                LabeledExprSyntax(expression: MemberAccessExprSyntax(
+                                                                    base: TypeExprSyntax(type: IdentifierTypeSyntax(name: .identifier("BuiltinOverrideModifiers"), genericArgumentClause: GenericArgumentClauseSyntax {
+                                                                        GenericArgumentSyntax(argument: IdentifierTypeSyntax(name: .identifier("R")))
+                                                                    })),
+                                                                    period: .periodToken(),
+                                                                    name: .identifier("self")
+                                                                ))
+                                                            }
+                                                        ))
+                                                    ))
+                                                )
+                                            }) {
+                                                InfixOperatorExprSyntax(
+                                                    leftOperand: DeclReferenceExprSyntax(baseName: .identifier("self")),
+                                                    operator: AssignmentExprSyntax(),
+                                                    rightOperand: FunctionCallExprSyntax(
+                                                        callee: MemberAccessExprSyntax(name: .identifier("_builtinOverride"))
+                                                    ) {
+                                                        LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("modifier")))
+                                                    }
+                                                )
+                                                ReturnStmtSyntax()
+                                            }
+                                            
+                                            // _imageModifier
                                             IfExprSyntax(conditions: ConditionElementListSyntax {
                                                 ConditionElementSyntax(
                                                     condition: .optionalBinding(OptionalBindingConditionSyntax(
@@ -246,6 +340,7 @@ extension ModifierGenerator {
                                                 ReturnStmtSyntax()
                                             }
                                             
+                                            // _shapeFinalizerModifier
                                             IfExprSyntax(conditions: ConditionElementListSyntax {
                                                 ConditionElementSyntax(
                                                     condition: .optionalBinding(OptionalBindingConditionSyntax(
@@ -405,6 +500,26 @@ extension ModifierGenerator {
                                 bindingSpecifier: .keyword(.let),
                                 pattern: ExpressionPatternSyntax(expression: FunctionCallExprSyntax(
                                     callee: MemberAccessExprSyntax(name: .identifier("_error"))
+                                ) {
+                                    LabeledExprSyntax(expression: PatternExprSyntax(pattern: IdentifierPatternSyntax(identifier: .identifier("modifier"))))
+                                })
+                            ))
+                        })) {
+                            FunctionCallExprSyntax(callee: MemberAccessExprSyntax(
+                                base: DeclReferenceExprSyntax(baseName: .identifier("content")),
+                                period: .periodToken(),
+                                name: .identifier("modifier")
+                            )) {
+                                LabeledExprSyntax(expression: DeclReferenceExprSyntax(baseName: .identifier("modifier")))
+                            }
+                        }
+                        
+                        // case let ._builtinOverride(modifier)
+                        SwitchCaseSyntax(label: .case(SwitchCaseLabelSyntax {
+                            SwitchCaseItemSyntax(pattern: ValueBindingPatternSyntax(
+                                bindingSpecifier: .keyword(.let),
+                                pattern: ExpressionPatternSyntax(expression: FunctionCallExprSyntax(
+                                    callee: MemberAccessExprSyntax(name: .identifier("_builtinOverride"))
                                 ) {
                                     LabeledExprSyntax(expression: PatternExprSyntax(pattern: IdentifierPatternSyntax(identifier: .identifier("modifier"))))
                                 })
