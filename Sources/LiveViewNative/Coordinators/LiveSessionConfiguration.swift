@@ -102,7 +102,7 @@ public struct LiveSessionConfiguration {
 }
 
 
-public final class ReconnectStrategyAdapter: SocketReconnectStrategy {
+internal final class ReconnectStrategyAdapter: SocketReconnectStrategy {
 
     private let behavior: LiveSessionConfiguration.ReconnectBehavior
     
