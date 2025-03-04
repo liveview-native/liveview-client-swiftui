@@ -102,16 +102,14 @@ public struct LiveSessionConfiguration {
 }
 
 
-internal final class ReconnectStrategyAdapter: SocketReconnectStrategy {
-
+final class ReconnectStrategyAdapter: SocketReconnectStrategy {
     private let behavior: LiveSessionConfiguration.ReconnectBehavior
     
-    public init(_ behavior: LiveSessionConfiguration.ReconnectBehavior) {
+    init(_ behavior: LiveSessionConfiguration.ReconnectBehavior) {
         self.behavior = behavior
     }
 
-    public func sleepDuration(_ attempt: UInt64) -> TimeInterval {
-
+    func sleepDuration(_ attempt: UInt64) -> TimeInterval {
         guard let delay = behavior.delay else {
             return TimeInterval.greatestFiniteMagnitude
         }
@@ -119,7 +117,5 @@ internal final class ReconnectStrategyAdapter: SocketReconnectStrategy {
         let safeAttempt = min(Int(attempt), Int.max)
         return delay(safeAttempt)
      }
-
-
 }
 
