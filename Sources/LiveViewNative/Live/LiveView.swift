@@ -247,7 +247,7 @@ public struct LiveView<
         .onChange(of: scenePhase) { newValue in
             guard case .active = newValue
             else { return }
-            if case .connected = session.socket?.status() {
+            if case .connected = session.status() {
                 return
             }
             Task {
