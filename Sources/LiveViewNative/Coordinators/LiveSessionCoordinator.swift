@@ -216,6 +216,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 try await socket.shutdown()
             }
             
+            let adapter = ReconnectStrategyAdapter(self.configuration.reconnectBehavior)
+            
             self.liveSocket = try await LiveSocket(
                 originalURL.absoluteString,
                 LiveSessionParameters.platform,
@@ -224,7 +226,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     body: httpBody,
                     method: httpMethod.flatMap(Method.init(_:)),
                     timeoutMs: 10_000
-                )
+                ),
+                adapter
             )
             
             // save cookies to storage
@@ -287,6 +290,17 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         } catch {
             self.state = .connectionFailed(error)
         }
+    }
+    
+    func overrideLiveReloadChannel(channel: LiveChannel) async throws {
+        
+        if let liveReloadChannel {
+            try await liveReloadChannel.shutdownParentSocket()
+            self.liveReloadChannel = nil
+        }
+        
+        self.liveReloadChannel = channel
+        self.bindLiveReloadListener()
     }
     
     func bindLiveReloadListener() {
