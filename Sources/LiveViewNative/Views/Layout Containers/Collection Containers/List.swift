@@ -208,7 +208,7 @@ struct List<Root: RootRegistry>: View {
                         }
                 }
             }
-            .opacity(didAttemptRestoration ? 1 : 0) // prevent flickering when restoring
+            .opacity((id == nil || didAttemptRestoration) ? 1 : 0) // prevent flickering when restoring
             .task {
                 defer { didAttemptRestoration = true }
                 
