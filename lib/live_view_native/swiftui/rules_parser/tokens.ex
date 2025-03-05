@@ -21,30 +21,28 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
 
   def nil_(), do: replace(string("nil"), nil)
 
-  def minus(), do: string("-")
-
-  def underscored_integer() do
-    integer(min: 1)
+  def digits() do
+    ascii_char([?0..?9])
     |> repeat(
       choice([
         ascii_char([?0..?9]),
-        ignore(string("_"))
-        |> ascii_char([?0..?9])
+        ignore(string("_")) |> ascii_char([?0..?9])
       ])
-      |> reduce({List, :to_string, []})
     )
-    |> reduce({Enum, :join, [""]})
+    |> reduce({List, :to_string, []})
+  end
+
+  def minus(), do: string("-")
+
+  def frac() do
+    concat(string("."), digits())
   end
 
   def integer() do
     optional(minus())
-    |> concat(underscored_integer())
+    |> concat(digits())
     |> reduce({Enum, :join, [""]})
     |> map({String, :to_integer, []})
-  end
-
-  def frac() do
-    concat(string("."), underscored_integer())
   end
 
   def float() do
