@@ -268,55 +268,54 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     }
     
     public func queueFileUpload(
-        name: String,
-        id: String,
-        contents: Data,
-        fileType: UTType,
-        fileName: String,
-        coordinator: LiveViewCoordinator<some RootRegistry>
-    ) async throws {
-        guard let liveChannel = coordinator.liveChannel
-        else { return }
-        
-        let file = LiveFile(
-            contents,
-            fileType.preferredMIMEType!,
-            fileName,
-            "",
-            id
-        )
-        if let changeEventName {
-            let replyPayload = try await coordinator.liveChannel!.channel().call(
-                event: .user(user: "event"),
-                payload: .jsonPayload(json: .object(object: [
-                    "type": .str(string: "form"),
-                    "event": .str(string: changeEventName),
-                    "value": .str(string: "_target=\(name)"),
-                    "uploads": .object(object: [
-                        id: .array(array: [
-                            .object(object: [
-                                "path": .str(string: fileName),
-                                "ref": .str(string: String(coordinator.nextUploadRef())),
-                                "last_modified": .numb(number: .posInt(pos: UInt64(Date().timeIntervalSince1970 * 1000))), // in milliseconds
-                                "name": .str(string: fileName),
-                                "relative_path": .str(string: ""),
-                                "type": .str(string: fileType.preferredMIMEType!),
-                                "size": .numb(number: .posInt(pos: UInt64(contents.count)))
-                            ])
-                        ])
-                    ])
-                ])),
-                timeout: 10_000
-            )
-            try await coordinator.handleEventReplyPayload(replyPayload)
-        }
-        self.fileUploads.append(.init(
-            id: id,
-            data: contents,
-            upload: { try await liveChannel.uploadFile(file) }
-        ))
-    }
-}
+           name: String,
+           id: String,
+           contents: Data,
+           fileType: UTType,
+           fileName: String,
+           coordinator: LiveViewCoordinator<some RootRegistry>
+       ) async throws {
+           
+           let file = LiveFile(
+               contents,
+               fileType.preferredMIMEType!,
+               fileName,
+               "",
+               id
+           )
+           if let changeEventName {
+               let replyPayload = try await coordinator.call(
+                   event: "event",
+                   payload: .jsonPayload(json: .object(object: [
+                       "type": .str(string: "form"),
+                       "event": .str(string: changeEventName),
+                       "value": .str(string: "_target=\(name)"),
+                       "uploads": .object(object: [
+                           id: .array(array: [
+                               .object(object: [
+                                   "path": .str(string: fileName),
+                                   "ref": .str(string: String(coordinator.nextUploadRef())),
+                                   "last_modified": .numb(number: .posInt(pos: UInt64(Date().timeIntervalSince1970 * 1000))), // in milliseconds
+                                   "name": .str(string: fileName),
+                                   "relative_path": .str(string: ""),
+                                   "type": .str(string: fileType.preferredMIMEType!),
+                                   "size": .numb(number: .posInt(pos: UInt64(contents.count)))
+                               ])
+                           ])
+                       ])
+                   ]))
+               );
+               if let payload = replyPayload {
+                   try await coordinator.handleEventReplyPayload(payload)
+               }
+           }
+           self.fileUploads.append(.init(
+               id: id,
+               data: contents,
+               upload: {  try await coordinator.uploadFile(file: file) }
+           ))
+       }
+   }
 
 private extension URLComponents {
     var formEncodedQuery: String? {
