@@ -112,6 +112,42 @@ labeled(as: 5)
 labeled(as: "Label")
 ```
 
+``ASTDecodable(_:options:)`` will also synthesize decoders for enum cases, static functions, static members, properties, and member functions.
+To exclude any of these declarations from the decoder, either prefix them with an underscore (`_`), or define them in an extension.
+Static functions, static members, properties, and member functions will only receive a synthesized decoder if they return `Self` (or a type name that matches the declaration ``ASTDecodable(_:options:)`` is attached to).
+
+```swift
+@ASTDecodable("MyType")
+enum MyType: Decodable {
+    init() {} // decodable
+    
+    case enumCase // decodable
+    
+    static func staticFunction() -> Self { ... } // decodable
+    static func staticFunction() -> OtherType { ... } // not decodable
+    static func _staticFunction() -> OtherType { ... } // not decodable
+    
+    static var staticMember: Self { ... } // decodable
+    static var staticMember: OtherType { ... } // not decodable
+    static var _staticMember: OtherType { ... } // not decodable
+    
+    func memberFunction() -> Self { ... } // decodable
+    func memberFunction() -> OtherType { ... } // not decodable
+    func _memberFunction() -> OtherType { ... } // not decodable
+    
+    var property: Self { ... } // decodable
+    var property: OtherType { ... } // not decodable
+    var _property: OtherType { ... } // not decodable
+}
+
+extension MyType {
+    static func staticFunction() -> Self { ... } // not decodable
+    static var staticMember: Self { ... } // not decodable
+    func memberFunction() -> Self { ... } // not decodable
+    var property: Self { ... } // not decodable
+}
+```
+
 ### Attribute References
 Any type that conforms to ``AttributeDecodable`` can be wrapped with ``AttributeReference``.
 
