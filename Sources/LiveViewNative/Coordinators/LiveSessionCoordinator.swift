@@ -67,7 +67,20 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Json)), Never>()
     private var eventHandlers = Set<AnyCancellable>()
     
-    private var reconnectAttempts = 0
+    deinit {
+        let client = liveviewClient
+        let channel = liveReloadChannel
+        Task { @MainActor in
+            if let client {
+                client.shutdown()
+            }
+            if let channel {
+                do {
+                  try await channel.shutdownParentSocket()
+                }
+            }
+        }
+    }
     
     /// Positions for `<ScrollView>` elements with an explicit ID.
     ///
@@ -195,15 +208,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.init(url, config: config, customRegistryType: EmptyRegistry.self)
     }
     
-    deinit {
-        let liveReloadChannel = liveReloadChannel
-        Task {
-            do {
-                try await liveReloadChannel?.shutdownParentSocket()
-            }
-        }
-    }
-
+ 
     /// Connects this coordinator to the LiveView channel.
     ///
     /// You generally do not call this function yourself. It is called automatically when the ``LiveView`` appears.
@@ -233,6 +238,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             let headers = (configuration.headers ?? [:])
                 .merging(additionalHeaders ?? [:]) { $1 }
             
+            // TODO: add this interface
             let adapter = ReconnectStrategyAdapter(self.configuration.reconnectBehavior)
             
             let opts = ClientConnectOpts(
