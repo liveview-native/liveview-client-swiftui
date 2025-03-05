@@ -12,7 +12,7 @@ import LiveViewNativeCore
 
 extension WKTextContentType {
     @ASTDecodable("WKTextContentType")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable, @preconcurrency AttributeDecodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable, @preconcurrency AttributeDecodable {
         case name
         case namePrefix
         case givenName
@@ -43,7 +43,7 @@ extension WKTextContentType {
     }
 }
 
-extension WKTextContentType.Resolvable {
+public extension WKTextContentType.Resolvable {
     func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> WKTextContentType where R : RootRegistry {
         switch self {
         case .name:

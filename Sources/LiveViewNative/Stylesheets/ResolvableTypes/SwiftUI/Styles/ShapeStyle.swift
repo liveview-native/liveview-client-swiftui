@@ -9,8 +9,8 @@ import SwiftUI
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
-indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurrency ShapeStyle, @preconcurrency Decodable {
-    typealias Resolved = AnyShapeStyle
+public indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurrency ShapeStyle, @preconcurrency Decodable {
+    public typealias Resolved = AnyShapeStyle
     
     case color(Color.Resolvable)
     case angularGradient(AngularGradient.Resolvable)
@@ -22,7 +22,7 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
     case semantic(SemanticShapeStyle)
     case modified(ModifiedShapeStyle)
     
-    struct ModifiedShapeStyle: StylesheetResolvable, @preconcurrency Decodable {
+    public struct ModifiedShapeStyle: StylesheetResolvable, @preconcurrency Decodable {
         let base: StylesheetResolvableShapeStyle
         let modifier: Modifier
         
@@ -81,7 +81,7 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
             }
         }
         
-        init(from decoder: any Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             var container = try decoder.unkeyedContainer()
             
             _ = try container.decode(ASTNode.Identifiers.MemberAccess.self)
@@ -92,7 +92,7 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
             self.modifier = try arguments.decode(Modifier.self)
         }
         
-        func resolve(
+        public func resolve(
             on element: ElementNode,
             in context: LiveContext<some RootRegistry>
         ) -> AnyShapeStyle {
@@ -124,7 +124,7 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
     }
     
     @ASTDecodable("ShapeStyle")
-    enum MaterialShapeStyle: StylesheetResolvable, @preconcurrency Decodable {
+    public enum MaterialShapeStyle: StylesheetResolvable, @preconcurrency Decodable {
         case regularMaterial
         case thickMaterial
         case thinMaterial
@@ -136,7 +136,7 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
         case bar
         #endif
         
-        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Material where R : RootRegistry {
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Material where R : RootRegistry {
             if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 10.0, *) {
                 switch self {
                 case .regularMaterial:
@@ -161,7 +161,7 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
     }
     
     @ASTDecodable("ShapeStyle")
-    enum SemanticShapeStyle: @preconcurrency Decodable {
+    public enum SemanticShapeStyle: @preconcurrency Decodable {
         case foreground
         case background
         #if os(iOS) || os(macOS) || os(visionOS)
@@ -226,7 +226,7 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
         }
     }
     
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         var container = try decoder.singleValueContainer()
         
         if let color = try? container.decode(Color.Resolvable.self) {
@@ -262,7 +262,7 @@ indirect enum StylesheetResolvableShapeStyle: StylesheetResolvable, @preconcurre
     }
 }
 
-extension StylesheetResolvableShapeStyle {
+public extension StylesheetResolvableShapeStyle {
     func resolve(in environment: EnvironmentValues) -> AnyShapeStyle {
         return AnyShapeStyle(.red)
     }
@@ -292,21 +292,21 @@ extension StylesheetResolvableShapeStyle {
 }
 
 extension StylesheetResolvableShapeStyle: @preconcurrency AttributeDecodable {
-    init(from attribute: Attribute?, on element: ElementNode) throws {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
         fatalError()
     }
 }
 
 extension HierarchicalShapeStyle {
     @ASTDecodable("HierarchicalShapeStyle")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case primary
         case secondary
         case tertiary
         case quaternary
         case quinary
         
-        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> HierarchicalShapeStyle where R : RootRegistry {
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> HierarchicalShapeStyle where R : RootRegistry {
             switch self {
             case .primary:
                 return .primary
@@ -329,7 +329,7 @@ extension HierarchicalShapeStyle {
 
 extension AngularGradient {
     @ASTDecodable("AngularGradient")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case _angularGradient(gradient: Gradient.Resolvable, center: UnitPoint.Resolvable, startAngle: Angle.Resolvable, endAngle: Angle.Resolvable)
         case _angularColors(colors: [Color.Resolvable], center: UnitPoint.Resolvable, startAngle: Angle.Resolvable, endAngle: Angle.Resolvable)
         case _angularStops(stops: [Gradient.Stop.Resolvable], center: UnitPoint.Resolvable, startAngle: Angle.Resolvable, endAngle: Angle.Resolvable)
@@ -381,7 +381,7 @@ extension AngularGradient {
             ._conicStops(stops: stops, center: center, angle: angle)
         }
         
-        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> AngularGradient where R : RootRegistry {
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> AngularGradient where R : RootRegistry {
             switch self {
             case let ._angularGradient(gradient, center, startAngle, endAngle):
                 return .init(
@@ -429,7 +429,7 @@ extension AngularGradient {
 
 extension LinearGradient {
     @ASTDecodable("LinearGradient")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case _initGradient(gradient: Gradient.Resolvable, startPoint: UnitPoint.Resolvable, endPoint: UnitPoint.Resolvable)
         case _initColors(colors: [Color.Resolvable], startPoint: UnitPoint.Resolvable, endPoint: UnitPoint.Resolvable)
         case _initStops(stops: [Gradient.Stop.Resolvable], startPoint: UnitPoint.Resolvable, endPoint: UnitPoint.Resolvable)
@@ -456,7 +456,7 @@ extension LinearGradient {
             ._initStops(stops: stops, startPoint: startPoint, endPoint: endPoint)
         }
         
-        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> LinearGradient where R : RootRegistry {
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> LinearGradient where R : RootRegistry {
             switch self {
             case ._initGradient(let gradient, let startPoint, let endPoint):
                 return .init(
@@ -483,7 +483,7 @@ extension LinearGradient {
 
 extension RadialGradient {
     @ASTDecodable("RadialGradient")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case _initGradient(gradient: Gradient.Resolvable, center: UnitPoint.Resolvable, startRadius: CGFloat.Resolvable, endRadius: CGFloat.Resolvable)
         case _initColors(colors: [Color.Resolvable], center: UnitPoint.Resolvable, startRadius: CGFloat.Resolvable, endRadius: CGFloat.Resolvable)
         case _initStops(stops: [Gradient.Stop.Resolvable], center: UnitPoint.Resolvable, startRadius: CGFloat.Resolvable, endRadius: CGFloat.Resolvable)
@@ -510,7 +510,7 @@ extension RadialGradient {
             ._initStops(stops: stops, center: center, startRadius: startRadius, endRadius: endRadius)
         }
         
-        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> RadialGradient where R : RootRegistry {
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> RadialGradient where R : RootRegistry {
             switch self {
             case ._initGradient(let gradient, let center, let startRadius, let endRadius):
                 return .init(
@@ -540,7 +540,7 @@ extension RadialGradient {
 
 extension ImagePaint {
     @ASTDecodable("ImagePaint")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case _init(image: Image.Resolvable, sourceRect: CGRect.Resolvable, scale: CGFloat.Resolvable)
         
         init(image: Image.Resolvable, sourceRect: CGRect.Resolvable = .__constant(CGRect(x: 0, y: 0, width: 1, height: 1)), scale: CGFloat.Resolvable = .__constant(1)) {
@@ -551,7 +551,7 @@ extension ImagePaint {
             ._init(image: image, sourceRect: sourceRect, scale: scale)
         }
         
-        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> ImagePaint where R : RootRegistry {
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> ImagePaint where R : RootRegistry {
             switch self {
             case let ._init(image, sourceRect, scale):
                 return .init(
@@ -566,7 +566,7 @@ extension ImagePaint {
 
 extension ShadowStyle {
     @ASTDecodable("ShadowStyle")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(ShadowStyle)
         case _drop(
             color: Color.Resolvable,
@@ -599,7 +599,7 @@ extension ShadowStyle {
             ._inner(color: color, radius: radius, x: x, y: y)
         }
         
-        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> ShadowStyle where R : RootRegistry {
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> ShadowStyle where R : RootRegistry {
             switch self {
             case .__constant(let style):
                 return style

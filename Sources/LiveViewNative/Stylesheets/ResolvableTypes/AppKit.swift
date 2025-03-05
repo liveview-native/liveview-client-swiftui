@@ -12,7 +12,7 @@ import LiveViewNativeStylesheet
 
 extension NSTextContentType {
     @ASTDecodable("NSTextContentType")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable, @preconcurrency AttributeDecodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable, @preconcurrency AttributeDecodable {
         case username
         case password
         case oneTimeCode
@@ -59,7 +59,7 @@ extension NSTextContentType {
     }
 }
 
-extension NSTextContentType.Resolvable {
+public extension NSTextContentType.Resolvable {
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> NSTextContentType {
         switch self {
         case .username:
