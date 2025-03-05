@@ -123,7 +123,7 @@ extension StyleDefinitionGenerator {
         
         let resolvableEnum = EnumDeclSyntax(
             attributes: node.fullyResolvedAvailabilityAttributes,
-            modifiers: [DeclModifierSyntax(name: .keyword(.indirect))],
+            modifiers: [DeclModifierSyntax(name: .keyword(.public)), DeclModifierSyntax(name: .keyword(.indirect))],
             name: .identifier("Resolvable"),
             inheritanceClause: InheritanceClauseSyntax {
                 InheritedTypeSyntax(type: IdentifierTypeSyntax(name: .identifier("StylesheetResolvable")))
@@ -288,6 +288,7 @@ extension StyleDefinitionGenerator {
         
         let resolveMethodExtension = ExtensionDeclSyntax(
             attributes: node.fullyResolvedAvailabilityAttributes,
+            modifiers: [DeclModifierSyntax(name: .keyword(.public))],
             extendedType: MemberTypeSyntax(baseType: node.fullyResolvedType, name: .identifier("Resolvable"))
         ) {
             // @MainActor func resolve<R>(on element: ElementNode, in context: LiveContext<R>)

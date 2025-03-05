@@ -11,7 +11,7 @@ import LiveViewNativeStylesheet
 extension CGPoint {
     @ASTDecodable("CGPoint")
     @MainActor
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGPoint)
         case _init(x: AttributeReference<CGFloat>, y: AttributeReference<CGFloat>)
         
@@ -23,7 +23,7 @@ extension CGPoint {
     }
 }
 
-extension CGPoint.Resolvable {
+public extension CGPoint.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGPoint {
         switch self {
@@ -38,7 +38,7 @@ extension CGPoint.Resolvable {
 extension CGVector {
     @ASTDecodable("CGVector")
     @MainActor
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGVector)
         case _init(dx: AttributeReference<CGFloat>, dy: AttributeReference<CGFloat>)
         
@@ -50,7 +50,7 @@ extension CGVector {
     }
 }
 
-extension CGVector.Resolvable {
+public extension CGVector.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGVector {
         switch self {
@@ -64,12 +64,12 @@ extension CGVector.Resolvable {
 
 extension CGSize {
     @MainActor
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGSize)
         case _reference(AttributeReference<CGSize>)
         case _ast(ASTCGSize)
         
-        init(from decoder: any Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             var container = try decoder.singleValueContainer()
             
             if let reference = try? container.decode(AttributeReference<CGSize>.self) {
@@ -80,7 +80,7 @@ extension CGSize {
         }
         
         @ASTDecodable("CGSize")
-        enum ASTCGSize: @preconcurrency Decodable {
+        public enum ASTCGSize: @preconcurrency Decodable {
             case _init(width: AttributeReference<CGFloat>, height: AttributeReference<CGFloat>)
             
             init(width: AttributeReference<CGFloat>, height: AttributeReference<CGFloat>) {
@@ -90,7 +90,7 @@ extension CGSize {
     }
 }
 
-extension CGSize.Resolvable {
+public extension CGSize.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGSize {
         switch self {
@@ -107,7 +107,7 @@ extension CGSize.Resolvable {
 extension CGRect {
     @ASTDecodable("CGRect")
     @MainActor
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGRect)
         case _init1(origin: CGPoint.Resolvable, size: CGSize.Resolvable)
         case _init2(x: AttributeReference<CGFloat>, y: AttributeReference<CGFloat>, width: AttributeReference<CGFloat>, height: AttributeReference<CGFloat>)
@@ -122,7 +122,7 @@ extension CGRect {
     }
 }
 
-extension CGRect.Resolvable {
+public extension CGRect.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGRect {
         switch self {
@@ -138,12 +138,12 @@ extension CGRect.Resolvable {
 
 extension CGPath {
     @ASTDecodable("CGPath")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGPath)
     }
 }
 
-extension CGPath.Resolvable {
+public extension CGPath.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGPath {
         switch self {
@@ -155,12 +155,12 @@ extension CGPath.Resolvable {
 
 extension CGMutablePath {
     @ASTDecodable("CGMutablePath")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGMutablePath)
     }
 }
 
-extension CGMutablePath.Resolvable {
+public extension CGMutablePath.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGMutablePath {
         switch self {
@@ -172,7 +172,7 @@ extension CGMutablePath.Resolvable {
 
 extension CGLineCap {
     @ASTDecodable("CGLineCap")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGLineCap)
         case butt
         case round
@@ -180,7 +180,7 @@ extension CGLineCap {
     }
 }
 
-extension CGLineCap.Resolvable {
+public extension CGLineCap.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGLineCap {
         switch self {
@@ -198,7 +198,7 @@ extension CGLineCap.Resolvable {
 
 extension CGLineJoin {
     @ASTDecodable("CGLineJoin")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGLineJoin)
         case miter
         case round
@@ -206,7 +206,7 @@ extension CGLineJoin {
     }
 }
 
-extension CGLineJoin.Resolvable {
+public extension CGLineJoin.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGLineJoin {
         switch self {
@@ -224,12 +224,12 @@ extension CGLineJoin.Resolvable {
 
 extension CGAffineTransform {
     @ASTDecodable("CGAffineTransform")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGAffineTransform)
     }
 }
 
-extension CGAffineTransform.Resolvable {
+public extension CGAffineTransform.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGAffineTransform {
         switch self {
@@ -241,12 +241,12 @@ extension CGAffineTransform.Resolvable {
 
 extension CGImage {
     @ASTDecodable("CGImage")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGImage)
     }
 }
 
-extension CGImage.Resolvable {
+public extension CGImage.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGImage {
         switch self {
@@ -258,12 +258,12 @@ extension CGImage.Resolvable {
 
 extension CGColor {
     @ASTDecodable("CGColor")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGColor)
     }
 }
 
-extension CGColor.Resolvable {
+public extension CGColor.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CGColor {
         switch self {
@@ -274,7 +274,7 @@ extension CGColor.Resolvable {
 }
 
 extension CGFloat {
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(CGFloat)
         case reference(AttributeReference<CGFloat>)
         
@@ -284,7 +284,7 @@ extension CGFloat {
             case pi
         }
         
-        init(from decoder: any Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.singleValueContainer()
             if let member = try? container.decode(Member.self) {
                 switch member {
@@ -298,7 +298,7 @@ extension CGFloat {
             }
         }
         
-        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> CGFloat where R : RootRegistry {
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> CGFloat where R : RootRegistry {
             switch self {
             case let .__constant(constant):
                 return constant

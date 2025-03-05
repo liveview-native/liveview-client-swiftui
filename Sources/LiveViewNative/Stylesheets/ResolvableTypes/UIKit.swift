@@ -13,7 +13,7 @@ import LiveViewNativeCore
 #if os(iOS) || os(tvOS) || os(visionOS)
 extension UITextContentType {
     @ASTDecodable("UITextContentType")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case namePrefix
         case name
         case nameSuffix
@@ -61,7 +61,7 @@ extension UITextContentType {
     }
 }
 
-extension UITextContentType.Resolvable {
+public extension UITextContentType.Resolvable {
     func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> UITextContentType where R : RootRegistry {
         switch self {
         case .namePrefix:
@@ -221,7 +221,7 @@ extension UITextContentType.Resolvable {
 }
 
 extension UITextContentType.Resolvable: @preconcurrency AttributeDecodable {
-    init(from attribute: Attribute?, on element: ElementNode) throws {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "namePrefix":
             self = .namePrefix
@@ -321,7 +321,7 @@ extension UITextContentType.Resolvable: @preconcurrency AttributeDecodable {
 #if os(iOS) || os(tvOS) || os(visionOS)
 extension UIKeyboardType {
     @ASTDecodable("UIKeyboardType")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case `default`
         case asciiCapable
         case numbersAndPunctuation
@@ -337,7 +337,7 @@ extension UIKeyboardType {
     }
 }
 
-extension UIKeyboardType.Resolvable {
+public extension UIKeyboardType.Resolvable {
     func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> UIKeyboardType where R : RootRegistry {
         switch self {
         case .default:

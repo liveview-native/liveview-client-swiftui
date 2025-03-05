@@ -3,23 +3,23 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 @MainActor
-protocol StylesheetResolvable {
+public protocol StylesheetResolvable {
     associatedtype Resolved
     
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Resolved
 }
 
-enum StylesheetResolvableSet<T>: @preconcurrency Decodable, StylesheetResolvable where T: Decodable & StylesheetResolvable, T.Resolved: Hashable {
-    typealias Resolved = Set<T.Resolved>
+public enum StylesheetResolvableSet<T>: @preconcurrency Decodable, StylesheetResolvable where T: Decodable & StylesheetResolvable, T.Resolved: Hashable {
+    public typealias Resolved = Set<T.Resolved>
     
     case constant(Set<T.Resolved>)
     case resolvable([T])
     
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         self = .resolvable(try decoder.singleValueContainer().decode([T].self))
     }
     
-    func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Set<T.Resolved> {
+    public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Set<T.Resolved> {
         switch self {
         case let .constant(value):
             return value
@@ -30,7 +30,7 @@ enum StylesheetResolvableSet<T>: @preconcurrency Decodable, StylesheetResolvable
 }
 
 extension StylesheetResolvableSet: @preconcurrency AttributeDecodable {
-    init(from attribute: Attribute?, on element: ElementNode) throws {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.badValue(Self.self) }
         self = .resolvable(try makeJSONDecoder().decode([T].self, from: Data(value.utf8)))
@@ -38,17 +38,17 @@ extension StylesheetResolvableSet: @preconcurrency AttributeDecodable {
 }
 
 extension Array: StylesheetResolvable where Element: StylesheetResolvable {
-    typealias Resolved = [Element.Resolved]
+    public typealias Resolved = [Element.Resolved]
     
-    func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Resolved {
+    public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Resolved {
         self.map({ $0.resolve(on: element, in: context) })
     }
 }
 
 extension Optional: StylesheetResolvable where Wrapped: StylesheetResolvable {
-    typealias Resolved = Optional<Wrapped.Resolved>
+    public typealias Resolved = Optional<Wrapped.Resolved>
     
-    func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Resolved {
+    public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Resolved {
         switch self {
         case .none:
             return .none

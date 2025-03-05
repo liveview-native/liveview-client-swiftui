@@ -52,7 +52,7 @@ enum StylesheetResolvableTabViewStyle: StylesheetResolvable, @preconcurrency Dec
 
 #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
 extension PageTabViewStyle.IndexDisplayMode.Resolvable: @preconcurrency AttributeDecodable {
-    init(from attribute: Attribute?, on element: ElementNode) throws {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "always":
             self = .__constant(.always)

@@ -10,12 +10,12 @@ import LiveViewNativeStylesheet
 
 extension Edge.Set {
     @MainActor
-    indirect enum Resolvable: StylesheetResolvable, @preconcurrency Swift.Decodable {
+    public indirect enum Resolvable: StylesheetResolvable, @preconcurrency Swift.Decodable {
         case __constant(Edge.Set)
         case member(Member)
         case set([Edge.Set.Resolvable])
         
-        init(from decoder: any Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.singleValueContainer()
             
             if let member = try? container.decode(Member.self) {
@@ -27,7 +27,7 @@ extension Edge.Set {
         
         @ASTDecodable("Set")
         @MainActor
-        indirect enum Member: @preconcurrency Decodable {
+        public indirect enum Member: @preconcurrency Decodable {
             case top
             case leading
             case bottom
@@ -49,7 +49,7 @@ extension Edge.Set {
     }
 }
 
-extension Edge.Set.Resolvable {
+public extension Edge.Set.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Edge.Set {
         switch self {
         case let .__constant(__value):
