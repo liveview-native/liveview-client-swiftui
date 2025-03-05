@@ -117,8 +117,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert parse(input) == output
 
-      input = "background(Color.blue.opacity(0.2).blendMode(.multiply).mix(with: .orange).opacity(0.7))"
-      output = {:background, [], [{:., [], [{:., [], [{:., [], [{:., [], [{:., [], [:Color, :blue]}, {:opacity, [], [0.2]}]}, {:blendMode, [], [{:., [], [nil, :multiply]}]}]}, {:mix, [], [{:with, {:., [], [nil, :orange]}}]}]}, {:opacity, [], [0.7]}]}]}
+      input = "background(Color.blue.opacity(0.02).blendMode(.multiply).mix(with: .orange).opacity(0.7))"
+      output = {:background, [], [{:., [], [{:., [], [{:., [], [{:., [], [{:., [], [:Color, :blue]}, {:opacity, [], [0.02]}]}, {:blendMode, [], [{:., [], [nil, :multiply]}]}]}, {:mix, [], [{:with, {:., [], [nil, :orange]}}]}]}, {:opacity, [], [0.7]}]}]}
 
       assert parse(input) == output
     end
