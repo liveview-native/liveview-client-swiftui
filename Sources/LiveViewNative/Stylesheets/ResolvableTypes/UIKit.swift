@@ -400,6 +400,29 @@ extension UIKeyboardType: @preconcurrency AttributeDecodable {
         }
     }
 }
+
+extension UITextAutocapitalizationType {
+    @ASTDecodable("UITextAutocapitalizationType")
+    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+        case none
+        case words
+        case sentences
+        case allCharacters
+        
+        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> UITextAutocapitalizationType where R : RootRegistry {
+            switch self {
+            case .none:
+                return .none
+            case .words:
+                return .words
+            case .sentences:
+                return .sentences
+            case .allCharacters:
+                return .allCharacters
+            }
+        }
+    }
+}
 #endif
 
 #endif

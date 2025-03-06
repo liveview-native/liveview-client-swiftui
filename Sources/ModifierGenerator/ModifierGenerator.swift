@@ -17,6 +17,9 @@ struct ModifierGenerator: ParsableCommand {
     import Spatial
     import Symbols
     import LiveViewNativeStylesheet
+    import OSLog
+    
+    private let __generatedModifierLogger = Logger(subsystem: "LiveViewNative", category: "Stylesheet") 
     
     """#
     
