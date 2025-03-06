@@ -11,7 +11,7 @@ import LiveViewNativeCore
 extension AnyHashable {
     @ASTDecodable("AnyHashable")
     @MainActor
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(AnyHashable)
         case _string(AttributeReference<String>)
         
@@ -21,7 +21,7 @@ extension AnyHashable {
     }
 }
 
-extension AnyHashable.Resolvable {
+public extension AnyHashable.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyHashable {
         switch self {
         case let .__constant(value):
@@ -33,20 +33,20 @@ extension AnyHashable.Resolvable {
 }
 
 extension Character {
-    struct Resolvable: @preconcurrency Decodable, StylesheetResolvable {
+    public struct Resolvable: @preconcurrency Decodable, StylesheetResolvable {
         let value: AttributeReference<String>
         
-        init(from decoder: any Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             self.value = try decoder.singleValueContainer().decode(AttributeReference<String>.self)
         }
         
-        @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Character {
+        @MainActor public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Character {
             Character(value.resolve(on: element, in: context))
         }
     }
 }
 
-enum StylesheetResolvableRangeExpression: Decodable {
+public enum StylesheetResolvableRangeExpression: Decodable {
     case __never
     
     func resolve<R: RootRegistry, Bound>(on element: ElementNode, in context: LiveContext<R>) -> Range<Bound> {
@@ -55,13 +55,13 @@ enum StylesheetResolvableRangeExpression: Decodable {
 }
 
 extension StylesheetResolvableRangeExpression: @preconcurrency AttributeDecodable {
-    nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
+    public nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         fatalError()
     }
 }
 
 extension Double {
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Double)
         case reference(AttributeReference<Double>)
         
@@ -71,7 +71,7 @@ extension Double {
             case pi
         }
         
-        init(from decoder: any Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.singleValueContainer()
             
             if let member = try? container.decode(Member.self) {
@@ -86,7 +86,7 @@ extension Double {
             }
         }
         
-        func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Double where R : RootRegistry {
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Double where R : RootRegistry {
             switch self {
             case let .__constant(constant):
                 return constant

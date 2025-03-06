@@ -11,7 +11,7 @@ import LiveViewNativeCore
 
 extension Calendar {
     @ASTDecodable("Calendar")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case _current
         case _autoupdatingCurrent
         
@@ -20,7 +20,7 @@ extension Calendar {
     }
 }
 
-extension Calendar.Resolvable {
+public extension Calendar.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Calendar {
         switch self {
@@ -34,7 +34,7 @@ extension Calendar.Resolvable {
 
 extension Locale {
     @ASTDecodable("Locale")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case _current
         case _autoupdatingCurrent
         
@@ -43,7 +43,7 @@ extension Locale {
     }
 }
 
-extension Locale.Resolvable {
+public extension Locale.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Locale {
         switch self {
@@ -58,7 +58,7 @@ extension Locale.Resolvable {
 extension Locale.Language {
     @ASTDecodable("Language")
     @MainActor
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Locale.Language)
         case _init(identifier: AttributeReference<String>)
         
@@ -68,7 +68,7 @@ extension Locale.Language {
     }
 }
 
-extension Locale.Language.Resolvable {
+public extension Locale.Language.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Locale.Language {
         switch self {
@@ -82,7 +82,7 @@ extension Locale.Language.Resolvable {
 
 extension Date.ComponentsFormatStyle.Field {
     @ASTDecodable("Field")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Date.ComponentsFormatStyle.Field)
         case _day
         case _hour
@@ -102,7 +102,7 @@ extension Date.ComponentsFormatStyle.Field {
     }
 }
 
-extension Date.ComponentsFormatStyle.Field.Resolvable {
+public extension Date.ComponentsFormatStyle.Field.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Date.ComponentsFormatStyle.Field {
         switch self {
@@ -128,7 +128,7 @@ extension Date.ComponentsFormatStyle.Field.Resolvable {
 
 extension NumberFormatStyleConfiguration.SignDisplayStrategy {
     @ASTDecodable("SignDisplayStrategy")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(NumberFormatStyleConfiguration.SignDisplayStrategy)
         case _automatic
         case _never
@@ -142,7 +142,7 @@ extension NumberFormatStyleConfiguration.SignDisplayStrategy {
     }
 }
 
-extension NumberFormatStyleConfiguration.SignDisplayStrategy.Resolvable {
+public extension NumberFormatStyleConfiguration.SignDisplayStrategy.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> NumberFormatStyleConfiguration.SignDisplayStrategy {
         switch self {
@@ -160,7 +160,7 @@ extension NumberFormatStyleConfiguration.SignDisplayStrategy.Resolvable {
 
 extension Bundle {
     @ASTDecodable("Bundle")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Bundle)
         case _init(url: URL)
         
@@ -170,7 +170,7 @@ extension Bundle {
     }
 }
 
-extension Bundle.Resolvable {
+public extension Bundle.Resolvable {
     @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Bundle {
         switch self {
@@ -185,7 +185,7 @@ extension Bundle.Resolvable {
 extension LocalizedStringResource {
     @ASTDecodable("LocalizedStringResource")
     @MainActor
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(LocalizedStringResource)
         case _init(key: AttributeReference<String>)
         
@@ -195,7 +195,7 @@ extension LocalizedStringResource {
     }
 }
 
-extension LocalizedStringResource.Resolvable {
+public extension LocalizedStringResource.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> LocalizedStringResource {
         switch self {
         case let .__constant(value):
@@ -208,12 +208,12 @@ extension LocalizedStringResource.Resolvable {
 
 extension DateInterval {
     @ASTDecodable("DateInterval")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(DateInterval)
     }
 }
 
-extension DateInterval.Resolvable {
+public extension DateInterval.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> DateInterval {
         switch self {
         case let .__constant(value):
@@ -224,12 +224,12 @@ extension DateInterval.Resolvable {
 
 extension AttributedString {
     @ASTDecodable("AttributedString")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(AttributedString)
     }
 }
 
-extension AttributedString.Resolvable {
+public extension AttributedString.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AttributedString {
         switch self {
         case let .__constant(value):
@@ -238,18 +238,18 @@ extension AttributedString.Resolvable {
     }
 }
 
-struct StylesheetResolvableLocalizedError: @preconcurrency Decodable, StylesheetResolvable, LocalizedError, @preconcurrency AttributeDecodable {
-    let errorDescription: String?
+public struct StylesheetResolvableLocalizedError: @preconcurrency Decodable, StylesheetResolvable, LocalizedError, @preconcurrency AttributeDecodable {
+    public let errorDescription: String?
     
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         self.errorDescription = try decoder.singleValueContainer().decode(String?.self)
     }
     
-    func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Self where R : RootRegistry {
+    public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Self where R : RootRegistry {
         return self
     }
     
-    init(from attribute: Attribute?, on element: ElementNode) throws {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
         self.errorDescription = attribute?.value
     }
 }

@@ -12,7 +12,7 @@ import LiveViewNativeCore
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
 extension NamedCoordinateSpace {
     @ASTDecodable("NamedCoordinateSpace")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(NamedCoordinateSpace)
         
         case named(AttributeReference<String>)
@@ -26,13 +26,13 @@ extension NamedCoordinateSpace {
 }
 
 extension Axis.Resolvable: @preconcurrency AttributeDecodable {
-    init(from attribute: Attribute?, on element: ElementNode) throws {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
         self = .__constant(try Axis(from: attribute, on: element))
     }
 }
 
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-extension NamedCoordinateSpace.Resolvable {
+public extension NamedCoordinateSpace.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> NamedCoordinateSpace {
         switch self {
         case let .__constant(value):
