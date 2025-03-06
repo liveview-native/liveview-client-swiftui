@@ -123,6 +123,7 @@ struct NavigationLink<Root: RootRegistry>: View {
                         value: LiveNavigationEntry(
                             url: url,
                             coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url),
+                            mode: .replaceTop,
                             navigationTransition: nil, // FIXME: navigationTransition
                             pendingView: pendingView
                         )
