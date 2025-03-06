@@ -70,11 +70,6 @@ struct NavStackEntryView<R: RootRegistry>: View {
                             .transition(coordinator.session.configuration.transition ?? .identity)
                     }
                 }
-            } else {
-                SwiftUI.ZStack {
-                    SwiftUI.Rectangle().fill(.red)
-                    SwiftUI.Text("\(coordinator.url) != \(entry.url)")
-                }
             }
         }
         .animation(coordinator.session.configuration.transition.map({ _ in .default }), value: coordinator.state.isConnected)

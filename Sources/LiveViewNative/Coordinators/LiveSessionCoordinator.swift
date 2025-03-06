@@ -117,25 +117,23 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     
                     // if the coordinator is connected, the mode was a `patch`, and the new entry has the same coordinator
                     // send a `live_patch` event and keep the same coordinator.
-                    switch prev.last!.mode {
-                    case .patch:
-                        if case .connected = prev.last?.coordinator.state,
-                            next.last?.coordinator === prev.last?.coordinator
-                        {
-                            _ = try await prev.last?.coordinator.doPushEvent(
-                                "live_patch",
-                                payload: .jsonPayload(json: .object(object: [
-                                    "url": .str(string: next.last!.url.absoluteString)
-                                ]))
-                            )
-                            next.last!.coordinator.url = next.last!.url
-                            next.last!.coordinator.objectWillChange.send()
-                            if next.count <= 1 { // if we navigated back to the root page, trigger an update on the session too
-                                self.objectWillChange.send()
-                            }
-                            return
+                    if case .patch = prev.last!.mode,
+                       case .connected = prev.last?.coordinator.state,
+                       next.last?.coordinator === prev.last?.coordinator
+                    {
+                        _ = try await prev.last?.coordinator.doPushEvent(
+                            "live_patch",
+                            payload: .jsonPayload(json: .object(object: [
+                                "url": .str(string: next.last!.url.absoluteString)
+                            ]))
+                        )
+                        next.last!.coordinator.url = next.last!.url
+                        next.last!.coordinator.objectWillChange.send()
+                        if next.count <= 1 { // if we navigated back to the root page, trigger an update on the session too
+                            self.objectWillChange.send()
                         }
-                    case .replaceTop:
+                        return
+                    } else {
                         try await prev.last?.coordinator.disconnect()
                         let targetEntry = self.liveSocket!.getEntries()[next.count - 1]
                         next.last?.coordinator.join(
@@ -151,8 +149,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     }
                 } else if next.count > prev.count && prev.count > 0 {
                     // forward navigation (from `redirect` or `<NavigationLink>`)
-                    
-                    // if the coordinator instance is the same and its connected, we don't need to handle a connection.
                     switch next.last!.mode {
                     case .patch:
                         next.last?.coordinator.url = next.last!.url
@@ -169,16 +165,23 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         )
                     }
                 } else if next.count == prev.count {
-                    try await prev.last?.coordinator.disconnect()
-                    guard let liveChannel =
-                            try await self.liveSocket?.navigate(next.last!.url.absoluteString,
-                                                                .some([
-                                                                    "_format": .str(string: LiveSessionParameters.platform),
-                                                                    "_interface": .object(object: LiveSessionParameters.platformParams)
-                                                                    ]),
-                                                                   NavOptions(action: .replace))
-                    else { return }
-                    next.last?.coordinator.join(liveChannel)
+                    switch next.last!.mode {
+                    case .patch:
+                        next.last?.coordinator.url = next.last!.url
+                        return
+                    case .replaceTop:
+                        try await prev.last?.coordinator.disconnect()
+                        guard let liveChannel = try await self.liveSocket?.navigate(
+                            next.last!.url.absoluteString,
+                            .some([
+                                "_format": .str(string: LiveSessionParameters.platform),
+                                "_interface": .object(object: LiveSessionParameters.platformParams)
+                            ]),
+                            NavOptions(action: .replace)
+                        )
+                        else { return }
+                        next.last?.coordinator.join(liveChannel)
+                    }
                 }
             }
         }.store(in: &cancellables)
