@@ -12,7 +12,7 @@ import LiveViewNativeCore
 
 extension Accessibility.AXCustomContent.Importance {
     @ASTDecodable("Importance")
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Accessibility.AXCustomContent.Importance)
         
         case `default`
@@ -20,7 +20,7 @@ extension Accessibility.AXCustomContent.Importance {
     }
 }
 
-extension Accessibility.AXCustomContent.Importance.Resolvable {
+public extension Accessibility.AXCustomContent.Importance.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Accessibility.AXCustomContent.Importance {
         switch self {
         case let .__constant(value):
@@ -33,22 +33,22 @@ extension Accessibility.AXCustomContent.Importance.Resolvable {
     }
 }
 
-struct StylesheetResolvableAXChartDescriptorRepresentable: StylesheetResolvable, @preconcurrency Decodable, @preconcurrency AXChartDescriptorRepresentable {
-    init(from decoder: any Decoder) throws {
+public struct StylesheetResolvableAXChartDescriptorRepresentable: StylesheetResolvable, @preconcurrency Decodable, @preconcurrency AXChartDescriptorRepresentable {
+    public init(from decoder: any Decoder) throws {
         fatalError("'AXChartDescriptor' is not supported")
     }
     
-    func makeChartDescriptor() -> AXChartDescriptor {
+    public func makeChartDescriptor() -> AXChartDescriptor {
         fatalError("'AXChartDescriptor' is not supported")
     }
     
-    func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Self where R : RootRegistry {
+    public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Self where R : RootRegistry {
         return self
     }
 }
 
 extension StylesheetResolvableAXChartDescriptorRepresentable: @preconcurrency AttributeDecodable {
-    init(from attribute: Attribute?, on element: ElementNode) throws {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
         fatalError("'AXChartDescriptor' is not supported")
     }
 }

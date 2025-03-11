@@ -680,6 +680,7 @@ public extension ContentBuilder {
 /// Modifiers must be decoded from the ``ContentBuilder/decodeModifier(_:from:registry:)``.
 ///
 /// - Note: Keys are automatically converted from `camelCase` to `snake_case` in the decoder.
+@MainActor
 public protocol ContentModifier<Builder>: Decodable {
     associatedtype Builder: ContentBuilder
     func apply<R: RootRegistry>(
@@ -689,7 +690,7 @@ public protocol ContentModifier<Builder>: Decodable {
     ) -> Builder.Content
 }
 
-public struct EmptyContentModifier<Builder: ContentBuilder>: ContentModifier {
+public struct EmptyContentModifier<Builder: ContentBuilder>: ContentModifier, @preconcurrency Decodable {
     public init() {}
     
     public func apply<R>(
@@ -705,4 +706,10 @@ public struct EmptyContentModifier<Builder: ContentBuilder>: ContentModifier {
 
 enum ContentBuilderError: Error {
     case unknownTag(String)
+}
+
+extension StylesheetResolvable {
+    public func resolve<Builder: ContentBuilder, R: RootRegistry>(on element: ElementNode, in context: Builder.Context<R>) -> Resolved {
+        self.resolve(on: element, in: context.context)
+    }
 }

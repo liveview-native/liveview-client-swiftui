@@ -11,7 +11,7 @@ import LiveViewNativeStylesheet
 extension Spatial.Size3D {
     @ASTDecodable("Size3D")
     @MainActor
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(Spatial.Size3D)
         case _init(width: AttributeReference<Double>, height: AttributeReference<Double>, depth: AttributeReference<Double>)
         
@@ -21,7 +21,7 @@ extension Spatial.Size3D {
     }
 }
 
-extension Spatial.Size3D.Resolvable {
+public extension Spatial.Size3D.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Spatial.Size3D {
         switch self {
         case let .__constant(value):

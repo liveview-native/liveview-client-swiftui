@@ -25,7 +25,7 @@ enum StylesheetResolvableScrollTargetBehavior: StylesheetResolvable, @preconcurr
 
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
 extension ViewAlignedScrollTargetBehavior.LimitBehavior.Resolvable: @preconcurrency AttributeDecodable {
-    init(from attribute: Attribute?, on element: ElementNode) throws {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "automatic":
             self = .automatic

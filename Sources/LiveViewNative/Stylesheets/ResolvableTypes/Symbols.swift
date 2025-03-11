@@ -186,7 +186,7 @@ extension View {
 extension Symbols.SymbolEffectOptions {
     @ASTDecodable("SymbolEffectOptions")
     @MainActor
-    indirect enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public indirect enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case __constant(SymbolEffectOptions)
         
         case `default`
@@ -217,7 +217,7 @@ extension Symbols.SymbolEffectOptions {
 
 @available(macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension SymbolEffectOptions.RepeatBehavior.Resolvable: @preconcurrency AttributeDecodable {
-    init(from attribute: Attribute?, on element: ElementNode) throws {
+    public init(from attribute: Attribute?, on element: ElementNode) throws {
         switch attribute?.value {
         case "continuous":
             self = .continuous
@@ -230,7 +230,7 @@ extension SymbolEffectOptions.RepeatBehavior.Resolvable: @preconcurrency Attribu
 }
 
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-extension SymbolEffectOptions.Resolvable {
+public extension SymbolEffectOptions.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SymbolEffectOptions {
         switch self {
         case let .__constant(value):
@@ -265,7 +265,7 @@ extension SymbolEffectOptions.Resolvable {
 extension SymbolEffectOptions.RepeatBehavior {
     @ASTDecodable("RepeatBehavior")
     @MainActor
-    enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
         case continuous
         case periodic
         
@@ -277,7 +277,7 @@ extension SymbolEffectOptions.RepeatBehavior {
 }
 
 @available(iOS 18, macOS 15, tvOS 18, visionOS 2, watchOS 11, *)
-extension SymbolEffectOptions.RepeatBehavior.Resolvable {
+public extension SymbolEffectOptions.RepeatBehavior.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SymbolEffectOptions.RepeatBehavior {
         switch self {
         case .continuous:

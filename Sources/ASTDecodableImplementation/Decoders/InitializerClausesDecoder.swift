@@ -34,6 +34,7 @@ struct InitializerClausesDecoder<TypeSyntaxType: TypeSyntaxProtocol> {
         let errorReference = DeclReferenceExprSyntax(baseName: errorName)
         
         return StructDeclSyntax(
+            attributes: [.attribute(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("MainActor"))))],
             name: name,
             inheritanceClause: InheritanceClauseSyntax(inheritedTypes: [
                 // @preconcurrency Swift.Decodable
