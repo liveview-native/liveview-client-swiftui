@@ -599,7 +599,7 @@ enum LiveSessionParameters {
     }()
 }
 
-fileprivate extension URL {
+extension URL {
     @MainActor
     func appendingLiveViewItems() -> Self {
         var result = self

@@ -18,7 +18,7 @@ public struct Stylesheet<R: RootRegistry>: Sendable {
         self.classes = classes
     }
     
-    init(from data: String) throws {
+    public init(from data: String) throws {
         self.content = [data]
         self.classes = try JSONDecoder().decode([String:[BuiltinRegistry<R>.BuiltinModifier]].self, from: Data(data.utf8))
     }

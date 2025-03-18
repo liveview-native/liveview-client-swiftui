@@ -23,7 +23,9 @@ struct ModifierGeneratorPlugin: BuildToolPlugin {
                 displayName: tool.name,
                 executable: tool.url,
                 arguments: arguments,
-                environment: ProcessInfo.processInfo.environment,
+                environment: [
+                    "SDKROOT": "/Applications/Xcode-16-3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
+                ],
                 inputFiles: [],
                 outputFiles: [output]
             )

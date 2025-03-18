@@ -70,45 +70,57 @@ extension StyleDefinitionGenerator {
                 }))
             }
         let initializers = members
-            .compactMap { $0.decl.as(InitializerDeclSyntax.self) }
-            .filter(\.modifiers.isAccessible)
-            .filter {
-                $0.isValidModifier
-                && $0.genericParameterClause == nil && $0.genericWhereClause == nil
-                && !$0.attributes.isDeprecated
-                && $0.optionalMark == nil
+            .compactMap { (member: MemberBlockItemSyntax) -> InitializerDeclSyntax? in
+                member.decl.as(InitializerDeclSyntax.self)
             }
-            .map { $0.normalizedParameterTypes() }
+            .filter(\.modifiers.isAccessible)
+            .filter { (member: InitializerDeclSyntax) -> Bool in
+                member.isValidModifier
+                && member.genericParameterClause == nil && member.genericWhereClause == nil
+                && !member.attributes.isDeprecated
+                && member.optionalMark == nil
+            }
+            .map { (member: InitializerDeclSyntax) -> InitializerDeclSyntax in
+                member.normalizedParameterTypes()
+            }
         let memberFunctions = members
-            .compactMap { $0.decl.as(FunctionDeclSyntax.self) }
+            .compactMap { (member: MemberBlockItemSyntax) -> FunctionDeclSyntax? in
+                member.decl.as(FunctionDeclSyntax.self)
+            }
             .filter(\.modifiers.isAccessible)
-            .filter {
-                $0.isValidModifier
-                && !$0.attributes.isDeprecated
-                && !$0.modifiers.contains(where: { $0.name.tokenKind == .keyword(.static) })
+            .filter { (member: FunctionDeclSyntax) -> Bool in
+                member.isValidModifier
+                && !member.attributes.isDeprecated
+                && !member.modifiers.contains(where: { $0.name.tokenKind == .keyword(.static) })
                 && (
-                    $0.signature.returnClause?.type.as(IdentifierTypeSyntax.self)?.name.tokenKind == .keyword(.Self)
-                    || $0.signature.returnClause?.type.as(IdentifierTypeSyntax.self)?.name.text == node.name.text
-                    || $0.signature.returnClause?.type.as(MemberTypeSyntax.self)?.name.text == node.name.text
+                    member.signature.returnClause?.type.as(IdentifierTypeSyntax.self)?.name.tokenKind == .keyword(.Self)
+                    || member.signature.returnClause?.type.as(IdentifierTypeSyntax.self)?.name.text == node.name.text
+                    || member.signature.returnClause?.type.as(MemberTypeSyntax.self)?.name.text == node.name.text
                 )
             }
-            .map { $0.normalizedParameterTypes() }
+            .map { (member: FunctionDeclSyntax) -> FunctionDeclSyntax in
+                member.normalizedParameterTypes()
+            }
         let staticFunctions = members
-            .compactMap { $0.decl.as(FunctionDeclSyntax.self) }
+            .compactMap { (member: MemberBlockItemSyntax) -> FunctionDeclSyntax? in
+                member.decl.as(FunctionDeclSyntax.self)
+            }
             .filter(\.modifiers.isAccessible)
-            .filter {
-                $0.isValidModifier
-                && $0.genericParameterClause == nil && $0.genericWhereClause == nil
-                && !$0.attributes.isDeprecated
-                && !$0.name.isOperatorToken
-                && $0.modifiers.contains(where: { $0.name.tokenKind == .keyword(.static) })
+            .filter { (member: FunctionDeclSyntax) -> Bool in
+                member.isValidModifier
+                && member.genericParameterClause == nil && member.genericWhereClause == nil
+                && !member.attributes.isDeprecated
+                && !member.name.isOperatorToken
+                && member.modifiers.contains(where: { $0.name.tokenKind == .keyword(.static) })
                 && (
-                    $0.signature.returnClause?.type.as(IdentifierTypeSyntax.self)?.name.tokenKind == .keyword(.Self)
-                    || $0.signature.returnClause?.type.as(IdentifierTypeSyntax.self)?.name.text == node.name.text
-                    || $0.signature.returnClause?.type.as(MemberTypeSyntax.self)?.name.text == node.name.text
+                    member.signature.returnClause?.type.as(IdentifierTypeSyntax.self)?.name.tokenKind == .keyword(.Self)
+                    || member.signature.returnClause?.type.as(IdentifierTypeSyntax.self)?.name.text == node.name.text
+                    || member.signature.returnClause?.type.as(MemberTypeSyntax.self)?.name.text == node.name.text
                 )
             }
-            .map { $0.normalizedParameterTypes() }
+            .map { (member: FunctionDeclSyntax) -> FunctionDeclSyntax in
+                member.normalizedParameterTypes()
+            }
         let staticMembers = members
             .compactMap({ $0.decl.as(VariableDeclSyntax.self) })
             .filter({
@@ -136,7 +148,7 @@ extension StyleDefinitionGenerator {
                     )
                 )
             }
-        ) {
+        ) { () -> MemberBlockItemListSyntax in
             // add a constant case for default values
             // case __constant(ParentType)
             EnumCaseDeclSyntax {

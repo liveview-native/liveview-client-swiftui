@@ -7,10 +7,8 @@ import CompilerPluginSupport
 let package = Package(
     name: "LiveViewNative",
     platforms: [
-        .iOS("16.0"),
-        .macOS("13.0"),
-        .watchOS("9.0"),
-        .tvOS("16.0"),
+        .iOS("18.0"),
+        .macOS("15.0")
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
@@ -30,6 +28,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
         
         .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.1"),
+        
+        .package(path: "../../crane"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -40,7 +40,8 @@ let package = Package(
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "LiveViewNativeCore", package: "liveview-native-core"),
                 "LiveViewNativeMacros",
-                "LiveViewNativeStylesheet"
+                "LiveViewNativeStylesheet",
+                .product(name: "Crane", package: "crane"),
             ],
             plugins: [
                 .plugin(name: "BuiltinRegistryGeneratorPlugin"),
