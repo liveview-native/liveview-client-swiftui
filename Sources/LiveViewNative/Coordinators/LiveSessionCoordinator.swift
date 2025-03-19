@@ -120,6 +120,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
 
         self.configuration = config
         
+        let adapter = ReconnectStrategyAdapter(self.configuration.reconnectBehavior)
+
         self.patchHandler = SimplePatchHandler()
         self.eventHandler = SimpleEventHandler()
         self.navHandler = SimpleNavHandler()
@@ -132,6 +134,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.builder.setPersistenceProvider(persistence)
         self.builder.setLiveChannelEventHandler(eventHandler)
         self.builder.setLogLevel(.debug)
+        self.builder.setSocketReconnectStrategy(adapter)
        
         self.eventHandler.viewReloadSubject
             .receive(on: DispatchQueue.main)
@@ -237,9 +240,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             let headers = (configuration.headers ?? [:])
                 .merging(additionalHeaders ?? [:]) { $1 }
-            
-            // TODO: add this interface
-            let adapter = ReconnectStrategyAdapter(self.configuration.reconnectBehavior)
             
             let opts = ClientConnectOpts(
                 joinParams: .some([ "_interface": .object(object: LiveSessionParameters.platformParams)]),
