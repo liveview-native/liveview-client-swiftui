@@ -272,6 +272,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                     switch event.event {
                     case .phoenix(phoenix: .error):
                         logger.error("encountered error in reply - channel reconnecting");
+                        if let liveChannel {
+                            let channel = liveChannel.channel()
+                            try await channel.shutdown()
+                        }
                         try await session.joinLiveViewChannel()
                     case .user(user: "diff"):
                         switch event.payload {
@@ -345,12 +349,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
 
     func join(_ liveChannel: LiveViewNativeCore.LiveChannel) {
-        if let old = self.liveChannel {
-            let channel = old.channel()
-            Task { @MainActor in
-                try await channel.shutdown()
-            }
-        }
         
         self.liveChannel = liveChannel
         let channel = liveChannel.channel()
