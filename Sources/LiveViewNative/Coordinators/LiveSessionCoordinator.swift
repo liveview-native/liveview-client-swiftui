@@ -266,15 +266,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
             }
             
-            let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
-                .some([
-                    "_format": .str(string: LiveSessionParameters.platform),
-                    "_interface": .object(object: LiveSessionParameters.platformParams)
-                ]),
-                nil
-            )
-            
-            self.navigationPath.last!.coordinator.join(liveChannel)
+            try await self.joinLiveViewChannel()
             
             self.state = .connected
             
@@ -327,6 +319,18 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
             
         }
+    }
+    
+    func joinLiveViewChannel() async throws {
+        let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
+                .some([
+                    "_format": .str(string: LiveSessionParameters.platform),
+                    "_interface": .object(object: LiveSessionParameters.platformParams)
+                ]),
+                nil
+        )
+            
+        self.navigationPath.last?.coordinator.join(liveChannel)
     }
 
     private func disconnect(preserveNavigationPath: Bool = false) async {
