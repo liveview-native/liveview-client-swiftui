@@ -270,6 +270,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 guard !Task.isCancelled else { return }
                 do {
                     switch event.event {
+                    case .phoenix(phoenix: .error):
+                        logger.error("encountered error in reply - channel reconnecting");
+                        try await session.joinLiveViewChannel()
                     case .user(user: "diff"):
                         switch event.payload {
                         case let .jsonPayload(json):
