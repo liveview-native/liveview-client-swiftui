@@ -345,6 +345,13 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
 
     func join(_ liveChannel: LiveViewNativeCore.LiveChannel) {
+        if let old = self.liveChannel {
+            let channel = old.channel()
+            Task { @MainActor in
+                try await channel.shutdown()
+            }
+        }
+        
         self.liveChannel = liveChannel
         let channel = liveChannel.channel()
         self.channel = channel
