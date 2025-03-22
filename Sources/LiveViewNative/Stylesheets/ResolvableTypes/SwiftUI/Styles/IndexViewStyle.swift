@@ -22,7 +22,7 @@ enum StylesheetResolvableIndexViewStyle: StylesheetResolvable, @preconcurrency D
 }
 
 extension PageIndexViewStyle.BackgroundDisplayMode.Resolvable: AttributeDecodable {
-    nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
+    public nonisolated init(from attribute: Attribute?, on element: ElementNode) throws {
         fatalError()
     }
 }

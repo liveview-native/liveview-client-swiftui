@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 
 extension Anchor.Source {
     @ASTDecodable("Source")
-    enum Resolvable: @preconcurrency Decodable, StylesheetResolvable {
+    public enum Resolvable: @preconcurrency Decodable, StylesheetResolvable {
         case point(CGPoint.Resolvable)
         case unitPoint(UnitPoint.Resolvable)
         
@@ -31,7 +31,7 @@ extension Anchor.Source {
     }
 }
 
-extension Anchor.Source.Resolvable {
+public extension Anchor.Source.Resolvable {
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Anchor<Value>.Source {
         switch self {
         case let .point(point):
