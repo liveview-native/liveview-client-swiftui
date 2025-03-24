@@ -58,7 +58,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private var liveviewClient: LiveViewClient?
     private var builder: LiveViewClientBuilder
 
-    private var liveReloadChannel: LiveViewNativeCore.LiveChannel?
     private var liveReloadListenerLoop: Task<(), any Error>?
     
     private var cancellables = Set<AnyCancellable>()
@@ -69,15 +68,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     
     deinit {
         let client = liveviewClient
-        let channel = liveReloadChannel
         Task { @MainActor in
             if let client {
                 client.shutdown()
-            }
-            if let channel {
-                do {
-                  try await channel.shutdownParentSocket()
-                }
             }
         }
     }
@@ -103,12 +96,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.init(host.url, config: config, customRegistryType: customRegistryType)
     }
     
-    public func clientChannel() -> LiveViewClientChannel? {
-         self.liveviewClient?.channel()
-     }
-
-     public func status() -> SocketStatus {
-         (try? self.liveviewClient?.status()) ?? .disconnected
+    public func status() -> LiveViewClientStatus {
+         (try? self.liveviewClient?.status()) ?? .connecting
      }
 
     /// Creates a new coordinator with a custom registry.
@@ -141,8 +130,27 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             .sink { [weak self] newView in
                 guard let self else { return }
                 guard let last = self.navigationPath.last else { return }
-                if let client = self.liveviewClient {
-                    last.coordinator.join(client, self.eventHandler, self.patchHandler)
+                switch newView {
+                case .disconnected:
+                    self.state = .disconnected
+                case .connecting:
+                    self.state = .connecting
+                case .reconnecting:
+                    self.state = .reconnecting
+                case .connected(channelStatus: let channelStatus):
+                    switch channelStatus {
+                        case .connected(let doc):
+                            self.state = .connected
+                        case .reconnecting:
+                            self.state = .reconnecting
+                    }
+                case .error(error: let error):
+                    self.state = .connectionFailed(error)
+                }
+                if stylesheet != nil && rootLayout != nil {
+                    if let client = self.liveviewClient {
+                        last.coordinator.join(client, newView, self.patchHandler)
+                    }
                 }
         }.store(in: &cancellables)
         
@@ -252,10 +260,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 try await client.reconnect(originalURL.absoluteString, opts)
             } else {
                 self.liveviewClient = try await self.builder.connect(originalURL.absoluteString, opts)
-                self.navigationPath.last!.coordinator.join(self.liveviewClient!, self.eventHandler, self.patchHandler)
             }
-            
-            
+           
             self.rootLayout = try self.liveviewClient!.deadRender()
             let styleURLs = try self.liveviewClient!.styleUrls()
             
@@ -281,49 +287,15 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
             }
             
-            self.state = .connected
-            
+            self.navigationPath.last!.coordinator.join(self.liveviewClient!, self.liveviewClient!.status(), self.patchHandler)
+           
         } catch {
+            self.rootLayout = nil
+            self.stylesheet = nil
             self.state = .connectionFailed(error)
         }
     }
-   
-    // TODO: move this error handlign into core
-    func overrideLiveReloadChannel(channel: LiveChannel) async throws {
-        if let liveReloadChannel {
-            try await liveReloadChannel.shutdownParentSocket()
-            self.liveReloadChannel = nil
-        }
-        
-        self.liveReloadChannel = channel
-        self.bindLiveReloadListener()
-    }
     
-    func bindLiveReloadListener() {
-        let eventListener = self.liveReloadChannel!.channel().events()
-        self.liveReloadListenerLoop = Task { @MainActor [weak self] in
-            while !Task.isCancelled {
-                let event =  try await eventListener.event()
-                guard let self else { return }
-                let currentTime = Date()
-                
-                guard currentTime.timeIntervalSince(lastReloadTime) >= debounceTime else {
-                    continue
-                }
-                
-                if case .user(user: "assets_change") = event.event {
-                    Task { @MainActor in
-                        await self.disconnect()
-                        self.navigationPath = [.init(url: self.url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
-                        await self.connect()
-                        self.lastReloadTime = Date()
-                    }
-                    return
-                }
-            }
-            
-        }
-    }
 
     private func disconnect(preserveNavigationPath: Bool = false) async {
         do {
@@ -342,15 +314,12 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 self.navigationPath = [self.navigationPath.first!]
             }
             
-            if self.liveReloadChannel?.channel().status() == .joined {
-                try await self.liveReloadChannel?.shutdownParentSocket()
-            }
+          
             
             if let liveReloadListenerLoop {
                 liveReloadListenerLoop.cancel()
             }
             
-            self.liveReloadChannel = nil
             
             if let client = self.liveviewClient {
                 try await client.disconnect()

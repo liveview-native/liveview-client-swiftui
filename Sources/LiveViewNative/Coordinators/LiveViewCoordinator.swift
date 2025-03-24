@@ -34,7 +34,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     @_spi(LiveForm) public private(set) weak var session: LiveSessionCoordinator<R>!
     
     private weak var liveviewClient: LiveViewClient?
-    private var channel: LiveViewClientChannel?
 
      var url: URL
 
@@ -113,7 +112,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             throw LiveSocketError.DisconnectionError
         }
 
-        if let replyPayload = try await channel?.call(event, payload) {
+        if let replyPayload = try await liveviewClient?.call(event, payload) {
             return try await handleEventReplyPayload(replyPayload)
         } else {
             return nil
@@ -126,7 +125,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             throw LiveSocketError.DisconnectionError
         }
 
-        if let replyPayload = try await channel?.call(event, payload) {
+        if let replyPayload = try await liveviewClient?.call(event, payload) {
             return replyPayload
         } else {
             return nil
@@ -245,9 +244,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
 
    
-    func bindDocumentListener() {
-        let handler = SimplePatchHandler()
-        patchHandlerCancellable = handler.patchEventSubject.sink { [weak self] patch in
+    func bindDocumentListener(_ handler: SimplePatchHandler) {
+        patchHandlerCancellable = handler.patchEventSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] patch in
             switch patch.data {
             case .root:
                 // when the root changes, update the `NavStackEntry` itself.
@@ -278,70 +278,57 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 }
             }
         }
-        self.document?.setEventHandler(handler)
     }
    
     func join(_ client: LiveViewNativeCore.LiveViewClient,
-              _ eventListener: SimpleEventHandler,
+              _ initial_status: LiveViewClientStatus,
               _ docHandler: SimplePatchHandler
     ) {
         self.liveviewClient = client
-        self.channel = client.channel()
-        self.document = try! client.document()
-        
-         eventListener.channelStatusSubject
-            .receive(on: DispatchQueue.main)
-            .sink { event in
-            self.internalState = switch event.status {
-            case .joined:
-                .connected
-            case .joining, .waitingForSocketToConnect, .waitingToJoin:
-                .connecting
-            case .waitingToRejoin:
-                .reconnecting
-            case .leaving, .left, .shuttingDown, .shutDown:
-                .disconnected
-            }
-        }.store(in: &eventHandlers)
-        
-        
-         docHandler.patchEventSubject
-            .receive(on: DispatchQueue.main)
-            .sink { event in
-            switch event.data {
-            case .root:
-                // when the root changes, update the `NavStackEntry` itself.
-                self.objectWillChange.send()
-            case .leaf:
-                // text nodes don't have their own views, changes to them need to be handled by the parent Text view
-                // note: aren't these branches the same?
-                if event.parent != nil {
-                    self.elementChanged(event.node).send()
-                } else {
-                    self.elementChanged(event.node).send()
-                }
-            case .nodeElement:
-                // when a single element changes, send an update only to that element.
-                self.elementChanged(event.node).send()
-            }
-        }.store(in: &eventHandlers)
-
-        
-
-        
-        switch try! client.joinPayload() {
-        case let .jsonPayload(.object(payload)):
-            self.handleEvents(payload["rendered"]!)
-        default:
-            fatalError()
-        }
-        
-        self.internalState = .connected
+        handleViewReloadStatus(initial_status)
+        self.bindDocumentListener(docHandler)
     }
     
+    
+    func handleViewReloadStatus(_ status: LiveViewClientStatus) {
+        switch status {
+            case .disconnected:
+                 self.internalState = .disconnected
+            case .connecting:
+                self.internalState = .connecting
+            case .error(error: let error):
+                self.internalState = .connectionFailed(error)
+            case .reconnecting:
+                self.internalState = .setup
+            case .connected(channelStatus: let channelStatus):
+               switch channelStatus {
+                case .connected(let document):
+                    self.document = document
+                    do {
+                        if case let .jsonPayload(.object(payload)) = try self.liveviewClient?.joinPayload() {
+                            self.handleEvents(payload["rendered"]!)
+                        }
+                        self.internalState = .connected
+                    } catch {
+                       self.internalState = .connectionFailed(error)
+                    }
+                case .reconnecting:
+                    do {
+                        guard let document = try self.liveviewClient?.document() else {
+                            self.internalState = .connecting
+                            return
+                        }
+                        self.document = document
+                        self.internalState = .reconnecting
+                    } catch {
+                        self.internalState = .connecting
+                    }
+                }
+        }
+    }
+
     func disconnect() {
-        self.liveviewClient = nil
-        self.channel = nil
         self.internalState = .setup
+        self.liveviewClient = nil
     }
 }

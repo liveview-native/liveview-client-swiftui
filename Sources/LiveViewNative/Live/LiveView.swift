@@ -207,16 +207,6 @@ public struct LiveView<
         case .connecting:
             return .connecting
         case let .connectionFailed(error):
-            
-            if let error = error as? LiveViewNativeCore.LiveSocketError,
-               case let .ConnectionError(connectionError) = error {
-                if let channel = connectionError.livereloadChannel {
-                    Task { @MainActor [weak session] in
-                        try await session?.overrideLiveReloadChannel(channel: channel)
-                    }
-                }
-            }
-            
             return .error(error)
         case .setup:
             return .connecting
