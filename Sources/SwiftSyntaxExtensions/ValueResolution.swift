@@ -117,7 +117,10 @@ public extension FunctionParameterSyntax {
             // value.resolve(on: __element, in: __context)
             var resolvedAttribute = FunctionCallExprSyntax.resolveAttributeReference(parameterReference)
             // a resolvable value should call `resolve(...)` again
-            if attributeReferenceType.genericArgumentClause!.arguments.first!.argument.as(IdentifierTypeSyntax.self)?.name.text.starts(with: "StylesheetResolvable") ?? false {
+            if attributeReferenceType.genericArgumentClause!.arguments.first!.argument.as(IdentifierTypeSyntax.self)?.name.text.starts(with: "StylesheetResolvable")
+                ?? attributeReferenceType.genericArgumentClause!.arguments.first!.argument.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text.starts(with: "StylesheetResolvable")
+                ?? false
+            {
                 resolvedAttribute = FunctionCallExprSyntax.resolveAttributeReference(resolvedAttribute)
             }
             // InlineViewReference should call `resolve(...)` again
