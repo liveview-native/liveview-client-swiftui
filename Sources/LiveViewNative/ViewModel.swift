@@ -363,9 +363,24 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                     let stream = InputStream(data: contents)
                     var buf = [UInt8](repeating: 0, count: reply.config.chunk_size)
                     stream.open()
+                    var amountRead = 0
                     while case let amount = stream.read(&buf, maxLength: reply.config.chunk_size), amount > 0 {
                         let resp = try await uploadChannel.call(event: .user(user: "chunk"), payload: .binary(bytes: Data(buf[..<amount])), timeout: 10_000)
                         print("uploaded chunk: \(resp)")
+                        amountRead += amount
+                        
+                        let progressReply = try await coordinator.liveChannel!.channel().call(
+                            event: .user(user: "progress"),
+                            payload: .jsonPayload(json: .object(object: [
+                                "event": .null,
+                                "ref": .str(string: id),
+                                "entry_ref": .str(string: "\(ref)"),
+                                "progress": .numb(number: .posInt(pos: UInt64((Double(amountRead) / Double(contents.count)) * 100))),
+                            ])),
+                            timeout: 10_000
+                        )
+                        print(progressReply)
+                        try await coordinator.handleEventReplyPayload(progressReply)
                     }
                     stream.close()
                     
