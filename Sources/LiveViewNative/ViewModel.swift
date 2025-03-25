@@ -74,6 +74,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     public struct FileUpload: Identifiable {
         public let id: String
         public let data: Data
+        public let ref: Int
         let upload: () async throws -> ()
     }
     
@@ -285,6 +286,19 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             "",
             id
         )
+        
+        let ref = coordinator.nextUploadRef()
+        
+        let fileMetadata = Json.object(object: [
+            "path": .str(string: name),
+            "ref": .str(string: "\(ref)"),
+            "last_modified": .numb(number: .posInt(pos: UInt64(Date().timeIntervalSince1970 * 1000))), // in milliseconds
+            "name": .str(string: fileName),
+            "relative_path": .str(string: ""),
+            "type": .str(string: fileType.preferredMIMEType!),
+            "size": .numb(number: .posInt(pos: UInt64(contents.count)))
+        ])
+        
         if let changeEventName {
             let replyPayload = try await coordinator.liveChannel!.channel().call(
                 event: .user(user: "event"),
@@ -294,15 +308,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                     "value": .str(string: "_target=\(name)"),
                     "uploads": .object(object: [
                         id: .array(array: [
-                            .object(object: [
-                                "path": .str(string: fileName),
-                                "ref": .str(string: String(coordinator.nextUploadRef())),
-                                "last_modified": .numb(number: .posInt(pos: UInt64(Date().timeIntervalSince1970 * 1000))), // in milliseconds
-                                "name": .str(string: fileName),
-                                "relative_path": .str(string: ""),
-                                "type": .str(string: fileType.preferredMIMEType!),
-                                "size": .numb(number: .posInt(pos: UInt64(contents.count)))
-                            ])
+                            fileMetadata
                         ])
                     ])
                 ])),
@@ -313,8 +319,91 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         self.fileUploads.append(.init(
             id: id,
             data: contents,
-            upload: { try await liveChannel.uploadFile(file) }
+            ref: ref,
+            upload: {
+                do {
+                    let entries = Json.array(array: [
+                        fileMetadata
+                    ])
+                    
+                    let payload = LiveViewNativeCore.Payload.jsonPayload(json: .object(object: [
+                        "ref": .str(string: id),
+                        "entries": entries,
+                    ]))
+                    
+                    print("sending preflight request \(ref)")
+                    
+                    let response = try await coordinator.liveChannel!.channel().call(
+                        event: .user(user: "allow_upload"),
+                        payload: payload,
+                        timeout: 10_000
+                    )
+                    
+                    try await coordinator.handleEventReplyPayload(response)
+                    
+                    print("got preflight response \(response)")
+                    
+                    // LiveUploader.initAdapterUpload
+                    // UploadEntry.uploader
+                    // utils.channelUploader
+                    // EntryUploader
+                    let reply = switch response {
+                    case let .jsonPayload(json: json):
+                        try await JsonDecoder().decode(AllowUploadReply.self, from: json)
+                    default:
+                        fatalError()
+                    }
+                    print(reply)
+                    
+                    let uploadChannel = try await coordinator.session.liveSocket!.socket().channel(topic: .fromString(topic: "lvu:\(ref)"), payload: .jsonPayload(json: .object(object: [
+                        "token": .str(string: reply.entries["\(ref)"]!)
+                    ])))
+                    try await uploadChannel.join(timeout: 10_000)
+                    
+                    let stream = InputStream(data: contents)
+                    var buf = [UInt8](repeating: 0, count: reply.config.chunk_size)
+                    stream.open()
+                    while case let amount = stream.read(&buf, maxLength: reply.config.chunk_size), amount > 0 {
+                        let resp = try await uploadChannel.call(event: .user(user: "chunk"), payload: .binary(bytes: Data(buf[..<amount])), timeout: 10_000)
+                        print("uploaded chunk: \(resp)")
+                    }
+                    stream.close()
+                    
+                    print("finished uploading chunks")
+                    let progressReply = try await coordinator.liveChannel!.channel().call(
+                        event: .user(user: "progress"),
+                        payload: .jsonPayload(json: .object(object: [
+                            "event": .null,
+                            "ref": .str(string: id),
+                            "entry_ref": .str(string: "\(ref)"),
+                            "progress": .numb(number: .posInt(pos: 100)),
+                        ])),
+                        timeout: 10_000
+                    )
+                    print(progressReply)
+                    try await coordinator.handleEventReplyPayload(progressReply)
+                    
+                    print("done")
+                } catch {
+                    fatalError(error.localizedDescription)
+                }
+                
+//                try! await liveChannel.uploadFile(file)
+            }
         ))
+    }
+    
+    fileprivate struct UploadConfig: Codable {
+        let chunk_size: Int
+        let max_entries: Int
+        let chunk_timeout: Int
+        let max_file_size: Int
+    }
+    
+    fileprivate struct AllowUploadReply: Codable {
+        let ref: String
+        let config: UploadConfig
+        let entries: [String:String]
     }
 }
 
@@ -330,3 +419,4 @@ private extension URLComponents {
         return components.query!
     }
 }
+
