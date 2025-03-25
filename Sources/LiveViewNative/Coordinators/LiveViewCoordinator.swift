@@ -242,12 +242,12 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             eventSubject.send((name, event[1]))
         }
     }
-
    
     func bindDocumentListener(_ handler: SimplePatchHandler) {
         patchHandlerCancellable = handler.patchEventSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] patch in
+
             switch patch.data {
             case .root:
                 // when the root changes, update the `NavStackEntry` itself.
@@ -287,6 +287,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         self.liveviewClient = client
         handleViewReloadStatus(initial_status)
         self.bindDocumentListener(docHandler)
+
     }
     
     

@@ -288,14 +288,13 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
             
             self.navigationPath.last!.coordinator.join(self.liveviewClient!, self.liveviewClient!.status(), self.patchHandler)
-           
+
         } catch {
             self.rootLayout = nil
             self.stylesheet = nil
             self.state = .connectionFailed(error)
         }
     }
-    
 
     private func disconnect(preserveNavigationPath: Bool = false) async {
         do {
