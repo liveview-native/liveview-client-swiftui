@@ -270,6 +270,13 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 guard !Task.isCancelled else { return }
                 do {
                     switch event.event {
+                    case .phoenix(phoenix: .error):
+                        logger.error("encountered error in reply - channel reconnecting");
+                        if let liveChannel {
+                            let channel = liveChannel.channel()
+                            try await channel.shutdown()
+                        }
+                        try await session.joinLiveViewChannel()
                     case .user(user: "diff"):
                         switch event.payload {
                         case let .jsonPayload(json):
@@ -342,6 +349,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
 
     func join(_ liveChannel: LiveViewNativeCore.LiveChannel) {
+        
         self.liveChannel = liveChannel
         let channel = liveChannel.channel()
         self.channel = channel
