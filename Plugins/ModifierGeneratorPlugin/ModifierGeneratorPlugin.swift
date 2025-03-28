@@ -11,7 +11,6 @@ import Foundation
 @main
 struct ModifierGeneratorPlugin: BuildToolPlugin {
     func createBuildCommands(context: PluginContext, target: Target) async throws -> [Command] {
-        guard let target = target as? SwiftSourceModuleTarget else { return [] }
         let tool = try context.tool(named: "ModifierGenerator")
         let output = context.pluginWorkDirectoryURL.appending(path: "GeneratedModifiers.swift")
         
@@ -23,7 +22,10 @@ struct ModifierGeneratorPlugin: BuildToolPlugin {
                 displayName: tool.name,
                 executable: tool.url,
                 arguments: arguments,
-                environment: ProcessInfo.processInfo.environment,
+//                environment: ProcessInfo.processInfo.environment,
+//                environment: ["SDKROOT": "/Applications/Xcode-16-3.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator.sdk"],
+//                environment: ["SDKROOT": "/Applications/Xcode-16-3.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/SDKs/AppleTVSimulator.sdk"],
+                environment: ["SDKROOT": "/Applications/Xcode-16-3.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.4.sdk"],
                 inputFiles: [],
                 outputFiles: [output]
             )
