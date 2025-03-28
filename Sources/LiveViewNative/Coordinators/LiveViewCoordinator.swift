@@ -314,7 +314,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     func bindDocumentListener() {
         let handler = SimplePatchHandler()
-        patchHandlerCancellable = handler.patchEventSubject.sink { [weak self] patch in
+        patchHandlerCancellable = handler.patchEventSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] patch in
             switch patch.data {
             case .root:
                 // when the root changes, update the `NavStackEntry` itself.
