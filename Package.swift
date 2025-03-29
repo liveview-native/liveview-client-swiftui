@@ -25,7 +25,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
-        .package(url: "https://github.com/liveview-native/liveview-native-core", exact: "0.4.1-rc-2"),
+        .package(url: "https://github.com/liveview-native/liveview-native-core", exact: "0.4.1-rc-3"),
         
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
         
