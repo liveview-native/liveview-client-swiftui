@@ -247,7 +247,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         patchHandlerCancellable = handler.patchEventSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] patch in
-
             switch patch.data {
             case .root:
                 // when the root changes, update the `NavStackEntry` itself.
