@@ -33,10 +33,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     @_spi(LiveForm) public private(set) weak var session: LiveSessionCoordinator<R>!
     
-    var url: URL
+    private weak var liveviewClient: LiveViewClient?
 
-    private(set) var liveChannel: LiveViewNativeCore.LiveChannel?
-    private var channel: LiveViewNativeCore.Channel?
+     var url: URL
 
     @Published var document: LiveViewNativeCore.Document? {
         didSet {
@@ -58,11 +57,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventSubject = PassthroughSubject<(String, Json), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
-//    private var eventListener: Channel.EventStream?
-    private var eventListenerLoop: Task<(), any Error>?
-//    private var statusListener: Channel.StatusStream?
-    private var statusListenerLoop: Task<(), any Error>?
-    
+
     private var patchHandlerCancellable: AnyCancellable?
 
     private(set) internal var liveViewModel = LiveViewModel()
@@ -79,26 +74,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         self.url = url
     }
     
-    deinit {
-        let channel = channel
-        Task {
-            do {
-                try await channel?.shutdown()
-            }
-        }
-        
-        if let eventListenerLoop {
-            if !eventListenerLoop.isCancelled {
-                eventListenerLoop.cancel()
-            }
-        }
-        
-        if let statusListenerLoop {
-            if !statusListenerLoop.isCancelled {
-                statusListenerLoop.cancel()
-            }
-        }
-    }
 
     /// Pushes a LiveView event with the given name and payload to the server.
     ///
@@ -132,17 +107,37 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     @discardableResult
     internal func doPushEvent(_ event: String, payload: LiveViewNativeCore.Payload) async throws -> [String:Any]? {
-        guard let channel = channel else {
-            return nil
-        }
-        
-        guard case .joined = channel.status() else {
+
+        guard case .connected = state else {
             throw LiveSocketError.DisconnectionError
         }
-        
-        let replyPayload = try await channel.call(event: .user(user: event), payload: payload, timeout: PUSH_TIMEOUT)
-        
-        return try await handleEventReplyPayload(replyPayload)
+
+        if let replyPayload = try await liveviewClient?.call(event, payload) {
+            return try await handleEventReplyPayload(replyPayload)
+        } else {
+            return nil
+        }
+    }
+
+    @discardableResult
+    public func call(event: String, payload: LiveViewNativeCore.Payload) async throws -> LiveViewNativeCore.Payload? {
+        guard case .connected = state else {
+            throw LiveSocketError.DisconnectionError
+        }
+
+        if let replyPayload = try await liveviewClient?.call(event, payload) {
+            return replyPayload
+        } else {
+            return nil
+        }
+    }
+
+    public func uploadFile(file: LiveViewNativeCore.LiveFile) async throws  {
+        guard case .connected = state else {
+            throw LiveSocketError.DisconnectionError
+        }
+
+        try await liveviewClient?.uploadFiles([file]);
     }
 
     /// Creates a publisher that can be used to listen for server-sent LiveView events.
@@ -212,10 +207,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             .catch({ _ in Empty() })
     }
 
-    private func handleDiff(payload: LiveViewNativeCore.Json, baseURL: URL) throws {
-        handleEvents(payload)
-        try self.document?.mergeFragmentJson(String(data: try JSONEncoder().encode(payload), encoding: .utf8)!)
-    }
     
     func handleEventReplyPayload(_ replyPayload: LiveViewNativeCore.Payload) async throws -> [String:Any]? {
         switch replyPayload {
@@ -223,19 +214,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             switch json {
             case let .object(object):
                 if case let .object(diff) = object["diff"] {
-                    try self.handleDiff(payload: .object(object: diff), baseURL: self.url)
                     if case let .object(reply) = diff["r"] {
                         return reply
                     }
-                } else if case let .object(redirectObject) = object["live_redirect"],
-                          let redirect = LiveRedirect(from: redirectObject, relativeTo: self.url)
-                {
-                    try await session.redirect(redirect)
-                } else if case let .object(redirectObject) = object["redirect"],
-                          case let .str(destinationString) = redirectObject["to"],
-                          let destination = URL(string: destinationString, relativeTo: self.url)
-                {
-                    try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
                 } else {
                     return nil
                 }
@@ -261,59 +242,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             eventSubject.send((name, event[1]))
         }
     }
-
-    func bindEventListener() {
-        self.eventListenerLoop = Task { [weak self, unowned channel] in
-            let eventListener = channel!.eventStream()
-            for try await event in eventListener {
-                guard let self else { return }
-                guard !Task.isCancelled else { return }
-                do {
-                    switch event.event {
-                    case .phoenix(phoenix: .error):
-                        logger.error("encountered error in reply - channel reconnecting");
-                        if let liveChannel {
-                            let channel = liveChannel.channel()
-                            try await channel.shutdown()
-                        }
-                        try await session.joinLiveViewChannel()
-                    case .user(user: "diff"):
-                        switch event.payload {
-                        case let .jsonPayload(json):
-                            try self.handleDiff(payload: json, baseURL: self.url)
-                        case .binary:
-                            fatalError()
-                        }
-                    case .user(user: "live_redirect"):
-                        guard case let .jsonPayload(json) = event.payload,
-                              case let .object(payload) = json,
-                              let redirect = LiveRedirect(from: payload, relativeTo: self.url)
-                        else { break }
-                        try await self.session.redirect(redirect)
-                    case .user(user: "live_patch"):
-                        guard case let .jsonPayload(json) = event.payload,
-                              case let .object(payload) = json,
-                              let redirect = LiveRedirect(from: payload, relativeTo: self.url, mode: .patch)
-                        else { return }
-                        try await self.session.redirect(redirect)
-                    case .user(user: "redirect"):
-                        guard case let .jsonPayload(json) = event.payload,
-                              case let .object(payload) = json,
-                              let destination = (payload["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: self.url) })
-                        else { return }
-                        try await self.session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
-                    default:
-                        logger.error("Unhandled event: \(String(describing: event))")
-                    }
-                } catch {
-                    logger.error("Event handling error: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
-    func bindDocumentListener() {
-        let handler = SimplePatchHandler()
+   
+    func bindDocumentListener(_ handler: SimplePatchHandler) {
         patchHandlerCancellable = handler.patchEventSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] patch in
@@ -347,71 +277,58 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 }
             }
         }
-        self.document?.setEventHandler(handler)
     }
+   
+    func join(_ client: LiveViewNativeCore.LiveViewClient,
+              _ initial_status: LiveViewClientStatus,
+              _ docHandler: SimplePatchHandler
+    ) {
+        self.liveviewClient = client
+        handleViewReloadStatus(initial_status)
+        self.bindDocumentListener(docHandler)
 
-    func join(_ liveChannel: LiveViewNativeCore.LiveChannel) {
-        
-        self.liveChannel = liveChannel
-        let channel = liveChannel.channel()
-        self.channel = channel
-        
-        if statusListenerLoop != nil && !statusListenerLoop!.isCancelled {
-            statusListenerLoop?.cancel()
-        }
-        
-        statusListenerLoop = Task { @MainActor [weak self, unowned channel] in
-            let statusListener = channel.statusStream()
-            for try await status in statusListener {
-                self?.internalState = switch status {
-                case .joined:
-                    .connected
-                case .joining, .waitingForSocketToConnect, .waitingToJoin:
-                    .connecting
-                case .waitingToRejoin:
-                    .reconnecting
-                case .leaving, .left, .shuttingDown, .shutDown:
-                    .disconnected
-                }
-            }
-        }
-        
-        self.bindEventListener()
-        
-        self.document = liveChannel.document()
-        self.bindDocumentListener()
-        
-        switch liveChannel.joinPayload() {
-        case let .jsonPayload(.object(payload)):
-            self.handleEvents(payload["rendered"]!)
-        default:
-            fatalError()
-        }
-        
-        self.internalState = .connected
     }
     
-    func disconnect() async throws {
-        try await self.channel?.leave()
-        try await self.channel?.shutdown()
-        
-        if let eventListenerLoop {
-            if !eventListenerLoop.isCancelled {
-                eventListenerLoop.cancel()
-            }
+    
+    func handleViewReloadStatus(_ status: LiveViewClientStatus) {
+        switch status {
+            case .disconnected:
+                 self.internalState = .disconnected
+            case .connecting:
+                self.internalState = .connecting
+            case .error(error: let error):
+                self.internalState = .connectionFailed(error)
+            case .reconnecting:
+                self.internalState = .setup
+            case .connected(channelStatus: let channelStatus):
+               switch channelStatus {
+                case .connected(let document):
+                    self.document = document
+                    do {
+                        if case let .jsonPayload(.object(payload)) = try self.liveviewClient?.joinPayload() {
+                            self.handleEvents(payload["rendered"]!)
+                        }
+                        self.internalState = .connected
+                    } catch {
+                       self.internalState = .connectionFailed(error)
+                    }
+                case .reconnecting:
+                    do {
+                        guard let document = try self.liveviewClient?.document() else {
+                            self.internalState = .connecting
+                            return
+                        }
+                        self.document = document
+                        self.internalState = .reconnecting
+                    } catch {
+                        self.internalState = .connecting
+                    }
+                }
         }
-        
-        if let statusListenerLoop {
-            if !statusListenerLoop.isCancelled {
-                statusListenerLoop.cancel()
-            }
-        }
+    }
 
-        self.eventListenerLoop = nil
-        self.statusListenerLoop = nil
-        self.liveChannel = nil
-        self.channel = nil
-        
+    func disconnect() {
         self.internalState = .setup
+        self.liveviewClient = nil
     }
 }
