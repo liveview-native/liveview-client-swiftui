@@ -89,6 +89,10 @@ struct NavigationLink<Root: RootRegistry>: View {
     @Environment(\.coordinatorEnvironment)
     private var coordinatorEnvironment: CoordinatorEnvironment?
     
+    @LiveElementIgnored
+    @Environment(\.navigationHandler)
+    private var navigationHandler: (URL) -> ()
+    
     @ViewBuilder
     public var body: some View {
         if let url = destination.flatMap({ URL(string: $0, relativeTo: $liveElement.context.coordinator.url) })?.appending(path: "").absoluteURL {
@@ -119,13 +123,10 @@ struct NavigationLink<Root: RootRegistry>: View {
                         $liveElement.children()
                     }
                 case .push:
-                    SwiftUI.NavigationLink(
-                        value: LiveNavigationEntry(
-                            url: url,
-                            coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url),
-                            navigationTransition: nil, // FIXME: navigationTransition
-                            pendingView: pendingView
-                        )
+                    SwiftUI.Button(
+                        action: {
+                            navigationHandler(url)
+                        }
                     ) {
                         $liveElement.children()
                     }
@@ -165,4 +166,8 @@ struct NavigationLink<Root: RootRegistry>: View {
                 }
         }
     }
+}
+
+extension EnvironmentValues {
+    @Entry public var navigationHandler: (URL) -> () = { _ in }
 }
