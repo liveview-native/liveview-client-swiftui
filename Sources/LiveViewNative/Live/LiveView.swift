@@ -207,16 +207,6 @@ public struct LiveView<
         case .connecting:
             return .connecting
         case let .connectionFailed(error):
-            
-            if let error = error as? LiveViewNativeCore.LiveSocketError,
-               case let .ConnectionError(connectionError) = error {
-                if let channel = connectionError.livereloadChannel {
-                    Task { @MainActor [weak session] in
-                        try await session?.overrideLiveReloadChannel(channel: channel)
-                    }
-                }
-            }
-            
             return .error(error)
         case .setup:
             return .connecting
@@ -247,7 +237,7 @@ public struct LiveView<
         .onChange(of: scenePhase) { newValue in
             guard case .active = newValue
             else { return }
-            if case .connected = session.socket?.status() {
+            if case .connected = session.status() {
                 return
             }
             Task {
