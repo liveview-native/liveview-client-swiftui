@@ -213,7 +213,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 .merging(additionalHeaders ?? [:]) { $1 }
             
             if let socket {
-                try await socket.shutdown()
+                try? await socket.shutdown()
             }
             
             let adapter = ReconnectStrategyAdapter(self.configuration.reconnectBehavior)
@@ -360,7 +360,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             self.liveReloadChannel = nil
             
-            try await self.socket?.shutdown()
+            try? await self.socket?.shutdown()
             self.socket = nil
             self.liveSocket = nil
             self.state = .disconnected
