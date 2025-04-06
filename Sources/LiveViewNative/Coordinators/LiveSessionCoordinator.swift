@@ -112,7 +112,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
             Task {
-                try await prev.last?.coordinator.disconnect()
+                try? await prev.last?.coordinator.disconnect()
                 if prev.count > next.count {
                     let targetEntry = self.liveSocket!.getEntries()[next.count - 1]
                     next.last?.coordinator.join(
@@ -336,7 +336,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private func disconnect(preserveNavigationPath: Bool = false) async {
         do {
             for entry in self.navigationPath {
-                try await entry.coordinator.disconnect()
+                try? await entry.coordinator.disconnect()
                 if !preserveNavigationPath {
                     entry.coordinator.document = nil
                 }
