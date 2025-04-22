@@ -64,13 +64,13 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     var submitAction: (() -> ())?
 
     /// The form data for this form.
-    @Published internal private(set) var data = [String: any FormValue]()
+    @Published @_spi(LiveForm) public private(set) var data = [String: any FormValue]()
     var formFieldWillChange = PassthroughSubject<String, Never>()
     
     /// A publisher that emits a value before sending the form submission event.
     var formWillSubmit = PassthroughSubject<(), Never>()
     
-    var fileUploads: [FileUpload] = []
+    @_spi(LiveForm) public internal(set) var fileUploads: [FileUpload] = []
     public struct FileUpload: Identifiable {
         public let id: String
         public let data: Data
