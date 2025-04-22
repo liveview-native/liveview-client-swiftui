@@ -64,16 +64,17 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     var submitAction: (() -> ())?
 
     /// The form data for this form.
-    @Published @_spi(LiveForm) public private(set) var data = [String: any FormValue]()
+    @Published internal private(set) var data = [String: any FormValue]()
     var formFieldWillChange = PassthroughSubject<String, Never>()
     
     /// A publisher that emits a value before sending the form submission event.
     var formWillSubmit = PassthroughSubject<(), Never>()
     
-    @_spi(LiveForm) public internal(set) var fileUploads: [FileUpload] = []
+    var fileUploads: [FileUpload] = []
     public struct FileUpload: Identifiable {
         public let id: String
         public let data: Data
+        public let ref: Int
         let upload: () async throws -> ()
     }
     
@@ -267,13 +268,13 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         )
     }
     
-    public func queueFileUpload(
+    public func queueFileUpload<R: RootRegistry>(
         name: String,
         id: String,
         contents: Data,
         fileType: UTType,
         fileName: String,
-        coordinator: LiveViewCoordinator<some RootRegistry>
+        coordinator: LiveViewCoordinator<R>
     ) async throws {
         guard let liveChannel = coordinator.liveChannel
         else { return }
@@ -285,6 +286,19 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             "",
             id
         )
+        
+        let ref = coordinator.nextUploadRef()
+        
+        let fileMetadata = Json.object(object: [
+            "path": .str(string: name),
+            "ref": .str(string: "\(ref)"),
+            "last_modified": .numb(number: .posInt(pos: UInt64(Date().timeIntervalSince1970 * 1000))), // in milliseconds
+            "name": .str(string: fileName),
+            "relative_path": .str(string: ""),
+            "type": .str(string: fileType.preferredMIMEType!),
+            "size": .numb(number: .posInt(pos: UInt64(contents.count)))
+        ])
+        
         if let changeEventName {
             let replyPayload = try await coordinator.liveChannel!.channel().call(
                 event: .user(user: "event"),
@@ -294,15 +308,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                     "value": .str(string: "_target=\(name)"),
                     "uploads": .object(object: [
                         id: .array(array: [
-                            .object(object: [
-                                "path": .str(string: fileName),
-                                "ref": .str(string: String(coordinator.nextUploadRef())),
-                                "last_modified": .numb(number: .posInt(pos: UInt64(Date().timeIntervalSince1970 * 1000))), // in milliseconds
-                                "name": .str(string: fileName),
-                                "relative_path": .str(string: ""),
-                                "type": .str(string: fileType.preferredMIMEType!),
-                                "size": .numb(number: .posInt(pos: UInt64(contents.count)))
-                            ])
+                            fileMetadata
                         ])
                     ])
                 ])),
@@ -310,11 +316,94 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             )
             try await coordinator.handleEventReplyPayload(replyPayload)
         }
-        self.fileUploads.append(.init(
+        self.fileUploads.append(FileUpload(
             id: id,
             data: contents,
-            upload: { try await liveChannel.uploadFile(file) }
+            ref: ref,
+            upload: {
+                do {
+                    let entries = Json.array(array: [
+                        fileMetadata
+                    ])
+                    
+                    let payload = LiveViewNativeCore.Payload.jsonPayload(json: .object(object: [
+                        "ref": .str(string: id),
+                        "entries": entries,
+                    ]))
+                    
+                    print("sending preflight request \(ref)")
+                    
+                    let response = try await coordinator.liveChannel!.channel().call(
+                        event: .user(user: "allow_upload"),
+                        payload: payload,
+                        timeout: 10_000
+                    )
+                    
+                    try await coordinator.handleEventReplyPayload(response)
+                    
+                    print("got preflight response \(response)")
+                    
+                    // LiveUploader.initAdapterUpload
+                    // UploadEntry.uploader
+                    // utils.channelUploader
+                    // EntryUploader
+                    let reply = switch response {
+                    case let .jsonPayload(json: json):
+                        json
+                    default:
+                        fatalError()
+                    }
+                    print(reply)
+                    
+                    let allowUploadReply = try JsonDecoder().decode(AllowUploadReply.self, from: reply)
+                    
+                    let entry: Json = switch reply {
+                    case let .object(object: object):
+                        switch object["entries"] {
+                        case let .object(object: object):
+                            object["\(ref)"]!
+                        default:
+                            fatalError()
+                        }
+                    default:
+                        fatalError()
+                    }
+                    
+                    
+                    let uploadEntry = UploadEntry<R>(data: contents, ref: allowUploadReply.ref, entryRef: ref, meta: entry, config: allowUploadReply.config, coordinator: coordinator)
+                    switch entry {
+                    case let .object(object: meta):
+                        switch meta["uploader"]! {
+                        case let .str(string: uploader):
+                            try await coordinator.session.configuration.uploaders[uploader]!.upload(uploadEntry, for: coordinator)
+                        default:
+                            fatalError()
+                        }
+                    case let .str(string: uploadToken):
+                        try await UploadEntry<R>.ChannelUploader().upload(uploadEntry, for: coordinator)
+                    default:
+                        fatalError()
+                    }
+                    
+                    print("done")
+                } catch {
+                    fatalError(error.localizedDescription)
+                }
+            }
         ))
+    }
+    
+    public struct UploadConfig: Codable {
+        public let chunk_size: Int
+        public let max_entries: Int
+        public let chunk_timeout: Int
+        public let max_file_size: Int
+    }
+    
+    fileprivate struct AllowUploadReply: Codable {
+        let ref: String
+        let config: UploadConfig
+//        let entries: [String:String]
     }
 }
 
@@ -329,4 +418,83 @@ private extension URLComponents {
         })
         return components.query!
     }
+}
+
+public final class UploadEntry<R: RootRegistry> {
+    public let data: Data
+    public let ref: String
+    public let entryRef: Int
+    public let meta: Json
+    public let config: FormModel.UploadConfig
+    private weak var coordinator: LiveViewCoordinator<R>?
+    
+    init(data: Data, ref: String, entryRef: Int, meta: Json, config: FormModel.UploadConfig, coordinator: LiveViewCoordinator<R>) {
+        self.data = data
+        self.ref = ref
+        self.entryRef = entryRef
+        self.meta = meta
+        self.config = config
+        self.coordinator = coordinator
+    }
+    
+    @MainActor
+    public func progress(_ progress: Int) async throws {
+        let progressReply = try await coordinator!.liveChannel!.channel().call(
+            event: .user(user: "progress"),
+            payload: .jsonPayload(json: .object(object: [
+                "event": .null,
+                "ref": .str(string: ref),
+                "entry_ref": .str(string: "\(entryRef)"),
+                "progress": .numb(number: .posInt(pos: UInt64(progress))),
+            ])),
+            timeout: 10_000
+        )
+        print(progressReply)
+        _ = try await coordinator!.handleEventReplyPayload(progressReply)
+    }
+    
+    @MainActor
+    public func error(_ error: some Error) async throws {
+        
+    }
+    
+    @MainActor
+    public func pause() async throws {
+        
+    }
+    
+    public struct ChannelUploader: Uploader {
+        public init() {}
+        
+        public func upload<Root: RootRegistry>(
+            _ entry: UploadEntry<Root>,
+            for coordinator: LiveViewCoordinator<Root>
+        ) async throws {
+            let uploadChannel = try await coordinator.session.liveSocket!.socket().channel(topic: .fromString(topic: "lvu:\(entry.entryRef)"), payload: .jsonPayload(json: .object(object: [
+                "token": entry.meta
+            ])))
+            _ = try await uploadChannel.join(timeout: 10_000)
+            
+            let stream = InputStream(data: entry.data)
+            var buf = [UInt8](repeating: 0, count: entry.config.chunk_size)
+            stream.open()
+            var amountRead = 0
+            while case let amount = stream.read(&buf, maxLength: entry.config.chunk_size), amount > 0 {
+                let resp = try await uploadChannel.call(event: .user(user: "chunk"), payload: .binary(bytes: Data(buf[..<amount])), timeout: 10_000)
+                print("uploaded chunk: \(resp)")
+                amountRead += amount
+                
+                try await entry.progress(Int((Double(amountRead) / Double(entry.data.count)) * 100))
+            }
+            stream.close()
+            
+            print("finished uploading chunks")
+            try await entry.progress(100)
+        }
+    }
+}
+
+public protocol Uploader {
+    @MainActor
+    func upload<R: RootRegistry>(_ entry: UploadEntry<R>, for coordinator: LiveViewCoordinator<R>) async throws
 }
