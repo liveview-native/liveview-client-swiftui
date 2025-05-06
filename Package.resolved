@@ -1,5 +1,5 @@
 {
-  "originHash" : "a1b1e06fbdf5f90d2817b4e4ba491ff6fc177e87dad20844f45d67caa0b58193",
+  "originHash" : "0c8c3e8458ec9c2f13f4c7fdaf35ecaf0763b299e8b3f598c64384f5561619e0",
   "pins" : [
     {
       "identity" : "liveview-native-core",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "2f0e874960ee93b5b76daff2ecfb6d8e445e15bc",
         "version" : "0.4.1-rc-5"
+      }
+    },
+    {
+      "identity" : "nuke",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kean/Nuke",
+      "state" : {
+        "revision" : "0ead44350d2737db384908569c012fe67c421e4d",
+        "version" : "12.8.0"
       }
     },
     {
