@@ -6,6 +6,10 @@
 //
 
 import SwiftUI
+#if canImport(Nuke) && canImport(NukeUI)
+import Nuke
+import NukeUI
+#endif
 
 /// Displays an image asynchronously loaded from a URL.
 ///
@@ -69,37 +73,58 @@ struct AsyncImage<Root: RootRegistry>: View {
     }
     
     var asyncImage: some View {
+        #if canImport(Nuke) && canImport(NukeUI)
+        LazyImage(
+            url: url.flatMap({ URL(string: $0, relativeTo: context.url) }),
+            transaction: transaction
+        ) { state in
+            let phase = switch state.result {
+            case .none:
+                AsyncImagePhase.empty
+            case .some(.success(let response)):
+                AsyncImagePhase.success(Image(uiImage: response.image))
+            case .some(.failure(let error)):
+                AsyncImagePhase.failure(error)
+            }
+            asyncImageContent(phase)
+        }
+        #else
         SwiftUI.AsyncImage(
             url: url.flatMap({ URL(string: $0, relativeTo: context.url) }),
             scale: scale,
             transaction: transaction
         ) { phase in
-            SwiftUI.Group {
-                switch phase {
-                case .empty:
-                    if $liveElement.hasTemplate(.asyncImagePhase(.empty)) {
-                        $liveElement.children(in: .asyncImagePhase(.empty))
-                    } else {
-                        SwiftUI.ProgressView().progressViewStyle(.circular)
-                    }
-                case .success(let image):
-                    if $liveElement.hasTemplate(.asyncImagePhase(.success)) {
-                        $liveElement.children(in: .asyncImagePhase(.success))
-                    } else {
-                        image
-                    }
-                case .failure(let error):
-                    if $liveElement.hasTemplate(.asyncImagePhase(.failure)) {
-                        $liveElement.children(in: .asyncImagePhase(.failure))
-                    } else {
-                        SwiftUI.Text(error.localizedDescription)
-                    }
-                @unknown default:
-                    EmptyView()
-                }
-            }
-            .environment(\.asyncImagePhase, phase)
+            asyncImageContent(phase)
         }
+        #endif
+    }
+    
+    func asyncImageContent(_ phase: AsyncImagePhase) -> some View {
+        SwiftUI.Group {
+            switch phase {
+            case .empty:
+                if $liveElement.hasTemplate(.asyncImagePhase(.empty)) {
+                    $liveElement.children(in: .asyncImagePhase(.empty))
+                } else {
+                    SwiftUI.ProgressView().progressViewStyle(.circular)
+                }
+            case .success(let image):
+                if $liveElement.hasTemplate(.asyncImagePhase(.success)) {
+                    $liveElement.children(in: .asyncImagePhase(.success))
+                } else {
+                    image
+                }
+            case .failure(let error):
+                if $liveElement.hasTemplate(.asyncImagePhase(.failure)) {
+                    $liveElement.children(in: .asyncImagePhase(.failure))
+                } else {
+                    SwiftUI.Text(error.localizedDescription)
+                }
+            @unknown default:
+                EmptyView()
+            }
+        }
+        .environment(\.asyncImagePhase, phase)
     }
 }
 
