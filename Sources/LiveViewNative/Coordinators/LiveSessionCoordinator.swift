@@ -216,6 +216,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 try? await socket.shutdown()
             }
             
+            if let liveReloadChannel {
+                try? await liveReloadChannel.shutdownParentSocket()
+            }
+            
             let adapter = ReconnectStrategyAdapter(self.configuration.reconnectBehavior)
             
             self.liveSocket = try await LiveSocket(
@@ -287,7 +291,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     func overrideLiveReloadChannel(channel: LiveChannel) async throws {
         
         if let liveReloadChannel {
-            try await liveReloadChannel.shutdownParentSocket()
+            try? await liveReloadChannel.shutdownParentSocket()
             self.liveReloadChannel = nil
         }
         
