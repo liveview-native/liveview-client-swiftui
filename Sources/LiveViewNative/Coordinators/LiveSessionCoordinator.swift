@@ -303,7 +303,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let eventListener = self.liveReloadChannel!.channel().events()
         self.liveReloadListenerLoop = Task { @MainActor [weak self] in
             while !Task.isCancelled {
-                let event =  try await eventListener.event()
+                let event = try await eventListener.event()
                 guard let self else { return }
                 let currentTime = Date()
                 
@@ -313,6 +313,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 
                 if case .user(user: "assets_change") = event.event {
                     Task { @MainActor in
+                        self.state = .setup
                         await self.disconnect()
                         self.navigationPath = [.init(url: self.url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
                         await self.connect()
