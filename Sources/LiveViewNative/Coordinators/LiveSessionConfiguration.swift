@@ -36,6 +36,8 @@ public struct LiveSessionConfiguration {
     
     public var eventConfirmation: ((String, ElementNode) async -> Bool)?
     
+    public var uploaders: [String:any Uploader] = [:]
+    
     /// Constructs a default, empty configuration.
     public init() {
     }
@@ -46,7 +48,8 @@ public struct LiveSessionConfiguration {
         urlSessionConfiguration: URLSessionConfiguration = .default,
         transition: AnyTransition? = nil,
         reconnectBehavior: ReconnectBehavior = .exponential,
-        eventConfirmation: ((String, ElementNode) async -> Bool)? = nil
+        eventConfirmation: ((String, ElementNode) async -> Bool)? = nil,
+        uploaders: [String:any Uploader] = [:]
     ) {
         self.headers = headers
         self.connectParams = connectParams
@@ -54,6 +57,7 @@ public struct LiveSessionConfiguration {
         self.transition = transition
         self.reconnectBehavior = reconnectBehavior
         self.eventConfirmation = eventConfirmation
+        self.uploaders = uploaders
     }
     
     public struct ReconnectBehavior: Sendable {

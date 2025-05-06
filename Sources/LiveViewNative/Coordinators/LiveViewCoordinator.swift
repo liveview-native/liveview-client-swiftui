@@ -223,7 +223,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             switch json {
             case let .object(object):
                 if case let .object(diff) = object["diff"] {
-                    try self.handleDiff(payload: .object(object: diff), baseURL: self.url)
+                    try? self.handleDiff(payload: .object(object: diff), baseURL: self.url)
                     if case let .object(reply) = diff["r"] {
                         return reply
                     }
