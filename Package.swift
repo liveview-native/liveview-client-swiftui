@@ -20,7 +20,8 @@ let package = Package(
         .library(
             name: "LiveViewNativeStylesheet",
             targets: ["LiveViewNativeStylesheet"]),
-        .executable(name: "ModifierGenerator", targets: ["ModifierGenerator"])
+        .executable(name: "ModifierGenerator", targets: ["ModifierGenerator"]),
+        .plugin(name: "AutoAddonPlugin", targets: ["AutoAddonPlugin"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -94,6 +95,21 @@ let package = Package(
                 ]
             ),
             dependencies: []
+        ),
+        
+        .executableTarget(
+            name: "AutoAddon",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax")
+            ]
+        ),
+        .plugin(
+            name: "AutoAddonPlugin",
+            capability: .buildTool,
+            dependencies: ["AutoAddon"]
         ),
         
         // Macros
