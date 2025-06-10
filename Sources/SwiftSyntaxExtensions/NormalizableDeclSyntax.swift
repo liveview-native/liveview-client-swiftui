@@ -69,9 +69,10 @@ public extension NormalizableDeclSyntax {
                         if let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
                             switch requirement.requirement {
                             case let .sameTypeRequirement(sameType):
-                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text,
+                                      case let .type(rightType) = sameType.rightType
                                 else { return nil }
-                                return sameType.rightType
+                                return rightType
                             case let .conformanceRequirement(conformance):
                                 guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
                                 else { return nil }
@@ -99,9 +100,10 @@ public extension NormalizableDeclSyntax {
                         if let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
                             switch requirement.requirement {
                             case let .sameTypeRequirement(sameType):
-                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text,
+                                      case let .type(rightType) = sameType.rightType
                                 else { return nil }
-                                return sameType.rightType
+                                return rightType
                             case let .conformanceRequirement(conformance):
                                 guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
                                 else { return nil }
@@ -128,9 +130,10 @@ public extension NormalizableDeclSyntax {
                         if let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
                             switch requirement.requirement {
                             case let .sameTypeRequirement(sameType):
-                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text,
+                                      case let .type(rightType) = sameType.rightType
                                 else { return nil }
-                                return sameType.rightType
+                                return rightType
                             case let .conformanceRequirement(conformance):
                                 guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
                                 else { return nil }
@@ -158,9 +161,10 @@ public extension NormalizableDeclSyntax {
                         if let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
                             switch requirement.requirement {
                             case let .sameTypeRequirement(sameType):
-                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text,
+                                      case let .type(rightType) = sameType.rightType
                                 else { return nil }
-                                return sameType.rightType
+                                return rightType
                             case let .conformanceRequirement(conformance):
                                 guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
                                 else { return nil }
@@ -268,9 +272,10 @@ public extension NormalizableDeclSyntax {
                         if let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
                             switch requirement.requirement {
                             case let .sameTypeRequirement(sameType):
-                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text,
+                                      case let .type(rightType) = sameType.rightType
                                 else { return nil }
-                                return sameType.rightType
+                                return rightType
                             case let .conformanceRequirement(conformance):
                                 guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
                                 else { return nil }
@@ -304,9 +309,10 @@ public extension NormalizableDeclSyntax {
                                        let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
                                            switch requirement.requirement {
                                            case let .sameTypeRequirement(sameType):
-                                               guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                               guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text,
+                                                     case let .type(rightType) = sameType.rightType
                                                else { return nil }
-                                               return sameType.rightType
+                                               return rightType
                                            case let .conformanceRequirement(conformance):
                                                guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
                                                else { return nil }
@@ -340,9 +346,10 @@ public extension NormalizableDeclSyntax {
                                        let genericType = genericWhereClause?.requirements.lazy.compactMap({ requirement -> TypeSyntax? in
                                            switch requirement.requirement {
                                            case let .sameTypeRequirement(sameType):
-                                               guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
+                                               guard sameType.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text,
+                                                     case let .type(rightType) = sameType.rightType
                                                else { return nil }
-                                               return sameType.rightType
+                                               return rightType
                                            case let .conformanceRequirement(conformance):
                                                guard conformance.leftType.as(IdentifierTypeSyntax.self)?.name.text == identifierType.name.text
                                                else { return nil }
@@ -392,7 +399,7 @@ public extension NormalizableDeclSyntax {
                         } else if let memberType = parameter.type.as(MemberTypeSyntax.self),
                                   memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift",
                                   memberType.name.text == "Set",
-                                  let elementType = memberType.genericArgumentClause?.arguments.first?.argument
+                                  case let .type(elementType) = memberType.genericArgumentClause?.arguments.first?.argument
                         { // Swift.Set<T> -> AttributeReference<StylesheetResolvableSet<T.Resolvable>>
                             return parameter
                                 .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("StylesheetResolvableSet"), genericArgumentClause: GenericArgumentClauseSyntax {
@@ -570,10 +577,10 @@ public extension TypeSyntax {
         } else if let memberType = self.as(MemberTypeSyntax.self),
                   memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "Swift",
                   memberType.name.text == "Set",
-                  let elementType = memberType.genericArgumentClause?.arguments.first?.argument
+                  case let .type(elementType) = memberType.genericArgumentClause?.arguments.first?.argument
         { // Swift.Set<T> -> StylesheetResolvableSet<T.Resolvable>
             return TypeSyntax(IdentifierTypeSyntax(name: .identifier("StylesheetResolvableSet"), genericArgumentClause: GenericArgumentClauseSyntax {
-                GenericArgumentSyntax(argument: MemberTypeSyntax(baseType: elementType, name: .identifier("Resolvable")))
+                GenericArgumentSyntax(argument: .type(TypeSyntax(MemberTypeSyntax(baseType: elementType, name: .identifier("Resolvable")))))
             }))
         } else if let memberType = self.as(MemberTypeSyntax.self),
                   memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUICore",

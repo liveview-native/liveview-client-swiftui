@@ -621,3 +621,21 @@ extension ShadowStyle {
         }
     }
 }
+
+@available(iOS 26.0, *)
+extension Color.ResolvedHDR {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+        case __constant(SwiftUI.Color.ResolvedHDR)
+        
+        public init(from decoder: any Decoder) throws {
+            fatalError()
+        }
+        
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Color.ResolvedHDR where R : RootRegistry {
+            switch self {
+            case let .__constant(resolvedHDR):
+                return resolvedHDR
+            }
+        }
+    }
+}

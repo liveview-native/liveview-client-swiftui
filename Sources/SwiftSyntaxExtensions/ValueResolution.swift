@@ -181,13 +181,15 @@ public extension FunctionParameterSyntax {
                     name: .identifier("castProjectedValue")
                 )
             ) {
-                LabeledExprSyntax(
-                    label: "type",
-                    expression: MemberAccessExprSyntax(
-                        base: TypeExprSyntax(type: changeTrackedType.genericArgumentClause!.arguments.first!.argument),
-                        name: .identifier("self")
+                if case let .type(type) = changeTrackedType.genericArgumentClause!.arguments.first!.argument {
+                    LabeledExprSyntax(
+                        label: "type",
+                        expression: MemberAccessExprSyntax(
+                            base: TypeExprSyntax(type: type),
+                            name: .identifier("self")
+                        )
                     )
-                )
+                }
             })
         } else if self.type.isResolvableType {
             // value.resolve(on: __element, in: __context)

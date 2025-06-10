@@ -51,5 +51,8 @@ let denylist = [
     
     "touchBar",
     
-    "pageCommand"
+    "pageCommand",
+    
+    "attributedTextFormattingDefinition",
+    "navigationSubtitle"
 ]
