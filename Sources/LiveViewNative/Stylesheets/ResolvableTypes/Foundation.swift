@@ -8,6 +8,7 @@
 import Foundation
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
+import CoreText
 
 extension Calendar {
     @ASTDecodable("Calendar")
@@ -231,6 +232,24 @@ extension AttributedString {
 
 public extension AttributedString.Resolvable {
     @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AttributedString {
+        switch self {
+        case let .__constant(value):
+            return value
+        }
+    }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributedString.LineHeight {
+    @ASTDecodable("LineHeight")
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+        case __constant(AttributedString.LineHeight)
+    }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+public extension AttributedString.LineHeight.Resolvable {
+    @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AttributedString.LineHeight {
         switch self {
         case let .__constant(value):
             return value

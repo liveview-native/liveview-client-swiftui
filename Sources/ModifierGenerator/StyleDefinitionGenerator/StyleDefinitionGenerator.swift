@@ -181,12 +181,39 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
         
         let extensionAvailability = node.attributes.filter(\.isAvailability)
         
+        print(node.memberBlock.members.compactMap({ $0.decl.syntaxNodeType }))
+        
         for modifier in node.memberBlock.members
-            .compactMap({ $0.decl.as(FunctionDeclSyntax.self) })
-            .filter(\.isValidModifier)
-            .map({ $0.normalizedParameterTypes() })
-            .filter(\.isPublic)
-            .filter({ !denylist.contains($0.name.text) })
+            .reduce(into: [FunctionDeclSyntax](), { functionDecls, member in
+                if let functionDecl = member.decl.as(FunctionDeclSyntax.self),
+                   functionDecl.isValidModifier,
+                   functionDecl.isPublic,
+                   !denylist.contains(functionDecl.name.text)
+                {
+                    functionDecls.append(functionDecl.normalizedParameterTypes())
+                } else if let ifConfig = member.decl.as(IfConfigDeclSyntax.self) {
+                    // extract clauses from #if blocks, for example:
+                    // #if compiler(>= 5.3) && $NoncopyableTypes
+                    // func modifier(...) -> some SwiftUICore.View
+                    // #endif
+                    for clause in ifConfig.clauses {
+                        switch clause.elements {
+                        case let .decls(decls):
+                            for decl in decls {
+                                if let functionDecl = decl.decl.as(FunctionDeclSyntax.self),
+                                   functionDecl.isValidModifier,
+                                   functionDecl.isPublic,
+                                   !denylist.contains(functionDecl.name.text)
+                                {
+                                    functionDecls.append(functionDecl.normalizedParameterTypes())
+                                }
+                            }
+                        default:
+                            break
+                        }
+                    }
+                }
+            })
         {
             // special case for `toolbar` to exclude `ViewReference` clauses.
             if modifier.name.text == "toolbar" {
