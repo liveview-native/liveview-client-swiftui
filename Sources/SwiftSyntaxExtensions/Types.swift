@@ -83,6 +83,22 @@ public extension TypeSyntaxProtocol {
             return false
         }
         
+        // SwiftUI.ContextMenu<MenuItems> is not allowed
+        if let memberType = self.as(MemberTypeSyntax.self),
+           memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI",
+           memberType.name.text == "ContextMenu"
+        {
+            return false
+        }
+        
+        // SwiftUI.Alert is not allowed
+        if let memberType = self.as(MemberTypeSyntax.self),
+           memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI",
+           memberType.name.text == "Alert"
+        {
+            return false
+        }
+        
         // Swift.Optional<() -> ()> with a function wrapped type is not allowed
         if let memberType = self.as(MemberTypeSyntax.self),
            memberType.baseType.as(MemberTypeSyntax.self)?.name.text == "Swift",

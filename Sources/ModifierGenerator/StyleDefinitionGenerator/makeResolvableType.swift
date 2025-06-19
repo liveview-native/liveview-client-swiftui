@@ -75,7 +75,7 @@ extension StyleDefinitionGenerator {
             .filter {
                 $0.isValidModifier
                 && $0.genericParameterClause == nil && $0.genericWhereClause == nil
-                && !$0.attributes.isDeprecated
+                && !$0.attributes.isObsoleted
                 && $0.optionalMark == nil
             }
             .map { $0.normalizedParameterTypes() }
@@ -84,7 +84,7 @@ extension StyleDefinitionGenerator {
             .filter(\.modifiers.isAccessible)
             .filter {
                 $0.isValidModifier
-                && !$0.attributes.isDeprecated
+                && !$0.attributes.isObsoleted
                 && !$0.modifiers.contains(where: { $0.name.tokenKind == .keyword(.static) })
                 && (
                     $0.signature.returnClause?.type.as(IdentifierTypeSyntax.self)?.name.tokenKind == .keyword(.Self)
@@ -99,7 +99,7 @@ extension StyleDefinitionGenerator {
             .filter {
                 $0.isValidModifier
                 && $0.genericParameterClause == nil && $0.genericWhereClause == nil
-                && !$0.attributes.isDeprecated
+                && !$0.attributes.isObsoleted
                 && !$0.name.isOperatorToken
                 && $0.modifiers.contains(where: { $0.name.tokenKind == .keyword(.static) })
                 && (
@@ -112,7 +112,7 @@ extension StyleDefinitionGenerator {
         let staticMembers = members
             .compactMap({ $0.decl.as(VariableDeclSyntax.self) })
             .filter({
-                !$0.attributes.isDeprecated
+                !$0.attributes.isObsoleted
                 && !$0.bindings.contains(where: { $0.pattern.as(IdentifierPatternSyntax.self)?.identifier.text.starts(with: "_") ?? false })
                 && $0.modifiers.contains(where: { $0.name.tokenKind == .keyword(.static) })
                 && $0.modifiers.isAccessible

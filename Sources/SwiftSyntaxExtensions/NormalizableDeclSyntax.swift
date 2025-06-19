@@ -27,7 +27,7 @@ public extension NormalizableDeclSyntax {
     /// Check if the modifier decl has valid parameters.
     var isValidModifier: Bool {
         // deprecated/obsoleted symbols
-        guard !attributes.isDeprecated
+        guard !attributes.isObsoleted
         else { return false }
         
         for parameter in signature.parameterClause.parameters {
@@ -225,6 +225,7 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                            .with(\.defaultValue, nil)
                     }
                     if let optionalType = parameter.type.as(OptionalTypeSyntax.self),
                        let tupleType = optionalType.wrappedType.as(TupleTypeSyntax.self),
@@ -237,6 +238,7 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                            .with(\.defaultValue, nil)
                     }
                     if let attributedType = parameter.type.as(AttributedTypeSyntax.self),
                        let functionType = attributedType.baseType.as(FunctionTypeSyntax.self)
@@ -247,6 +249,7 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                            .with(\.defaultValue, nil)
                     }
                     if let attributedType = parameter.type.as(AttributedTypeSyntax.self),
                        let tupleType = attributedType.baseType.as(TupleTypeSyntax.self),
@@ -259,6 +262,7 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                            .with(\.defaultValue, nil)
                     }
                     // [S] where S == String -> [String]
                     // [S] where S: Protocol -> [StylesheetResolvableProtocol]
@@ -429,8 +433,17 @@ public extension NormalizableDeclSyntax {
                                 }))
                                 .makeAttributeReference()
                         } else if let optionalType = parameter.type.as(OptionalTypeSyntax.self) { // T? -> T.Resolvable?
+                            // [T]? -> [T.Resolvable]?
+                            if let arrayType = optionalType.wrappedType.as(ArrayTypeSyntax.self) {
+                                return parameter
+                                    .with(\.type, TypeSyntax(
+                                        optionalType.with(\.wrappedType, TypeSyntax(
+                                            arrayType.with(\.element, TypeSyntax(MemberTypeSyntax(baseType: arrayType.element, name: .identifier("Resolvable"))))
+                                        ))
+                                    ))
+                            }
                             // Text? -> TextReference?
-                            if let memberType = optionalType.wrappedType.as(MemberTypeSyntax.self),
+                            else if let memberType = optionalType.wrappedType.as(MemberTypeSyntax.self),
                                memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUICore",
                                memberType.name.text == "Text"
                             {

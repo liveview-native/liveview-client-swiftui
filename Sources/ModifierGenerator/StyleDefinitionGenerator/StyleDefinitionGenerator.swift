@@ -61,7 +61,7 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
         guard node.modifiers.isAccessible
         else { return .visitChildren }
         
-        guard !node.attributes.isDeprecated
+        guard !node.attributes.isObsoleted
         else { return .visitChildren }
         
         // replicate all of the public symbols with `AttributeDecodable` wrapping
@@ -126,7 +126,7 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
         }) ?? false)
         else { return .visitChildren }
         
-        guard !node.attributes.isDeprecated
+        guard !node.attributes.isObsoleted
         else { return .visitChildren }
         
         // replicate all of the public symbols with `AttributeDecodable` wrapping
@@ -176,7 +176,11 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
         guard node.isViewExtension
         else { return .visitChildren }
         
-        guard !node.attributes.isDeprecated
+        // if the extension has a generic constraint (such as `Self: Equatable`), skip it
+        guard node.genericWhereClause == nil
+        else { return .skipChildren }
+        
+        guard !node.attributes.isObsoleted
         else { return .visitChildren }
         
         let extensionAvailability = node.attributes.filter(\.isAvailability)
@@ -255,6 +259,23 @@ public final class StyleDefinitionGenerator: SyntaxVisitor {
                 attributes: availability,
                 signature: modifier.signature.with(\.returnClause, nil)
             ) {
+                // log a warning when the modifier is deprecated
+                if modifier.attributes.isDeprecated {
+                    FunctionCallExprSyntax(
+                        callee: MemberAccessExprSyntax(
+                            base: DeclReferenceExprSyntax(baseName: .identifier("__generatedModifierLogger")),
+                            name: .identifier("warning")
+                        )
+                    ) {
+                        if let deprecationMessage = modifier.attributes.deprecationMessage {
+                            LabeledExprSyntax(expression: StringLiteralExprSyntax(
+                                content: "'\(modifier.name.text)' is deprecated: \(deprecationMessage.segments.map(\.content.text).joined())"
+                            ))
+                        } else {
+                            LabeledExprSyntax(expression: StringLiteralExprSyntax(content: "'\(modifier.name.text)' is deprecated and will be removed in a future version."))
+                        }
+                    }
+                }
                 InfixOperatorExprSyntax(
                     leftOperand: MemberAccessExprSyntax(base: DeclReferenceExprSyntax(baseName: .identifier("self")), name: .identifier("__clause")),
                     operator: AssignmentExprSyntax(),

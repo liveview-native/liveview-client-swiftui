@@ -38,6 +38,40 @@ public extension AttributeListSyntax.Element {
     }
 }
 
+extension AttributeSyntax {
+    var deprecationMessage: SimpleStringLiteralExprSyntax? {
+        var isDeprecated = false
+        var message: SimpleStringLiteralExprSyntax?
+        
+        for argument in arguments?.as(AvailabilityArgumentListSyntax.self) ?? [] {
+            switch argument.argument {
+            case let .token(token):
+                if token.tokenKind == .keyword(.deprecated) {
+                    isDeprecated = true
+                }
+            case let .availabilityLabeledArgument(argument):
+                if argument.label.tokenKind == .keyword(.deprecated) {
+                    isDeprecated = true
+                }
+                if argument.label.tokenKind == .keyword(.message) {
+                    message = argument.value.as(SimpleStringLiteralExprSyntax.self)
+                    if isDeprecated {
+                        return message
+                    }
+                }
+            default:
+                continue
+            }
+        }
+        
+        if !isDeprecated {
+            return nil
+        } else {
+            return message
+        }
+    }
+}
+
 public extension AttributeListSyntax {
     /// Checks if this symbol is marked `@MainActor`.
     var isActorIsolated: Bool {
@@ -56,7 +90,7 @@ public extension AttributeListSyntax {
         })
     }
     
-    /// Checks if this symbol is marked `@available(deprecated)` or `@available(obsoleted)`.
+    /// Checks if this symbol is marked `@available(deprecated)`
     var isDeprecated: Bool {
         contains(where: {
             guard case let .attribute(attribute) = $0 else { return false }
@@ -64,10 +98,35 @@ public extension AttributeListSyntax {
                 switch $0.argument {
                 case let .token(token):
                     return token.tokenKind == .keyword(.deprecated)
-                        || token.tokenKind == .keyword(.obsoleted)
                 case let .availabilityLabeledArgument(argument):
                     return argument.label.tokenKind == .keyword(.deprecated)
-                        || argument.label.tokenKind == .keyword(.obsoleted)
+                default:
+                    return false
+                }
+            })
+                ?? false
+        })
+    }
+    
+    var deprecationMessage: SimpleStringLiteralExprSyntax? {
+        for case let .attribute(attribute) in self {
+            if let message = attribute.deprecationMessage {
+                return message
+            }
+        }
+        return nil
+    }
+    
+    /// Checks if this symbol is marked `@available(obsoleted)`
+    var isObsoleted: Bool {
+        contains(where: {
+            guard case let .attribute(attribute) = $0 else { return false }
+            return attribute.arguments?.as(AvailabilityArgumentListSyntax.self)?.contains(where: {
+                switch $0.argument {
+                case let .token(token):
+                    return token.tokenKind == .keyword(.obsoleted)
+                case let .availabilityLabeledArgument(argument):
+                    return argument.label.tokenKind == .keyword(.obsoleted)
                 default:
                     return false
                 }
