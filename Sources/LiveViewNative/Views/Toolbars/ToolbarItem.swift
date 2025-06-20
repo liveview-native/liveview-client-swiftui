@@ -66,7 +66,7 @@ import LiveViewNativeCore
 struct ToolbarItem<Root: RootRegistry>: ToolbarContent {
     /// The position of this item in the toolbar.
     @_documentation(visibility: public)
-    private var placement: ToolbarItemPlacement = .automatic
+    private var placement: _ToolbarItemPlacement = .automatic
     
     init(element: ElementNode) {
         self._liveElement = .init(element: element)
@@ -83,7 +83,7 @@ struct ToolbarItem<Root: RootRegistry>: ToolbarContent {
 @_documentation(visibility: public)
 @LiveElement
 struct CustomizableToolbarItem<Root: RootRegistry>: CustomizableToolbarContent {
-    var placement: ToolbarItemPlacement = .automatic
+    var placement: _ToolbarItemPlacement = .automatic
     
     /// The unique ID for this customizable item.
     @_documentation(visibility: public)
@@ -131,7 +131,7 @@ struct CustomizableToolbarItem<Root: RootRegistry>: CustomizableToolbarContent {
 
 /// The positioning of a toolbar item.
 @_documentation(visibility: public)
-enum ToolbarItemPlacement: String, AttributeDecodable {
+enum _ToolbarItemPlacement: String, AttributeDecodable {
     @_documentation(visibility: public)
     case automatic
     @_documentation(visibility: public)

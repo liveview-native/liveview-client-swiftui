@@ -3,4 +3,6 @@ let typeDenylist = [
     "GraphicsContext",
     "Foundation.AttributeScopes.SwiftUIAttributes",
     "Edge.Set",
+    "TextSelection.Indices",
+    "AttributedTextSelection"
 ]

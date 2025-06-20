@@ -43,6 +43,8 @@ enum StylesheetResolvablePrimitiveButtonStyle: @preconcurrency PrimitiveButtonSt
     case link
     #endif
     case plain
+    
+    case glass
 }
 
 extension StylesheetResolvablePrimitiveButtonStyle {
@@ -87,6 +89,12 @@ extension StylesheetResolvablePrimitiveButtonStyle {
         #endif
         case .plain:
             SwiftUI.Button(configuration).buttonStyle(.plain)
+        case .glass:
+            if #available(iOS 26, macOS 26, tvOS 26, visionOS 26, watchOS 26, *) {
+                SwiftUI.Button(configuration).buttonStyle(.glass)
+            } else {
+                SwiftUI.Button(configuration).buttonStyle(.automatic)
+            }
         }
     }
 }
@@ -118,6 +126,8 @@ extension StylesheetResolvablePrimitiveButtonStyle: @preconcurrency AttributeDec
         #endif
         case "plain":
             self = .plain
+        case "glass":
+            self = .glass
         default:
             throw AttributeDecodingError.badValue(Self.self)
         }

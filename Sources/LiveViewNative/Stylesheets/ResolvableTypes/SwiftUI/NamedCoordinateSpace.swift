@@ -46,3 +46,14 @@ public extension NamedCoordinateSpace.Resolvable {
         }
     }
 }
+
+enum StylesheetResolvableCoordinateSpaceProtocol: StylesheetResolvable, AttributeDecodable, @preconcurrency Decodable {
+    case local
+    
+    @MainActor func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> CoordinateSpace {
+        switch self {
+        case .local:
+            return .local
+        }
+    }
+}

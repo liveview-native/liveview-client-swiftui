@@ -6,6 +6,9 @@ import SwiftParser
 
 @main
 struct ModifierGenerator: ParsableCommand {
+//    @Argument(transform: { URL(filePath: $0) })
+//    private var input: URL
+//    
     /// The path used as the output file.
     @Argument(transform: { URL(filePath: $0) })
     private var output: URL

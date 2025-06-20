@@ -32,7 +32,7 @@ import SwiftUI
 struct ToolbarItemGroup<Root: RootRegistry>: ToolbarContent {
     /// The position of this group in the toolbar.
     @_documentation(visibility: public)
-    private var placement: ToolbarItemPlacement = .automatic
+    private var placement: _ToolbarItemPlacement = .automatic
     
     init(element: ElementNode) {
         self._liveElement = .init(element: element)

@@ -45,12 +45,18 @@ public extension TypeSyntaxProtocol {
         
         // generic arguments must be valid (A<B, C>)
         if let identifierType = self.as(IdentifierTypeSyntax.self),
-           !(identifierType.genericArgumentClause?.arguments.allSatisfy(\.argument.isValidModifierType) ?? true)
+           !(identifierType.genericArgumentClause?.arguments.allSatisfy({
+               guard case .type(let type) = $0.argument else { return false }
+               return type.isValidModifierType
+           }) ?? true)
         {
             return false
         }
         if let memberType = self.as(MemberTypeSyntax.self),
-           !(memberType.genericArgumentClause?.arguments.allSatisfy(\.argument.isValidModifierType) ?? true)
+           !(memberType.genericArgumentClause?.arguments.allSatisfy({
+               guard case .type(let type) = $0.argument else { return false }
+               return type.isValidModifierType
+           }) ?? true)
         {
             return false
         }
@@ -221,7 +227,10 @@ public extension TypeSyntaxProtocol {
             case "Bool", "Duration", "Float", "Float16", "Int", "Int128", "Int16", "Int32", "Int64", "Int8", "LocalTestingActorID", "Never", "ObservationRegistrar", "SIMD16", "SIMD2", "SIMD3", "SIMD32", "SIMD4", "SIMD64", "SIMD8", "SIMDMask", "String", "TaskPriority", "UInt", "UInt128", "UInt16", "UInt32", "UInt64", "UInt8":
                 return true
             case "ClosedRange", "CollectionDifference", "ContiguousArray", "Optional", "PartialRangeFrom", "PartialRangeThrough", "PartialRangeUpTo", "Range", "Set", "Dictionary":
-                return memberType.genericArgumentClause?.arguments.allSatisfy({ $0.argument.isPrimitiveDecodable }) ?? true
+                return memberType.genericArgumentClause?.arguments.allSatisfy({
+                    guard case .type(let type) = $0.argument else { return false }
+                    return type.isPrimitiveDecodable
+                }) ?? true
             default:
                 return false
             }
@@ -241,7 +250,10 @@ public extension TypeSyntaxProtocol {
             case "Bool", "Duration", "Float", "Float16", "Int", "Int128", "Int16", "Int32", "Int64", "Int8", "LocalTestingActorID", "Never", "ObservationRegistrar", "SIMD16", "SIMD2", "SIMD3", "SIMD32", "SIMD4", "SIMD64", "SIMD8", "SIMDMask", "String", "TaskPriority", "UInt", "UInt128", "UInt16", "UInt32", "UInt64", "UInt8":
                 return true
             case "ClosedRange", "CollectionDifference", "ContiguousArray", "Optional", "PartialRangeFrom", "PartialRangeThrough", "PartialRangeUpTo", "Range", "Set", "Dictionary":
-                return identifierType.genericArgumentClause?.arguments.allSatisfy({ $0.argument.isPrimitiveDecodable }) ?? true
+                return identifierType.genericArgumentClause?.arguments.allSatisfy({
+                    guard case .type(let type) = $0.argument else { return false }
+                    return type.isPrimitiveDecodable
+                }) ?? true
             case "TimeInterval", "Date", "URL", "Data":
                 return true
             default:
