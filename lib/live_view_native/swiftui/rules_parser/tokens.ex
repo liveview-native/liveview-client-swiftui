@@ -95,6 +95,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     |> reduce({List, :to_string, []})
   end
 
+  def identifier do
+    utf8_string([?a..?z, ?A..?Z, ?_, ?-], min: 1)
+  end
+
   #
   # Whitespace
   #

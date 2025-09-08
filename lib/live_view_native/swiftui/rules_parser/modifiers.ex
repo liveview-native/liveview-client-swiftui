@@ -109,8 +109,8 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> enclosed(
       "(",
       expect(
-        double_quoted_string(),
-        error_message: "‘attr’ expects a string argument",
+        identifier(),
+        error_message: "‘attr’ expects an identifier argument",
         error_parser: optional(non_whitespace(also_ignore: String.to_charlist(")],")))
       ),
       ")",
@@ -121,8 +121,8 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
 
   event_arg_1 =
     expect(
-      double_quoted_string(),
-      error_message: "‘event’ expects a string as the first argument",
+      identifier(),
+      error_message: "‘event’ expects an identifier as the first argument",
       error_parser: optional(non_whitespace(also_ignore: String.to_charlist(")],")))
     )
 
