@@ -284,8 +284,36 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     end
 
     test "parses attr value references" do
-      input = ~s|foo(attr("bar"))|
-      output = {:foo, [], [{:__attr__, [], "bar"}]}
+      input = ~s|foo(attr(bar))|
+      output = {:foo, [], [{:__attr__, [], ["bar"]}]}
+
+      assert parse(input) == output
+    end
+
+    test "parses attr value references and type hint" do
+      input = ~s|foo(attr(bar px))|
+      output = {:foo, [], [{:__attr__, [], [{"bar", "px"}]}]}
+
+      assert parse(input) == output
+    end
+
+    test "parses attr value references and data type function" do
+      input = ~s|foo(attr(bar type(<number>)))|
+      output = {:foo, [], [{:__attr__, [], [{"bar", {:type, [], ["number"]}}]}]}
+
+      assert parse(input) == output
+    end
+
+    test "parses attr value references and data multitype function" do
+      input = ~s|foo(attr(bar type(<length> | <percentage>)))|
+      output = {:foo, [], [{:__attr__, [], [{"bar", {:type, [], ["length", "percentage"]}}]}]}
+
+      assert parse(input) == output
+    end
+
+    test "parses attr value references with default value" do
+      input = ~s|foo(attr(bar, \"foo\"))|
+      output = {:foo, [], [{:__attr__, [], ["bar", "foo"]}]}
 
       assert parse(input) == output
     end
@@ -388,18 +416,28 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert parse(input) == output
     end
+
+    test "parses tuples" do
+      input = "rotation3DEffect(.degrees(10), axis: (x: 1, y: 0, z: 0))"
+
+      output =
+        {:rotation3DEffect, [],
+        [{:., [], [nil, {:degrees, [], [10]}]}, {:axis, {:"()", [], [{:x, 1}, {:y, 0}, {:z, 0}]}}]}
+
+      assert parse(input) == output
+    end
   end
 
   describe "helper functions" do
     test "event" do
-      input = ~s{searchable(change: event("search-event", throttle: 10_000))}
+      input = ~s{searchable(change: event(search-event, throttle: 10_000))}
       output = {:searchable, [], [{:change, {:__event__, [], ["search-event", {:throttle, 10_000}]}}]}
 
       assert parse(input) == output
     end
 
     test "event with no arguments" do
-      input = ~s{searchable(change: event("search-event"))}
+      input = ~s{searchable(change: event(search-event))}
       output = {:searchable, [], [{:change, {:__event__, [], ["search-event"]}}]}
 
       assert parse(input) == output
@@ -473,8 +511,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
          - a list of values eg ‘[1, 2, 3]’, ‘["red", "blue"]’ or ‘[Color.red, Color.blue]’
          - a Swift range eg ‘1..<10’ or ‘foo(Foo.bar...Baz.qux)’
          - a number, string, nil, boolean or :atom
-         - an event eg ‘event(\"search-event\", throttle: 10_000)’
-         - an attribute eg ‘attr(\"placeholder\")’
+         - an event eg ‘event(search-event, throttle: 10_000)’
+         - an attribute eg ‘attr(placeholder)’
          - an IME eg ‘Color.red’ or ‘.largeTitle’’
          - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
          - a modifier eg ‘bold()’
@@ -735,8 +773,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
          - a list of values eg ‘[1, 2, 3]’, ‘["red", "blue"]’ or ‘[Color.red, Color.blue]’
          - a Swift range eg ‘1..<10’ or ‘foo(Foo.bar...Baz.qux)’
          - a number, string, nil, boolean or :atom
-         - an event eg ‘event("search-event", throttle: 10_000)’
-         - an attribute eg ‘attr("placeholder")’
+         - an event eg ‘event(search-event, throttle: 10_000)’
+         - an attribute eg ‘attr(placeholder)’
          - an IME eg ‘Color.red’ or ‘.largeTitle’’
          - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
          - a modifier eg ‘bold()’
@@ -794,7 +832,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     end
 
     test "event with non-keyword as second arg" do
-      input = "foo(event(\"click\", 1))"
+      input = "foo(event(click, 1))"
 
       error =
         assert_raise SyntaxError, fn ->
@@ -805,7 +843,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         """
         Unsupported input:
           |
-        1 | foo(event("click", 1))
+        1 | foo(event(click, 1))
           |                    ^
           |
 
