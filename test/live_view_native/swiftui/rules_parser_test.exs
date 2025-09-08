@@ -305,7 +305,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     end
 
     test "parses attr value references and data multitype function" do
-      input = ~s|foo(attr(bar type(<length> | <percentage>)))|
+      input = ~s'foo(attr(bar type(<length> | <percentage>)))'
       output = {:foo, [], [{:__attr__, [], [{"bar", {:type, [], ["length", "percentage"]}}]}]}
 
       assert parse(input) == output
