@@ -8,6 +8,11 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   alias LiveViewNative.SwiftUI.RulesParser.PostProcessors
 
   defcombinator(
+    :tuple_list,
+    enclosed("(", wrap(key_value_pairs(generate_error?: true, allow_empty?: false)), ")", allow_empty?: true)
+  )
+
+  defcombinator(
     :key_value_list,
     enclosed("[", wrap(key_value_pairs(generate_error?: true, allow_empty?: false)), "]",
       allow_empty?: false,
@@ -174,6 +179,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
         parsec(:key_value_list),
         ~s'a keyword list eg ‘[style: :dashed]’, ‘[size: 12]’ or ‘[lineWidth: lineWidth]’',
         inside_key_value_pair?
+      },
+      {
+        parsec(:tuple_list),
+        ~s'a tuple list eg `(x: 1, y: 1)`'
       },
       {
         swift_range(),
