@@ -61,13 +61,18 @@ public extension FunctionParameterSyntax {
             )
         ))
         .with(\.defaultValue, self.defaultValue.flatMap({ defaultValue in
-            InitializerClauseSyntax(value: FunctionCallExprSyntax(
-                calledExpression: MemberAccessExprSyntax(name: .identifier("constant")),
-                leftParen: .leftParenToken(),
-                rightParen: .rightParenToken()
-            ) {
-                LabeledExprSyntax(expression: defaultValue.value)
-            })
+            // can't provide a default for a some/any type
+            if self.type.as(IdentifierTypeSyntax.self)?.name.text.hasPrefix("StylesheetResolvable") == true {
+                return nil
+            } else {
+                return InitializerClauseSyntax(value: FunctionCallExprSyntax(
+                    calledExpression: MemberAccessExprSyntax(name: .identifier("constant")),
+                    leftParen: .leftParenToken(),
+                    rightParen: .rightParenToken()
+                ) {
+                    LabeledExprSyntax(expression: defaultValue.value)
+                })
+            }
         }))
     }
     

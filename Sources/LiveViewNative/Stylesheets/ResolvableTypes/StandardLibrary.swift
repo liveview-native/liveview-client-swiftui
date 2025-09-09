@@ -96,3 +96,40 @@ extension Double {
         }
     }
 }
+
+extension Float {
+    public enum Resolvable: StylesheetResolvable, @preconcurrency Decodable {
+        case __constant(Float)
+        case reference(AttributeReference<Float>)
+        
+        @ASTDecodable("Float")
+        enum Member: @preconcurrency Decodable {
+            case infinity
+            case pi
+        }
+        
+        public init(from decoder: any Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            
+            if let member = try? container.decode(Member.self) {
+                switch member {
+                case .infinity:
+                    self = .__constant(.infinity)
+                case .pi:
+                    self = .__constant(.pi)
+                }
+            } else {
+                self = .reference(try container.decode(AttributeReference<Float>.self))
+            }
+        }
+        
+        public func resolve<R>(on element: ElementNode, in context: LiveContext<R>) -> Float where R : RootRegistry {
+            switch self {
+            case let .__constant(constant):
+                return constant
+            case let .reference(reference):
+                return reference.resolve(on: element, in: context)
+            }
+        }
+    }
+}

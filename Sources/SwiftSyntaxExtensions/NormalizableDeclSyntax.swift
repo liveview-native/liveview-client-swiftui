@@ -229,6 +229,7 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                            .with(\.attributes, [])
                     }
                     if let optionalType = parameter.type.as(OptionalTypeSyntax.self),
                        let tupleType = optionalType.wrappedType.as(TupleTypeSyntax.self),
@@ -241,6 +242,7 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                            .with(\.attributes, [])
                     }
                     if let attributedType = parameter.type.as(AttributedTypeSyntax.self),
                        let functionType = attributedType.baseType.as(FunctionTypeSyntax.self)
@@ -251,6 +253,7 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                            .with(\.attributes, [])
                     }
                     if let attributedType = parameter.type.as(AttributedTypeSyntax.self),
                        let tupleType = attributedType.baseType.as(TupleTypeSyntax.self),
@@ -263,6 +266,7 @@ public extension NormalizableDeclSyntax {
                         else { fatalError("Unsupported parameter '\(functionType)'. Function parameters must have a 'Void' return value.") }
                         return parameter
                             .with(\.type, TypeSyntax(IdentifierTypeSyntax(name: .identifier("Event"))))
+                            .with(\.attributes, [])
                     }
                     // [S] where S == String -> [String]
                     // [S] where S: Protocol -> [StylesheetResolvableProtocol]

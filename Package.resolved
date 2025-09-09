@@ -1,12 +1,12 @@
 {
-  "originHash" : "a1b1e06fbdf5f90d2817b4e4ba491ff6fc177e87dad20844f45d67caa0b58193",
+  "originHash" : "0d71c67b1c80ef5579aa062c1d31bee0895d941e2b3d8283f5523ed15a0479fd",
   "pins" : [
     {
       "identity" : "liveview-native-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/liveview-native/liveview-native-core",
       "state" : {
-        "revision" : "2f0e874960ee93b5b76daff2ecfb6d8e445e15bc",
+        "revision" : "0e3475a96ebf9528be3645e476738f0b8181c0b2",
         "version" : "0.4.1-rc-5"
       }
     },
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax.git",
       "state" : {
-        "revision" : "0687f71944021d616d34d922343dcef086855920",
-        "version" : "600.0.1"
+        "revision" : "f99ae8aa18f0cf0d53481901f88a0991dc3bd4a2",
+        "version" : "601.0.1"
       }
     }
   ],
