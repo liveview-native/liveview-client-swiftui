@@ -10,7 +10,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   defcombinator(
     :tuple_list,
     enclosed("(", wrap(key_value_pairs(generate_error?: true, allow_empty?: false)), ")", allow_empty?: true)
+    |> post_traverse(:to_tuple_ast)
   )
+
+  defp to_tuple_ast(rest, [kwl], context, _, _) do
+    {rest, [{:"()", [], kwl}], context}
+  end
 
   defcombinator(
     :key_value_list,
