@@ -24,6 +24,24 @@ extension CDP {
             }
         }
         
+        // Events
+        
+        public struct CharacterDataModified: Decodable, Sendable {
+            /// Id of the node that has changed.
+            public let nodeId: Node.ID
+            /// New text value.
+            public let characterData: String
+        }
+        
+        public struct ChildNodeInserted: Decodable, Sendable {
+            /// Id of the parent node.
+            public let parentNodeId: Node.ID
+            /// Id of the previous child node.
+            public let previousNodeId: Node.ID?
+            /// The node data
+            public let node: Node
+        }
+        
         // Types
         
         public struct Node: Decodable, Identifiable, Sendable {
@@ -33,7 +51,7 @@ extension CDP {
             public let nodeId: NodeId
             public let parentId: NodeId?
             public let backendNodeId: BackendNodeId
-            public let nodeType: Int
+            public let nodeType: NodeType
             public let nodeName: String
             public let localName: String
             public let nodeValue: String

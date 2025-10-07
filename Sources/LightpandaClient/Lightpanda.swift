@@ -27,6 +27,77 @@ public final class Lightpanda {
     }
 }
 
+public final class NodeRegistry {
+    public var nodes = [Int:Node]()
+}
+
+public enum NodeType: Int, Codable, Sendable {
+    case element = 1
+    case attribute = 2
+    case text = 3
+    case cdataSection = 4
+    case processingInstruction = 7
+    case comment = 8
+    case document = 9
+    case documentType = 10
+    case documentFragment = 11
+}
+
+@Observable
+public class Node: Identifiable {
+    public var id: Int
+    
+    public var type: NodeType
+    
+    public var name: String
+    
+    public var value: String
+    
+    public var childNodeCount: Int?
+    
+    public var children: [Node]
+    
+    public var attributes: [String:String] = [:]
+    
+    public weak var parent: Node?
+    
+    init(registry: NodeRegistry, id: Int, type: NodeType, name: String, value: String, childNodeCount: Int? = nil, children: [Node] = [], attributes: [String:String] = [:], parent: Node? = nil) {
+        self.id = id
+        self.type = type
+        self.name = name
+        self.value = value
+        self.childNodeCount = childNodeCount
+        self.children = children
+        self.attributes = attributes
+        self.parent = parent
+        
+        registry.nodes[id] = self
+    }
+    
+    init(from cdpNode: CDP.DOM.Node, registry: NodeRegistry) {
+        self.id = cdpNode.id
+        self.type = cdpNode.nodeType
+        self.name = cdpNode.nodeName
+        self.value = cdpNode.nodeValue
+        self.childNodeCount = cdpNode.childNodeCount
+        
+        self.children = []
+        for child in (cdpNode.children ?? []) {
+            let childNode = Node(from: child, registry: registry)
+            childNode.parent = self
+            self.children.append(childNode)
+        }
+        
+        self.attributes = cdpNode.attributes.flatMap { attributes in
+            return Dictionary(uniqueKeysWithValues: stride(from: 0, to: attributes.count, by: 2).map {
+                (attributes[$0], attributes[$0 + 1])
+            })
+        } ?? [:]
+        
+        registry.nodes[id] = self
+    }
+}
+
 @Observable
 @MainActor
 public final class Demo {
@@ -35,7 +106,8 @@ public final class Demo {
     var eventTask: Task<(), any Error>?
     var docMessageId = Int?.none
     
-    public var dom: CDP.DOM.Node?
+    public var nodeRegistry: NodeRegistry = NodeRegistry()
+    public var dom: Node?
     
     public init() {}
     
@@ -55,9 +127,20 @@ public final class Demo {
                 case let .success(result):
                     print("GOT DOCUMENT")
                     print(result.root)
-                    self.dom = result.root
+                    self.dom = Node(from: result.root, registry: self.nodeRegistry)
                 case let .failure(error):
                     fatalError(error.localizedDescription)
+                }
+            case let .characterDataModified(characterDataModified):
+                self.nodeRegistry.nodes[characterDataModified.nodeId]?.value = characterDataModified.characterData
+            case let .childNodeInserted(childNodeInserted):
+                let newNode = Node(from: childNodeInserted.node, registry: self.nodeRegistry)
+                
+                let parentNode = self.nodeRegistry.nodes[childNodeInserted.parentNodeId]
+                if let sibling = parentNode?.children.firstIndex(where: { $0.id == childNodeInserted.previousNodeId }) {
+                    parentNode?.children.insert(newNode, at: sibling + 1)
+                } else {
+                    parentNode?.children.append(newNode)
                 }
             default:
                 break

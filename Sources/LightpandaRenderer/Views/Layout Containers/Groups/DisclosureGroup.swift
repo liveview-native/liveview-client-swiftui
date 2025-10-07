@@ -1,0 +1,62 @@
+//
+//  DisclosureGroup.swift
+//
+//
+//  Created by Carson Katri on 2/22/23.
+//
+
+import SwiftUI
+import LightpandaClient
+
+/// An expandable section of content.
+///
+/// Use the `content` and `label` children to create a disclosure group.
+///
+/// ```html
+/// <DisclosureGroup>
+///     <Text template={:label}>Edit Actions</Text>
+///     <Group template={:content}>
+///         <Button phx-click="arrange">Arrange</Button>
+///         <Button phx-click="update">Update</Button>
+///         <Button phx-click="remove">Remove</Button>
+///     </Group>
+/// </DisclosureGroup>
+/// ```
+///
+/// To synchronize the expansion state with the server, use the ``isExpanded`` attribute.
+///
+/// ```html
+/// <DisclosureGroup isExpanded={@actions_open} phx-change="actions-group-changed">
+///     ...
+/// </DisclosureGroup>
+/// ```
+///
+/// ## Bindings
+/// * ``isExpanded``
+///
+/// ## Children
+/// * `label` - Describes the content of the disclosure group.
+/// * `content` - The elements below the fold.
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``DisclosureGroupStyle``
+@_documentation(visibility: public)
+@available(iOS 16.0, macOS 13.0, *)
+struct DisclosureGroup<Library: ElementLibrary>: View {
+    let node: Node
+    
+    /// Synchronizes the expansion state with the server.
+    @_documentation(visibility: public)
+    @State private var isExpanded = false // TODO: events
+
+    public var body: some View {
+#if os(iOS) || os(macOS)
+        SwiftUI.DisclosureGroup(isExpanded: $isExpanded) {
+            node.children(in: "content", default: true, library: Library.self)
+        } label: {
+            node.children(in: "label", library: Library.self)
+        }
+#endif
+    }
+}

@@ -35,13 +35,17 @@ public final class CDP {
     public func startPageRunLoop() {
         pageRunLoop = Task {
             while !Task.isCancelled {
-                _ = self.pageWait(0)
-                try await Task.sleep(for: .milliseconds(50))
+                let delay = self.pageWait(0)
+//                if delay < 1 {
+//                    try await Task.sleep(for: .milliseconds(10))
+//                } else {
+                    try await Task.sleep(for: .milliseconds(delay))
+//                }
             }
         }
     }
     
-    public func pageWait(_ ms: Int32) -> lightpanda.Session_WaitResult {
+    public func pageWait(_ ms: Int32) -> Int32 {
         return lightpanda_cdp_page_wait(address, ms)
     }
     
@@ -154,6 +158,11 @@ public final class CDP {
         case result(id: Int)
         case targetCreated(Target.TargetCreated)
         case documentUpdated
+        case attributeModified
+        case attributeRemoved
+        case characterDataModified(DOM.CharacterDataModified)
+        case childNodeInserted(DOM.ChildNodeInserted)
+        case childNodeRemoved
         case unknown(method: String)
         
         enum CodingKeys: String, CodingKey {
@@ -172,6 +181,16 @@ public final class CDP {
                     self = .targetCreated(try container.decode(Target.TargetCreated.self, forKey: .params))
                 case "DOM.documentUpdated":
                     self = .documentUpdated
+                case "DOM.attributeModified":
+                    self = .attributeModified
+                case "DOM.attributeRemoved":
+                    self = .attributeRemoved
+                case "DOM.characterDataModified":
+                    self = .characterDataModified(try container.decode(DOM.CharacterDataModified.self, forKey: .params))
+                case "DOM.childNodeInserted":
+                    self = .childNodeInserted(try container.decode(DOM.ChildNodeInserted.self, forKey: .params))
+                case "DOM.childNodeRemoved":
+                    self = .childNodeRemoved
                 case let method:
                     self = .unknown(method: method)
                 }

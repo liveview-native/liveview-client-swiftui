@@ -11,9 +11,13 @@ let package = Package(
         .library(
             name: "LightpandaClient",
             targets: ["LightpandaClient"]),
+        
+        .library(
+            name: "LightpandaRenderer",
+            targets: ["LightpandaRenderer"])
     ],
     targets: [
-        .binaryTarget(name: "lightpanda", path: "lightpanda.xcframework"),
+        .binaryTarget(name: "lightpanda", path: "Frameworks/lightpanda.xcframework"),
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
@@ -23,5 +27,27 @@ let package = Package(
             name: "LightpandaClientTests",
             dependencies: ["LightpandaClient"]
         ),
+        
+        .target(
+            name: "LightpandaRenderer",
+            dependencies: ["LightpandaClient"],
+            exclude: [
+                "Views/Controls and Indicators/Pickers/ColorPicker.swift",
+                "Views/Controls and Indicators/Buttons/Button.swift",
+                "Views/Controls and Indicators/Buttons/PasteButton.swift",
+                "Views/Controls and Indicators/Links/TextFieldLink.swift",
+                "Views/Controls and Indicators/Pickers/DatePicker.swift",
+                "Views/Controls and Indicators/Pickers/MultiDatePicker.swift",
+                "Views/Controls and Indicators/Pickers/Picker.swift",
+                "Views/Controls and Indicators/Value Inputs/Slider.swift",
+                "Views/Controls and Indicators/Value Inputs/Stepper.swift",
+                "Views/Controls and Indicators/Value Inputs/Toggle.swift",
+                "Views/Text Input and Output/SecureField.swift",
+                "Views/Text Input and Output/TextEditor.swift",
+                "Views/Text Input and Output/TextField.swift",
+                "Views/Layout Containers/Collection Containers/Table.swift",
+                "Views/Layout Containers/Presentation Containers/NavigationLink.swift",
+            ]
+        )
     ]
 )
