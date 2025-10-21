@@ -24,6 +24,26 @@ extension CDP {
             }
         }
         
+        public struct ResolveNode: CDP.Method {
+            public static let method = "DOM.resolveNode"
+            
+            public let nodeId: NodeId?
+            public let backendId: BackendNodeId?
+            public let objectGroup: String?
+            public let executionContextId: Runtime.ExecutionContextId?
+            
+            public init(nodeId: NodeId?, backendId: BackendNodeId?, objectGroup: String?, executionContextId: Runtime.ExecutionContextId?) {
+                self.nodeId = nodeId
+                self.backendId = backendId
+                self.objectGroup = objectGroup
+                self.executionContextId = executionContextId
+            }
+            
+            public struct Response: Decodable, Sendable {
+                public let object: Runtime.RemoteObject
+            }
+        }
+        
         // Events
         
         public struct CharacterDataModified: Decodable, Sendable {
@@ -42,12 +62,16 @@ extension CDP {
             public let node: Node
         }
         
+        public struct ChildNodeRemoved: Decodable, Sendable {
+            /// Id of the parent node.
+            public let parentNodeId: Node.ID
+            /// Id of the node that has been removed.
+            public let nodeId: Node.ID
+        }
+        
         // Types
         
         public struct Node: Decodable, Identifiable, Sendable {
-            public typealias NodeId = Int
-            public typealias BackendNodeId = Int
-            
             public let nodeId: NodeId
             public let parentId: NodeId?
             public let backendNodeId: BackendNodeId
@@ -71,5 +95,8 @@ extension CDP {
                 nodeId
             }
         }
+        
+        public typealias NodeId = Int
+        public typealias BackendNodeId = Int
     }
 }

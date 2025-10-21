@@ -8,6 +8,58 @@
 import SwiftUI
 import LightpandaClient
 
+@MainActor
+struct NodeView<Library: ElementLibrary>: View {
+    let node: Node
+    
+    #if DEBUG
+    @Environment(LightpandaRuntime.self) private var runtime
+    @Environment(\.lightpandaNamespace) private var lightpandaNamespace
+    #endif
+    
+    var body: some View {
+        #if DEBUG
+        nodeContent
+            .overlay(SwiftUI.Group {
+                if runtime.cdp.focusedNode == node.id {
+                    RoundedRectangle(cornerRadius: 4, style: .continuous)
+                        .fill(.tint.quinary)
+                        .stroke(.tint, style: .init(lineWidth: 1))
+                        .ignoresSafeArea()
+                        .matchedGeometryEffect(id: "lightpanda:focused_node", in: lightpandaNamespace!)
+                }
+            })
+        #else
+        nodeContent
+        #endif
+    }
+    
+    @ViewBuilder
+    var nodeContent: some View {
+        switch node.type {
+        case .element:
+            switch node.name {
+            case "head", "script":
+                EmptyView()
+            default:
+                if let tagName = Library.TagName(rawValue: node.name) {
+                    Library.render(tagName, for: node)
+                } else {
+                    node.children(library: Library.self)
+                }
+            }
+        case .text:
+            if !node.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                SwiftUI.Text(node.value)
+            }
+        case .document, .documentFragment, .documentType:
+            node.children(library: Library.self)
+        default:
+            EmptyView()
+        }
+    }
+}
+
 extension Node {
     @MainActor
     public func children<Library: ElementLibrary>(
@@ -41,7 +93,7 @@ extension Node {
     }
 
     public func attributeValue(for name: String) -> String? {
-        return attributes[name]
+        return attributes[name.lowercased()]
     }
 
     public func attributeBoolean(for name: String) -> Bool {

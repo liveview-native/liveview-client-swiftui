@@ -33,7 +33,6 @@ let package = Package(
             dependencies: ["LightpandaClient"],
             exclude: [
                 "Views/Controls and Indicators/Pickers/ColorPicker.swift",
-                "Views/Controls and Indicators/Buttons/Button.swift",
                 "Views/Controls and Indicators/Buttons/PasteButton.swift",
                 "Views/Controls and Indicators/Links/TextFieldLink.swift",
                 "Views/Controls and Indicators/Pickers/DatePicker.swift",

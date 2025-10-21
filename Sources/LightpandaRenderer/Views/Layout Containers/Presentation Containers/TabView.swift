@@ -40,7 +40,16 @@ struct TabView<Library: ElementLibrary>: View {
     
     var body: some View {
         SwiftUI.TabView {
-            node.children(library: Library.self)
+            ForEach(node.children) { node in
+                if node.name.lowercased() == "tab" {
+                    Tab(
+                        node.attributeValue(for: "title") ?? "",
+                        systemImage: node.attributeValue(for: "systemImage") ?? ""
+                    ) {
+                        node.children(library: Library.self)
+                    }
+                }
+            }
         }
     }
 }

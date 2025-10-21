@@ -1,5 +1,6 @@
 import lightpanda
 import Foundation
+import SwiftUI
 
 @MainActor
 public final class Lightpanda {
@@ -21,7 +22,19 @@ public final class Lightpanda {
     public func makeCDP() -> CDP {
         let cdp = CDP()
         cdp.address = lightpanda_cdp_init(self.address, { [] ctx, message in
+            // handle message
             Unmanaged<CDP>.fromOpaque(ctx!).takeUnretainedValue().handleMessage(message)
+        }, { [] ctx, nodeId in
+            // focus node
+            withAnimation(.snappy) {
+                Unmanaged<CDP>.fromOpaque(ctx!).takeUnretainedValue().focusedNode = Node.ID(nodeId)
+            }
+        }, { [] ctx, message in
+            // paused in debugger message
+            // NOTE: this doesn't work because the pause loop blocks the main thread
+            withAnimation(.snappy) {
+                Unmanaged<CDP>.fromOpaque(ctx!).takeUnretainedValue().pausedInDebuggerMessage = message.flatMap(String.init(cString:))
+            }
         }, Unmanaged.passUnretained(cdp).toOpaque())
         return cdp
     }
@@ -100,20 +113,28 @@ public class Node: Identifiable {
 
 @Observable
 @MainActor
-public final class Demo {
+public final class LightpandaRuntime {
+    let url: URL
     var app: Lightpanda?
-    var cdp: CDP?
+    public var cdp: CDP!
     var eventTask: Task<(), any Error>?
     var docMessageId = Int?.none
     
     public var nodeRegistry: NodeRegistry = NodeRegistry()
     public var dom: Node?
     
-    public init() {}
+    public init(url: URL) {
+        self.url = url
+    }
     
+    @MainActor
     public func start() async throws {
         self.app = Lightpanda()
         self.cdp = app!.makeCDP()
+                
+        #if DEBUG
+        self.cdp!.startDevTools()
+        #endif
         
         self.cdp?.eventCallback = { event, data in
             switch event {
@@ -122,12 +143,16 @@ public final class Demo {
                 print(getDocumentMessage.id)
                 self.docMessageId = getDocumentMessage.id
                 self.cdp!.sendMessage(getDocumentMessage)
+                
+                let logMessage = self.cdp!.buildMessage(CDP.Runtime.Evaluate(expression: "console.log(42)"))
+                self.cdp!.sendMessage(logMessage)
             case .result(id: self.docMessageId):
                 switch try! JSONDecoder().decode(CDP.MethodResult<CDP.DOM.GetDocument>.self, from: data) {
                 case let .success(result):
                     print("GOT DOCUMENT")
                     print(result.root)
                     self.dom = Node(from: result.root, registry: self.nodeRegistry)
+                    self.docMessageId = nil
                 case let .failure(error):
                     fatalError(error.localizedDescription)
                 }
@@ -142,6 +167,10 @@ public final class Demo {
                 } else {
                     parentNode?.children.append(newNode)
                 }
+            case let .childNodeRemoved(childNodeRemoved):
+                
+                let parentNode = self.nodeRegistry.nodes[childNodeRemoved.parentNodeId]
+                parentNode?.children.removeAll(where: { $0.id == childNodeRemoved.nodeId })
             default:
                 break
             }
@@ -152,9 +181,10 @@ public final class Demo {
         self.cdp!.startPageRunLoop()
         
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Network.Enable(maxPostDataSize: 65536, reportDirectSocketTraffic: true)))
+        self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Log.Enable()))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Runtime.Enable()))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Target.SetAutoAttach(autoAttach: true, flatten: true, waitForDebuggerOnStart: true)))
-        self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Page.Navigate(url: "http://localhost:4000")))
+        self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Page.Navigate(url: self.url.absoluteString)))
         
 //        self.cdp?.eventCallback = { event in
 ////            print("RECEIVED EVENT:", event)

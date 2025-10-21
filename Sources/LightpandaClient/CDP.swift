@@ -2,16 +2,21 @@ import lightpanda
 import Foundation
 
 @MainActor
+@Observable
 public final class CDP {
     var address: UnsafeMutableRawPointer!
-    var pending: [Int:(Result<Data, any Error>) -> ()] = [:]
+    var pending: [Int:CheckedContinuation<Data, any Error>] = [:]
     var index = 0
     
     private var pageRunLoop: Task<(), any Error>?
     
 //    public var eventStream: AsyncStream<Event>!
 //    private var eventStreamContinuation: AsyncStream<Event>.Continuation!
-    public var eventCallback: (Event, Data) -> () = { _, _ in }
+    public var eventCallback: @MainActor (Event, Data) -> () = { _, _ in }
+    
+    public var focusedNode: Node.ID?
+    
+    public var pausedInDebuggerMessage: String?
     
     init() {}
     
@@ -36,50 +41,18 @@ public final class CDP {
         pageRunLoop = Task {
             while !Task.isCancelled {
                 let delay = self.pageWait(0)
-//                if delay < 1 {
-//                    try await Task.sleep(for: .milliseconds(10))
-//                } else {
-                    try await Task.sleep(for: .milliseconds(delay))
-//                }
+                try await Task.sleep(for: .milliseconds(delay))
             }
         }
+    }
+    
+    public func startDevTools() {
+        lightpanda_devtools_init(self.address)
     }
     
     public func pageWait(_ ms: Int32) -> Int32 {
         return lightpanda_cdp_page_wait(address, ms)
     }
-    
-//    public func processMessage<Params: Method>(
-//        _ params: Params
-//    ) async throws -> Params.Response {
-//        // this lets the page process any pending events after the message is sent and responded.
-////        defer { _ = self.pageWait(604_800_000) }
-//        
-//        index += 1
-//        let message = Message(id: index, method: Params.method, params: params)
-//        return try await withCheckedThrowingContinuation { continuation in
-//            pending[message.id] = { result in
-//                nonisolated(unsafe) let result = result.flatMap { (data) -> Result<Params.Response, any Error> in
-//                    do {
-//                        switch try JSONDecoder().decode(MethodResult<Params>.self, from: data) {
-//                        case let .success(result):
-//                            return .success(result)
-//                        case let .failure(error):
-//                            return .failure(error)
-//                        }
-//                    } catch {
-//                        return .failure(error)
-//                    }
-//                }
-//                continuation.resume(with: result)
-//            }
-//            let message = String(data: try! JSONEncoder().encode(message), encoding: .utf8)!
-//            print("[SEND]")
-//            print(message)
-//            print("")
-//            lightpanda_cdp_process_message(address, message)
-//        }
-//    }
     
     public func buildMessage<Params: Method>(
         _ params: Params
@@ -95,11 +68,29 @@ public final class CDP {
         lightpanda_cdp_process_message(address, String(data: try! JSONEncoder().encode(message), encoding: .utf8)!)
     }
     
+    public func send<Params: Method>(
+        _ params: Params
+    ) async throws -> Params.Response {
+        let message = self.buildMessage(params)
+        let data: Data = try await withCheckedThrowingContinuation { continuation in
+            self.pending[message.id] = continuation
+            self.sendMessage(message)
+        }
+        let result = try JSONDecoder().decode(MethodResult<Params>.self, from: data)
+        switch result {
+        case let .failure(error):
+            throw error
+        case let .success(response):
+            return response
+        }
+    }
+    
     func handleMessage(_ message: UnsafePointer<CChar>?) {
 //        print(String(cString: message!))
         print("[RECEIVE]")
         print(String(cString: message!))
         print("")
+//        let data = Data(bytes: UnsafeMutableRawPointer(mutating: message!), count: strlen(message!))
         let data = Data(
             bytesNoCopy: UnsafeMutableRawPointer(mutating: message!),
             count: strlen(message!),
@@ -112,7 +103,14 @@ public final class CDP {
             Event.self,
             from: data
         )
-        self.eventCallback(event, data)
+        if case let .result(id) = event,
+           let continuation = pending[id]
+        {
+            pending.removeValue(forKey: id)
+            continuation.resume(returning: Data(data))
+        } else {
+            self.eventCallback(event, data)
+        }
 //        switch event {
 //        case let .result(id):
 //            if let continuation = pending[id] {
@@ -162,7 +160,7 @@ public final class CDP {
         case attributeRemoved
         case characterDataModified(DOM.CharacterDataModified)
         case childNodeInserted(DOM.ChildNodeInserted)
-        case childNodeRemoved
+        case childNodeRemoved(DOM.ChildNodeRemoved)
         case unknown(method: String)
         
         enum CodingKeys: String, CodingKey {
@@ -190,7 +188,7 @@ public final class CDP {
                 case "DOM.childNodeInserted":
                     self = .childNodeInserted(try container.decode(DOM.ChildNodeInserted.self, forKey: .params))
                 case "DOM.childNodeRemoved":
-                    self = .childNodeRemoved
+                    self = .childNodeRemoved(try container.decode(DOM.ChildNodeRemoved.self, forKey: .params))
                 case let method:
                     self = .unknown(method: method)
                 }
