@@ -12,6 +12,8 @@ import LightpandaClient
 struct NodeView<Library: ElementLibrary>: View {
     let node: Node
     
+    @Environment(ModifierParser.self) private var modifierParser
+    
     #if DEBUG
     @Environment(LightpandaRuntime.self) private var runtime
     @Environment(\.lightpandaNamespace) private var lightpandaNamespace
@@ -43,7 +45,13 @@ struct NodeView<Library: ElementLibrary>: View {
                 EmptyView()
             default:
                 if let tagName = Library.TagName(rawValue: node.name) {
-                    Library.render(tagName, for: node)
+                    if let style = node.attributeValue(for: "style") {
+                        let collection = modifierParser.parse(style)
+                        Library.render(tagName, for: node)
+                            .modifier(collection)
+                    } else {
+                        Library.render(tagName, for: node)
+                    }
                 } else {
                     node.children(library: Library.self)
                 }

@@ -10,6 +10,7 @@ import LightpandaClient
 
 public struct LightpandaRenderer<Library: ElementLibrary>: View {
     @State private var lightpanda: LightpandaRuntime
+    @State private var modifierParser = ModifierParser()
     @Namespace private var namespace
     
     public init(url: URL) {
@@ -23,6 +24,7 @@ public struct LightpandaRenderer<Library: ElementLibrary>: View {
             }
         }
         .environment(lightpanda)
+        .environment(modifierParser)
         .environment(\.lightpandaNamespace, namespace)
         .task {
             try! await lightpanda.start()
