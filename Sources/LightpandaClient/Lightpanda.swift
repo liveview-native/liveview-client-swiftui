@@ -1,40 +1,69 @@
 import lightpanda
 import Foundation
-import SwiftUI
+import Observation
 
-@MainActor
-public final class Lightpanda {
+#if os(Android)
+import Android
+
+private let ANDROID_LOG_INFO: Int32 = 4
+
+/// Redirects stdout and stderr to Android's Logcat.
+/// Call this early (e.g., from your JNI entrypoint or Swift runtime initializer).
+public func redirectStdoutToLogcat(tag: String = "SwiftNative") {
+    var pipefd: [Int32] = [0, 0]
+    guard pipe(&pipefd) == 0 else { return }
+
+    // Duplicate pipe write-end to stdout and stderr
+    dup2(pipefd[1], STDOUT_FILENO)
+    dup2(pipefd[1], STDERR_FILENO)
+    setvbuf(stdout, nil, _IOLBF, 0)
+    setvbuf(stderr, nil, _IOLBF, 0)
+
+    let readFD = pipefd[0]
+    let tagCString = strdup(tag)
+
+    // Spawn a background thread to read from the pipe and write to Logcat
+    Thread.detachNewThread {
+        var buffer = [CChar](repeating: 0, count: 1024)
+        while true {
+            let count = read(readFD, &buffer, buffer.count - 1)
+            if count <= 0 { break }
+            buffer[count] = 0
+            __android_log_write(ANDROID_LOG_INFO, tagCString!, buffer)
+        }
+        free(tagCString)
+    }
+}
+#endif
+
+final class Lightpanda {
     var address: UnsafeMutableRawPointer!
     
-    public init() {
+    init() {
         self.address = lightpanda_app_init()
     }
     
-    @MainActor
+    
     deinit {
         lightpanda_app_deinit(address)
     }
     
-    public func makeBrowser() -> Browser {
+    func makeBrowser() -> Browser {
         return Browser(address: lightpanda_browser_init(self.address))
     }
     
-    public func makeCDP() -> CDP {
+    func makeCDP() -> CDP {
         let cdp = CDP()
         cdp.address = lightpanda_cdp_init(self.address, { [] ctx, message in
             // handle message
             Unmanaged<CDP>.fromOpaque(ctx!).takeUnretainedValue().handleMessage(message)
         }, { [] ctx, nodeId in
             // focus node
-            withAnimation(.snappy) {
-                Unmanaged<CDP>.fromOpaque(ctx!).takeUnretainedValue().focusedNode = Node.ID(nodeId)
-            }
+            Unmanaged<CDP>.fromOpaque(ctx!).takeUnretainedValue().focusedNode = Node.ID(nodeId)
         }, { [] ctx, message in
             // paused in debugger message
             // NOTE: this doesn't work because the pause loop blocks the main thread
-            withAnimation(.snappy) {
-                Unmanaged<CDP>.fromOpaque(ctx!).takeUnretainedValue().pausedInDebuggerMessage = message.flatMap(String.init(cString:))
-            }
+            Unmanaged<CDP>.fromOpaque(ctx!).takeUnretainedValue().pausedInDebuggerMessage = message.flatMap(String.init(cString:))
         }, Unmanaged.passUnretained(cdp).toOpaque())
         return cdp
     }
@@ -109,26 +138,46 @@ public class Node: Identifiable {
         
         registry.nodes[id] = self
     }
+
+    public func observe(changed: () -> ()) async {
+        for await _ in Observations({
+            _ = self.id
+            _ = self.type
+            _ = self.name
+            _ = self.value
+            _ = self.childNodeCount
+            _ = self.children
+            _ = self.attributes
+            _ = self.parent
+        }) {
+            changed()
+        }
+    }
 }
 
 @Observable
-@MainActor
 public final class LightpandaRuntime {
     let url: URL
     var app: Lightpanda?
-    public var cdp: CDP!
+    private var cdp: CDP!
     var eventTask: Task<(), any Error>?
     var docMessageId = Int?.none
     
-    public var nodeRegistry: NodeRegistry = NodeRegistry()
-    public var dom: Node?
+    private var nodeRegistry: NodeRegistry = NodeRegistry()
+    public nonisolated(unsafe) var dom: Node?
     
-    public init(url: URL) {
-        self.url = url
+    // public init(url: URL) {
+    //     self.url = url
+    // }
+
+    public init(url: String) {
+        self.url = URL(string: url)!
     }
     
-    @MainActor
-    public func start() async throws {
+    public func start() async {
+        redirectStdoutToLogcat()
+        print("Starting LightpandaRuntime")
+
         self.app = Lightpanda()
         self.cdp = app!.makeCDP()
                 
@@ -180,64 +229,33 @@ public final class LightpandaRuntime {
         
         self.cdp!.startPageRunLoop()
         
-//        self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Network.Enable(maxPostDataSize: 65536, reportDirectSocketTraffic: true)))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Log.Enable()))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Runtime.Enable()))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Target.SetAutoAttach(autoAttach: true, flatten: true, waitForDebuggerOnStart: true)))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Page.Navigate(url: self.url.absoluteString)))
         
-//        self.cdp?.eventCallback = { event in
-////            print("RECEIVED EVENT:", event)
-//            switch event {
-//            case .documentUpdated:
-//                print("GOT DOM")
-//                try! await self.cdp!.processMessage(CDP.DOM.GetDocument(depth: -1, pierce: true))
-//            default:
-//                break
-//            }
-//        }
-//        
-//        _ = self.cdp!.createBrowserContext()
-//        
-//        self.cdp?.startPageRunLoop()
-//        
-//        _ = try await self.cdp!.processMessage(CDP.Network.Enable(maxPostDataSize: 65536, reportDirectSocketTraffic: true))
-//        
-//        _ = try await self.cdp!.processMessage(CDP.Page.Enable())
-//        
-//        _ = try await self.cdp!.processMessage(CDP.Runtime.Enable())
-//        
-//        _ = try await self.cdp!.processMessage(CDP.DOM.Enable())
-//        _ = try await self.cdp!.processMessage(CDP.CSS.Enable())
-//        _ = try await self.cdp!.processMessage(CDP.Log.Enable())
-//        _ = try await self.cdp!.processMessage(CDP.Emulation.SetEmulatedMedia(
-//            features: [
-//                .init(name: "color-gamut", value: ""),
-//                .init(name: "prefers-color-scheme", value: ""),
-//                .init(name: "forced-colors", value: ""),
-//                .init(name: "prefers-contrast", value: ""),
-//                .init(name: "prefers-reduced-data", value: ""),
-//                .init(name: "prefers-reduced-motion", value: ""),
-//                .init(name: "prefers-reduced-transparency", value: ""),
-//            ],
-//            media: ""
-//        ))
-//        
-//        _ = try await self.cdp!.processMessage(CDP.Inspector.Enable())
-//        
-//        _ = try await self.cdp!.processMessage(CDP.Target.SetAutoAttach(autoAttach: true, flatten: true, waitForDebuggerOnStart: true))
-//        
-//        _ = try await self.cdp!.processMessage(CDP.Target.SetDiscoverTargets(discover: true))
-//        
-//        _ = try await self.cdp!.processMessage(CDP.Runtime.AddBinding(name: "__chromium_devtools_metrics_reporter", executionContextName: "DevTools Performance Metrics"))
-//        
-//        _ = try await self.cdp!.processMessage(CDP.Runtime.RunIfWaitingForDebugger())
-//        
-//        _ = try await self.cdp!.processMessage(CDP.Emulation.SetFocusEmulationEnabled(enabled: true))
-//        
-////        _ = try await self.cdp!.processMessage(CDP.Page.Navigate(url: "http://localhost:4000"))
-//        _ = try await self.cdp!.processMessage(CDP.Page.Navigate(url: "http://localhost:4000"))
-        
-//        print("EXITING START")
+        print("EXITING START")
+    }
+
+    public func observeDOM(changed: () -> ()) async {
+        for await _ in Observations({ self.dom }) {
+            print(self.dom)
+            changed()
+        }
+    }
+
+    public func callFunctionOn(node: Node, _ function: String) async throws {
+        let remoteObject = try await cdp.send(CDP.DOM.ResolveNode(
+            nodeId: node.id,
+            backendId: nil,
+            objectGroup: nil,
+            executionContextId: nil
+        ))
+        cdp.sendMessage(
+            cdp.buildMessage(CDP.Runtime.CallFunctionOn(
+                functionDeclaration: function,
+                objectId: remoteObject.object.objectId!
+            ))
+        )
     }
 }

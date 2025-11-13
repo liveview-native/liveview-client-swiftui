@@ -128,7 +128,7 @@ public struct SwiftUIElementLibrary: ElementLibrary {
         }
     }
     
-    @MainActor
+    
     public static func render(_ tag: TagName, for node: Node) -> some View {
         switch tag {
         case .button:

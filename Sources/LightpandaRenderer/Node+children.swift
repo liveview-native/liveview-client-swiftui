@@ -8,7 +8,7 @@
 import SwiftUI
 import LightpandaClient
 
-@MainActor
+
 struct NodeView<Library: ElementLibrary>: View {
     let node: Node
     
@@ -69,7 +69,7 @@ struct NodeView<Library: ElementLibrary>: View {
 }
 
 extension Node {
-    @MainActor
+    
     public func children<Library: ElementLibrary>(
         library: Library.Type = Library.self
     ) -> some View {
@@ -78,7 +78,7 @@ extension Node {
         }
     }
     
-    @MainActor
+    
     public func children<Library: ElementLibrary>(
         in template: String,
         default: Bool = false,

@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:LightpandaClient}",
+            "name": "Debug ModifierCodeGeneration",
+            "target": "ModifierCodeGeneration",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug ModifierCodeGeneration"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:LightpandaClient}",
+            "name": "Release ModifierCodeGeneration",
+            "target": "ModifierCodeGeneration",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release ModifierCodeGeneration"
+        }
+    ]
+}

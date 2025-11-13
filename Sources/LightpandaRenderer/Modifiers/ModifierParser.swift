@@ -4,7 +4,7 @@ import Observation
 import SwiftUI
 
 @Observable
-@MainActor
+
 final class ModifierParser {
     /// Pre-parsed segments.
     static var cache = [String:ModifierCollection]()

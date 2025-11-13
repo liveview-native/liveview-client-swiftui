@@ -1,82 +1,82 @@
 extension CDP {
-    public struct Runtime {
+    struct Runtime {
         // Methods
         
-        public struct Enable: CDP.Method {
-            public static let method = "Runtime.enable"
+        struct Enable: CDP.Method {
+            static let method = "Runtime.enable"
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
         
-        public struct AddBinding: CDP.Method {
-            public static let method = "Runtime.addBinding"
+        struct AddBinding: CDP.Method {
+            static let method = "Runtime.addBinding"
             
-            public let name: String
-            public let executionContextName: String
+            let name: String
+            let executionContextName: String
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
         
-        public struct RunIfWaitingForDebugger: CDP.Method {
-            public static let method = "Runtime.runIfWaitingForDebugger"
+        struct RunIfWaitingForDebugger: CDP.Method {
+            static let method = "Runtime.runIfWaitingForDebugger"
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
         
-        public struct Evaluate: CDP.Method {
-            public static let method = "Runtime.evaluate"
+        struct Evaluate: CDP.Method {
+            static let method = "Runtime.evaluate"
             
             /// Expression to evaluate.
-            public let expression: String
+            let expression: String
             
             /// Symbolic group name that can be used to release multiple objects.
-            public let objectGroup: String?
+            let objectGroup: String?
             
             /// Determines whether Command Line API should be available during the evaluation.
-            public let includeCommandLineAPI: Bool?
+            let includeCommandLineAPI: Bool?
             
             /// In silent mode exceptions thrown during evaluation are not reported and do not pause execution. Overrides setPauseOnException state.
-            public let silent: Bool?
+            let silent: Bool?
             
             /// Specifies in which execution context to perform evaluation. If the parameter is omitted the evaluation will be performed in the context of the inspected page. This is mutually exclusive with uniqueContextId, which offers an alternative way to identify the execution context that is more reliable in a multi-process environment.
-            public let contextId: ExecutionContextId?
+            let contextId: ExecutionContextId?
             
             /// Whether the result is expected to be a JSON object that should be sent by value.
-            public let returnByValue: Bool?
+            let returnByValue: Bool?
             
             /// Whether preview should be generated for the result.
-            public let generatePreview: Bool?
+            let generatePreview: Bool?
             
             /// Whether execution should be treated as initiated by user in the UI.
-            public let userGesture: Bool?
+            let userGesture: Bool?
             
             /// Whether execution should await for resulting value and return once awaited promise is resolved.
-            public let awaitPromise: Bool?
+            let awaitPromise: Bool?
             
             /// Whether to throw an exception if side effect cannot be ruled out during evaluation. This implies disableBreaks below.
-            public let throwOnSideEffect: Bool?
+            let throwOnSideEffect: Bool?
             
             /// Terminate execution after timing out (number of milliseconds).
-            public let timeout: Int?
+            let timeout: Int?
             
             /// Disable breakpoints during execution.
-            public let disableBreaks: Bool?
+            let disableBreaks: Bool?
             
             /// Setting this flag to true enables let re-declaration and top-level await. Note that let variables can only be re-declared if they originate from replMode themselves.
-            public let replMode: Bool?
+            let replMode: Bool?
             
             /// The Content Security Policy (CSP) for the target might block 'unsafe-eval' which includes eval(), Function(), setTimeout() and setInterval() when called with non-callable arguments. This flag bypasses CSP for this evaluation and allows unsafe-eval.
             ///
             /// Defaults to true.
-            public let allowUnsafeEvalBlockedByCSP: Bool?
+            let allowUnsafeEvalBlockedByCSP: Bool?
             
             /// An alternative way to specify the execution context to evaluate in. Compared to contextId that may be reused across processes, this is guaranteed to be system-unique, so it can be used to prevent accidental evaluation of the expression in context different than intended (e.g. as a result of navigation across process boundaries). This is mutually exclusive with contextId.
-            public let uniqueContextId: String?
+            let uniqueContextId: String?
             
             /// Specifies the result serialization. If provided, overrides generatePreview and returnByValue.
-            public let serializationOptions: SerializationOptions?
+            let serializationOptions: SerializationOptions?
             
-            public init(expression: String, objectGroup: String? = nil, includeCommandLineAPI: Bool? = nil, silent: Bool? = nil, contextId: ExecutionContextId? = nil, returnByValue: Bool? = nil, generatePreview: Bool? = nil, userGesture: Bool? = nil, awaitPromise: Bool? = nil, throwOnSideEffect: Bool? = nil, timeout: Int? = nil, disableBreaks: Bool? = nil, replMode: Bool? = nil, allowUnsafeEvalBlockedByCSP: Bool? = nil, uniqueContextId: String? = nil, serializationOptions: SerializationOptions? = nil) {
+            init(expression: String, objectGroup: String? = nil, includeCommandLineAPI: Bool? = nil, silent: Bool? = nil, contextId: ExecutionContextId? = nil, returnByValue: Bool? = nil, generatePreview: Bool? = nil, userGesture: Bool? = nil, awaitPromise: Bool? = nil, throwOnSideEffect: Bool? = nil, timeout: Int? = nil, disableBreaks: Bool? = nil, replMode: Bool? = nil, allowUnsafeEvalBlockedByCSP: Bool? = nil, uniqueContextId: String? = nil, serializationOptions: SerializationOptions? = nil) {
                 self.expression = expression
                 self.objectGroup = objectGroup
                 self.includeCommandLineAPI = includeCommandLineAPI
@@ -95,30 +95,30 @@ extension CDP {
                 self.serializationOptions = serializationOptions
             }
             
-            public struct Response: Decodable, Sendable {
-                public let result: RemoteObject?
-                public let exceptionDetails: ExceptionDetails?
+            struct Response: Decodable, Sendable {
+                let result: RemoteObject?
+                let exceptionDetails: ExceptionDetails?
             }
         }
         
-        public struct CallFunctionOn: CDP.Method {
-            public static let method = "Runtime.callFunctionOn"
+        struct CallFunctionOn: CDP.Method {
+            static let method = "Runtime.callFunctionOn"
             
-            public let functionDeclaration: String
-            public let objectId: RemoteObjectId?
-            public let arguments: [CallArgument]?
-            public let silent: Bool?
-            public let returnByValue: Bool?
-            public let generatePreview: Bool?
-            public let userGesture: Bool?
-            public let awaitPromise: Bool?
-            public let executionContextId: ExecutionContextId?
-            public let objectGroup: String?
-            public let throwOnSideEffect: Bool?
-            public let uniqueContextId: String?
-            public let serializationOptions: SerializationOptions?
+            let functionDeclaration: String
+            let objectId: RemoteObjectId?
+            let arguments: [CallArgument]?
+            let silent: Bool?
+            let returnByValue: Bool?
+            let generatePreview: Bool?
+            let userGesture: Bool?
+            let awaitPromise: Bool?
+            let executionContextId: ExecutionContextId?
+            let objectGroup: String?
+            let throwOnSideEffect: Bool?
+            let uniqueContextId: String?
+            let serializationOptions: SerializationOptions?
             
-            public init(functionDeclaration: String, objectId: RemoteObjectId? = nil, arguments: [CallArgument]? = nil, silent: Bool? = nil, returnByValue: Bool? = nil, generatePreview: Bool? = nil, userGesture: Bool? = nil, awaitPromise: Bool? = nil, executionContextId: ExecutionContextId? = nil, objectGroup: String? = nil, throwOnSideEffect: Bool? = nil, uniqueContextId: String? = nil, serializationOptions: SerializationOptions? = nil) {
+            init(functionDeclaration: String, objectId: RemoteObjectId? = nil, arguments: [CallArgument]? = nil, silent: Bool? = nil, returnByValue: Bool? = nil, generatePreview: Bool? = nil, userGesture: Bool? = nil, awaitPromise: Bool? = nil, executionContextId: ExecutionContextId? = nil, objectGroup: String? = nil, throwOnSideEffect: Bool? = nil, uniqueContextId: String? = nil, serializationOptions: SerializationOptions? = nil) {
                 self.functionDeclaration = functionDeclaration
                 self.objectId = objectId
                 self.arguments = arguments
@@ -134,36 +134,36 @@ extension CDP {
                 self.serializationOptions = serializationOptions
             }
             
-            public struct Response: Decodable, Sendable {
-                public let result: RemoteObject?
-                public let exceptionDetails: ExceptionDetails?
+            struct Response: Decodable, Sendable {
+                let result: RemoteObject?
+                let exceptionDetails: ExceptionDetails?
             }
         }
         
         // Types
         
-        public struct RemoteObject: Codable, Sendable, Identifiable {
-            public let type: ObjectType
-            public let subtype: ObjectSubtype?
-            public let className: String?
-            public let value: Value?
-            public let unserializableValue: UnserializableValue?
-            public let description: String?
-            public let deepSerializedValue: DeepSerializedValue?
-            public let objectId: RemoteObjectId?
-            public let preview: ObjectPreview?
-            public let customPreview: CustomPreview?
+        struct RemoteObject: Codable, Sendable, Identifiable {
+            let type: ObjectType
+            let subtype: ObjectSubtype?
+            let className: String?
+            let value: Value?
+            let unserializableValue: UnserializableValue?
+            let description: String?
+            let deepSerializedValue: DeepSerializedValue?
+            let objectId: RemoteObjectId?
+            let preview: ObjectPreview?
+            let customPreview: CustomPreview?
             
-            public var id: RemoteObjectId? { objectId }
+            var id: RemoteObjectId? { objectId }
             
-            public enum Value: Codable, Sendable {
+            enum Value: Codable, Sendable {
                 case string(String)
                 case number(Double)
                 case bool(Bool)
                 case array([Value])
                 case object([String:Value])
                 
-                public init(from decoder: any Decoder) throws {
+                init(from decoder: any Decoder) throws {
                     let container = try decoder.singleValueContainer()
                     if let string = try? container.decode(String.self) {
                         self = .string(string)
@@ -178,7 +178,7 @@ extension CDP {
                     }
                 }
                 
-                public func encode(to encoder: any Encoder) throws {
+                func encode(to encoder: any Encoder) throws {
                     var container = encoder.singleValueContainer()
                     switch self {
                     case .string(let string):
@@ -195,7 +195,7 @@ extension CDP {
                 }
             }
             
-            public enum ObjectType: String, Codable, Sendable {
+            enum ObjectType: String, Codable, Sendable {
                 case object
                 case function
                 case undefined
@@ -206,111 +206,111 @@ extension CDP {
                 case bigint
             }
             
-            public enum ObjectSubtype: String, Codable, Sendable {
+            enum ObjectSubtype: String, Codable, Sendable {
                 case array, null, node, regexp, date, map, set, weakmap, weakset, iterator, generator, error, proxy, promise, typedarray, arraybuffer, dataview, webassemblymemory, wasmvalue, trustedtype
             }
         }
         
-        public struct DeepSerializedValue: Codable, Sendable {
-            public let type: DeepSerializedValueType
-            public let value: RemoteObject.Value?
-            public let objectId: String?
-            public let weakLocalObjectReference: Int?
+        struct DeepSerializedValue: Codable, Sendable {
+            let type: DeepSerializedValueType
+            let value: RemoteObject.Value?
+            let objectId: String?
+            let weakLocalObjectReference: Int?
             
-            public enum DeepSerializedValueType: String, Codable, Sendable {
+            enum DeepSerializedValueType: String, Codable, Sendable {
                 case undefined, null, string, number, boolean, bigint, regexp, date, symbol, array, object, function, map, set, weakmap, weakset, error, proxy, promise, typedarray, arraybuffer, node, window, generator
             }
         }
         
-        public struct ExceptionDetails: Codable, Sendable {
-            public let exceptionId: Int
-            public let text: String
-            public let lineNumber: Int
-            public let columnNumber: Int
-            public let scriptId: ScriptId?
-            public let url: String?
-            public let stackTrace: StackTrace?
+        struct ExceptionDetails: Codable, Sendable {
+            let exceptionId: Int
+            let text: String
+            let lineNumber: Int
+            let columnNumber: Int
+            let scriptId: ScriptId?
+            let url: String?
+            let stackTrace: StackTrace?
         }
         
-        public typealias ScriptId = String
+        typealias ScriptId = String
         
-        public struct StackTrace: Codable, Sendable {
-            public let description: String?
-            public let callFrames: [CallFrame]
-//            public let parent: StackTrace? // recursive
-            public let parentId: StackTraceId?
+        struct StackTrace: Codable, Sendable {
+            let description: String?
+            let callFrames: [CallFrame]
+//            let parent: StackTrace? // recursive
+            let parentId: StackTraceId?
         }
         
-        public struct CallFrame: Codable, Sendable {
-            public let functionName: String
-            public let scriptId: ScriptId
-            public let url: String
-            public let lineNumber: Int
-            public let columnNumber: Int
+        struct CallFrame: Codable, Sendable {
+            let functionName: String
+            let scriptId: ScriptId
+            let url: String
+            let lineNumber: Int
+            let columnNumber: Int
         }
         
-        public struct StackTraceId: Codable, Sendable {
-            public let id: String
-            public let debuggerId: UniqueDebuggerId?
+        struct StackTraceId: Codable, Sendable {
+            let id: String
+            let debuggerId: UniqueDebuggerId?
         }
         
-        public typealias UniqueDebuggerId = String
+        typealias UniqueDebuggerId = String
         
-        public struct SerializationOptions: Codable, Sendable {
-            public let serialization: Serialization
-            public let maxDepth: Int?
-            public let additionalParameters: [String:String]?
+        struct SerializationOptions: Codable, Sendable {
+            let serialization: Serialization
+            let maxDepth: Int?
+            let additionalParameters: [String:String]?
             
-            public enum Serialization: String, Codable, Sendable {
+            enum Serialization: String, Codable, Sendable {
                 case deep
                 case json
                 case idOnly
             }
         }
         
-        public typealias ExecutionContextId = Int
+        typealias ExecutionContextId = Int
         
-        public typealias RemoteObjectId = String
+        typealias RemoteObjectId = String
         
-        public struct ObjectPreview: Codable, Sendable {
-            public let type: RemoteObject.ObjectType
-            public let subtype: RemoteObject.ObjectSubtype?
-            public let description: String?
-            public let overflow: Bool
-            public let properties: [PropertyPreview]
-            public let entries: [EntryPreview]?
+        struct ObjectPreview: Codable, Sendable {
+            let type: RemoteObject.ObjectType
+            let subtype: RemoteObject.ObjectSubtype?
+            let description: String?
+            let overflow: Bool
+            let properties: [PropertyPreview]
+            let entries: [EntryPreview]?
         }
         
-        public struct PropertyPreview: Codable, Sendable {
-            public let name: String
-            public let type: RemoteObject.ObjectType
-            public let value: String?
-            public let valuePreview: ObjectPreview?
-            public let subtype: RemoteObject.ObjectSubtype?
+        struct PropertyPreview: Codable, Sendable {
+            let name: String
+            let type: RemoteObject.ObjectType
+            let value: String?
+            let valuePreview: ObjectPreview?
+            let subtype: RemoteObject.ObjectSubtype?
         }
         
-        public struct EntryPreview: Codable, Sendable {
-            public let key: ObjectPreview?
-            public let value: ObjectPreview
+        struct EntryPreview: Codable, Sendable {
+            let key: ObjectPreview?
+            let value: ObjectPreview
         }
         
-        public struct CustomPreview: Codable, Sendable {
-            public let header: String
-            public let bodyGetterId: RemoteObjectId?
+        struct CustomPreview: Codable, Sendable {
+            let header: String
+            let bodyGetterId: RemoteObjectId?
         }
         
-        public struct CallArgument: Codable, Sendable {
-            public let value: RemoteObject.Value?
-            public let unserializableValue: UnserializableValue?
-            public let objectId: RemoteObjectId?
+        struct CallArgument: Codable, Sendable {
+            let value: RemoteObject.Value?
+            let unserializableValue: UnserializableValue?
+            let objectId: RemoteObjectId?
             
-            public init(value: RemoteObject.Value? = nil, unserializableValue: UnserializableValue? = nil, objectId: RemoteObjectId? = nil) {
+            init(value: RemoteObject.Value? = nil, unserializableValue: UnserializableValue? = nil, objectId: RemoteObjectId? = nil) {
                 self.value = value
                 self.unserializableValue = unserializableValue
                 self.objectId = objectId
             }
         }
         
-        public typealias UnserializableValue = String
+        typealias UnserializableValue = String
     }
 }

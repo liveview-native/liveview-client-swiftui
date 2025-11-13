@@ -13,7 +13,7 @@ public protocol ElementLibrary {
     
     associatedtype Body: View
     
-    @MainActor
+    
     @ViewBuilder
     static func render(_ tag: TagName, for node: Node) -> Body
 }

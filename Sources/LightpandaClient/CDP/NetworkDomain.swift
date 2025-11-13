@@ -1,14 +1,14 @@
 extension CDP {    
-    public struct Network {
+    struct Network {
         // Methods
         
-        public struct Enable: CDP.Method {
-            public static let method = "Network.enable"
+        struct Enable: CDP.Method {
+            static let method = "Network.enable"
             
-            public let maxPostDataSize: Int
-            public let reportDirectSocketTraffic: Bool
+            let maxPostDataSize: Int
+            let reportDirectSocketTraffic: Bool
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
     }
 }

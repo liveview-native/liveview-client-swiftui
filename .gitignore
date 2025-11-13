@@ -8,3 +8,6 @@ DerivedData/
 .netrc
 
 lightpanda.xcframework
+
+build
+.gradle

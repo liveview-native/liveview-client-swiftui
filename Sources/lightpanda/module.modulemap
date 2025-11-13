@@ -1,0 +1,5 @@
+module lightpanda [system] {
+    header "lightpanda.h"
+    link "lightpanda"
+    export *
+}

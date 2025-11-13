@@ -82,7 +82,7 @@ struct NavigationLink<Library: ElementLibrary>: View {
                 switch linkState {
                 case .replace:
                     SwiftUI.Button {
-                        Task { @MainActor in
+                        Task {  in
                             try await $liveElement.context.coordinator.session.redirect(
                                 .init(
                                     kind: .replace,
@@ -110,7 +110,7 @@ struct NavigationLink<Library: ElementLibrary>: View {
                 }
             case .patch:
                 SwiftUI.Button {
-                    Task { @MainActor in
+                    Task {  in
                         // send the `live_patch` event
                         try await $liveElement.context.coordinator.doPushEvent("live_patch", payload: .jsonPayload(json: .object(object: [
                             "url": .str(string: url.absoluteString)

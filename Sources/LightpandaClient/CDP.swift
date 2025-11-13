@@ -1,7 +1,8 @@
 import lightpanda
 import Foundation
+import Observation
 
-@MainActor
+
 @Observable
 public final class CDP {
     var address: UnsafeMutableRawPointer!
@@ -12,32 +13,32 @@ public final class CDP {
     
 //    public var eventStream: AsyncStream<Event>!
 //    private var eventStreamContinuation: AsyncStream<Event>.Continuation!
-    public var eventCallback: @MainActor (Event, Data) -> () = { _, _ in }
+    var eventCallback:  (Event, Data) -> () = { _, _ in }
     
-    public var focusedNode: Node.ID?
+    public nonisolated(unsafe) var focusedNode: Node.ID?
     
-    public var pausedInDebuggerMessage: String?
+    var pausedInDebuggerMessage: String?
     
     init() {}
     
-    @MainActor
+    
     deinit {
         lightpanda_cdp_deinit(address)
     }
     
-    public func createBrowserContext() -> String {
+    func createBrowserContext() -> String {
         return String(cString: lightpanda_cdp_create_browser_context(address))
     }
     
-    public var browser: Browser {
+    var browser: Browser {
         Browser(address: lightpanda_cdp_browser(address))
     }
     
-    public var browserContext: BrowserContext {
+    var browserContext: BrowserContext {
         BrowserContext(address: lightpanda_cdp_browser_context(address))
     }
     
-    public func startPageRunLoop() {
+    func startPageRunLoop() {
         pageRunLoop = Task {
             while !Task.isCancelled {
                 let delay = self.pageWait(0)
@@ -46,15 +47,15 @@ public final class CDP {
         }
     }
     
-    public func startDevTools() {
+    func startDevTools() {
         lightpanda_devtools_init(self.address)
     }
     
-    public func pageWait(_ ms: Int32) -> Int32 {
+    func pageWait(_ ms: Int32) -> Int32 {
         return lightpanda_cdp_page_wait(address, ms)
     }
     
-    public func buildMessage<Params: Method>(
+    func buildMessage<Params: Method>(
         _ params: Params
     ) -> Message<Params> {
         index += 1
@@ -62,13 +63,13 @@ public final class CDP {
     }
     
     @discardableResult
-    public func sendMessage<Params: Method>(
+    func sendMessage<Params: Method>(
         _ message: Message<Params>
     ) {
         lightpanda_cdp_process_message(address, String(data: try! JSONEncoder().encode(message), encoding: .utf8)!)
     }
     
-    public func send<Params: Method>(
+    func send<Params: Method>(
         _ params: Params
     ) async throws -> Params.Response {
         let message = self.buildMessage(params)
@@ -122,7 +123,7 @@ public final class CDP {
 //        }
     }
     
-    public struct Message<Params: Method>: Encodable {
+    struct Message<Params: Method>: Encodable {
         let id: Int
         let method: String
         let params: Params
@@ -152,7 +153,7 @@ public final class CDP {
         let message: String
     }
 
-    public enum Event: Decodable {
+    enum Event: Decodable {
         case result(id: Int)
         case targetCreated(Target.TargetCreated)
         case documentUpdated
@@ -169,7 +170,7 @@ public final class CDP {
             case params
         }
         
-        public init(from decoder: any Decoder) throws {
+        init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             if container.contains(.id) { // method result
                 self = .result(id: try container.decode(Int.self, forKey: .id))
@@ -196,7 +197,7 @@ public final class CDP {
         }
     }
 
-    public protocol Method: Encodable {
+    protocol Method: Encodable {
         static var method: String { get }
         associatedtype Response: Decodable
     }

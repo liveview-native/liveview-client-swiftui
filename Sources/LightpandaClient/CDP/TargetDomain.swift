@@ -1,60 +1,60 @@
 extension CDP {
-    public struct Target {
+    struct Target {
         // Methods
         
-        public struct CreateTarget: CDP.Method {
-            public static let method = "Target.createTarget"
+        struct CreateTarget: CDP.Method {
+            static let method = "Target.createTarget"
             
-            public let url: String
-            public let browserContextId: String?
+            let url: String
+            let browserContextId: String?
             
-            public struct Response: Decodable, Sendable {
+            struct Response: Decodable, Sendable {
                 let targetId: String
             }
         }
         
-        public struct CreateBrowserContext: CDP.Method {
-            public static let method = "Target.createBrowserContext"
+        struct CreateBrowserContext: CDP.Method {
+            static let method = "Target.createBrowserContext"
             
-            public struct Response: Decodable, Sendable {
+            struct Response: Decodable, Sendable {
                 let browserContextId: String
             }
         }
         
-        public struct SetAutoAttach: CDP.Method {
-            public static let method = "Target.setAutoAttach"
+        struct SetAutoAttach: CDP.Method {
+            static let method = "Target.setAutoAttach"
             
-            public let autoAttach: Bool
-            public let flatten: Bool
-            public let waitForDebuggerOnStart: Bool
+            let autoAttach: Bool
+            let flatten: Bool
+            let waitForDebuggerOnStart: Bool
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
         
-        public struct SetDiscoverTargets: CDP.Method {
-            public static let method = "Target.setDiscoverTargets"
+        struct SetDiscoverTargets: CDP.Method {
+            static let method = "Target.setDiscoverTargets"
             
-            public let discover: Bool
+            let discover: Bool
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
         
         // Events
         
-        public struct TargetCreated: Decodable, Sendable {
-            public let targetInfo: TargetInfo
+        struct TargetCreated: Decodable, Sendable {
+            let targetInfo: TargetInfo
         }
         
         // Types
         
-        public struct TargetInfo: Decodable, Sendable {
-            public let url: String
-            public let title: String
-            public let targetId: String
-            public let attached: Bool
-            public let type: String
-            public let canAccessOpener: Bool
-            public let browserContextId: String
+        struct TargetInfo: Decodable, Sendable {
+            let url: String
+            let title: String
+            let targetId: String
+            let attached: Bool
+            let type: String
+            let canAccessOpener: Bool
+            let browserContextId: String
         }
     }
 }

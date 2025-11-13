@@ -1,29 +1,29 @@
 extension CDP {
-    public struct Page {
+    struct Page {
         // Methods
         
-        public struct Enable: CDP.Method {
-            public static let method = "Page.enable"
+        struct Enable: CDP.Method {
+            static let method = "Page.enable"
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
         
-        public struct Navigate: CDP.Method {
-            public static let method = "Page.navigate"
+        struct Navigate: CDP.Method {
+            static let method = "Page.navigate"
             
-            public let url: String
+            let url: String
             
-            public struct Response: Decodable, Sendable {
+            struct Response: Decodable, Sendable {
                 let frameId: String
             }
         }
         
-        public struct SetLifecycleEventsEnabled: CDP.Method {
-            public static let method = "Page.setLifecycleEventsEnabled"
+        struct SetLifecycleEventsEnabled: CDP.Method {
+            static let method = "Page.setLifecycleEventsEnabled"
             
-            public let enabled: Bool
+            let enabled: Bool
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
     }
 }

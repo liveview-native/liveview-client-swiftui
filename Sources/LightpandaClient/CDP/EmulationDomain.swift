@@ -1,28 +1,28 @@
 extension CDP {
-    public struct Emulation {
+    struct Emulation {
         // Methods
         
-        public struct SetEmulatedMedia: CDP.Method {
-            public static let method = "Emulation.setEmulatedMedia"
+        struct SetEmulatedMedia: CDP.Method {
+            static let method = "Emulation.setEmulatedMedia"
             
-            public let features: [Feature]
+            let features: [Feature]
             
-            public let media: String
+            let media: String
             
-            public struct Feature: Encodable, Sendable {
-                public let name: String
-                public let value: String
+            struct Feature: Encodable, Sendable {
+                let name: String
+                let value: String
             }
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
         
-        public struct SetFocusEmulationEnabled: CDP.Method {
-            public static let method = "Emulation.setFocusEmulationEnabled"
+        struct SetFocusEmulationEnabled: CDP.Method {
+            static let method = "Emulation.setFocusEmulationEnabled"
             
-            public let enabled: Bool
+            let enabled: Bool
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
     }
 }

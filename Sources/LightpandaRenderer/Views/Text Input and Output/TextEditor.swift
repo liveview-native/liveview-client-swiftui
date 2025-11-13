@@ -44,7 +44,7 @@ struct TextEditor<Library: ElementLibrary>: TextFieldProtocol {
 #endif
     }
     
-    @MainActor
+    
     func handleFocus(_ isFocused: Bool) {
         if isFocused {
             focusEvent(value:

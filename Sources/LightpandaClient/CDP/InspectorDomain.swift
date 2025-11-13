@@ -1,11 +1,11 @@
 extension CDP {
-    public struct Inspector {
+    struct Inspector {
         // Methods
         
-        public struct Enable: CDP.Method {
-            public static let method = "Inspector.enable"
+        struct Enable: CDP.Method {
+            static let method = "Inspector.enable"
             
-            public struct Response: Decodable, Sendable {}
+            struct Response: Decodable, Sendable {}
         }
     }
 }

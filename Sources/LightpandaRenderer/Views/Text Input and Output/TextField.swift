@@ -153,7 +153,7 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
             .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
     }
     
-    @MainActor
+    
     func handleFocus(_ isFocused: Bool) {
         if isFocused {
             focusEvent(value:

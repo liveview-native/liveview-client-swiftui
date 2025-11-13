@@ -55,7 +55,7 @@ struct SecureField<Library: ElementLibrary>: TextFieldProtocol {
             .onChange(of: _text.isFocused, perform: handleFocus)
     }
     
-    @MainActor
+    
     func handleFocus(_ isFocused: Bool) {
         if isFocused {
             focusEvent(value:

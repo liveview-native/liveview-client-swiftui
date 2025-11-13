@@ -52,23 +52,12 @@ public struct Button<Library: ElementLibrary>: View {
     
     private func handleClick() {
         Task {
-            let remoteObject = try! await lightpanda.cdp.send(CDP.DOM.ResolveNode(
-                nodeId: self.node.id,
-                backendId: nil,
-                objectGroup: nil,
-                executionContextId: nil
-            ))
-            lightpanda.cdp.sendMessage(
-                lightpanda.cdp.buildMessage(CDP.Runtime.CallFunctionOn(
-                    functionDeclaration: #"""
-                    function() {
-                        this.dispatchEvent(new MouseEvent("mousedown", { x: 0, y: 0, bubbles: true, cancelable: true }));
-                        this.dispatchEvent(new MouseEvent("click", { x: 0, y: 0, bubbles: true, cancelable: true, view: window, detail: 1 }));
-                    }
-                    """#,
-                    objectId: remoteObject.object.objectId!
-                ))
-            )
+            try! await lightpanda.callFunctionOn(node: self.node, function: """
+            function() {
+                this.dispatchEvent(new MouseEvent("mousedown", { x: 0, y: 0, bubbles: true, cancelable: true }));
+                this.dispatchEvent(new MouseEvent("click", { x: 0, y: 0, bubbles: true, cancelable: true, view: window, detail: 1 }));
+            }
+            """)
         }
     }
 }
