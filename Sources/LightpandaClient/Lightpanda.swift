@@ -153,6 +153,10 @@ public class Node: Identifiable {
             changed()
         }
     }
+
+    public func attributeValue(for name: String) -> String? {
+        return attributes[name]
+    }
 }
 
 @Observable
