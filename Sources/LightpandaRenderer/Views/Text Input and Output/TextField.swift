@@ -156,7 +156,7 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
                         lightpanda.cdp.buildMessage(CDP.Runtime.CallFunctionOn(
                             functionDeclaration: #"""
                                 function() {
-                                    this.dispatchEvent(new InputEvent("input", {
+                                    this.dispatchEvent(new Event("input", {
                                         inputType: "insertText",
                                         data: "\#(newValue?.last ?? " ")",
                                         bubbles: true
@@ -192,7 +192,7 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
                             functionDeclaration: #"""
                                 function() {
                                     this.dispatchEvent(new KeyboardEvent("\#(event)", {
-                                        key: "\#(String(data: try! JSONEncoder().encode(press.characters), encoding: .utf8)!)",
+                                        key: \#(String(data: try! JSONEncoder().encode(press.characters), encoding: .utf8)!),
                                         repeat: \#(press.phase == .repeat),
                                         ctrlKey: \#(press.modifiers.contains(.control) ? "true" : "false"),
                                         metaKey: \#(press.modifiers.contains(.command) ? "true" : "false"),
@@ -211,7 +211,7 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
                                 functionDeclaration: #"""
                                     function() {
                                         this.dispatchEvent(new KeyboardEvent("keypress", {
-                                            key: "\#(String(data: try! JSONEncoder().encode(press.characters), encoding: .utf8)!)",
+                                            key: \#(String(data: try! JSONEncoder().encode(press.characters), encoding: .utf8)!),
                                             repeat: \#(press.phase == .repeat),
                                             ctrlKey: \#(press.modifiers.contains(.control) ? "true" : "false"),
                                             metaKey: \#(press.modifiers.contains(.command) ? "true" : "false"),
