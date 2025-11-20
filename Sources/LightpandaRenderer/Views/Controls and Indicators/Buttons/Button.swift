@@ -85,10 +85,12 @@ struct ButtonRoleParseStrategy: ParseStrategy {
         switch value {
         case "cancel":
             return .cancel
+        #if os(iOS)
         case "close":
             return .close
         case "confirm":
             return .confirm
+        #endif
         case "destructive":
             return .destructive
         default:

@@ -41,13 +41,6 @@ struct NamespaceContext<Library: ElementLibrary>: View {
         if let id {
             node.children(library: Library.self)
                 .environment(\.namespaces, namespaces.merging([id: namespace], uniquingKeysWith: { $1 }))
-                #if !os(iOS) && !os(visionOS)
-                .onReceive($liveElement.context.coordinator.receiveEvent("reset_focus")) { (event: ResetFocusEvent) in
-                    guard event.namespace == id
-                    else { return }
-                    resetFocus(in: self.namespace)
-                }
-                #endif
         } else {
             node.children(library: Library.self)
         }

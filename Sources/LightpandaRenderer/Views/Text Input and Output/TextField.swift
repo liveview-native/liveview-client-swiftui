@@ -90,14 +90,10 @@ import LightpandaClient
 @_documentation(visibility: public)
 struct TextField<Library: ElementLibrary>: TextFieldProtocol {
     let node: Node
-
-    @FormState("text", default: "") var text: String?
     
-    @_documentation(visibility: public)
-    @Event(.init(name: "phx-focus"), type: "focus") var focusEvent
+    @Environment(LightpandaRuntime.self) private var lightpanda
     
-    @_documentation(visibility: public)
-    @Event(.init(name: "phx-blur"), type: "blur") var blurEvent
+    @State var text: String?
     
     /// The axis to scroll when the content doesn't fit.
     ///
@@ -148,24 +144,27 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
     
     var body: some View {
         field
-            .focused(_text.$isFocused)
-            .onChange(of: _text.isFocused, perform: handleFocus)
-            .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
-    }
-    
-    @MainActor
-    func handleFocus(_ isFocused: Bool) {
-        if isFocused {
-            focusEvent(value:
-                $liveElement.element.buildPhxValuePayload()
-                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
-            )
-        } else {
-            blurEvent(value:
-                $liveElement.element.buildPhxValuePayload()
-                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
-            )
-        }
+            .onChange(of: text) { oldValue, newValue in
+                Task {
+                    let remoteObject = try! await lightpanda.cdp.send(CDP.DOM.ResolveNode(
+                        nodeId: self.node.id,
+                        backendId: nil,
+                        objectGroup: nil,
+                        executionContextId: nil
+                    ))
+                    lightpanda.cdp.sendMessage(
+                        lightpanda.cdp.buildMessage(CDP.Runtime.CallFunctionOn(
+                            functionDeclaration: #"""
+                                function() {
+                                    this.dispatchEvent(new InputEvent("input", { data: "\#(newValue?.last ?? " ")", bubbles: true }));
+                                    this.text = \#(String(data: try! JSONEncoder().encode(newValue ?? ""), encoding: .utf8)!);
+                                }
+                                """#,
+                            objectId: remoteObject.object.objectId!
+                        ))
+                    )
+                }
+            }
     }
     
     @ViewBuilder
@@ -190,7 +189,7 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
                 }
             case "iso8601":
                 SwiftUI.TextField(
-                    value: valueBinding(format: .iso8601),
+                    value: valueBinding(format: Date.ISO8601FormatStyle()),
                     format: .iso8601,
                     prompt: prompt.flatMap(SwiftUI.Text.init)
                 ) {
@@ -269,6 +268,27 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
     }
     
     var label: some View {
-        node.children()
+        node.children(library: Library.self)
     }
 }
+
+extension ParseStrategy where Self == AxisParseStrategy {
+    static var axis: AxisParseStrategy { AxisParseStrategy() }
+}
+
+struct AxisParseStrategy: ParseStrategy {
+    typealias ParseInput = String
+    typealias ParseOutput = Axis
+    
+    func parse(_ value: String) throws -> Axis {
+        switch value {
+        case "horizontal":
+            return .horizontal
+        case "vertical":
+            return .vertical
+        default:
+            throw ParseError()
+        }
+    }
+}
+

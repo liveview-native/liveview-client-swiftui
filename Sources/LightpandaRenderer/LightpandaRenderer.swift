@@ -29,7 +29,7 @@ public struct LightpandaRenderer<Library: ElementLibrary>: View {
         .task {
             try! await lightpanda.start()
         }
-        #if DEBUG
+        #if DEBUG && os(iOS)
         .overlay(alignment: .top) {
             if let pausedInDebuggerMessage = self.lightpanda.cdp?.pausedInDebuggerMessage {
                 GlassEffectContainer(spacing: 8) {

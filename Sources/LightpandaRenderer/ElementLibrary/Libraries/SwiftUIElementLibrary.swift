@@ -57,6 +57,7 @@ public struct SwiftUIElementLibrary: ElementLibrary {
         
         case label = "Label"
         case text = "Text"
+        case textField = "TextField"
         
         public init?(rawValue: String) {
             switch rawValue.lowercased() {
@@ -122,6 +123,8 @@ public struct SwiftUIElementLibrary: ElementLibrary {
                 self = .label
             case "text":
                 self = .text
+            case "textfield":
+                self = .textField
             default:
                 return nil
             }
@@ -193,6 +196,8 @@ public struct SwiftUIElementLibrary: ElementLibrary {
             Label<Self>(node: node)
         case .text:
             TextView<Self>(node: node)
+        case .textField:
+            TextField<Self>(node: node)
         }
     }
 }

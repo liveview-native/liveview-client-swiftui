@@ -74,6 +74,7 @@ struct ToolbarItemPlacementParseStrategy: ParseStrategy {
             return .destructiveAction
         case "keyboard":
             return .keyboard
+        #if os(iOS)
         case "topBarLeading":
             return .topBarLeading
         case "topBarTrailing":
@@ -88,6 +89,7 @@ struct ToolbarItemPlacementParseStrategy: ParseStrategy {
             return .subtitle
         case "largeSubtitle":
             return .largeSubtitle
+        #endif
         default:
             throw ParseError()
         }

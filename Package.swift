@@ -49,7 +49,6 @@ let package = Package(
                 "Views/Controls and Indicators/Value Inputs/Toggle.swift",
                 "Views/Text Input and Output/SecureField.swift",
                 "Views/Text Input and Output/TextEditor.swift",
-                "Views/Text Input and Output/TextField.swift",
                 "Views/Layout Containers/Collection Containers/Table.swift",
                 "Views/Layout Containers/Presentation Containers/NavigationLink.swift",
             ]
