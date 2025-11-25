@@ -58,6 +58,12 @@ struct ModifierCollection: ViewModifier {
 struct AnyRuntimeViewModifier: ViewModifier {
     static let types: [any RuntimeViewModifier.Type] = [
         PaddingModifier.self,
+        StrikethroughModifier.self,
+        ButtonStyleModifier.self,
+        ClipShapeModifier.self,
+        MultilineTextAlignmentModifier.self,
+        ForegroundStyleModifier.self,
+        TintModifier.self
     ]
     
     let modifier: any RuntimeViewModifier
