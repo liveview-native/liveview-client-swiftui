@@ -73,13 +73,15 @@ let includeViews = [
 ]
 
 let includeModifiers = [
+    "ModifierParseError",
+    
     "PaddingModifier",
     "StrikethroughModifier",
     "ButtonStyleModifier",
     "ClipShapeModifier",
     "MultilineTextAlignmentModifier",
     "ForegroundStyleModifier",
-    "TintModifier"
+    "TintModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {
