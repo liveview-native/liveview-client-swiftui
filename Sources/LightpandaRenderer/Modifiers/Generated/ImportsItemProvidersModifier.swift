@@ -15,7 +15,7 @@ extension ImportsItemProvidersModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = [UniformTypeIdentifiers.UTType](syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "ImportsItemProvidersModifier", variant: "importsItemProviders", expectedTypes: "[UniformTypeIdentifiers.UTType]")
             }
             self = .importsItemProviders(value0)

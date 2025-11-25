@@ -15,9 +15,7 @@ extension ClippedModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let antialiased = Swift.Bool(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ClippedModifier", variant: "clipped", expectedTypes: "Swift.Bool")
-            }
+            let antialiased: Swift.Bool = if let expr = syntax.argument(named: "antialiased")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { false }
             self = .clipped(antialiased: antialiased)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ClippedModifier", expected: [1], found: syntax.arguments.count)

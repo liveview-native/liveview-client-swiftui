@@ -22,25 +22,25 @@ extension AccessibilityValueModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = SwiftUICore.Text(syntax: syntax.arguments[0].expression) {
+            if let value0: SwiftUICore.Text = SwiftUICore.Text(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .accessibilityValueWithText(value0)
-            } else if let value0 = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[0].expression) {
+            } else if let value0: SwiftUICore.LocalizedStringKey = SwiftUICore.LocalizedStringKey(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .accessibilityValueWithLocalizedStringKey(value0)
-            } else if let value0 = Foundation.LocalizedStringResource(syntax: syntax.arguments[0].expression) {
+            } else if let value0: Foundation.LocalizedStringResource = Foundation.LocalizedStringResource(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .accessibilityValueWithLocalizedStringResource(value0)
-            } else if let value0 = String(syntax: syntax.arguments[0].expression) {
+            } else if let value0: String = String(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .accessibilityValueWithString(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityValueModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Text or SwiftUICore.LocalizedStringKey or Foundation.LocalizedStringResource or String")
             }
         case 2:
-            if let value0 = SwiftUICore.Text(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            if let value0: SwiftUICore.Text = SwiftUICore.Text(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) {
                 self = .accessibilityValueWithTextBool(value0, isEnabled: isEnabled)
-            } else if let value0 = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            } else if let value0: SwiftUICore.LocalizedStringKey = SwiftUICore.LocalizedStringKey(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) {
                 self = .accessibilityValueWithLocalizedStringKeyBool(value0, isEnabled: isEnabled)
-            } else if let value0 = Foundation.LocalizedStringResource(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            } else if let value0: Foundation.LocalizedStringResource = Foundation.LocalizedStringResource(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) {
                 self = .accessibilityValueWithLocalizedStringResourceBool(value0, isEnabled: isEnabled)
-            } else if let value0 = String(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            } else if let value0: String = String(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) {
                 self = .accessibilityValueWithStringBool(value0, isEnabled: isEnabled)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityValueModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Text, Swift.Bool or SwiftUICore.LocalizedStringKey, Swift.Bool or Foundation.LocalizedStringResource, Swift.Bool or String, Swift.Bool")

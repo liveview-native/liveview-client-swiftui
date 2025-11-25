@@ -15,7 +15,7 @@ extension TabViewSearchActivationModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUI.TabSearchActivation(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.TabSearchActivation(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "TabViewSearchActivationModifier", variant: "tabViewSearchActivation", expectedTypes: "SwiftUI.TabSearchActivation")
             }
             self = .tabViewSearchActivation(value0)

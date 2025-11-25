@@ -17,17 +17,17 @@ extension FileImporterModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented) else {
                 throw ModifierParseError.invalidArguments(modifier: "FileImporterModifier", variant: "fileImporterWithBoolUTTypeVoid", expectedTypes: "SwiftUICore.Binding<Swift.Bool>, [UniformTypeIdentifiers.UTType]")
             }
-            guard let allowedContentTypes = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[1].expression) else {
+            guard let expr_allowedContentTypes = syntax.argument(named: "allowedContentTypes")?.expression, let allowedContentTypes = [UniformTypeIdentifiers.UTType](syntax: expr_allowedContentTypes) else {
                 throw ModifierParseError.invalidArguments(modifier: "FileImporterModifier", variant: "fileImporterWithBoolUTTypeVoid", expectedTypes: "SwiftUICore.Binding<Swift.Bool>, [UniformTypeIdentifiers.UTType]")
             }
             self = .fileImporterWithBoolUTTypeVoid(isPresented: isPresented, allowedContentTypes: allowedContentTypes)
         case 3:
-            if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let allowedContentTypes = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[1].expression), let allowsMultipleSelection = Swift.Bool(syntax: syntax.arguments[2].expression) {
+            if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented), let expr_allowedContentTypes = syntax.argument(named: "allowedContentTypes")?.expression, let allowedContentTypes = [UniformTypeIdentifiers.UTType](syntax: expr_allowedContentTypes), let expr_allowsMultipleSelection = syntax.argument(named: "allowsMultipleSelection")?.expression, let allowsMultipleSelection = Swift.Bool(syntax: expr_allowsMultipleSelection) {
                 self = .fileImporterWithBoolUTTypeBoolVoid(isPresented: isPresented, allowedContentTypes: allowedContentTypes, allowsMultipleSelection: allowsMultipleSelection)
-            } else if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let allowedContentTypes = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[1].expression), let allowsMultipleSelection = Swift.Bool(syntax: syntax.arguments[2].expression) {
+            } else if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented), let expr_allowedContentTypes = syntax.argument(named: "allowedContentTypes")?.expression, let allowedContentTypes = [UniformTypeIdentifiers.UTType](syntax: expr_allowedContentTypes), let expr_allowsMultipleSelection = syntax.argument(named: "allowsMultipleSelection")?.expression, let allowsMultipleSelection = Swift.Bool(syntax: expr_allowsMultipleSelection) {
                 self = .fileImporterWithBoolUTTypeBoolVoidVoid(isPresented: isPresented, allowedContentTypes: allowedContentTypes, allowsMultipleSelection: allowsMultipleSelection)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "FileImporterModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Binding<Swift.Bool>, [UniformTypeIdentifiers.UTType], Swift.Bool or SwiftUICore.Binding<Swift.Bool>, [UniformTypeIdentifiers.UTType], Swift.Bool")

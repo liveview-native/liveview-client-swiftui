@@ -15,12 +15,8 @@ extension GlassEffectModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = SwiftUICore.Glass(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "GlassEffectModifier", variant: "glassEffect", expectedTypes: "SwiftUICore.Glass, some Shape")
-            }
-            guard let in = some Shape(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "GlassEffectModifier", variant: "glassEffect", expectedTypes: "SwiftUICore.Glass, some Shape")
-            }
+            let value0: SwiftUICore.Glass = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = SwiftUICore.Glass(syntax: expr) { parsed } else { .regular }
+            let in: some Shape = if let expr = syntax.argument(named: "in")?.expression, let parsed = some Shape(syntax: expr) { parsed } else { DefaultGlassEffectShape() }
             self = .glassEffect(value0, in: in)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "GlassEffectModifier", expected: [2], found: syntax.arguments.count)

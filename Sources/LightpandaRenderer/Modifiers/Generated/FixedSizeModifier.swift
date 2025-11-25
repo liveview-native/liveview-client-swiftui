@@ -18,10 +18,10 @@ extension FixedSizeModifier: RuntimeViewModifier {
         case 0:
             self = .fixedSize
         case 2:
-            guard let horizontal = Swift.Bool(syntax: syntax.arguments[0].expression) else {
+            guard let expr_horizontal = syntax.argument(named: "horizontal")?.expression, let horizontal = Swift.Bool(syntax: expr_horizontal) else {
                 throw ModifierParseError.invalidArguments(modifier: "FixedSizeModifier", variant: "fixedSizeWithBoolBool", expectedTypes: "Swift.Bool, Swift.Bool")
             }
-            guard let vertical = Swift.Bool(syntax: syntax.arguments[1].expression) else {
+            guard let expr_vertical = syntax.argument(named: "vertical")?.expression, let vertical = Swift.Bool(syntax: expr_vertical) else {
                 throw ModifierParseError.invalidArguments(modifier: "FixedSizeModifier", variant: "fixedSizeWithBoolBool", expectedTypes: "Swift.Bool, Swift.Bool")
             }
             self = .fixedSizeWithBoolBool(horizontal: horizontal, vertical: vertical)

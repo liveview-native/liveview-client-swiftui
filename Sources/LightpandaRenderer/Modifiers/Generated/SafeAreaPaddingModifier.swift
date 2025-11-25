@@ -17,18 +17,16 @@ extension SafeAreaPaddingModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = SwiftUICore.EdgeInsets(syntax: syntax.arguments[0].expression) {
+            if let value0: SwiftUICore.EdgeInsets = SwiftUICore.EdgeInsets(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .safeAreaPaddingWithEdgeInsets(value0)
-            } else if let value0 = CoreFoundation.CGFloat(syntax: syntax.arguments[0].expression) {
+            } else if let value0: CoreFoundation.CGFloat = CoreFoundation.CGFloat(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .safeAreaPaddingWithCGFloat(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "SafeAreaPaddingModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.EdgeInsets or CoreFoundation.CGFloat")
             }
         case 2:
-            guard let value0 = SwiftUICore.Edge.Set(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "SafeAreaPaddingModifier", variant: "safeAreaPaddingWithSetCGFloatOptional", expectedTypes: "SwiftUICore.Edge.Set, CoreFoundation.CGFloat?")
-            }
-            let value1 = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression)
+            let value0: SwiftUICore.Edge.Set = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = SwiftUICore.Edge.Set(syntax: expr) { parsed } else { .all }
+            let value1: CoreFoundation.CGFloat? = if let expr = (syntax.arguments.count > 1 ? syntax.arguments[1].expression : nil), let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
             self = .safeAreaPaddingWithSetCGFloatOptional(value0, value1)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "SafeAreaPaddingModifier", expected: [1, 2], found: syntax.arguments.count)

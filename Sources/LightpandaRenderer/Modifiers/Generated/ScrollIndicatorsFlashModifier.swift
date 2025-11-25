@@ -19,17 +19,17 @@ extension ScrollIndicatorsFlashModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case "onAppear":
-                guard let onAppear = Swift.Bool(syntax: syntax.arguments[0].expression) else {
+                guard let expr_onAppear = syntax.argument(named: "onAppear")?.expression, let onAppear = Swift.Bool(syntax: expr_onAppear) else {
                     throw ModifierParseError.invalidArguments(modifier: "ScrollIndicatorsFlashModifier", variant: "scrollIndicatorsFlashWithBool", expectedTypes: "Swift.Bool")
                 }
                 self = .scrollIndicatorsFlashWithBool(onAppear: onAppear)
             case "trigger":
-                guard let trigger = some Equatable(syntax: syntax.arguments[0].expression) else {
+                guard let expr_trigger = syntax.argument(named: "trigger")?.expression, let trigger = some Equatable(syntax: expr_trigger) else {
                     throw ModifierParseError.invalidArguments(modifier: "ScrollIndicatorsFlashModifier", variant: "scrollIndicatorsFlashWithsomeEquatable", expectedTypes: "some Equatable")
                 }
                 self = .scrollIndicatorsFlashWithsomeEquatable(trigger: trigger)
             default:
-                throw ModifierParseError.ambiguousVariant(modifier: "ScrollIndicatorsFlashModifier", expectedLabels: ["trigger", "onAppear"])
+                throw ModifierParseError.ambiguousVariant(modifier: "ScrollIndicatorsFlashModifier", expectedLabels: ["onAppear", "trigger"])
             }
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ScrollIndicatorsFlashModifier", expected: [1], found: syntax.arguments.count)

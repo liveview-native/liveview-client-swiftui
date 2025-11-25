@@ -15,18 +15,12 @@ extension ShadowModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 4:
-            guard let color = SwiftUICore.Color(syntax: syntax.arguments[0].expression) else {
+            let color: SwiftUICore.Color = if let expr = syntax.argument(named: "color")?.expression, let parsed = SwiftUICore.Color(syntax: expr) { parsed } else { Color(.sRGBLinear, white: 0, opacity: 0.33) }
+            guard let expr_radius = syntax.argument(named: "radius")?.expression, let radius = CoreFoundation.CGFloat(syntax: expr_radius) else {
                 throw ModifierParseError.invalidArguments(modifier: "ShadowModifier", variant: "shadow", expectedTypes: "SwiftUICore.Color, CoreFoundation.CGFloat, CoreFoundation.CGFloat, CoreFoundation.CGFloat")
             }
-            guard let radius = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ShadowModifier", variant: "shadow", expectedTypes: "SwiftUICore.Color, CoreFoundation.CGFloat, CoreFoundation.CGFloat, CoreFoundation.CGFloat")
-            }
-            guard let x = CoreFoundation.CGFloat(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ShadowModifier", variant: "shadow", expectedTypes: "SwiftUICore.Color, CoreFoundation.CGFloat, CoreFoundation.CGFloat, CoreFoundation.CGFloat")
-            }
-            guard let y = CoreFoundation.CGFloat(syntax: syntax.arguments[3].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ShadowModifier", variant: "shadow", expectedTypes: "SwiftUICore.Color, CoreFoundation.CGFloat, CoreFoundation.CGFloat, CoreFoundation.CGFloat")
-            }
+            let x: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "x")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 0 }
+            let y: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "y")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 0 }
             self = .shadow(color: color, radius: radius, x: x, y: y)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ShadowModifier", expected: [4], found: syntax.arguments.count)

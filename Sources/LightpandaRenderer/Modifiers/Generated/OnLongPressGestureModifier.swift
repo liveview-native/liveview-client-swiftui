@@ -18,21 +18,12 @@ extension OnLongPressGestureModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let minimumDuration = Swift.Double(syntax: syntax.arguments[0].expression) {
-                self = .onLongPressGestureWithDoubleVoidVoidOptional(minimumDuration: minimumDuration)
-            } else if let minimumDuration = Swift.Double(syntax: syntax.arguments[0].expression) {
-                self = .onLongPressGestureWithDoubleVoidOptionalVoid(minimumDuration: minimumDuration)
-            } else {
-                throw ModifierParseError.invalidArguments(modifier: "OnLongPressGestureModifier", variant: "multiple variants", expectedTypes: "Swift.Double or Swift.Double")
-            }
+            let minimumDuration: Swift.Double? = if let expr = syntax.argument(named: "minimumDuration")?.expression { Swift.Double(syntax: expr) } else { nil }
+            self = .onLongPressGestureWithDoubleVoidVoidOptional(minimumDuration: minimumDuration)
         case 2:
-            if let minimumDuration = Swift.Double(syntax: syntax.arguments[0].expression), let maximumDistance = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression) {
-                self = .onLongPressGestureWithDoubleCGFloatVoidVoidOptional(minimumDuration: minimumDuration, maximumDistance: maximumDistance)
-            } else if let minimumDuration = Swift.Double(syntax: syntax.arguments[0].expression), let maximumDistance = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression) {
-                self = .onLongPressGestureWithDoubleCGFloatVoidOptionalVoid(minimumDuration: minimumDuration, maximumDistance: maximumDistance)
-            } else {
-                throw ModifierParseError.invalidArguments(modifier: "OnLongPressGestureModifier", variant: "multiple variants", expectedTypes: "Swift.Double, CoreFoundation.CGFloat or Swift.Double, CoreFoundation.CGFloat")
-            }
+            let minimumDuration: Swift.Double? = if let expr = syntax.argument(named: "minimumDuration")?.expression { Swift.Double(syntax: expr) } else { nil }
+            let maximumDistance: CoreFoundation.CGFloat? = if let expr = syntax.argument(named: "maximumDistance")?.expression { CoreFoundation.CGFloat(syntax: expr) } else { nil }
+            self = .onLongPressGestureWithDoubleCGFloatVoidVoidOptional(minimumDuration: minimumDuration, maximumDistance: maximumDistance)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "OnLongPressGestureModifier", expected: [1, 2], found: syntax.arguments.count)
         }

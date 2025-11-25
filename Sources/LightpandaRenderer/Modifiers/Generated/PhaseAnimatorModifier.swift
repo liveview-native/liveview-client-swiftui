@@ -16,15 +16,15 @@ extension PhaseAnimatorModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = some Sequence<Phase>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = some Sequence<Phase>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "PhaseAnimatorModifier", variant: "phaseAnimatorWithsomeSequencePhaseClosuresomeViewAnimationOptional", expectedTypes: "some Sequence<Phase>")
             }
             self = .phaseAnimatorWithsomeSequencePhaseClosuresomeViewAnimationOptional(value0)
         case 2:
-            guard let value0 = some Sequence<Phase>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = some Sequence<Phase>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "PhaseAnimatorModifier", variant: "phaseAnimatorWithsomeSequencePhasesomeEquatableClosuresomeViewAnimationOptional", expectedTypes: "some Sequence<Phase>, some Equatable")
             }
-            guard let trigger = some Equatable(syntax: syntax.arguments[1].expression) else {
+            guard let expr_trigger = syntax.argument(named: "trigger")?.expression, let trigger = some Equatable(syntax: expr_trigger) else {
                 throw ModifierParseError.invalidArguments(modifier: "PhaseAnimatorModifier", variant: "phaseAnimatorWithsomeSequencePhasesomeEquatableClosuresomeViewAnimationOptional", expectedTypes: "some Sequence<Phase>, some Equatable")
             }
             self = .phaseAnimatorWithsomeSequencePhasesomeEquatableClosuresomeViewAnimationOptional(value0, trigger: trigger)

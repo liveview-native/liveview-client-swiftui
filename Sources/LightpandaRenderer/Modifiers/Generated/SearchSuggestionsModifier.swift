@@ -18,10 +18,10 @@ extension SearchSuggestionsModifier: RuntimeViewModifier {
         case 0:
             self = .searchSuggestionsWithClosureAnyView
         case 2:
-            guard let value0 = SwiftUICore.Visibility(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Visibility(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "SearchSuggestionsModifier", variant: "searchSuggestionsWithVisibilitySet", expectedTypes: "SwiftUICore.Visibility, SwiftUI.SearchSuggestionsPlacement.Set")
             }
-            guard let for = SwiftUI.SearchSuggestionsPlacement.Set(syntax: syntax.arguments[1].expression) else {
+            guard let expr_for = syntax.argument(named: "for")?.expression, let for = SwiftUI.SearchSuggestionsPlacement.Set(syntax: expr_for) else {
                 throw ModifierParseError.invalidArguments(modifier: "SearchSuggestionsModifier", variant: "searchSuggestionsWithVisibilitySet", expectedTypes: "SwiftUICore.Visibility, SwiftUI.SearchSuggestionsPlacement.Set")
             }
             self = .searchSuggestionsWithVisibilitySet(value0, for: for)

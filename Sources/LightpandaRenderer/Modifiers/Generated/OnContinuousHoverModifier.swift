@@ -16,13 +16,8 @@ extension OnContinuousHoverModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let coordinateSpace = SwiftUICore.CoordinateSpace(syntax: syntax.arguments[0].expression) {
-                self = .onContinuousHoverWithCoordinateSpaceVoid(coordinateSpace: coordinateSpace)
-            } else if let coordinateSpace = some CoordinateSpaceProtocol(syntax: syntax.arguments[0].expression) {
-                self = .onContinuousHoverWithsomeCoordinateSpaceProtocolVoid(coordinateSpace: coordinateSpace)
-            } else {
-                throw ModifierParseError.invalidArguments(modifier: "OnContinuousHoverModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.CoordinateSpace or some CoordinateSpaceProtocol")
-            }
+            let coordinateSpace: SwiftUICore.CoordinateSpace? = if let expr = syntax.argument(named: "coordinateSpace")?.expression { SwiftUICore.CoordinateSpace(syntax: expr) } else { nil }
+            self = .onContinuousHoverWithCoordinateSpaceVoid(coordinateSpace: coordinateSpace)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "OnContinuousHoverModifier", expected: [1], found: syntax.arguments.count)
         }

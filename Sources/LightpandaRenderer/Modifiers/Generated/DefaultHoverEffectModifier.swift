@@ -16,7 +16,7 @@ extension DefaultHoverEffectModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUI.HoverEffect(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUI.HoverEffect? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUI.HoverEffect(syntax: expr) } else { nil }
             self = .defaultHoverEffectWithHoverEffectOptional(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "DefaultHoverEffectModifier", expected: [1], found: syntax.arguments.count)

@@ -15,12 +15,10 @@ extension BorderModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = AnyShapeStyle(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = AnyShapeStyle(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "BorderModifier", variant: "border", expectedTypes: "AnyShapeStyle, CoreFoundation.CGFloat")
             }
-            guard let width = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "BorderModifier", variant: "border", expectedTypes: "AnyShapeStyle, CoreFoundation.CGFloat")
-            }
+            let width: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "width")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 1 }
             self = .border(value0, width: width)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "BorderModifier", expected: [2], found: syntax.arguments.count)

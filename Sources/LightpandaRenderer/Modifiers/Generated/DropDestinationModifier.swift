@@ -18,22 +18,11 @@ extension DropDestinationModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let for = T.Type(syntax: syntax.arguments[0].expression) {
-                self = .dropDestinationWithTypeBoolVoid(for: for)
-            } else if let for = T.Type(syntax: syntax.arguments[0].expression) {
-                self = .dropDestinationWithTypeVoid(for: for)
-            } else if let for = T.Type(syntax: syntax.arguments[0].expression) {
-                self = .dropDestinationWithTypeBoolVoid2(for: for)
-            } else {
-                throw ModifierParseError.invalidArguments(modifier: "DropDestinationModifier", variant: "multiple variants", expectedTypes: "T.Type or T.Type or T.Type")
-            }
+            let for: T.Type? = if let expr = syntax.argument(named: "for")?.expression { T.Type(syntax: expr) } else { nil }
+            self = .dropDestinationWithTypeBoolVoid(for: for)
         case 2:
-            guard let for = T.Type(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "DropDestinationModifier", variant: "dropDestinationWithTypeBoolVoid1", expectedTypes: "T.Type, Swift.Bool")
-            }
-            guard let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "DropDestinationModifier", variant: "dropDestinationWithTypeBoolVoid1", expectedTypes: "T.Type, Swift.Bool")
-            }
+            let for: T.Type = if let expr = syntax.argument(named: "for")?.expression, let parsed = T.Type(syntax: expr) { parsed } else { T.self }
+            let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .dropDestinationWithTypeBoolVoid1(for: for, isEnabled: isEnabled)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "DropDestinationModifier", expected: [1, 2], found: syntax.arguments.count)

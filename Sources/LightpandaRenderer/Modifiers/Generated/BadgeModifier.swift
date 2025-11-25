@@ -19,19 +19,19 @@ extension BadgeModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = Swift.Int(syntax: syntax.arguments[0].expression) {
+            if let value0: Swift.Int = Swift.Int(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .badgeWithInt(value0)
             } else if true {
-                let value0 = SwiftUICore.Text(syntax: syntax.arguments[0].expression)
+                let value0: SwiftUICore.Text = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.Text(syntax: expr) } else { nil }
                 self = .badgeWithTextOptional(value0)
             } else if true {
-                let value0 = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[0].expression)
+                let value0: SwiftUICore.LocalizedStringKey = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.LocalizedStringKey(syntax: expr) } else { nil }
                 self = .badgeWithLocalizedStringKeyOptional(value0)
             } else if true {
-                let value0 = Foundation.LocalizedStringResource(syntax: syntax.arguments[0].expression)
+                let value0: Foundation.LocalizedStringResource = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { Foundation.LocalizedStringResource(syntax: expr) } else { nil }
                 self = .badgeWithLocalizedStringResourceOptional(value0)
             } else if true {
-                let value0 = String(syntax: syntax.arguments[0].expression)
+                let value0: String = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { String(syntax: expr) } else { nil }
                 self = .badgeWithStringOptional(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "BadgeModifier", variant: "multiple variants", expectedTypes: "Swift.Int or SwiftUICore.Text? or SwiftUICore.LocalizedStringKey? or Foundation.LocalizedStringResource? or String?")

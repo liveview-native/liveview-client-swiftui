@@ -18,14 +18,14 @@ extension FileDialogConfirmationLabelModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = String(syntax: syntax.arguments[0].expression) {
+            if let value0: String = String(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .fileDialogConfirmationLabelWithString(value0)
             } else if true {
-                let value0 = SwiftUICore.Text(syntax: syntax.arguments[0].expression)
+                let value0: SwiftUICore.Text = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.Text(syntax: expr) } else { nil }
                 self = .fileDialogConfirmationLabelWithTextOptional(value0)
-            } else if let value0 = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[0].expression) {
+            } else if let value0: SwiftUICore.LocalizedStringKey = SwiftUICore.LocalizedStringKey(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .fileDialogConfirmationLabelWithLocalizedStringKey(value0)
-            } else if let value0 = Foundation.LocalizedStringResource(syntax: syntax.arguments[0].expression) {
+            } else if let value0: Foundation.LocalizedStringResource = Foundation.LocalizedStringResource(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .fileDialogConfirmationLabelWithLocalizedStringResource(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "FileDialogConfirmationLabelModifier", variant: "multiple variants", expectedTypes: "String or SwiftUICore.Text? or SwiftUICore.LocalizedStringKey or Foundation.LocalizedStringResource")

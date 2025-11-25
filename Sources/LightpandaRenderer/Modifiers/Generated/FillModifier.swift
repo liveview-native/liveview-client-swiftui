@@ -15,12 +15,8 @@ extension FillModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = AnyShapeStyle(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "FillModifier", variant: "fill", expectedTypes: "AnyShapeStyle, SwiftUICore.FillStyle")
-            }
-            guard let style = SwiftUICore.FillStyle(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "FillModifier", variant: "fill", expectedTypes: "AnyShapeStyle, SwiftUICore.FillStyle")
-            }
+            let value0: AnyShapeStyle = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = AnyShapeStyle(syntax: expr) { parsed } else { .foreground }
+            let style: SwiftUICore.FillStyle = if let expr = syntax.argument(named: "style")?.expression, let parsed = SwiftUICore.FillStyle(syntax: expr) { parsed } else { FillStyle() }
             self = .fill(value0, style: style)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "FillModifier", expected: [2], found: syntax.arguments.count)

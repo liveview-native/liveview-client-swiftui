@@ -18,7 +18,7 @@ extension AccessibilityActionsModifier: RuntimeViewModifier {
         case 0:
             self = .accessibilityActionsWithClosureAnyView
         case 1:
-            guard let category = SwiftUI.AccessibilityActionCategory(syntax: syntax.arguments[0].expression) else {
+            guard let expr_category = syntax.argument(named: "category")?.expression, let category = SwiftUI.AccessibilityActionCategory(syntax: expr_category) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityActionsModifier", variant: "accessibilityActionsWithAccessibilityActionCategoryClosureAnyView", expectedTypes: "SwiftUI.AccessibilityActionCategory")
             }
             self = .accessibilityActionsWithAccessibilityActionCategoryClosureAnyView(category: category)

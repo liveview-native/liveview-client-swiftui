@@ -18,11 +18,11 @@ extension AnimationModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUICore.Animation(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUICore.Animation? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.Animation(syntax: expr) } else { nil }
             self = .animationWithAnimationOptional(value0)
         case 2:
-            let value0 = SwiftUICore.Animation(syntax: syntax.arguments[0].expression)
-            guard let value = V(syntax: syntax.arguments[1].expression) else {
+            let value0: SwiftUICore.Animation? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.Animation(syntax: expr) } else { nil }
+            guard let expr_value = syntax.argument(named: "value")?.expression, let value = V(syntax: expr_value) else {
                 throw ModifierParseError.invalidArguments(modifier: "AnimationModifier", variant: "animationWithAnimationOptionalV", expectedTypes: "SwiftUICore.Animation?, V")
             }
             self = .animationWithAnimationOptionalV(value0, value: value)

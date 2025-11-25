@@ -16,15 +16,15 @@ extension PresentationDetentsModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = Swift.Set<SwiftUI.PresentationDetent>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Swift.Set<SwiftUI.PresentationDetent>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "PresentationDetentsModifier", variant: "presentationDetentsWithPresentationDetent", expectedTypes: "Swift.Set<SwiftUI.PresentationDetent>")
             }
             self = .presentationDetentsWithPresentationDetent(value0)
         case 2:
-            guard let value0 = Swift.Set<SwiftUI.PresentationDetent>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Swift.Set<SwiftUI.PresentationDetent>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "PresentationDetentsModifier", variant: "presentationDetentsWithPresentationDetentPresentationDetent", expectedTypes: "Swift.Set<SwiftUI.PresentationDetent>, SwiftUICore.Binding<SwiftUI.PresentationDetent>")
             }
-            guard let selection = SwiftUICore.Binding<SwiftUI.PresentationDetent>(syntax: syntax.arguments[1].expression) else {
+            guard let expr_selection = syntax.argument(named: "selection")?.expression, let selection = SwiftUICore.Binding<SwiftUI.PresentationDetent>(syntax: expr_selection) else {
                 throw ModifierParseError.invalidArguments(modifier: "PresentationDetentsModifier", variant: "presentationDetentsWithPresentationDetentPresentationDetent", expectedTypes: "Swift.Set<SwiftUI.PresentationDetent>, SwiftUICore.Binding<SwiftUI.PresentationDetent>")
             }
             self = .presentationDetentsWithPresentationDetentPresentationDetent(value0, selection: selection)

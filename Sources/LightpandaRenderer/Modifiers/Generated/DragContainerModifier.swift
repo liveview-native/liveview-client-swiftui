@@ -18,21 +18,17 @@ extension DragContainerModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let for = Item.Type(syntax: syntax.arguments[0].expression) {
-                let in = SwiftUICore.Namespace.ID(syntax: syntax.arguments[1].expression)
-                self = .dragContainerWithTypeIDOptionalClosureData(for: for, in: in)
-            } else if let for = Item.Type(syntax: syntax.arguments[0].expression) {
-                let in = SwiftUICore.Namespace.ID(syntax: syntax.arguments[1].expression)
-                self = .dragContainerWithTypeIDOptionalClosureData1(for: for, in: in)
-            } else {
-                throw ModifierParseError.invalidArguments(modifier: "DragContainerModifier", variant: "multiple variants", expectedTypes: "Item.Type, SwiftUICore.Namespace.ID? or Item.Type, SwiftUICore.Namespace.ID?")
-            }
+            let for: Item.Type? = if let expr = syntax.argument(named: "for")?.expression { Item.Type(syntax: expr) } else { nil }
+            let in: SwiftUICore.Namespace.ID? = if let expr = syntax.argument(named: "in")?.expression { SwiftUICore.Namespace.ID(syntax: expr) } else { nil }
+            self = .dragContainerWithTypeIDOptionalClosureData(for: for, in: in)
         case 3:
-            if let for = Item.Type(syntax: syntax.arguments[0].expression), let itemID = Swift.KeyPath<Item, ItemID>(syntax: syntax.arguments[1].expression) {
-                let in = SwiftUICore.Namespace.ID(syntax: syntax.arguments[2].expression)
+            if let expr_itemID = syntax.argument(named: "itemID")?.expression, let itemID = Swift.KeyPath<Item, ItemID>(syntax: expr_itemID) {
+                let for: Item.Type = if let expr = syntax.argument(named: "for")?.expression, let parsed = Item.Type(syntax: expr) { parsed } else { Item.self }
+                let in: SwiftUICore.Namespace.ID = if let expr = syntax.argument(named: "in")?.expression, let parsed = SwiftUICore.Namespace.ID(syntax: expr) { parsed } else { nil }
                 self = .dragContainerWithTypeKeyPathItemItemIDIDOptionalClosureData(for: for, itemID: itemID, in: in)
-            } else if let for = Item.Type(syntax: syntax.arguments[0].expression), let itemID = Swift.KeyPath<Item, ItemID>(syntax: syntax.arguments[1].expression) {
-                let in = SwiftUICore.Namespace.ID(syntax: syntax.arguments[2].expression)
+            } else if let expr_itemID = syntax.argument(named: "itemID")?.expression, let itemID = Swift.KeyPath<Item, ItemID>(syntax: expr_itemID) {
+                let for: Item.Type = if let expr = syntax.argument(named: "for")?.expression, let parsed = Item.Type(syntax: expr) { parsed } else { Item.self }
+                let in: SwiftUICore.Namespace.ID = if let expr = syntax.argument(named: "in")?.expression, let parsed = SwiftUICore.Namespace.ID(syntax: expr) { parsed } else { nil }
                 self = .dragContainerWithTypeKeyPathItemItemIDIDOptionalClosureData1(for: for, itemID: itemID, in: in)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "DragContainerModifier", variant: "multiple variants", expectedTypes: "Item.Type, Swift.KeyPath<Item, ItemID>, SwiftUICore.Namespace.ID? or Item.Type, Swift.KeyPath<Item, ItemID>, SwiftUICore.Namespace.ID?")

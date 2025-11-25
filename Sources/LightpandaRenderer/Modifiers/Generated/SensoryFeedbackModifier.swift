@@ -18,17 +18,17 @@ extension SensoryFeedbackModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let trigger = T(syntax: syntax.arguments[0].expression) {
+            if let expr_trigger = syntax.argument(named: "trigger")?.expression, let trigger = T(syntax: expr_trigger) {
                 self = .sensoryFeedbackWithTSensoryFeedbackOptional(trigger: trigger)
-            } else if let trigger = T(syntax: syntax.arguments[0].expression) {
+            } else if let expr_trigger = syntax.argument(named: "trigger")?.expression, let trigger = T(syntax: expr_trigger) {
                 self = .sensoryFeedbackWithTSensoryFeedbackOptional1(trigger: trigger)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "SensoryFeedbackModifier", variant: "multiple variants", expectedTypes: "T or T")
             }
         case 2:
-            if let value0 = SwiftUI.SensoryFeedback(syntax: syntax.arguments[0].expression), let trigger = T(syntax: syntax.arguments[1].expression) {
+            if let value0: SwiftUI.SensoryFeedback = SwiftUI.SensoryFeedback(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_trigger = syntax.argument(named: "trigger")?.expression, let trigger = T(syntax: expr_trigger) {
                 self = .sensoryFeedbackWithSensoryFeedbackT(value0, trigger: trigger)
-            } else if let value0 = SwiftUI.SensoryFeedback(syntax: syntax.arguments[0].expression), let trigger = T(syntax: syntax.arguments[1].expression) {
+            } else if let value0: SwiftUI.SensoryFeedback = SwiftUI.SensoryFeedback(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_trigger = syntax.argument(named: "trigger")?.expression, let trigger = T(syntax: expr_trigger) {
                 self = .sensoryFeedbackWithSensoryFeedbackTBool(value0, trigger: trigger)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "SensoryFeedbackModifier", variant: "multiple variants", expectedTypes: "SwiftUI.SensoryFeedback, T or SwiftUI.SensoryFeedback, T")

@@ -15,12 +15,8 @@ extension DrawingGroupModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let opaque = Swift.Bool(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "DrawingGroupModifier", variant: "drawingGroup", expectedTypes: "Swift.Bool, SwiftUICore.ColorRenderingMode")
-            }
-            guard let colorMode = SwiftUICore.ColorRenderingMode(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "DrawingGroupModifier", variant: "drawingGroup", expectedTypes: "Swift.Bool, SwiftUICore.ColorRenderingMode")
-            }
+            let opaque: Swift.Bool = if let expr = syntax.argument(named: "opaque")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { false }
+            let colorMode: SwiftUICore.ColorRenderingMode = if let expr = syntax.argument(named: "colorMode")?.expression, let parsed = SwiftUICore.ColorRenderingMode(syntax: expr) { parsed } else { .nonLinear }
             self = .drawingGroup(opaque: opaque, colorMode: colorMode)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "DrawingGroupModifier", expected: [2], found: syntax.arguments.count)

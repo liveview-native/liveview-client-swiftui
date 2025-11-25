@@ -15,7 +15,7 @@ extension LabeledContentStyleModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = S(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = S(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "LabeledContentStyleModifier", variant: "labeledContentStyle", expectedTypes: "S")
             }
             self = .labeledContentStyle(value0)

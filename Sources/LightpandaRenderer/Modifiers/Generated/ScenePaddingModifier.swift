@@ -16,17 +16,13 @@ extension ScenePaddingModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUICore.Edge.Set(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ScenePaddingModifier", variant: "scenePaddingWithSet", expectedTypes: "SwiftUICore.Edge.Set")
-            }
+            let value0: SwiftUICore.Edge.Set = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = SwiftUICore.Edge.Set(syntax: expr) { parsed } else { .all }
             self = .scenePaddingWithSet(value0)
         case 2:
-            guard let value0 = SwiftUI.ScenePadding(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.ScenePadding(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "ScenePaddingModifier", variant: "scenePaddingWithScenePaddingSet", expectedTypes: "SwiftUI.ScenePadding, SwiftUICore.Edge.Set")
             }
-            guard let edges = SwiftUICore.Edge.Set(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ScenePaddingModifier", variant: "scenePaddingWithScenePaddingSet", expectedTypes: "SwiftUI.ScenePadding, SwiftUICore.Edge.Set")
-            }
+            let edges: SwiftUICore.Edge.Set = if let expr = syntax.argument(named: "edges")?.expression, let parsed = SwiftUICore.Edge.Set(syntax: expr) { parsed } else { .all }
             self = .scenePaddingWithScenePaddingSet(value0, edges: edges)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ScenePaddingModifier", expected: [1, 2], found: syntax.arguments.count)

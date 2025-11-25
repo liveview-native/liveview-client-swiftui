@@ -16,19 +16,17 @@ extension ScrollTransitionModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = SwiftUI.ScrollTransitionConfiguration(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ScrollTransitionModifier", variant: "scrollTransitionWithScrollTransitionConfigurationAxisOptionalClosuresomeVisualEffect", expectedTypes: "SwiftUI.ScrollTransitionConfiguration, SwiftUICore.Axis?")
-            }
-            let axis = SwiftUICore.Axis(syntax: syntax.arguments[1].expression)
+            let value0: SwiftUI.ScrollTransitionConfiguration = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = SwiftUI.ScrollTransitionConfiguration(syntax: expr) { parsed } else { .interactive }
+            let axis: SwiftUICore.Axis? = if let expr = syntax.argument(named: "axis")?.expression, let parsed = SwiftUICore.Axis(syntax: expr) { parsed } else { nil }
             self = .scrollTransitionWithScrollTransitionConfigurationAxisOptionalClosuresomeVisualEffect(value0, axis: axis)
         case 3:
-            guard let topLeading = SwiftUI.ScrollTransitionConfiguration(syntax: syntax.arguments[0].expression) else {
+            guard let expr_topLeading = syntax.argument(named: "topLeading")?.expression, let topLeading = SwiftUI.ScrollTransitionConfiguration(syntax: expr_topLeading) else {
                 throw ModifierParseError.invalidArguments(modifier: "ScrollTransitionModifier", variant: "scrollTransitionWithScrollTransitionConfigurationScrollTransitionConfigurationAxisOptionalClosuresomeVisualEffect", expectedTypes: "SwiftUI.ScrollTransitionConfiguration, SwiftUI.ScrollTransitionConfiguration, SwiftUICore.Axis?")
             }
-            guard let bottomTrailing = SwiftUI.ScrollTransitionConfiguration(syntax: syntax.arguments[1].expression) else {
+            guard let expr_bottomTrailing = syntax.argument(named: "bottomTrailing")?.expression, let bottomTrailing = SwiftUI.ScrollTransitionConfiguration(syntax: expr_bottomTrailing) else {
                 throw ModifierParseError.invalidArguments(modifier: "ScrollTransitionModifier", variant: "scrollTransitionWithScrollTransitionConfigurationScrollTransitionConfigurationAxisOptionalClosuresomeVisualEffect", expectedTypes: "SwiftUI.ScrollTransitionConfiguration, SwiftUI.ScrollTransitionConfiguration, SwiftUICore.Axis?")
             }
-            let axis = SwiftUICore.Axis(syntax: syntax.arguments[2].expression)
+            let axis: SwiftUICore.Axis? = if let expr = syntax.argument(named: "axis")?.expression, let parsed = SwiftUICore.Axis(syntax: expr) { parsed } else { nil }
             self = .scrollTransitionWithScrollTransitionConfigurationScrollTransitionConfigurationAxisOptionalClosuresomeVisualEffect(topLeading: topLeading, bottomTrailing: bottomTrailing, axis: axis)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ScrollTransitionModifier", expected: [2, 3], found: syntax.arguments.count)

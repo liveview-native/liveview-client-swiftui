@@ -19,12 +19,12 @@ extension CoordinateSpaceModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case nil:
-                guard let value0 = SwiftUICore.NamedCoordinateSpace(syntax: syntax.arguments[0].expression) else {
+                guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.NamedCoordinateSpace(syntax: expr_value0) else {
                     throw ModifierParseError.invalidArguments(modifier: "CoordinateSpaceModifier", variant: "coordinateSpaceWithNamedCoordinateSpace", expectedTypes: "SwiftUICore.NamedCoordinateSpace")
                 }
                 self = .coordinateSpaceWithNamedCoordinateSpace(value0)
             case "name":
-                guard let name = AnyHashable(syntax: syntax.arguments[0].expression) else {
+                guard let expr_name = syntax.argument(named: "name")?.expression, let name = AnyHashable(syntax: expr_name) else {
                     throw ModifierParseError.invalidArguments(modifier: "CoordinateSpaceModifier", variant: "coordinateSpaceWithAnyHashable", expectedTypes: "AnyHashable")
                 }
                 self = .coordinateSpaceWithAnyHashable(name: name)

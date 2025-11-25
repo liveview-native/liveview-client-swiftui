@@ -15,7 +15,7 @@ extension PreviewDeviceModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUI.PreviewDevice(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUI.PreviewDevice? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUI.PreviewDevice(syntax: expr) } else { nil }
             self = .previewDevice(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "PreviewDeviceModifier", expected: [1], found: syntax.arguments.count)

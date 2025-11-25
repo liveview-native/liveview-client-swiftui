@@ -15,9 +15,7 @@ extension CuttableModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let for = T.Type(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "CuttableModifier", variant: "cuttable", expectedTypes: "T.Type")
-            }
+            let for: T.Type = if let expr = syntax.argument(named: "for")?.expression, let parsed = T.Type(syntax: expr) { parsed } else { T.self }
             self = .cuttable(for: for)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "CuttableModifier", expected: [1], found: syntax.arguments.count)

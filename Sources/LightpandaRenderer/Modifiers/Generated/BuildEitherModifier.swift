@@ -19,17 +19,17 @@ extension BuildEitherModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case "first":
-                guard let first = AnyView(syntax: syntax.arguments[0].expression) else {
+                guard let expr_first = syntax.argument(named: "first")?.expression, let first = AnyView(syntax: expr_first) else {
                     throw ModifierParseError.invalidArguments(modifier: "BuildEitherModifier", variant: "buildEitherWithAnyView", expectedTypes: "AnyView")
                 }
                 self = .buildEitherWithAnyView(first: first)
             case "second":
-                guard let second = AnyView(syntax: syntax.arguments[0].expression) else {
+                guard let expr_second = syntax.argument(named: "second")?.expression, let second = AnyView(syntax: expr_second) else {
                     throw ModifierParseError.invalidArguments(modifier: "BuildEitherModifier", variant: "buildEitherWithAnyView1", expectedTypes: "AnyView")
                 }
                 self = .buildEitherWithAnyView1(second: second)
             default:
-                throw ModifierParseError.ambiguousVariant(modifier: "BuildEitherModifier", expectedLabels: ["second", "first"])
+                throw ModifierParseError.ambiguousVariant(modifier: "BuildEitherModifier", expectedLabels: ["first", "second"])
             }
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "BuildEitherModifier", expected: [1], found: syntax.arguments.count)

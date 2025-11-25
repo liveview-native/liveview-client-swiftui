@@ -15,9 +15,7 @@ extension AccessibilityElementModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let children = SwiftUI.AccessibilityChildBehavior(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "AccessibilityElementModifier", variant: "accessibilityElement", expectedTypes: "SwiftUI.AccessibilityChildBehavior")
-            }
+            let children: SwiftUI.AccessibilityChildBehavior = if let expr = syntax.argument(named: "children")?.expression, let parsed = SwiftUI.AccessibilityChildBehavior(syntax: expr) { parsed } else { .ignore }
             self = .accessibilityElement(children: children)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "AccessibilityElementModifier", expected: [1], found: syntax.arguments.count)

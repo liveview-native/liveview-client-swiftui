@@ -16,15 +16,15 @@ extension SearchScopesModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUICore.Binding<AnyHashable>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Binding<AnyHashable>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "SearchScopesModifier", variant: "searchScopesWithBindingAnyHashableClosureAnyView", expectedTypes: "SwiftUICore.Binding<AnyHashable>")
             }
             self = .searchScopesWithBindingAnyHashableClosureAnyView(value0)
         case 2:
-            guard let value0 = SwiftUICore.Binding<AnyHashable>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Binding<AnyHashable>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "SearchScopesModifier", variant: "searchScopesWithBindingAnyHashableSearchScopeActivationClosureAnyView", expectedTypes: "SwiftUICore.Binding<AnyHashable>, SwiftUI.SearchScopeActivation")
             }
-            guard let activation = SwiftUI.SearchScopeActivation(syntax: syntax.arguments[1].expression) else {
+            guard let expr_activation = syntax.argument(named: "activation")?.expression, let activation = SwiftUI.SearchScopeActivation(syntax: expr_activation) else {
                 throw ModifierParseError.invalidArguments(modifier: "SearchScopesModifier", variant: "searchScopesWithBindingAnyHashableSearchScopeActivationClosureAnyView", expectedTypes: "SwiftUICore.Binding<AnyHashable>, SwiftUI.SearchScopeActivation")
             }
             self = .searchScopesWithBindingAnyHashableSearchScopeActivationClosureAnyView(value0, activation: activation)

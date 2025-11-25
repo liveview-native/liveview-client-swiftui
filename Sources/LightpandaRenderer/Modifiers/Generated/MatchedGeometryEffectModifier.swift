@@ -15,21 +15,15 @@ extension MatchedGeometryEffectModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 5:
-            guard let id = AnyHashable(syntax: syntax.arguments[0].expression) else {
+            guard let expr_id = syntax.argument(named: "id")?.expression, let id = AnyHashable(syntax: expr_id) else {
                 throw ModifierParseError.invalidArguments(modifier: "MatchedGeometryEffectModifier", variant: "matchedGeometryEffect", expectedTypes: "AnyHashable, SwiftUICore.Namespace.AnyHashable, SwiftUICore.MatchedGeometryProperties, SwiftUICore.UnitPoint, Swift.Bool")
             }
-            guard let in = SwiftUICore.Namespace.AnyHashable(syntax: syntax.arguments[1].expression) else {
+            guard let expr_in = syntax.argument(named: "in")?.expression, let in = SwiftUICore.Namespace.AnyHashable(syntax: expr_in) else {
                 throw ModifierParseError.invalidArguments(modifier: "MatchedGeometryEffectModifier", variant: "matchedGeometryEffect", expectedTypes: "AnyHashable, SwiftUICore.Namespace.AnyHashable, SwiftUICore.MatchedGeometryProperties, SwiftUICore.UnitPoint, Swift.Bool")
             }
-            guard let properties = SwiftUICore.MatchedGeometryProperties(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "MatchedGeometryEffectModifier", variant: "matchedGeometryEffect", expectedTypes: "AnyHashable, SwiftUICore.Namespace.AnyHashable, SwiftUICore.MatchedGeometryProperties, SwiftUICore.UnitPoint, Swift.Bool")
-            }
-            guard let anchor = SwiftUICore.UnitPoint(syntax: syntax.arguments[3].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "MatchedGeometryEffectModifier", variant: "matchedGeometryEffect", expectedTypes: "AnyHashable, SwiftUICore.Namespace.AnyHashable, SwiftUICore.MatchedGeometryProperties, SwiftUICore.UnitPoint, Swift.Bool")
-            }
-            guard let isSource = Swift.Bool(syntax: syntax.arguments[4].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "MatchedGeometryEffectModifier", variant: "matchedGeometryEffect", expectedTypes: "AnyHashable, SwiftUICore.Namespace.AnyHashable, SwiftUICore.MatchedGeometryProperties, SwiftUICore.UnitPoint, Swift.Bool")
-            }
+            let properties: SwiftUICore.MatchedGeometryProperties = if let expr = syntax.argument(named: "properties")?.expression, let parsed = SwiftUICore.MatchedGeometryProperties(syntax: expr) { parsed } else { .frame }
+            let anchor: SwiftUICore.UnitPoint = if let expr = syntax.argument(named: "anchor")?.expression, let parsed = SwiftUICore.UnitPoint(syntax: expr) { parsed } else { .center }
+            let isSource: Swift.Bool = if let expr = syntax.argument(named: "isSource")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .matchedGeometryEffect(id: id, in: in, properties: properties, anchor: anchor, isSource: isSource)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "MatchedGeometryEffectModifier", expected: [5], found: syntax.arguments.count)

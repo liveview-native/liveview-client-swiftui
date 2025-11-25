@@ -17,11 +17,11 @@ extension AttributedTextFormattingDefinitionModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = D(syntax: syntax.arguments[0].expression) {
+            if let value0: D = D(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .attributedTextFormattingDefinitionWithD(value0)
-            } else if let value0 = S.Type(syntax: syntax.arguments[0].expression) {
+            } else if let value0: S.Type = S.Type(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .attributedTextFormattingDefinitionWithType(value0)
-            } else if let value0 = Swift.KeyPath<Foundation.AttributeScopes, S.Type>(syntax: syntax.arguments[0].expression) {
+            } else if let value0: Swift.KeyPath<Foundation.AttributeScopes, S.Type> = Swift.KeyPath<Foundation.AttributeScopes, S.Type>(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .attributedTextFormattingDefinitionWithType1(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "AttributedTextFormattingDefinitionModifier", variant: "multiple variants", expectedTypes: "D or S.Type or Swift.KeyPath<Foundation.AttributeScopes, S.Type>")

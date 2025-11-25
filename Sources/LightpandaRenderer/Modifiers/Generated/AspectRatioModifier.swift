@@ -16,10 +16,10 @@ extension AspectRatioModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let contentMode = SwiftUICore.ContentMode(syntax: syntax.arguments[1].expression) {
-                let value0 = CoreFoundation.CGFloat(syntax: syntax.arguments[0].expression)
+            if let expr_contentMode = syntax.argument(named: "contentMode")?.expression, let contentMode = SwiftUICore.ContentMode(syntax: expr_contentMode) {
+                let value0: CoreFoundation.CGFloat = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
                 self = .aspectRatioWithCGFloatOptionalContentMode(value0, contentMode: contentMode)
-            } else if let value0 = CoreFoundation.CGSize(syntax: syntax.arguments[0].expression), let contentMode = SwiftUICore.ContentMode(syntax: syntax.arguments[1].expression) {
+            } else if let value0: CoreFoundation.CGSize = CoreFoundation.CGSize(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_contentMode = syntax.argument(named: "contentMode")?.expression, let contentMode = SwiftUICore.ContentMode(syntax: expr_contentMode) {
                 self = .aspectRatioWithCGSizeContentMode(value0, contentMode: contentMode)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "AspectRatioModifier", variant: "multiple variants", expectedTypes: "CoreFoundation.CGFloat?, SwiftUICore.ContentMode or CoreFoundation.CGSize, SwiftUICore.ContentMode")

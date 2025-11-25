@@ -22,15 +22,15 @@ extension NavigationTitleModifier: RuntimeViewModifier {
         case 0:
             self = .navigationTitleWithClosureAnyView
         case 1:
-            if let value0 = SwiftUICore.Text(syntax: syntax.arguments[0].expression) {
+            if let value0: SwiftUICore.Text = SwiftUICore.Text(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .navigationTitleWithText(value0)
-            } else if let value0 = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[0].expression) {
+            } else if let value0: SwiftUICore.LocalizedStringKey = SwiftUICore.LocalizedStringKey(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .navigationTitleWithLocalizedStringKey(value0)
-            } else if let value0 = Foundation.LocalizedStringResource(syntax: syntax.arguments[0].expression) {
+            } else if let value0: Foundation.LocalizedStringResource = Foundation.LocalizedStringResource(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .navigationTitleWithLocalizedStringResource(value0)
-            } else if let value0 = String(syntax: syntax.arguments[0].expression) {
+            } else if let value0: String = String(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .navigationTitleWithString(value0)
-            } else if let value0 = SwiftUICore.Binding<Swift.String>(syntax: syntax.arguments[0].expression) {
+            } else if let value0: SwiftUICore.Binding<Swift.String> = SwiftUICore.Binding<Swift.String>(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .navigationTitleWithString1(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "NavigationTitleModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Text or SwiftUICore.LocalizedStringKey or Foundation.LocalizedStringResource or String or SwiftUICore.Binding<Swift.String>")

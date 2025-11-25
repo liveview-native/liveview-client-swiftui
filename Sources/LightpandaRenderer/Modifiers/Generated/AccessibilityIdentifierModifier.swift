@@ -16,15 +16,15 @@ extension AccessibilityIdentifierModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = Swift.String(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Swift.String(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityIdentifierModifier", variant: "accessibilityIdentifierWithString", expectedTypes: "Swift.String")
             }
             self = .accessibilityIdentifierWithString(value0)
         case 2:
-            guard let value0 = Swift.String(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Swift.String(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityIdentifierModifier", variant: "accessibilityIdentifierWithStringBool", expectedTypes: "Swift.String, Swift.Bool")
             }
-            guard let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) else {
+            guard let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityIdentifierModifier", variant: "accessibilityIdentifierWithStringBool", expectedTypes: "Swift.String, Swift.Bool")
             }
             self = .accessibilityIdentifierWithStringBool(value0, isEnabled: isEnabled)

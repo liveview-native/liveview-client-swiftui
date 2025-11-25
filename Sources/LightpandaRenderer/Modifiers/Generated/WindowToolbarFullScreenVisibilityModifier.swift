@@ -15,7 +15,7 @@ extension WindowToolbarFullScreenVisibilityModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUI.WindowToolbarFullScreenVisibility(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.WindowToolbarFullScreenVisibility(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "WindowToolbarFullScreenVisibilityModifier", variant: "windowToolbarFullScreenVisibility", expectedTypes: "SwiftUI.WindowToolbarFullScreenVisibility")
             }
             self = .windowToolbarFullScreenVisibility(value0)

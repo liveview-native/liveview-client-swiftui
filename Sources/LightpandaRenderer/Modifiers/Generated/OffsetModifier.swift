@@ -16,17 +16,13 @@ extension OffsetModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = CoreFoundation.CGSize(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = CoreFoundation.CGSize(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "OffsetModifier", variant: "offsetWithCGSize", expectedTypes: "CoreFoundation.CGSize")
             }
             self = .offsetWithCGSize(value0)
         case 2:
-            guard let x = CoreFoundation.CGFloat(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "OffsetModifier", variant: "offsetWithCGFloatCGFloat", expectedTypes: "CoreFoundation.CGFloat, CoreFoundation.CGFloat")
-            }
-            guard let y = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "OffsetModifier", variant: "offsetWithCGFloatCGFloat", expectedTypes: "CoreFoundation.CGFloat, CoreFoundation.CGFloat")
-            }
+            let x: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "x")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 0 }
+            let y: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "y")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 0 }
             self = .offsetWithCGFloatCGFloat(x: x, y: y)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "OffsetModifier", expected: [1, 2], found: syntax.arguments.count)

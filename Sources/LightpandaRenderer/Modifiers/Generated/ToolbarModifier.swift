@@ -24,21 +24,21 @@ extension ToolbarModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case "id":
-                guard let id = Swift.String(syntax: syntax.arguments[0].expression) else {
+                guard let expr_id = syntax.argument(named: "id")?.expression, let id = Swift.String(syntax: expr_id) else {
                     throw ModifierParseError.invalidArguments(modifier: "ToolbarModifier", variant: "toolbarWithStringClosureContent", expectedTypes: "Swift.String")
                 }
                 self = .toolbarWithStringClosureContent(id: id)
             case "removing":
-                let removing = SwiftUI.ToolbarDefaultItemKind(syntax: syntax.arguments[0].expression)
+                let removing: SwiftUI.ToolbarDefaultItemKind? = if let expr = syntax.argument(named: "removing")?.expression { SwiftUI.ToolbarDefaultItemKind(syntax: expr) } else { nil }
                 self = .toolbarWithToolbarDefaultItemKindOptional(removing: removing)
             default:
                 throw ModifierParseError.ambiguousVariant(modifier: "ToolbarModifier", expectedLabels: ["removing", "id"])
             }
         case 2:
-            guard let value0 = SwiftUICore.Visibility(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Visibility(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "ToolbarModifier", variant: "toolbarWithVisibilityToolbarPlacement", expectedTypes: "SwiftUICore.Visibility, SwiftUI.ToolbarPlacement")
             }
-            guard let for = SwiftUI.ToolbarPlacement(syntax: syntax.arguments[1].expression) else {
+            guard let expr_for = syntax.argument(named: "for")?.expression, let for = SwiftUI.ToolbarPlacement(syntax: expr_for) else {
                 throw ModifierParseError.invalidArguments(modifier: "ToolbarModifier", variant: "toolbarWithVisibilityToolbarPlacement", expectedTypes: "SwiftUICore.Visibility, SwiftUI.ToolbarPlacement")
             }
             self = .toolbarWithVisibilityToolbarPlacement(value0, for: for)

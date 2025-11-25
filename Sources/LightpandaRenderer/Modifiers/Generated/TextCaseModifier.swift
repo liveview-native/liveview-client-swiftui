@@ -15,7 +15,7 @@ extension TextCaseModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUICore.Text.Case(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUICore.Text.Case? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.Text.Case(syntax: expr) } else { nil }
             self = .textCase(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "TextCaseModifier", expected: [1], found: syntax.arguments.count)

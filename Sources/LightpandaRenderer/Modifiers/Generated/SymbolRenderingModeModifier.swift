@@ -15,7 +15,7 @@ extension SymbolRenderingModeModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUICore.SymbolRenderingMode(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUICore.SymbolRenderingMode? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.SymbolRenderingMode(syntax: expr) } else { nil }
             self = .symbolRenderingMode(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "SymbolRenderingModeModifier", expected: [1], found: syntax.arguments.count)

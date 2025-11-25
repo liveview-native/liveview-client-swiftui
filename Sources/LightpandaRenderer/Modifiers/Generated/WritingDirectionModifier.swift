@@ -15,7 +15,7 @@ extension WritingDirectionModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let strategy = SwiftUICore.Text.WritingDirectionStrategy(syntax: syntax.arguments[0].expression) else {
+            guard let expr_strategy = syntax.argument(named: "strategy")?.expression, let strategy = SwiftUICore.Text.WritingDirectionStrategy(syntax: expr_strategy) else {
                 throw ModifierParseError.invalidArguments(modifier: "WritingDirectionModifier", variant: "writingDirection", expectedTypes: "SwiftUICore.Text.WritingDirectionStrategy")
             }
             self = .writingDirection(strategy: strategy)

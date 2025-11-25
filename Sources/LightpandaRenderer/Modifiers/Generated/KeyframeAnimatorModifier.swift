@@ -16,9 +16,10 @@ extension KeyframeAnimatorModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let initialValue = Value(syntax: syntax.arguments[0].expression), let trigger = some Equatable(syntax: syntax.arguments[1].expression) {
+            if let expr_initialValue = syntax.argument(named: "initialValue")?.expression, let initialValue = Value(syntax: expr_initialValue), let expr_trigger = syntax.argument(named: "trigger")?.expression, let trigger = some Equatable(syntax: expr_trigger) {
                 self = .keyframeAnimatorWithValuesomeEquatableClosuresomeViewClosuresomeKeyframesValue(initialValue: initialValue, trigger: trigger)
-            } else if let initialValue = Value(syntax: syntax.arguments[0].expression), let repeating = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            } else if let expr_initialValue = syntax.argument(named: "initialValue")?.expression, let initialValue = Value(syntax: expr_initialValue) {
+                let repeating: Swift.Bool = if let expr = syntax.argument(named: "repeating")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .keyframeAnimatorWithValueBoolClosuresomeViewClosuresomeKeyframesValue(initialValue: initialValue, repeating: repeating)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "KeyframeAnimatorModifier", variant: "multiple variants", expectedTypes: "Value, some Equatable or Value, Swift.Bool")

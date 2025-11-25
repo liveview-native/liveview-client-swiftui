@@ -15,9 +15,7 @@ extension DefaultAdaptableTabBarPlacementModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUI.AdaptableTabBarPlacement(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "DefaultAdaptableTabBarPlacementModifier", variant: "defaultAdaptableTabBarPlacement", expectedTypes: "SwiftUI.AdaptableTabBarPlacement")
-            }
+            let value0: SwiftUI.AdaptableTabBarPlacement = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = SwiftUI.AdaptableTabBarPlacement(syntax: expr) { parsed } else { .automatic }
             self = .defaultAdaptableTabBarPlacement(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "DefaultAdaptableTabBarPlacementModifier", expected: [1], found: syntax.arguments.count)

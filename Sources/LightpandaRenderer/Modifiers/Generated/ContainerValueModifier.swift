@@ -15,10 +15,10 @@ extension ContainerValueModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = Swift.WritableKeyPath<SwiftUICore.ContainerValues, V>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Swift.WritableKeyPath<SwiftUICore.ContainerValues, V>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "ContainerValueModifier", variant: "containerValue", expectedTypes: "Swift.WritableKeyPath<SwiftUICore.ContainerValues, V>, V")
             }
-            guard let value1 = V(syntax: syntax.arguments[1].expression) else {
+            guard let expr_value1 = (syntax.arguments.count > 1 ? syntax.arguments[1].expression : nil), let value1 = V(syntax: expr_value1) else {
                 throw ModifierParseError.invalidArguments(modifier: "ContainerValueModifier", variant: "containerValue", expectedTypes: "Swift.WritableKeyPath<SwiftUICore.ContainerValues, V>, V")
             }
             self = .containerValue(value0, value1)

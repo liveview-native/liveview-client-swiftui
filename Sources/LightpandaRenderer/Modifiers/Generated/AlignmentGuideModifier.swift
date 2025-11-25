@@ -16,9 +16,9 @@ extension AlignmentGuideModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = SwiftUICore.HorizontalAlignment(syntax: syntax.arguments[0].expression) {
+            if let value0: SwiftUICore.HorizontalAlignment = SwiftUICore.HorizontalAlignment(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .alignmentGuideWithHorizontalAlignmentCGFloat(value0)
-            } else if let value0 = SwiftUICore.VerticalAlignment(syntax: syntax.arguments[0].expression) {
+            } else if let value0: SwiftUICore.VerticalAlignment = SwiftUICore.VerticalAlignment(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .alignmentGuideWithVerticalAlignmentCGFloat(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "AlignmentGuideModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.HorizontalAlignment or SwiftUICore.VerticalAlignment")

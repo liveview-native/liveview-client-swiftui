@@ -15,12 +15,8 @@ extension ScrollEdgeEffectHiddenModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = Swift.Bool(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ScrollEdgeEffectHiddenModifier", variant: "scrollEdgeEffectHidden", expectedTypes: "Swift.Bool, SwiftUICore.Edge.Set")
-            }
-            guard let for = SwiftUICore.Edge.Set(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ScrollEdgeEffectHiddenModifier", variant: "scrollEdgeEffectHidden", expectedTypes: "Swift.Bool, SwiftUICore.Edge.Set")
-            }
+            let value0: Swift.Bool = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
+            let for: SwiftUICore.Edge.Set = if let expr = syntax.argument(named: "for")?.expression, let parsed = SwiftUICore.Edge.Set(syntax: expr) { parsed } else { .all }
             self = .scrollEdgeEffectHidden(value0, for: for)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ScrollEdgeEffectHiddenModifier", expected: [2], found: syntax.arguments.count)

@@ -19,17 +19,17 @@ extension ActionSheetModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case "isPresented":
-                guard let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression) else {
+                guard let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented) else {
                     throw ModifierParseError.invalidArguments(modifier: "ActionSheetModifier", variant: "actionSheetWithBoolActionSheet", expectedTypes: "SwiftUICore.Binding<Swift.Bool>")
                 }
                 self = .actionSheetWithBoolActionSheet(isPresented: isPresented)
             case "item":
-                guard let item = SwiftUICore.Binding<T?>(syntax: syntax.arguments[0].expression) else {
+                guard let expr_item = syntax.argument(named: "item")?.expression, let item = SwiftUICore.Binding<T?>(syntax: expr_item) else {
                     throw ModifierParseError.invalidArguments(modifier: "ActionSheetModifier", variant: "actionSheetWithBindingTOptionalActionSheet", expectedTypes: "SwiftUICore.Binding<T?>")
                 }
                 self = .actionSheetWithBindingTOptionalActionSheet(item: item)
             default:
-                throw ModifierParseError.ambiguousVariant(modifier: "ActionSheetModifier", expectedLabels: ["isPresented", "item"])
+                throw ModifierParseError.ambiguousVariant(modifier: "ActionSheetModifier", expectedLabels: ["item", "isPresented"])
             }
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ActionSheetModifier", expected: [1], found: syntax.arguments.count)

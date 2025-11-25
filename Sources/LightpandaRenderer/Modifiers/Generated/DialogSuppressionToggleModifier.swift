@@ -19,18 +19,18 @@ extension DialogSuppressionToggleModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let isSuppressed = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_isSuppressed = syntax.argument(named: "isSuppressed")?.expression, let isSuppressed = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isSuppressed) else {
                 throw ModifierParseError.invalidArguments(modifier: "DialogSuppressionToggleModifier", variant: "dialogSuppressionToggleWithBool", expectedTypes: "SwiftUICore.Binding<Swift.Bool>")
             }
             self = .dialogSuppressionToggleWithBool(isSuppressed: isSuppressed)
         case 2:
-            if let value0 = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[0].expression), let isSuppressed = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[1].expression) {
+            if let value0: SwiftUICore.LocalizedStringKey = SwiftUICore.LocalizedStringKey(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_isSuppressed = syntax.argument(named: "isSuppressed")?.expression, let isSuppressed = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isSuppressed) {
                 self = .dialogSuppressionToggleWithLocalizedStringKeyBool(value0, isSuppressed: isSuppressed)
-            } else if let value0 = Foundation.LocalizedStringResource(syntax: syntax.arguments[0].expression), let isSuppressed = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[1].expression) {
+            } else if let value0: Foundation.LocalizedStringResource = Foundation.LocalizedStringResource(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_isSuppressed = syntax.argument(named: "isSuppressed")?.expression, let isSuppressed = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isSuppressed) {
                 self = .dialogSuppressionToggleWithLocalizedStringResourceBool(value0, isSuppressed: isSuppressed)
-            } else if let value0 = String(syntax: syntax.arguments[0].expression), let isSuppressed = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[1].expression) {
+            } else if let value0: String = String(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_isSuppressed = syntax.argument(named: "isSuppressed")?.expression, let isSuppressed = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isSuppressed) {
                 self = .dialogSuppressionToggleWithStringBool(value0, isSuppressed: isSuppressed)
-            } else if let value0 = SwiftUICore.Text(syntax: syntax.arguments[0].expression), let isSuppressed = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[1].expression) {
+            } else if let value0: SwiftUICore.Text = SwiftUICore.Text(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_isSuppressed = syntax.argument(named: "isSuppressed")?.expression, let isSuppressed = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isSuppressed) {
                 self = .dialogSuppressionToggleWithTextBool(value0, isSuppressed: isSuppressed)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "DialogSuppressionToggleModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.LocalizedStringKey, SwiftUICore.Binding<Swift.Bool> or Foundation.LocalizedStringResource, SwiftUICore.Binding<Swift.Bool> or String, SwiftUICore.Binding<Swift.Bool> or SwiftUICore.Text, SwiftUICore.Binding<Swift.Bool>")

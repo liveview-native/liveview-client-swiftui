@@ -24,39 +24,45 @@ extension FileExporterModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let documents = C(syntax: syntax.arguments[1].expression), let contentType = UniformTypeIdentifiers.UTType(syntax: syntax.arguments[2].expression) {
+            if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented), let expr_documents = syntax.argument(named: "documents")?.expression, let documents = C(syntax: expr_documents), let expr_contentType = syntax.argument(named: "contentType")?.expression, let contentType = UniformTypeIdentifiers.UTType(syntax: expr_contentType) {
                 self = .fileExporterWithBoolCUTTypeVoid(isPresented: isPresented, documents: documents, contentType: contentType)
-            } else if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let documents = C(syntax: syntax.arguments[1].expression), let contentType = UniformTypeIdentifiers.UTType(syntax: syntax.arguments[2].expression) {
+            } else if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented), let expr_documents = syntax.argument(named: "documents")?.expression, let documents = C(syntax: expr_documents), let expr_contentType = syntax.argument(named: "contentType")?.expression, let contentType = UniformTypeIdentifiers.UTType(syntax: expr_contentType) {
                 self = .fileExporterWithBoolCUTTypeVoid1(isPresented: isPresented, documents: documents, contentType: contentType)
-            } else if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let items = C(syntax: syntax.arguments[1].expression), let contentTypes = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[2].expression) {
+            } else if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented), let expr_items = syntax.argument(named: "items")?.expression, let items = C(syntax: expr_items) {
+                let contentTypes: [UniformTypeIdentifiers.UTType] = if let expr = syntax.argument(named: "contentTypes")?.expression, let parsed = [UniformTypeIdentifiers.UTType](syntax: expr) { parsed } else { [] }
                 self = .fileExporterWithBoolCUTTypeVoidVoid(isPresented: isPresented, items: items, contentTypes: contentTypes)
-            } else if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let documents = C(syntax: syntax.arguments[1].expression), let contentTypes = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[2].expression) {
+            } else if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented), let expr_documents = syntax.argument(named: "documents")?.expression, let documents = C(syntax: expr_documents) {
+                let contentTypes: [UniformTypeIdentifiers.UTType] = if let expr = syntax.argument(named: "contentTypes")?.expression, let parsed = [UniformTypeIdentifiers.UTType](syntax: expr) { parsed } else { [] }
                 self = .fileExporterWithBoolCUTTypeVoidVoid1(isPresented: isPresented, documents: documents, contentTypes: contentTypes)
-            } else if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let documents = C(syntax: syntax.arguments[1].expression), let contentTypes = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[2].expression) {
+            } else if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented), let expr_documents = syntax.argument(named: "documents")?.expression, let documents = C(syntax: expr_documents) {
+                let contentTypes: [UniformTypeIdentifiers.UTType] = if let expr = syntax.argument(named: "contentTypes")?.expression, let parsed = [UniformTypeIdentifiers.UTType](syntax: expr) { parsed } else { [] }
                 self = .fileExporterWithBoolCUTTypeVoidVoid2(isPresented: isPresented, documents: documents, contentTypes: contentTypes)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "FileExporterModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Binding<Swift.Bool>, C, UniformTypeIdentifiers.UTType or SwiftUICore.Binding<Swift.Bool>, C, UniformTypeIdentifiers.UTType or SwiftUICore.Binding<Swift.Bool>, C, [UniformTypeIdentifiers.UTType] or SwiftUICore.Binding<Swift.Bool>, C, [UniformTypeIdentifiers.UTType] or SwiftUICore.Binding<Swift.Bool>, C, [UniformTypeIdentifiers.UTType]")
             }
         case 4:
-            if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let contentType = UniformTypeIdentifiers.UTType(syntax: syntax.arguments[2].expression) {
-                let document = D(syntax: syntax.arguments[1].expression)
-                let defaultFilename = Swift.String(syntax: syntax.arguments[3].expression)
+            if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented), let expr_contentType = syntax.argument(named: "contentType")?.expression, let contentType = UniformTypeIdentifiers.UTType(syntax: expr_contentType) {
+                let document: D = if let expr = syntax.argument(named: "document")?.expression { D(syntax: expr) } else { nil }
+                let defaultFilename: Swift.String = if let expr = syntax.argument(named: "defaultFilename")?.expression, let parsed = Swift.String(syntax: expr) { parsed } else { nil }
                 self = .fileExporterWithBoolDOptionalUTTypeStringOptionalVoid(isPresented: isPresented, document: document, contentType: contentType, defaultFilename: defaultFilename)
-            } else if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let contentType = UniformTypeIdentifiers.UTType(syntax: syntax.arguments[2].expression) {
-                let document = D(syntax: syntax.arguments[1].expression)
-                let defaultFilename = Swift.String(syntax: syntax.arguments[3].expression)
+            } else if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented), let expr_contentType = syntax.argument(named: "contentType")?.expression, let contentType = UniformTypeIdentifiers.UTType(syntax: expr_contentType) {
+                let document: D = if let expr = syntax.argument(named: "document")?.expression { D(syntax: expr) } else { nil }
+                let defaultFilename: Swift.String = if let expr = syntax.argument(named: "defaultFilename")?.expression, let parsed = Swift.String(syntax: expr) { parsed } else { nil }
                 self = .fileExporterWithBoolDOptionalUTTypeStringOptionalVoid1(isPresented: isPresented, document: document, contentType: contentType, defaultFilename: defaultFilename)
-            } else if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let contentTypes = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[2].expression) {
-                let item = T(syntax: syntax.arguments[1].expression)
-                let defaultFilename = Swift.String(syntax: syntax.arguments[3].expression)
+            } else if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented) {
+                let item: T = if let expr = syntax.argument(named: "item")?.expression { T(syntax: expr) } else { nil }
+                let contentTypes: [UniformTypeIdentifiers.UTType] = if let expr = syntax.argument(named: "contentTypes")?.expression, let parsed = [UniformTypeIdentifiers.UTType](syntax: expr) { parsed } else { [] }
+                let defaultFilename: Swift.String = if let expr = syntax.argument(named: "defaultFilename")?.expression, let parsed = Swift.String(syntax: expr) { parsed } else { nil }
                 self = .fileExporterWithBoolTOptionalUTTypeStringOptionalVoidVoid(isPresented: isPresented, item: item, contentTypes: contentTypes, defaultFilename: defaultFilename)
-            } else if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let contentTypes = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[2].expression) {
-                let document = D(syntax: syntax.arguments[1].expression)
-                let defaultFilename = Swift.String(syntax: syntax.arguments[3].expression)
+            } else if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented) {
+                let document: D = if let expr = syntax.argument(named: "document")?.expression { D(syntax: expr) } else { nil }
+                let contentTypes: [UniformTypeIdentifiers.UTType] = if let expr = syntax.argument(named: "contentTypes")?.expression, let parsed = [UniformTypeIdentifiers.UTType](syntax: expr) { parsed } else { [] }
+                let defaultFilename: Swift.String = if let expr = syntax.argument(named: "defaultFilename")?.expression, let parsed = Swift.String(syntax: expr) { parsed } else { nil }
                 self = .fileExporterWithBoolDOptionalUTTypeStringOptionalVoidVoid(isPresented: isPresented, document: document, contentTypes: contentTypes, defaultFilename: defaultFilename)
-            } else if let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression), let contentTypes = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[2].expression) {
-                let document = D(syntax: syntax.arguments[1].expression)
-                let defaultFilename = Swift.String(syntax: syntax.arguments[3].expression)
+            } else if let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented) {
+                let document: D = if let expr = syntax.argument(named: "document")?.expression { D(syntax: expr) } else { nil }
+                let contentTypes: [UniformTypeIdentifiers.UTType] = if let expr = syntax.argument(named: "contentTypes")?.expression, let parsed = [UniformTypeIdentifiers.UTType](syntax: expr) { parsed } else { [] }
+                let defaultFilename: Swift.String = if let expr = syntax.argument(named: "defaultFilename")?.expression, let parsed = Swift.String(syntax: expr) { parsed } else { nil }
                 self = .fileExporterWithBoolDOptionalUTTypeStringOptionalVoidVoid1(isPresented: isPresented, document: document, contentTypes: contentTypes, defaultFilename: defaultFilename)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "FileExporterModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Binding<Swift.Bool>, D?, UniformTypeIdentifiers.UTType, Swift.String? or SwiftUICore.Binding<Swift.Bool>, D?, UniformTypeIdentifiers.UTType, Swift.String? or SwiftUICore.Binding<Swift.Bool>, T?, [UniformTypeIdentifiers.UTType], Swift.String? or SwiftUICore.Binding<Swift.Bool>, D?, [UniformTypeIdentifiers.UTType], Swift.String? or SwiftUICore.Binding<Swift.Bool>, D?, [UniformTypeIdentifiers.UTType], Swift.String?")

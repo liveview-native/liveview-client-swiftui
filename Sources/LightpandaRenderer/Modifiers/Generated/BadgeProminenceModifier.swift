@@ -15,7 +15,7 @@ extension BadgeProminenceModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUI.BadgeProminence(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.BadgeProminence(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "BadgeProminenceModifier", variant: "badgeProminence", expectedTypes: "SwiftUI.BadgeProminence")
             }
             self = .badgeProminence(value0)

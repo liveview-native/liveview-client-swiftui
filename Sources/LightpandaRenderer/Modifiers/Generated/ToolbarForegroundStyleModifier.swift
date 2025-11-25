@@ -15,10 +15,10 @@ extension ToolbarForegroundStyleModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = AnyShapeStyle(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = AnyShapeStyle(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "ToolbarForegroundStyleModifier", variant: "toolbarForegroundStyle", expectedTypes: "AnyShapeStyle, SwiftUI.ToolbarPlacement")
             }
-            guard let for = SwiftUI.ToolbarPlacement(syntax: syntax.arguments[1].expression) else {
+            guard let expr_for = syntax.argument(named: "for")?.expression, let for = SwiftUI.ToolbarPlacement(syntax: expr_for) else {
                 throw ModifierParseError.invalidArguments(modifier: "ToolbarForegroundStyleModifier", variant: "toolbarForegroundStyle", expectedTypes: "AnyShapeStyle, SwiftUI.ToolbarPlacement")
             }
             self = .toolbarForegroundStyle(value0, for: for)

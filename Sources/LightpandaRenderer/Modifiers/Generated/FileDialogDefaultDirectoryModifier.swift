@@ -15,7 +15,7 @@ extension FileDialogDefaultDirectoryModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = Foundation.URL(syntax: syntax.arguments[0].expression)
+            let value0: Foundation.URL? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { Foundation.URL(syntax: expr) } else { nil }
             self = .fileDialogDefaultDirectory(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "FileDialogDefaultDirectoryModifier", expected: [1], found: syntax.arguments.count)

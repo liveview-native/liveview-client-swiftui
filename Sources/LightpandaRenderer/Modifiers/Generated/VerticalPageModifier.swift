@@ -15,7 +15,7 @@ extension VerticalPageModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let transitionStyle = SwiftUI.VerticalPageTabViewStyle.TransitionStyle(syntax: syntax.arguments[0].expression) else {
+            guard let expr_transitionStyle = syntax.argument(named: "transitionStyle")?.expression, let transitionStyle = SwiftUI.VerticalPageTabViewStyle.TransitionStyle(syntax: expr_transitionStyle) else {
                 throw ModifierParseError.invalidArguments(modifier: "VerticalPageModifier", variant: "verticalPage", expectedTypes: "SwiftUI.VerticalPageTabViewStyle.TransitionStyle")
             }
             self = .verticalPage(transitionStyle: transitionStyle)

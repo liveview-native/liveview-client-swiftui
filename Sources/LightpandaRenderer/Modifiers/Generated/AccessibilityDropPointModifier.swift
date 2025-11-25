@@ -22,25 +22,25 @@ extension AccessibilityDropPointModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let value0 = SwiftUICore.UnitPoint(syntax: syntax.arguments[0].expression), let description = SwiftUICore.Text(syntax: syntax.arguments[1].expression) {
+            if let value0: SwiftUICore.UnitPoint = SwiftUICore.UnitPoint(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_description = syntax.argument(named: "description")?.expression, let description = SwiftUICore.Text(syntax: expr_description) {
                 self = .accessibilityDropPointWithUnitPointText(value0, description: description)
-            } else if let value0 = SwiftUICore.UnitPoint(syntax: syntax.arguments[0].expression), let description = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[1].expression) {
+            } else if let value0: SwiftUICore.UnitPoint = SwiftUICore.UnitPoint(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_description = syntax.argument(named: "description")?.expression, let description = SwiftUICore.LocalizedStringKey(syntax: expr_description) {
                 self = .accessibilityDropPointWithUnitPointLocalizedStringKey(value0, description: description)
-            } else if let value0 = SwiftUICore.UnitPoint(syntax: syntax.arguments[0].expression), let description = Foundation.LocalizedStringResource(syntax: syntax.arguments[1].expression) {
+            } else if let value0: SwiftUICore.UnitPoint = SwiftUICore.UnitPoint(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_description = syntax.argument(named: "description")?.expression, let description = Foundation.LocalizedStringResource(syntax: expr_description) {
                 self = .accessibilityDropPointWithUnitPointLocalizedStringResource(value0, description: description)
-            } else if let value0 = SwiftUICore.UnitPoint(syntax: syntax.arguments[0].expression), let description = String(syntax: syntax.arguments[1].expression) {
+            } else if let value0: SwiftUICore.UnitPoint = SwiftUICore.UnitPoint(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_description = syntax.argument(named: "description")?.expression, let description = String(syntax: expr_description) {
                 self = .accessibilityDropPointWithUnitPointString(value0, description: description)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityDropPointModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.UnitPoint, SwiftUICore.Text or SwiftUICore.UnitPoint, SwiftUICore.LocalizedStringKey or SwiftUICore.UnitPoint, Foundation.LocalizedStringResource or SwiftUICore.UnitPoint, String")
             }
         case 3:
-            if let value0 = SwiftUICore.UnitPoint(syntax: syntax.arguments[0].expression), let description = SwiftUICore.Text(syntax: syntax.arguments[1].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[2].expression) {
+            if let value0: SwiftUICore.UnitPoint = SwiftUICore.UnitPoint(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_description = syntax.argument(named: "description")?.expression, let description = SwiftUICore.Text(syntax: expr_description), let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) {
                 self = .accessibilityDropPointWithUnitPointTextBool(value0, description: description, isEnabled: isEnabled)
-            } else if let value0 = SwiftUICore.UnitPoint(syntax: syntax.arguments[0].expression), let description = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[1].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[2].expression) {
+            } else if let value0: SwiftUICore.UnitPoint = SwiftUICore.UnitPoint(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_description = syntax.argument(named: "description")?.expression, let description = SwiftUICore.LocalizedStringKey(syntax: expr_description), let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) {
                 self = .accessibilityDropPointWithUnitPointLocalizedStringKeyBool(value0, description: description, isEnabled: isEnabled)
-            } else if let value0 = SwiftUICore.UnitPoint(syntax: syntax.arguments[0].expression), let description = Foundation.LocalizedStringResource(syntax: syntax.arguments[1].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[2].expression) {
+            } else if let value0: SwiftUICore.UnitPoint = SwiftUICore.UnitPoint(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_description = syntax.argument(named: "description")?.expression, let description = Foundation.LocalizedStringResource(syntax: expr_description), let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) {
                 self = .accessibilityDropPointWithUnitPointLocalizedStringResourceBool(value0, description: description, isEnabled: isEnabled)
-            } else if let value0 = SwiftUICore.UnitPoint(syntax: syntax.arguments[0].expression), let description = String(syntax: syntax.arguments[1].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[2].expression) {
+            } else if let value0: SwiftUICore.UnitPoint = SwiftUICore.UnitPoint(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_description = syntax.argument(named: "description")?.expression, let description = String(syntax: expr_description), let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) {
                 self = .accessibilityDropPointWithUnitPointStringBool(value0, description: description, isEnabled: isEnabled)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityDropPointModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.UnitPoint, SwiftUICore.Text, Swift.Bool or SwiftUICore.UnitPoint, SwiftUICore.LocalizedStringKey, Swift.Bool or SwiftUICore.UnitPoint, Foundation.LocalizedStringResource, Swift.Bool or SwiftUICore.UnitPoint, String, Swift.Bool")

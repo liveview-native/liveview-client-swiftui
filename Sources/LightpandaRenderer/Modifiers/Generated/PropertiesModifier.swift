@@ -15,7 +15,7 @@ extension PropertiesModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let context = SwiftUI.ViewAlignedScrollTargetBehavior.PropertiesContext(syntax: syntax.arguments[0].expression) else {
+            guard let expr_context = syntax.argument(named: "context")?.expression, let context = SwiftUI.ViewAlignedScrollTargetBehavior.PropertiesContext(syntax: expr_context) else {
                 throw ModifierParseError.invalidArguments(modifier: "PropertiesModifier", variant: "properties", expectedTypes: "SwiftUI.ViewAlignedScrollTargetBehavior.PropertiesContext")
             }
             self = .properties(context: context)

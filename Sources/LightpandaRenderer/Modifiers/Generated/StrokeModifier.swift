@@ -16,9 +16,12 @@ extension StrokeModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            if let value0 = AnyShapeStyle(syntax: syntax.arguments[0].expression), let style = SwiftUICore.StrokeStyle(syntax: syntax.arguments[1].expression), let antialiased = Swift.Bool(syntax: syntax.arguments[2].expression) {
+            if let value0: AnyShapeStyle = AnyShapeStyle(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_style = syntax.argument(named: "style")?.expression, let style = SwiftUICore.StrokeStyle(syntax: expr_style) {
+                let antialiased: Swift.Bool = if let expr = syntax.argument(named: "antialiased")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .strokeWithAnyShapeStyleStrokeStyleBool(value0, style: style, antialiased: antialiased)
-            } else if let value0 = AnyShapeStyle(syntax: syntax.arguments[0].expression), let lineWidth = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression), let antialiased = Swift.Bool(syntax: syntax.arguments[2].expression) {
+            } else if let value0: AnyShapeStyle = AnyShapeStyle(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let lineWidth: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "lineWidth")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 1 }
+                let antialiased: Swift.Bool = if let expr = syntax.argument(named: "antialiased")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .strokeWithAnyShapeStyleCGFloatBool(value0, lineWidth: lineWidth, antialiased: antialiased)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "StrokeModifier", variant: "multiple variants", expectedTypes: "AnyShapeStyle, SwiftUICore.StrokeStyle, Swift.Bool or AnyShapeStyle, CoreFoundation.CGFloat, Swift.Bool")

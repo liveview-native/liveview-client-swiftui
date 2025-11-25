@@ -15,9 +15,7 @@ extension TransformPreferenceModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = K.Type(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "TransformPreferenceModifier", variant: "transformPreference", expectedTypes: "K.Type")
-            }
+            let value0: K.Type = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = K.Type(syntax: expr) { parsed } else { K.self }
             self = .transformPreference(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "TransformPreferenceModifier", expected: [1], found: syntax.arguments.count)

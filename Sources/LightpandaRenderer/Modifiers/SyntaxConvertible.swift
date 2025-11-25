@@ -6,8 +6,8 @@ public protocol SyntaxConvertible {
 }
 
 extension FunctionCallExprSyntax {
-    func argument(named name: String) -> ExprSyntax? {
-        return arguments.first(where: { $0.label?.text == name })?.expression
+    func argument(named name: String) -> LabeledExprSyntax? {
+        return arguments.first(where: { $0.label?.text == name })
     }
 }
 

@@ -15,13 +15,13 @@ extension AccessibilityLabeledPairModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            guard let role = SwiftUI.AccessibilityLabeledPairRole(syntax: syntax.arguments[0].expression) else {
+            guard let expr_role = syntax.argument(named: "role")?.expression, let role = SwiftUI.AccessibilityLabeledPairRole(syntax: expr_role) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityLabeledPairModifier", variant: "accessibilityLabeledPair", expectedTypes: "SwiftUI.AccessibilityLabeledPairRole, AnyHashable, SwiftUICore.Namespace.AnyHashable")
             }
-            guard let id = AnyHashable(syntax: syntax.arguments[1].expression) else {
+            guard let expr_id = syntax.argument(named: "id")?.expression, let id = AnyHashable(syntax: expr_id) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityLabeledPairModifier", variant: "accessibilityLabeledPair", expectedTypes: "SwiftUI.AccessibilityLabeledPairRole, AnyHashable, SwiftUICore.Namespace.AnyHashable")
             }
-            guard let in = SwiftUICore.Namespace.AnyHashable(syntax: syntax.arguments[2].expression) else {
+            guard let expr_in = syntax.argument(named: "in")?.expression, let in = SwiftUICore.Namespace.AnyHashable(syntax: expr_in) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityLabeledPairModifier", variant: "accessibilityLabeledPair", expectedTypes: "SwiftUI.AccessibilityLabeledPairRole, AnyHashable, SwiftUICore.Namespace.AnyHashable")
             }
             self = .accessibilityLabeledPair(role: role, id: id, in: in)

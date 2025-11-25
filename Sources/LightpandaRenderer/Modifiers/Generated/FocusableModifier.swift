@@ -17,18 +17,11 @@ extension FocusableModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = Swift.Bool(syntax: syntax.arguments[0].expression) {
-                self = .focusableWithBool(value0)
-            } else if let value0 = Swift.Bool(syntax: syntax.arguments[0].expression) {
-                self = .focusableWithBoolVoid(value0)
-            } else {
-                throw ModifierParseError.invalidArguments(modifier: "FocusableModifier", variant: "multiple variants", expectedTypes: "Swift.Bool or Swift.Bool")
-            }
+            let value0: Swift.Bool? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { Swift.Bool(syntax: expr) } else { nil }
+            self = .focusableWithBool(value0)
         case 2:
-            guard let value0 = Swift.Bool(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "FocusableModifier", variant: "focusableWithBoolFocusInteractions", expectedTypes: "Swift.Bool, SwiftUI.FocusInteractions")
-            }
-            guard let interactions = SwiftUI.FocusInteractions(syntax: syntax.arguments[1].expression) else {
+            let value0: Swift.Bool = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
+            guard let expr_interactions = syntax.argument(named: "interactions")?.expression, let interactions = SwiftUI.FocusInteractions(syntax: expr_interactions) else {
                 throw ModifierParseError.invalidArguments(modifier: "FocusableModifier", variant: "focusableWithBoolFocusInteractions", expectedTypes: "Swift.Bool, SwiftUI.FocusInteractions")
             }
             self = .focusableWithBoolFocusInteractions(value0, interactions: interactions)

@@ -19,16 +19,14 @@ extension HoverEffectGroupModifier: RuntimeViewModifier {
         case 0:
             self = .hoverEffectGroup
         case 1:
-            let value0 = SwiftUI.HoverEffectGroup(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUI.HoverEffectGroup? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUI.HoverEffectGroup(syntax: expr) } else { nil }
             self = .hoverEffectGroupWithHoverEffectGroupOptional(value0)
         case 3:
-            let id = Swift.String(syntax: syntax.arguments[0].expression)
-            guard let in = SwiftUICore.Namespace.ID(syntax: syntax.arguments[1].expression) else {
+            let id: Swift.String? = if let expr = syntax.argument(named: "id")?.expression, let parsed = Swift.String(syntax: expr) { parsed } else { nil }
+            guard let expr_in = syntax.argument(named: "in")?.expression, let in = SwiftUICore.Namespace.ID(syntax: expr_in) else {
                 throw ModifierParseError.invalidArguments(modifier: "HoverEffectGroupModifier", variant: "hoverEffectGroupWithStringOptionalIDBehavior", expectedTypes: "Swift.String?, SwiftUICore.Namespace.ID, SwiftUI.HoverEffectGroup.Behavior")
             }
-            guard let behavior = SwiftUI.HoverEffectGroup.Behavior(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "HoverEffectGroupModifier", variant: "hoverEffectGroupWithStringOptionalIDBehavior", expectedTypes: "Swift.String?, SwiftUICore.Namespace.ID, SwiftUI.HoverEffectGroup.Behavior")
-            }
+            let behavior: SwiftUI.HoverEffectGroup.Behavior = if let expr = syntax.argument(named: "behavior")?.expression, let parsed = SwiftUI.HoverEffectGroup.Behavior(syntax: expr) { parsed } else { .activatesGroup }
             self = .hoverEffectGroupWithStringOptionalIDBehavior(id: id, in: in, behavior: behavior)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "HoverEffectGroupModifier", expected: [0, 1, 3], found: syntax.arguments.count)

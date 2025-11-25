@@ -15,12 +15,8 @@ extension SwipeActionsModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let edge = SwiftUICore.HorizontalEdge(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "SwipeActionsModifier", variant: "swipeActions", expectedTypes: "SwiftUICore.HorizontalEdge, Swift.Bool")
-            }
-            guard let allowsFullSwipe = Swift.Bool(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "SwipeActionsModifier", variant: "swipeActions", expectedTypes: "SwiftUICore.HorizontalEdge, Swift.Bool")
-            }
+            let edge: SwiftUICore.HorizontalEdge = if let expr = syntax.argument(named: "edge")?.expression, let parsed = SwiftUICore.HorizontalEdge(syntax: expr) { parsed } else { .trailing }
+            let allowsFullSwipe: Swift.Bool = if let expr = syntax.argument(named: "allowsFullSwipe")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .swipeActions(edge: edge, allowsFullSwipe: allowsFullSwipe)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "SwipeActionsModifier", expected: [2], found: syntax.arguments.count)

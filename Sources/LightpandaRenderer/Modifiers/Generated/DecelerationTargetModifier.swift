@@ -15,16 +15,16 @@ extension DecelerationTargetModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 4:
-            guard let contentOffset = CoreFoundation.CGPoint(syntax: syntax.arguments[0].expression) else {
+            guard let expr_contentOffset = syntax.argument(named: "contentOffset")?.expression, let contentOffset = CoreFoundation.CGPoint(syntax: expr_contentOffset) else {
                 throw ModifierParseError.invalidArguments(modifier: "DecelerationTargetModifier", variant: "decelerationTarget", expectedTypes: "CoreFoundation.CGPoint, CoreFoundation.CGPoint, SwiftUICore._Velocity<CoreFoundation.CGSize>, CoreFoundation.CGSize")
             }
-            guard let originalContentOffset = CoreFoundation.CGPoint(syntax: syntax.arguments[1].expression) else {
+            guard let expr_originalContentOffset = syntax.argument(named: "originalContentOffset")?.expression, let originalContentOffset = CoreFoundation.CGPoint(syntax: expr_originalContentOffset) else {
                 throw ModifierParseError.invalidArguments(modifier: "DecelerationTargetModifier", variant: "decelerationTarget", expectedTypes: "CoreFoundation.CGPoint, CoreFoundation.CGPoint, SwiftUICore._Velocity<CoreFoundation.CGSize>, CoreFoundation.CGSize")
             }
-            guard let velocity = SwiftUICore._Velocity<CoreFoundation.CGSize>(syntax: syntax.arguments[2].expression) else {
+            guard let expr_velocity = syntax.argument(named: "velocity")?.expression, let velocity = SwiftUICore._Velocity<CoreFoundation.CGSize>(syntax: expr_velocity) else {
                 throw ModifierParseError.invalidArguments(modifier: "DecelerationTargetModifier", variant: "decelerationTarget", expectedTypes: "CoreFoundation.CGPoint, CoreFoundation.CGPoint, SwiftUICore._Velocity<CoreFoundation.CGSize>, CoreFoundation.CGSize")
             }
-            guard let size = CoreFoundation.CGSize(syntax: syntax.arguments[3].expression) else {
+            guard let expr_size = syntax.argument(named: "size")?.expression, let size = CoreFoundation.CGSize(syntax: expr_size) else {
                 throw ModifierParseError.invalidArguments(modifier: "DecelerationTargetModifier", variant: "decelerationTarget", expectedTypes: "CoreFoundation.CGPoint, CoreFoundation.CGPoint, SwiftUICore._Velocity<CoreFoundation.CGSize>, CoreFoundation.CGSize")
             }
             self = .decelerationTarget(contentOffset: contentOffset, originalContentOffset: originalContentOffset, velocity: velocity, size: size)

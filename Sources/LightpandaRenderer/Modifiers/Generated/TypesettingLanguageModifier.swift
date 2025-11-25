@@ -16,9 +16,11 @@ extension TypesettingLanguageModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let value0 = Foundation.Locale.Language(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            if let value0: Foundation.Locale.Language = Foundation.Locale.Language(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .typesettingLanguageWithLanguageBool(value0, isEnabled: isEnabled)
-            } else if let value0 = SwiftUICore.TypesettingLanguage(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            } else if let value0: SwiftUICore.TypesettingLanguage = SwiftUICore.TypesettingLanguage(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .typesettingLanguageWithTypesettingLanguageBool(value0, isEnabled: isEnabled)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "TypesettingLanguageModifier", variant: "multiple variants", expectedTypes: "Foundation.Locale.Language, Swift.Bool or SwiftUICore.TypesettingLanguage, Swift.Bool")

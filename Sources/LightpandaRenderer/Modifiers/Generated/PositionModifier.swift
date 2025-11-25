@@ -16,17 +16,13 @@ extension PositionModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = CoreFoundation.CGPoint(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = CoreFoundation.CGPoint(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "PositionModifier", variant: "positionWithCGPoint", expectedTypes: "CoreFoundation.CGPoint")
             }
             self = .positionWithCGPoint(value0)
         case 2:
-            guard let x = CoreFoundation.CGFloat(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "PositionModifier", variant: "positionWithCGFloatCGFloat", expectedTypes: "CoreFoundation.CGFloat, CoreFoundation.CGFloat")
-            }
-            guard let y = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "PositionModifier", variant: "positionWithCGFloatCGFloat", expectedTypes: "CoreFoundation.CGFloat, CoreFoundation.CGFloat")
-            }
+            let x: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "x")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 0 }
+            let y: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "y")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 0 }
             self = .positionWithCGFloatCGFloat(x: x, y: y)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "PositionModifier", expected: [1, 2], found: syntax.arguments.count)

@@ -15,12 +15,10 @@ extension ViewForIdentifierModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = AnyHashable(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = AnyHashable(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "ViewForIdentifierModifier", variant: "viewForIdentifier", expectedTypes: "AnyHashable, AnyView.Type")
             }
-            guard let value1 = AnyView.Type(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ViewForIdentifierModifier", variant: "viewForIdentifier", expectedTypes: "AnyHashable, AnyView.Type")
-            }
+            let value1: AnyView.Type = if let expr = (syntax.arguments.count > 1 ? syntax.arguments[1].expression : nil), let parsed = AnyView.Type(syntax: expr) { parsed } else { V.self }
             self = .viewForIdentifier(value0, value1)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ViewForIdentifierModifier", expected: [2], found: syntax.arguments.count)

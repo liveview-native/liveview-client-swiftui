@@ -17,23 +17,19 @@ extension ScaleEffectModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let value0 = CoreFoundation.CGSize(syntax: syntax.arguments[0].expression), let anchor = SwiftUICore.UnitPoint(syntax: syntax.arguments[1].expression) {
+            if let value0: CoreFoundation.CGSize = CoreFoundation.CGSize(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let anchor: SwiftUICore.UnitPoint = if let expr = syntax.argument(named: "anchor")?.expression, let parsed = SwiftUICore.UnitPoint(syntax: expr) { parsed } else { .center }
                 self = .scaleEffectWithCGSizeUnitPoint(value0, anchor: anchor)
-            } else if let value0 = CoreFoundation.CGFloat(syntax: syntax.arguments[0].expression), let anchor = SwiftUICore.UnitPoint(syntax: syntax.arguments[1].expression) {
+            } else if let value0: CoreFoundation.CGFloat = CoreFoundation.CGFloat(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let anchor: SwiftUICore.UnitPoint = if let expr = syntax.argument(named: "anchor")?.expression, let parsed = SwiftUICore.UnitPoint(syntax: expr) { parsed } else { .center }
                 self = .scaleEffectWithCGFloatUnitPoint(value0, anchor: anchor)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "ScaleEffectModifier", variant: "multiple variants", expectedTypes: "CoreFoundation.CGSize, SwiftUICore.UnitPoint or CoreFoundation.CGFloat, SwiftUICore.UnitPoint")
             }
         case 3:
-            guard let x = CoreFoundation.CGFloat(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ScaleEffectModifier", variant: "scaleEffectWithCGFloatCGFloatUnitPoint", expectedTypes: "CoreFoundation.CGFloat, CoreFoundation.CGFloat, SwiftUICore.UnitPoint")
-            }
-            guard let y = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ScaleEffectModifier", variant: "scaleEffectWithCGFloatCGFloatUnitPoint", expectedTypes: "CoreFoundation.CGFloat, CoreFoundation.CGFloat, SwiftUICore.UnitPoint")
-            }
-            guard let anchor = SwiftUICore.UnitPoint(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ScaleEffectModifier", variant: "scaleEffectWithCGFloatCGFloatUnitPoint", expectedTypes: "CoreFoundation.CGFloat, CoreFoundation.CGFloat, SwiftUICore.UnitPoint")
-            }
+            let x: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "x")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 1.0 }
+            let y: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "y")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 1.0 }
+            let anchor: SwiftUICore.UnitPoint = if let expr = syntax.argument(named: "anchor")?.expression, let parsed = SwiftUICore.UnitPoint(syntax: expr) { parsed } else { .center }
             self = .scaleEffectWithCGFloatCGFloatUnitPoint(x: x, y: y, anchor: anchor)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ScaleEffectModifier", expected: [2, 3], found: syntax.arguments.count)

@@ -19,17 +19,17 @@ extension PageModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case "backgroundDisplayMode":
-                guard let backgroundDisplayMode = SwiftUI.PageIndexViewStyle.BackgroundDisplayMode(syntax: syntax.arguments[0].expression) else {
+                guard let expr_backgroundDisplayMode = syntax.argument(named: "backgroundDisplayMode")?.expression, let backgroundDisplayMode = SwiftUI.PageIndexViewStyle.BackgroundDisplayMode(syntax: expr_backgroundDisplayMode) else {
                     throw ModifierParseError.invalidArguments(modifier: "PageModifier", variant: "pageWithBackgroundDisplayMode", expectedTypes: "SwiftUI.PageIndexViewStyle.BackgroundDisplayMode")
                 }
                 self = .pageWithBackgroundDisplayMode(backgroundDisplayMode: backgroundDisplayMode)
             case "indexDisplayMode":
-                guard let indexDisplayMode = SwiftUI.PageTabViewStyle.IndexDisplayMode(syntax: syntax.arguments[0].expression) else {
+                guard let expr_indexDisplayMode = syntax.argument(named: "indexDisplayMode")?.expression, let indexDisplayMode = SwiftUI.PageTabViewStyle.IndexDisplayMode(syntax: expr_indexDisplayMode) else {
                     throw ModifierParseError.invalidArguments(modifier: "PageModifier", variant: "pageWithIndexDisplayMode", expectedTypes: "SwiftUI.PageTabViewStyle.IndexDisplayMode")
                 }
                 self = .pageWithIndexDisplayMode(indexDisplayMode: indexDisplayMode)
             default:
-                throw ModifierParseError.ambiguousVariant(modifier: "PageModifier", expectedLabels: ["backgroundDisplayMode", "indexDisplayMode"])
+                throw ModifierParseError.ambiguousVariant(modifier: "PageModifier", expectedLabels: ["indexDisplayMode", "backgroundDisplayMode"])
             }
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "PageModifier", expected: [1], found: syntax.arguments.count)

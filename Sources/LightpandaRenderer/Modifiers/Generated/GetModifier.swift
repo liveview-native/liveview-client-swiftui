@@ -15,7 +15,7 @@ extension GetModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = Swift.KeyPath<Self.RootStateType, V>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Swift.KeyPath<Self.RootStateType, V>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "GetModifier", variant: "get", expectedTypes: "Swift.KeyPath<Self.RootStateType, V>")
             }
             self = .get(value0)

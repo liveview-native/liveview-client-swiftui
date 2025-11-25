@@ -15,12 +15,10 @@ extension TagModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = AnyHashable(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = AnyHashable(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "TagModifier", variant: "tag", expectedTypes: "AnyHashable, Swift.Bool")
             }
-            guard let includeOptional = Swift.Bool(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "TagModifier", variant: "tag", expectedTypes: "AnyHashable, Swift.Bool")
-            }
+            let includeOptional: Swift.Bool = if let expr = syntax.argument(named: "includeOptional")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .tag(value0, includeOptional: includeOptional)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "TagModifier", expected: [2], found: syntax.arguments.count)

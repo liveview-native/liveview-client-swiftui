@@ -15,10 +15,10 @@ extension ScrollInputBehaviorModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = SwiftUI.ScrollInputBehavior(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.ScrollInputBehavior(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "ScrollInputBehaviorModifier", variant: "scrollInputBehavior", expectedTypes: "SwiftUI.ScrollInputBehavior, SwiftUI.ScrollInputKind")
             }
-            guard let for = SwiftUI.ScrollInputKind(syntax: syntax.arguments[1].expression) else {
+            guard let expr_for = syntax.argument(named: "for")?.expression, let for = SwiftUI.ScrollInputKind(syntax: expr_for) else {
                 throw ModifierParseError.invalidArguments(modifier: "ScrollInputBehaviorModifier", variant: "scrollInputBehavior", expectedTypes: "SwiftUI.ScrollInputBehavior, SwiftUI.ScrollInputKind")
             }
             self = .scrollInputBehavior(value0, for: for)

@@ -18,30 +18,26 @@ extension KeyboardShortcutModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = SwiftUI.KeyboardShortcut(syntax: syntax.arguments[0].expression) {
+            if let value0: SwiftUI.KeyboardShortcut = SwiftUI.KeyboardShortcut(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .keyboardShortcutWithKeyboardShortcut(value0)
             } else if true {
-                let value0 = SwiftUI.KeyboardShortcut(syntax: syntax.arguments[0].expression)
+                let value0: SwiftUI.KeyboardShortcut = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUI.KeyboardShortcut(syntax: expr) } else { nil }
                 self = .keyboardShortcutWithKeyboardShortcutOptional(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "KeyboardShortcutModifier", variant: "multiple variants", expectedTypes: "SwiftUI.KeyboardShortcut or SwiftUI.KeyboardShortcut?")
             }
         case 2:
-            guard let value0 = SwiftUI.KeyEquivalent(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.KeyEquivalent(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "KeyboardShortcutModifier", variant: "keyboardShortcutWithKeyEquivalentEventModifiers", expectedTypes: "SwiftUI.KeyEquivalent, SwiftUICore.EventModifiers")
             }
-            guard let modifiers = SwiftUICore.EventModifiers(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "KeyboardShortcutModifier", variant: "keyboardShortcutWithKeyEquivalentEventModifiers", expectedTypes: "SwiftUI.KeyEquivalent, SwiftUICore.EventModifiers")
-            }
+            let modifiers: SwiftUICore.EventModifiers = if let expr = syntax.argument(named: "modifiers")?.expression, let parsed = SwiftUICore.EventModifiers(syntax: expr) { parsed } else { .command }
             self = .keyboardShortcutWithKeyEquivalentEventModifiers(value0, modifiers: modifiers)
         case 3:
-            guard let value0 = SwiftUI.KeyEquivalent(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.KeyEquivalent(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "KeyboardShortcutModifier", variant: "keyboardShortcutWithKeyEquivalentEventModifiersLocalization", expectedTypes: "SwiftUI.KeyEquivalent, SwiftUICore.EventModifiers, SwiftUI.KeyboardShortcut.Localization")
             }
-            guard let modifiers = SwiftUICore.EventModifiers(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "KeyboardShortcutModifier", variant: "keyboardShortcutWithKeyEquivalentEventModifiersLocalization", expectedTypes: "SwiftUI.KeyEquivalent, SwiftUICore.EventModifiers, SwiftUI.KeyboardShortcut.Localization")
-            }
-            guard let localization = SwiftUI.KeyboardShortcut.Localization(syntax: syntax.arguments[2].expression) else {
+            let modifiers: SwiftUICore.EventModifiers = if let expr = syntax.argument(named: "modifiers")?.expression, let parsed = SwiftUICore.EventModifiers(syntax: expr) { parsed } else { .command }
+            guard let expr_localization = syntax.argument(named: "localization")?.expression, let localization = SwiftUI.KeyboardShortcut.Localization(syntax: expr_localization) else {
                 throw ModifierParseError.invalidArguments(modifier: "KeyboardShortcutModifier", variant: "keyboardShortcutWithKeyEquivalentEventModifiersLocalization", expectedTypes: "SwiftUI.KeyEquivalent, SwiftUICore.EventModifiers, SwiftUI.KeyboardShortcut.Localization")
             }
             self = .keyboardShortcutWithKeyEquivalentEventModifiersLocalization(value0, modifiers: modifiers, localization: localization)

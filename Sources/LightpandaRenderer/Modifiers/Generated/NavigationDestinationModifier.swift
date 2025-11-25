@@ -20,22 +20,22 @@ extension NavigationDestinationModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case "for":
-                guard let for = AnyHashable.Type(syntax: syntax.arguments[0].expression) else {
+                guard let expr_for = syntax.argument(named: "for")?.expression, let for = AnyHashable.Type(syntax: expr_for) else {
                     throw ModifierParseError.invalidArguments(modifier: "NavigationDestinationModifier", variant: "navigationDestinationWithTypeClosureAnyView", expectedTypes: "AnyHashable.Type")
                 }
                 self = .navigationDestinationWithTypeClosureAnyView(for: for)
             case "isPresented":
-                guard let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression) else {
+                guard let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented) else {
                     throw ModifierParseError.invalidArguments(modifier: "NavigationDestinationModifier", variant: "navigationDestinationWithBoolClosureAnyView", expectedTypes: "SwiftUICore.Binding<Swift.Bool>")
                 }
                 self = .navigationDestinationWithBoolClosureAnyView(isPresented: isPresented)
             case "item":
-                guard let item = SwiftUICore.Binding<Swift.Optional<AnyHashable>>(syntax: syntax.arguments[0].expression) else {
+                guard let expr_item = syntax.argument(named: "item")?.expression, let item = SwiftUICore.Binding<Swift.Optional<AnyHashable>>(syntax: expr_item) else {
                     throw ModifierParseError.invalidArguments(modifier: "NavigationDestinationModifier", variant: "navigationDestinationWithOptionalAnyHashableClosureAnyView", expectedTypes: "SwiftUICore.Binding<Swift.Optional<AnyHashable>>")
                 }
                 self = .navigationDestinationWithOptionalAnyHashableClosureAnyView(item: item)
             default:
-                throw ModifierParseError.ambiguousVariant(modifier: "NavigationDestinationModifier", expectedLabels: ["item", "for", "isPresented"])
+                throw ModifierParseError.ambiguousVariant(modifier: "NavigationDestinationModifier", expectedLabels: ["item", "isPresented", "for"])
             }
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "NavigationDestinationModifier", expected: [1], found: syntax.arguments.count)

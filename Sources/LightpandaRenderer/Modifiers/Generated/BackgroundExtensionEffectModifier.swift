@@ -18,7 +18,7 @@ extension BackgroundExtensionEffectModifier: RuntimeViewModifier {
         case 0:
             self = .backgroundExtensionEffect
         case 1:
-            guard let isEnabled = Swift.Bool(syntax: syntax.arguments[0].expression) else {
+            guard let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) else {
                 throw ModifierParseError.invalidArguments(modifier: "BackgroundExtensionEffectModifier", variant: "backgroundExtensionEffectWithBool", expectedTypes: "Swift.Bool")
             }
             self = .backgroundExtensionEffectWithBool(isEnabled: isEnabled)

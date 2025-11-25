@@ -15,7 +15,7 @@ extension SearchSelectionModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUICore.Binding<SwiftUI.TextSelection?>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Binding<SwiftUI.TextSelection?>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "SearchSelectionModifier", variant: "searchSelection", expectedTypes: "SwiftUICore.Binding<SwiftUI.TextSelection?>")
             }
             self = .searchSelection(value0)

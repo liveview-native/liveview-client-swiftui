@@ -15,9 +15,7 @@ extension ScrollTargetLayoutModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let isEnabled = Swift.Bool(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ScrollTargetLayoutModifier", variant: "scrollTargetLayout", expectedTypes: "Swift.Bool")
-            }
+            let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .scrollTargetLayout(isEnabled: isEnabled)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ScrollTargetLayoutModifier", expected: [1], found: syntax.arguments.count)

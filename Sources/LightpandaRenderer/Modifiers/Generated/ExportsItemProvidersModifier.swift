@@ -16,9 +16,9 @@ extension ExportsItemProvidersModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[0].expression) {
+            if let value0: [UniformTypeIdentifiers.UTType] = [UniformTypeIdentifiers.UTType](syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .exportsItemProvidersWithUTTypeNSItemProvider(value0)
-            } else if let value0 = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[0].expression) {
+            } else if let value0: [UniformTypeIdentifiers.UTType] = [UniformTypeIdentifiers.UTType](syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .exportsItemProvidersWithUTTypeNSItemProviderBool(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "ExportsItemProvidersModifier", variant: "multiple variants", expectedTypes: "[UniformTypeIdentifiers.UTType] or [UniformTypeIdentifiers.UTType]")

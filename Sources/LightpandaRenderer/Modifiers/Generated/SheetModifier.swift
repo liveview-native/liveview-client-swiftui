@@ -19,17 +19,17 @@ extension SheetModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case "isPresented":
-                guard let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression) else {
+                guard let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented) else {
                     throw ModifierParseError.invalidArguments(modifier: "SheetModifier", variant: "sheetWithBoolVoidOptionalClosureAnyView", expectedTypes: "SwiftUICore.Binding<Swift.Bool>")
                 }
                 self = .sheetWithBoolVoidOptionalClosureAnyView(isPresented: isPresented)
             case "item":
-                guard let item = SwiftUICore.Binding<Item?>(syntax: syntax.arguments[0].expression) else {
+                guard let expr_item = syntax.argument(named: "item")?.expression, let item = SwiftUICore.Binding<Item?>(syntax: expr_item) else {
                     throw ModifierParseError.invalidArguments(modifier: "SheetModifier", variant: "sheetWithBindingItemOptionalVoidOptionalClosureAnyView", expectedTypes: "SwiftUICore.Binding<Item?>")
                 }
                 self = .sheetWithBindingItemOptionalVoidOptionalClosureAnyView(item: item)
             default:
-                throw ModifierParseError.ambiguousVariant(modifier: "SheetModifier", expectedLabels: ["item", "isPresented"])
+                throw ModifierParseError.ambiguousVariant(modifier: "SheetModifier", expectedLabels: ["isPresented", "item"])
             }
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "SheetModifier", expected: [1], found: syntax.arguments.count)

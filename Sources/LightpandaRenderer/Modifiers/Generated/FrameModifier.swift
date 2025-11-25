@@ -19,22 +19,18 @@ extension FrameModifier: RuntimeViewModifier {
         case 0:
             self = .frame
         case 3:
-            let width = CoreFoundation.CGFloat(syntax: syntax.arguments[0].expression)
-            let height = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression)
-            guard let alignment = SwiftUICore.Alignment(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "FrameModifier", variant: "frameWithCGFloatOptionalCGFloatOptionalAlignment", expectedTypes: "CoreFoundation.CGFloat?, CoreFoundation.CGFloat?, SwiftUICore.Alignment")
-            }
+            let width: CoreFoundation.CGFloat? = if let expr = syntax.argument(named: "width")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
+            let height: CoreFoundation.CGFloat? = if let expr = syntax.argument(named: "height")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
+            let alignment: SwiftUICore.Alignment = if let expr = syntax.argument(named: "alignment")?.expression, let parsed = SwiftUICore.Alignment(syntax: expr) { parsed } else { .center }
             self = .frameWithCGFloatOptionalCGFloatOptionalAlignment(width: width, height: height, alignment: alignment)
         case 7:
-            let minWidth = CoreFoundation.CGFloat(syntax: syntax.arguments[0].expression)
-            let idealWidth = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression)
-            let maxWidth = CoreFoundation.CGFloat(syntax: syntax.arguments[2].expression)
-            let minHeight = CoreFoundation.CGFloat(syntax: syntax.arguments[3].expression)
-            let idealHeight = CoreFoundation.CGFloat(syntax: syntax.arguments[4].expression)
-            let maxHeight = CoreFoundation.CGFloat(syntax: syntax.arguments[5].expression)
-            guard let alignment = SwiftUICore.Alignment(syntax: syntax.arguments[6].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "FrameModifier", variant: "frameWithCGFloatOptionalCGFloatOptionalCGFloatOptionalCGFloatOptionalCGFloatOptionalCGFloatOptionalAlignment", expectedTypes: "CoreFoundation.CGFloat?, CoreFoundation.CGFloat?, CoreFoundation.CGFloat?, CoreFoundation.CGFloat?, CoreFoundation.CGFloat?, CoreFoundation.CGFloat?, SwiftUICore.Alignment")
-            }
+            let minWidth: CoreFoundation.CGFloat? = if let expr = syntax.argument(named: "minWidth")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
+            let idealWidth: CoreFoundation.CGFloat? = if let expr = syntax.argument(named: "idealWidth")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
+            let maxWidth: CoreFoundation.CGFloat? = if let expr = syntax.argument(named: "maxWidth")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
+            let minHeight: CoreFoundation.CGFloat? = if let expr = syntax.argument(named: "minHeight")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
+            let idealHeight: CoreFoundation.CGFloat? = if let expr = syntax.argument(named: "idealHeight")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
+            let maxHeight: CoreFoundation.CGFloat? = if let expr = syntax.argument(named: "maxHeight")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
+            let alignment: SwiftUICore.Alignment = if let expr = syntax.argument(named: "alignment")?.expression, let parsed = SwiftUICore.Alignment(syntax: expr) { parsed } else { .center }
             self = .frameWithCGFloatOptionalCGFloatOptionalCGFloatOptionalCGFloatOptionalCGFloatOptionalCGFloatOptionalAlignment(minWidth: minWidth, idealWidth: idealWidth, maxWidth: maxWidth, minHeight: minHeight, idealHeight: idealHeight, maxHeight: maxHeight, alignment: alignment)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "FrameModifier", expected: [0, 3, 7], found: syntax.arguments.count)

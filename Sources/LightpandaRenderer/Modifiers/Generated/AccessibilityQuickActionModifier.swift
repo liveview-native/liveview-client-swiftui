@@ -16,15 +16,15 @@ extension AccessibilityQuickActionModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let style = Style(syntax: syntax.arguments[0].expression) else {
+            guard let expr_style = syntax.argument(named: "style")?.expression, let style = Style(syntax: expr_style) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityQuickActionModifier", variant: "accessibilityQuickActionWithStyleClosureAnyView", expectedTypes: "Style")
             }
             self = .accessibilityQuickActionWithStyleClosureAnyView(style: style)
         case 2:
-            guard let style = Style(syntax: syntax.arguments[0].expression) else {
+            guard let expr_style = syntax.argument(named: "style")?.expression, let style = Style(syntax: expr_style) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityQuickActionModifier", variant: "accessibilityQuickActionWithStyleBoolClosureAnyView", expectedTypes: "Style, SwiftUICore.Binding<Swift.Bool>")
             }
-            guard let isActive = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[1].expression) else {
+            guard let expr_isActive = syntax.argument(named: "isActive")?.expression, let isActive = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isActive) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityQuickActionModifier", variant: "accessibilityQuickActionWithStyleBoolClosureAnyView", expectedTypes: "Style, SwiftUICore.Binding<Swift.Bool>")
             }
             self = .accessibilityQuickActionWithStyleBoolClosureAnyView(style: style, isActive: isActive)

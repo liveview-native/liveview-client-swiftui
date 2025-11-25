@@ -16,17 +16,13 @@ extension TaskModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let priority = _Concurrency.TaskPriority(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "TaskModifier", variant: "taskWithTaskPriorityVoid", expectedTypes: "_Concurrency.TaskPriority")
-            }
+            let priority: _Concurrency.TaskPriority = if let expr = syntax.argument(named: "priority")?.expression, let parsed = _Concurrency.TaskPriority(syntax: expr) { parsed } else { .userInitiated }
             self = .taskWithTaskPriorityVoid(priority: priority)
         case 2:
-            guard let id = T(syntax: syntax.arguments[0].expression) else {
+            guard let expr_id = syntax.argument(named: "id")?.expression, let id = T(syntax: expr_id) else {
                 throw ModifierParseError.invalidArguments(modifier: "TaskModifier", variant: "taskWithTTaskPriorityVoid", expectedTypes: "T, _Concurrency.TaskPriority")
             }
-            guard let priority = _Concurrency.TaskPriority(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "TaskModifier", variant: "taskWithTTaskPriorityVoid", expectedTypes: "T, _Concurrency.TaskPriority")
-            }
+            let priority: _Concurrency.TaskPriority = if let expr = syntax.argument(named: "priority")?.expression, let parsed = _Concurrency.TaskPriority(syntax: expr) { parsed } else { .userInitiated }
             self = .taskWithTTaskPriorityVoid(id: id, priority: priority)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "TaskModifier", expected: [1, 2], found: syntax.arguments.count)

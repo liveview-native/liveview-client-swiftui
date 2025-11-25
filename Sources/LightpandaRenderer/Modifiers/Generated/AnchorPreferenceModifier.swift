@@ -15,10 +15,8 @@ extension AnchorPreferenceModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let key = K.Type(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "AnchorPreferenceModifier", variant: "anchorPreference", expectedTypes: "K.Type, SwiftUICore.Anchor<A>.Source")
-            }
-            guard let value = SwiftUICore.Anchor<A>.Source(syntax: syntax.arguments[1].expression) else {
+            let key: K.Type = if let expr = syntax.argument(named: "key")?.expression, let parsed = K.Type(syntax: expr) { parsed } else { K.self }
+            guard let expr_value = syntax.argument(named: "value")?.expression, let value = SwiftUICore.Anchor<A>.Source(syntax: expr_value) else {
                 throw ModifierParseError.invalidArguments(modifier: "AnchorPreferenceModifier", variant: "anchorPreference", expectedTypes: "K.Type, SwiftUICore.Anchor<A>.Source")
             }
             self = .anchorPreference(key: key, value: value)

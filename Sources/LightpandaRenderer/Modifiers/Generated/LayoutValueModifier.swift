@@ -15,10 +15,10 @@ extension LayoutValueModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let key = K.Type(syntax: syntax.arguments[0].expression) else {
+            guard let expr_key = syntax.argument(named: "key")?.expression, let key = K.Type(syntax: expr_key) else {
                 throw ModifierParseError.invalidArguments(modifier: "LayoutValueModifier", variant: "layoutValue", expectedTypes: "K.Type, K.Value")
             }
-            guard let value = K.Value(syntax: syntax.arguments[1].expression) else {
+            guard let expr_value = syntax.argument(named: "value")?.expression, let value = K.Value(syntax: expr_value) else {
                 throw ModifierParseError.invalidArguments(modifier: "LayoutValueModifier", variant: "layoutValue", expectedTypes: "K.Type, K.Value")
             }
             self = .layoutValue(key: key, value: value)

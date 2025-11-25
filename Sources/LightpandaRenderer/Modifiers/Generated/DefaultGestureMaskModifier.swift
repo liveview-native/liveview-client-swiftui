@@ -15,7 +15,7 @@ extension DefaultGestureMaskModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let proxy = SwiftUI._ScrollViewProxy(syntax: syntax.arguments[0].expression) else {
+            guard let expr_proxy = syntax.argument(named: "proxy")?.expression, let proxy = SwiftUI._ScrollViewProxy(syntax: expr_proxy) else {
                 throw ModifierParseError.invalidArguments(modifier: "DefaultGestureMaskModifier", variant: "defaultGestureMask", expectedTypes: "SwiftUI._ScrollViewProxy")
             }
             self = .defaultGestureMask(proxy: proxy)

@@ -19,14 +19,12 @@ extension PresentationBackgroundModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case nil:
-                guard let value0 = AnyShapeStyle(syntax: syntax.arguments[0].expression) else {
+                guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = AnyShapeStyle(syntax: expr_value0) else {
                     throw ModifierParseError.invalidArguments(modifier: "PresentationBackgroundModifier", variant: "presentationBackgroundWithAnyShapeStyle", expectedTypes: "AnyShapeStyle")
                 }
                 self = .presentationBackgroundWithAnyShapeStyle(value0)
             case "alignment":
-                guard let alignment = SwiftUICore.Alignment(syntax: syntax.arguments[0].expression) else {
-                    throw ModifierParseError.invalidArguments(modifier: "PresentationBackgroundModifier", variant: "presentationBackgroundWithAlignmentClosureAnyView", expectedTypes: "SwiftUICore.Alignment")
-                }
+                let alignment: SwiftUICore.Alignment = if let expr = syntax.argument(named: "alignment")?.expression, let parsed = SwiftUICore.Alignment(syntax: expr) { parsed } else { .center }
                 self = .presentationBackgroundWithAlignmentClosureAnyView(alignment: alignment)
             default:
                 throw ModifierParseError.ambiguousVariant(modifier: "PresentationBackgroundModifier", expectedLabels: ["alignment"])

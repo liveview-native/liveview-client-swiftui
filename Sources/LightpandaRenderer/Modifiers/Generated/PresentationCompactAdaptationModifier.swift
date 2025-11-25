@@ -16,15 +16,15 @@ extension PresentationCompactAdaptationModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUI.PresentationAdaptation(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.PresentationAdaptation(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "PresentationCompactAdaptationModifier", variant: "presentationCompactAdaptationWithPresentationAdaptation", expectedTypes: "SwiftUI.PresentationAdaptation")
             }
             self = .presentationCompactAdaptationWithPresentationAdaptation(value0)
         case 2:
-            guard let horizontal = SwiftUI.PresentationAdaptation(syntax: syntax.arguments[0].expression) else {
+            guard let expr_horizontal = syntax.argument(named: "horizontal")?.expression, let horizontal = SwiftUI.PresentationAdaptation(syntax: expr_horizontal) else {
                 throw ModifierParseError.invalidArguments(modifier: "PresentationCompactAdaptationModifier", variant: "presentationCompactAdaptationWithPresentationAdaptationPresentationAdaptation", expectedTypes: "SwiftUI.PresentationAdaptation, SwiftUI.PresentationAdaptation")
             }
-            guard let vertical = SwiftUI.PresentationAdaptation(syntax: syntax.arguments[1].expression) else {
+            guard let expr_vertical = syntax.argument(named: "vertical")?.expression, let vertical = SwiftUI.PresentationAdaptation(syntax: expr_vertical) else {
                 throw ModifierParseError.invalidArguments(modifier: "PresentationCompactAdaptationModifier", variant: "presentationCompactAdaptationWithPresentationAdaptationPresentationAdaptation", expectedTypes: "SwiftUI.PresentationAdaptation, SwiftUI.PresentationAdaptation")
             }
             self = .presentationCompactAdaptationWithPresentationAdaptationPresentationAdaptation(horizontal: horizontal, vertical: vertical)

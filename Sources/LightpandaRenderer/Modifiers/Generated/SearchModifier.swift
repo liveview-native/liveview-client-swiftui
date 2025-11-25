@@ -15,7 +15,7 @@ extension SearchModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let text = Swift.String(syntax: syntax.arguments[0].expression) else {
+            guard let expr_text = syntax.argument(named: "text")?.expression, let text = Swift.String(syntax: expr_text) else {
                 throw ModifierParseError.invalidArguments(modifier: "SearchModifier", variant: "search", expectedTypes: "Swift.String")
             }
             self = .search(text: text)

@@ -19,38 +19,28 @@ extension HoverEffectModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUI.HoverEffect(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "HoverEffectModifier", variant: "hoverEffectWithHoverEffect", expectedTypes: "SwiftUI.HoverEffect")
-            }
+            let value0: SwiftUI.HoverEffect = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = SwiftUI.HoverEffect(syntax: expr) { parsed } else { .automatic }
             self = .hoverEffectWithHoverEffect(value0)
         case 2:
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case nil:
-                if let value0 = some CustomHoverEffect(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
-                    self = .hoverEffectWithsomeCustomHoverEffectBool(value0, isEnabled: isEnabled)
-                } else if let value0 = SwiftUI.HoverEffect(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
-                    self = .hoverEffectWithHoverEffectBool(value0, isEnabled: isEnabled)
-                } else {
-                    throw ModifierParseError.invalidArguments(modifier: "HoverEffectModifier", variant: "multiple variants", expectedTypes: "some CustomHoverEffect, Swift.Bool or SwiftUI.HoverEffect, Swift.Bool")
-                }
+                let value0: some CustomHoverEffect? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { some CustomHoverEffect(syntax: expr) } else { nil }
+                let isEnabled: Swift.Bool? = if let expr = syntax.argument(named: "isEnabled")?.expression { Swift.Bool(syntax: expr) } else { nil }
+                self = .hoverEffectWithsomeCustomHoverEffectBool(value0, isEnabled: isEnabled)
             case "in":
-                let in = SwiftUI.HoverEffectGroup(syntax: syntax.arguments[0].expression)
-                guard let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) else {
-                    throw ModifierParseError.invalidArguments(modifier: "HoverEffectModifier", variant: "hoverEffectWithHoverEffectGroupOptionalBoolClosuresomeHoverEffectContent", expectedTypes: "SwiftUI.HoverEffectGroup?, Swift.Bool")
-                }
+                let in: SwiftUI.HoverEffectGroup? = if let expr = syntax.argument(named: "in")?.expression, let parsed = SwiftUI.HoverEffectGroup(syntax: expr) { parsed } else { nil }
+                let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .hoverEffectWithHoverEffectGroupOptionalBoolClosuresomeHoverEffectContent(in: in, isEnabled: isEnabled)
             default:
                 throw ModifierParseError.ambiguousVariant(modifier: "HoverEffectModifier", expectedLabels: ["in"])
             }
         case 3:
-            guard let value0 = some CustomHoverEffect(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = some CustomHoverEffect(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "HoverEffectModifier", variant: "hoverEffectWithsomeCustomHoverEffectHoverEffectGroupOptionalBool", expectedTypes: "some CustomHoverEffect, SwiftUI.HoverEffectGroup?, Swift.Bool")
             }
-            let in = SwiftUI.HoverEffectGroup(syntax: syntax.arguments[1].expression)
-            guard let isEnabled = Swift.Bool(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "HoverEffectModifier", variant: "hoverEffectWithsomeCustomHoverEffectHoverEffectGroupOptionalBool", expectedTypes: "some CustomHoverEffect, SwiftUI.HoverEffectGroup?, Swift.Bool")
-            }
+            let in: SwiftUI.HoverEffectGroup? = if let expr = syntax.argument(named: "in")?.expression { SwiftUI.HoverEffectGroup(syntax: expr) } else { nil }
+            let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .hoverEffectWithsomeCustomHoverEffectHoverEffectGroupOptionalBool(value0, in: in, isEnabled: isEnabled)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "HoverEffectModifier", expected: [1, 2, 3], found: syntax.arguments.count)

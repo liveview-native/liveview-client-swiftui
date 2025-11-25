@@ -19,15 +19,15 @@ extension TextInputSuggestionsModifier: RuntimeViewModifier {
         case 0:
             self = .textInputSuggestionsWithClosureAnyView
         case 1:
-            guard let value0 = Data(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Data(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "TextInputSuggestionsModifier", variant: "textInputSuggestionsWithDataClosureAnyView", expectedTypes: "Data")
             }
             self = .textInputSuggestionsWithDataClosureAnyView(value0)
         case 2:
-            guard let value0 = Data(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Data(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "TextInputSuggestionsModifier", variant: "textInputSuggestionsWithDataElementAnyHashableClosureAnyView", expectedTypes: "Data, Swift.KeyPath<Data.Element, AnyHashable>")
             }
-            guard let id = Swift.KeyPath<Data.Element, AnyHashable>(syntax: syntax.arguments[1].expression) else {
+            guard let expr_id = syntax.argument(named: "id")?.expression, let id = Swift.KeyPath<Data.Element, AnyHashable>(syntax: expr_id) else {
                 throw ModifierParseError.invalidArguments(modifier: "TextInputSuggestionsModifier", variant: "textInputSuggestionsWithDataElementAnyHashableClosureAnyView", expectedTypes: "Data, Swift.KeyPath<Data.Element, AnyHashable>")
             }
             self = .textInputSuggestionsWithDataElementAnyHashableClosureAnyView(value0, id: id)

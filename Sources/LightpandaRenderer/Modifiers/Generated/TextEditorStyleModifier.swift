@@ -15,7 +15,7 @@ extension TextEditorStyleModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = some TextEditorStyle(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = some TextEditorStyle(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "TextEditorStyleModifier", variant: "textEditorStyle", expectedTypes: "some TextEditorStyle")
             }
             self = .textEditorStyle(value0)

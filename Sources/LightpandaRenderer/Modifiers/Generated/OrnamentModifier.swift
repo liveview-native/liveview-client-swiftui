@@ -15,15 +15,11 @@ extension OrnamentModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            guard let visibility = SwiftUICore.Visibility(syntax: syntax.arguments[0].expression) else {
+            let visibility: SwiftUICore.Visibility = if let expr = syntax.argument(named: "visibility")?.expression, let parsed = SwiftUICore.Visibility(syntax: expr) { parsed } else { .automatic }
+            guard let expr_attachmentAnchor = syntax.argument(named: "attachmentAnchor")?.expression, let attachmentAnchor = SwiftUI.OrnamentAttachmentAnchor(syntax: expr_attachmentAnchor) else {
                 throw ModifierParseError.invalidArguments(modifier: "OrnamentModifier", variant: "ornament", expectedTypes: "SwiftUICore.Visibility, SwiftUI.OrnamentAttachmentAnchor, SwiftUICore.Alignment")
             }
-            guard let attachmentAnchor = SwiftUI.OrnamentAttachmentAnchor(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "OrnamentModifier", variant: "ornament", expectedTypes: "SwiftUICore.Visibility, SwiftUI.OrnamentAttachmentAnchor, SwiftUICore.Alignment")
-            }
-            guard let contentAlignment = SwiftUICore.Alignment(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "OrnamentModifier", variant: "ornament", expectedTypes: "SwiftUICore.Visibility, SwiftUI.OrnamentAttachmentAnchor, SwiftUICore.Alignment")
-            }
+            let contentAlignment: SwiftUICore.Alignment = if let expr = syntax.argument(named: "contentAlignment")?.expression, let parsed = SwiftUICore.Alignment(syntax: expr) { parsed } else { .center }
             self = .ornament(visibility: visibility, attachmentAnchor: attachmentAnchor, contentAlignment: contentAlignment)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "OrnamentModifier", expected: [3], found: syntax.arguments.count)

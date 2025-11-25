@@ -15,12 +15,10 @@ extension ScrollIndicatorsModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = SwiftUI.ScrollIndicatorVisibility(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.ScrollIndicatorVisibility(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "ScrollIndicatorsModifier", variant: "scrollIndicators", expectedTypes: "SwiftUI.ScrollIndicatorVisibility, SwiftUICore.Axis.Set")
             }
-            guard let axes = SwiftUICore.Axis.Set(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ScrollIndicatorsModifier", variant: "scrollIndicators", expectedTypes: "SwiftUI.ScrollIndicatorVisibility, SwiftUICore.Axis.Set")
-            }
+            let axes: SwiftUICore.Axis.Set = if let expr = syntax.argument(named: "axes")?.expression, let parsed = SwiftUICore.Axis.Set(syntax: expr) { parsed } else { [.vertical, .horizontal] }
             self = .scrollIndicators(value0, axes: axes)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ScrollIndicatorsModifier", expected: [2], found: syntax.arguments.count)

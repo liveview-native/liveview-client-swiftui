@@ -15,7 +15,7 @@ extension SymbolVariantModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUICore.SymbolVariants(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.SymbolVariants(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "SymbolVariantModifier", variant: "symbolVariant", expectedTypes: "SwiftUICore.SymbolVariants")
             }
             self = .symbolVariant(value0)

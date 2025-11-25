@@ -15,9 +15,7 @@ extension FocusEffectDisabledModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = Swift.Bool(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "FocusEffectDisabledModifier", variant: "focusEffectDisabled", expectedTypes: "Swift.Bool")
-            }
+            let value0: Swift.Bool = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .focusEffectDisabled(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "FocusEffectDisabledModifier", expected: [1], found: syntax.arguments.count)

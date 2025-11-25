@@ -19,12 +19,12 @@ extension AssistiveAccessNavigationIconModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case nil:
-                guard let value0 = SwiftUICore.Image(syntax: syntax.arguments[0].expression) else {
+                guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Image(syntax: expr_value0) else {
                     throw ModifierParseError.invalidArguments(modifier: "AssistiveAccessNavigationIconModifier", variant: "assistiveAccessNavigationIconWithImage", expectedTypes: "SwiftUICore.Image")
                 }
                 self = .assistiveAccessNavigationIconWithImage(value0)
             case "systemImage":
-                guard let systemImage = Swift.String(syntax: syntax.arguments[0].expression) else {
+                guard let expr_systemImage = syntax.argument(named: "systemImage")?.expression, let systemImage = Swift.String(syntax: expr_systemImage) else {
                     throw ModifierParseError.invalidArguments(modifier: "AssistiveAccessNavigationIconModifier", variant: "assistiveAccessNavigationIconWithString", expectedTypes: "Swift.String")
                 }
                 self = .assistiveAccessNavigationIconWithString(systemImage: systemImage)

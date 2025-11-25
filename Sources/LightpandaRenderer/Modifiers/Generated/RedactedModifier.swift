@@ -15,7 +15,7 @@ extension RedactedModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let reason = SwiftUICore.RedactionReasons(syntax: syntax.arguments[0].expression) else {
+            guard let expr_reason = syntax.argument(named: "reason")?.expression, let reason = SwiftUICore.RedactionReasons(syntax: expr_reason) else {
                 throw ModifierParseError.invalidArguments(modifier: "RedactedModifier", variant: "redacted", expectedTypes: "SwiftUICore.RedactionReasons")
             }
             self = .redacted(reason: reason)

@@ -63,7 +63,8 @@ struct AnyRuntimeViewModifier: ViewModifier {
         ClipShapeModifier.self,
         MultilineTextAlignmentModifier.self,
         ForegroundStyleModifier.self,
-        TintModifier.self
+        TintModifier.self,
+        FrameModifier.self
     ]
     
     let modifier: any RuntimeViewModifier

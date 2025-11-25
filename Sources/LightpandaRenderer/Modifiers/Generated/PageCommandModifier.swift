@@ -15,15 +15,13 @@ extension PageCommandModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            guard let value = SwiftUICore.Binding<V>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value = syntax.argument(named: "value")?.expression, let value = SwiftUICore.Binding<V>(syntax: expr_value) else {
                 throw ModifierParseError.invalidArguments(modifier: "PageCommandModifier", variant: "pageCommand", expectedTypes: "SwiftUICore.Binding<V>, Swift.ClosedRange<V>, V")
             }
-            guard let in = Swift.ClosedRange<V>(syntax: syntax.arguments[1].expression) else {
+            guard let expr_in = syntax.argument(named: "in")?.expression, let in = Swift.ClosedRange<V>(syntax: expr_in) else {
                 throw ModifierParseError.invalidArguments(modifier: "PageCommandModifier", variant: "pageCommand", expectedTypes: "SwiftUICore.Binding<V>, Swift.ClosedRange<V>, V")
             }
-            guard let step = V(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "PageCommandModifier", variant: "pageCommand", expectedTypes: "SwiftUICore.Binding<V>, Swift.ClosedRange<V>, V")
-            }
+            let step: V = if let expr = syntax.argument(named: "step")?.expression, let parsed = V(syntax: expr) { parsed } else { 1 }
             self = .pageCommand(value: value, in: in, step: step)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "PageCommandModifier", expected: [3], found: syntax.arguments.count)

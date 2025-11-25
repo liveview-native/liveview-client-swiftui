@@ -15,7 +15,7 @@ extension InspectorModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_isPresented = syntax.argument(named: "isPresented")?.expression, let isPresented = SwiftUICore.Binding<Swift.Bool>(syntax: expr_isPresented) else {
                 throw ModifierParseError.invalidArguments(modifier: "InspectorModifier", variant: "inspector", expectedTypes: "SwiftUICore.Binding<Swift.Bool>")
             }
             self = .inspector(isPresented: isPresented)

@@ -20,21 +20,21 @@ extension OnDropModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let of = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[0].expression) {
-                let isTargeted = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[1].expression)
+            if let expr_of = syntax.argument(named: "of")?.expression, let of = [UniformTypeIdentifiers.UTType](syntax: expr_of) {
+                let isTargeted: SwiftUICore.Binding<Swift.Bool> = if let expr = syntax.argument(named: "isTargeted")?.expression { SwiftUICore.Binding<Swift.Bool>(syntax: expr) } else { nil }
                 self = .onDropWithUTTypeBoolOptionalBool(of: of, isTargeted: isTargeted)
-            } else if let of = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[0].expression) {
-                let isTargeted = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[1].expression)
+            } else if let expr_of = syntax.argument(named: "of")?.expression, let of = [UniformTypeIdentifiers.UTType](syntax: expr_of) {
+                let isTargeted: SwiftUICore.Binding<Swift.Bool> = if let expr = syntax.argument(named: "isTargeted")?.expression { SwiftUICore.Binding<Swift.Bool>(syntax: expr) } else { nil }
                 self = .onDropWithUTTypeBoolOptionalBool1(of: of, isTargeted: isTargeted)
-            } else if let of = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[0].expression), let delegate = any SwiftUI.DropDelegate(syntax: syntax.arguments[1].expression) {
+            } else if let expr_of = syntax.argument(named: "of")?.expression, let of = [UniformTypeIdentifiers.UTType](syntax: expr_of), let expr_delegate = syntax.argument(named: "delegate")?.expression, let delegate = any SwiftUI.DropDelegate(syntax: expr_delegate) {
                 self = .onDropWithUTTypeDropDelegate(of: of, delegate: delegate)
-            } else if let of = [Swift.String](syntax: syntax.arguments[0].expression) {
-                let isTargeted = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[1].expression)
+            } else if let expr_of = syntax.argument(named: "of")?.expression, let of = [Swift.String](syntax: expr_of) {
+                let isTargeted: SwiftUICore.Binding<Swift.Bool> = if let expr = syntax.argument(named: "isTargeted")?.expression { SwiftUICore.Binding<Swift.Bool>(syntax: expr) } else { nil }
                 self = .onDropWithStringBoolOptionalBool(of: of, isTargeted: isTargeted)
-            } else if let of = [Swift.String](syntax: syntax.arguments[0].expression) {
-                let isTargeted = SwiftUICore.Binding<Swift.Bool>(syntax: syntax.arguments[1].expression)
+            } else if let expr_of = syntax.argument(named: "of")?.expression, let of = [Swift.String](syntax: expr_of) {
+                let isTargeted: SwiftUICore.Binding<Swift.Bool> = if let expr = syntax.argument(named: "isTargeted")?.expression { SwiftUICore.Binding<Swift.Bool>(syntax: expr) } else { nil }
                 self = .onDropWithStringBoolOptionalBool1(of: of, isTargeted: isTargeted)
-            } else if let of = [Swift.String](syntax: syntax.arguments[0].expression), let delegate = any SwiftUI.DropDelegate(syntax: syntax.arguments[1].expression) {
+            } else if let expr_of = syntax.argument(named: "of")?.expression, let of = [Swift.String](syntax: expr_of), let expr_delegate = syntax.argument(named: "delegate")?.expression, let delegate = any SwiftUI.DropDelegate(syntax: expr_delegate) {
                 self = .onDropWithStringDropDelegate(of: of, delegate: delegate)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "OnDropModifier", variant: "multiple variants", expectedTypes: "[UniformTypeIdentifiers.UTType], SwiftUICore.Binding<Swift.Bool>? or [UniformTypeIdentifiers.UTType], SwiftUICore.Binding<Swift.Bool>? or [UniformTypeIdentifiers.UTType], any SwiftUI.DropDelegate or [Swift.String], SwiftUICore.Binding<Swift.Bool>? or [Swift.String], SwiftUICore.Binding<Swift.Bool>? or [Swift.String], any SwiftUI.DropDelegate")

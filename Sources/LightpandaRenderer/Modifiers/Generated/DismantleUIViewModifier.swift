@@ -15,10 +15,10 @@ extension DismantleUIViewModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = Self.UIViewType(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Self.UIViewType(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "DismantleUIViewModifier", variant: "dismantleUIView", expectedTypes: "Self.UIViewType, Self.Coordinator")
             }
-            guard let coordinator = Self.Coordinator(syntax: syntax.arguments[1].expression) else {
+            guard let expr_coordinator = syntax.argument(named: "coordinator")?.expression, let coordinator = Self.Coordinator(syntax: expr_coordinator) else {
                 throw ModifierParseError.invalidArguments(modifier: "DismantleUIViewModifier", variant: "dismantleUIView", expectedTypes: "Self.UIViewType, Self.Coordinator")
             }
             self = .dismantleUIView(value0, coordinator: coordinator)

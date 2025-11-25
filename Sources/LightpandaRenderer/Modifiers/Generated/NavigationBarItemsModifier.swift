@@ -20,23 +20,23 @@ extension NavigationBarItemsModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case "leading":
-                guard let leading = AnyView(syntax: syntax.arguments[0].expression) else {
+                guard let expr_leading = syntax.argument(named: "leading")?.expression, let leading = AnyView(syntax: expr_leading) else {
                     throw ModifierParseError.invalidArguments(modifier: "NavigationBarItemsModifier", variant: "navigationBarItemsWithAnyView", expectedTypes: "AnyView")
                 }
                 self = .navigationBarItemsWithAnyView(leading: leading)
             case "trailing":
-                guard let trailing = AnyView(syntax: syntax.arguments[0].expression) else {
+                guard let expr_trailing = syntax.argument(named: "trailing")?.expression, let trailing = AnyView(syntax: expr_trailing) else {
                     throw ModifierParseError.invalidArguments(modifier: "NavigationBarItemsModifier", variant: "navigationBarItemsWithAnyView1", expectedTypes: "AnyView")
                 }
                 self = .navigationBarItemsWithAnyView1(trailing: trailing)
             default:
-                throw ModifierParseError.ambiguousVariant(modifier: "NavigationBarItemsModifier", expectedLabels: ["leading", "trailing"])
+                throw ModifierParseError.ambiguousVariant(modifier: "NavigationBarItemsModifier", expectedLabels: ["trailing", "leading"])
             }
         case 2:
-            guard let leading = AnyView(syntax: syntax.arguments[0].expression) else {
+            guard let expr_leading = syntax.argument(named: "leading")?.expression, let leading = AnyView(syntax: expr_leading) else {
                 throw ModifierParseError.invalidArguments(modifier: "NavigationBarItemsModifier", variant: "navigationBarItemsWithAnyViewAnyView", expectedTypes: "AnyView, AnyView")
             }
-            guard let trailing = AnyView(syntax: syntax.arguments[1].expression) else {
+            guard let expr_trailing = syntax.argument(named: "trailing")?.expression, let trailing = AnyView(syntax: expr_trailing) else {
                 throw ModifierParseError.invalidArguments(modifier: "NavigationBarItemsModifier", variant: "navigationBarItemsWithAnyViewAnyView", expectedTypes: "AnyView, AnyView")
             }
             self = .navigationBarItemsWithAnyViewAnyView(leading: leading, trailing: trailing)

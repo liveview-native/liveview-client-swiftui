@@ -16,9 +16,9 @@ extension ListSectionSpacingModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = SwiftUI.ListSectionSpacing(syntax: syntax.arguments[0].expression) {
+            if let value0: SwiftUI.ListSectionSpacing = SwiftUI.ListSectionSpacing(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .listSectionSpacingWithListSectionSpacing(value0)
-            } else if let value0 = CoreFoundation.CGFloat(syntax: syntax.arguments[0].expression) {
+            } else if let value0: CoreFoundation.CGFloat = CoreFoundation.CGFloat(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .listSectionSpacingWithCGFloat(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "ListSectionSpacingModifier", variant: "multiple variants", expectedTypes: "SwiftUI.ListSectionSpacing or CoreFoundation.CGFloat")

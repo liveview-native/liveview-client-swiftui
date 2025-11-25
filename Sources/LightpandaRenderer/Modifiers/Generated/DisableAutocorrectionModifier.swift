@@ -15,7 +15,7 @@ extension DisableAutocorrectionModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = Swift.Bool(syntax: syntax.arguments[0].expression)
+            let value0: Swift.Bool? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { Swift.Bool(syntax: expr) } else { nil }
             self = .disableAutocorrection(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "DisableAutocorrectionModifier", expected: [1], found: syntax.arguments.count)

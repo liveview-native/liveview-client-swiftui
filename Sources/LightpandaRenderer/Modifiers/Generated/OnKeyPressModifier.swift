@@ -22,14 +22,12 @@ extension OnKeyPressModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case nil:
-                guard let value0 = SwiftUI.KeyEquivalent(syntax: syntax.arguments[0].expression) else {
+                guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.KeyEquivalent(syntax: expr_value0) else {
                     throw ModifierParseError.invalidArguments(modifier: "OnKeyPressModifier", variant: "onKeyPressWithKeyEquivalentResult", expectedTypes: "SwiftUI.KeyEquivalent")
                 }
                 self = .onKeyPressWithKeyEquivalentResult(value0)
             case "phases":
-                guard let phases = SwiftUI.KeyPress.Phases(syntax: syntax.arguments[0].expression) else {
-                    throw ModifierParseError.invalidArguments(modifier: "OnKeyPressModifier", variant: "onKeyPressWithPhasesResult", expectedTypes: "SwiftUI.KeyPress.Phases")
-                }
+                let phases: SwiftUI.KeyPress.Phases = if let expr = syntax.argument(named: "phases")?.expression, let parsed = SwiftUI.KeyPress.Phases(syntax: expr) { parsed } else { [.down, .repeat] }
                 self = .onKeyPressWithPhasesResult(phases: phases)
             default:
                 throw ModifierParseError.ambiguousVariant(modifier: "OnKeyPressModifier", expectedLabels: ["phases"])
@@ -38,31 +36,27 @@ extension OnKeyPressModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case nil:
-                guard let value0 = SwiftUI.KeyEquivalent(syntax: syntax.arguments[0].expression) else {
+                guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.KeyEquivalent(syntax: expr_value0) else {
                     throw ModifierParseError.invalidArguments(modifier: "OnKeyPressModifier", variant: "onKeyPressWithKeyEquivalentPhasesResult", expectedTypes: "SwiftUI.KeyEquivalent, SwiftUI.KeyPress.Phases")
                 }
-                guard let phases = SwiftUI.KeyPress.Phases(syntax: syntax.arguments[1].expression) else {
+                guard let expr_phases = syntax.argument(named: "phases")?.expression, let phases = SwiftUI.KeyPress.Phases(syntax: expr_phases) else {
                     throw ModifierParseError.invalidArguments(modifier: "OnKeyPressModifier", variant: "onKeyPressWithKeyEquivalentPhasesResult", expectedTypes: "SwiftUI.KeyEquivalent, SwiftUI.KeyPress.Phases")
                 }
                 self = .onKeyPressWithKeyEquivalentPhasesResult(value0, phases: phases)
             case "characters":
-                guard let characters = Foundation.CharacterSet(syntax: syntax.arguments[0].expression) else {
+                guard let expr_characters = syntax.argument(named: "characters")?.expression, let characters = Foundation.CharacterSet(syntax: expr_characters) else {
                     throw ModifierParseError.invalidArguments(modifier: "OnKeyPressModifier", variant: "onKeyPressWithCharacterSetPhasesResult", expectedTypes: "Foundation.CharacterSet, SwiftUI.KeyPress.Phases")
                 }
-                guard let phases = SwiftUI.KeyPress.Phases(syntax: syntax.arguments[1].expression) else {
-                    throw ModifierParseError.invalidArguments(modifier: "OnKeyPressModifier", variant: "onKeyPressWithCharacterSetPhasesResult", expectedTypes: "Foundation.CharacterSet, SwiftUI.KeyPress.Phases")
-                }
+                let phases: SwiftUI.KeyPress.Phases = if let expr = syntax.argument(named: "phases")?.expression, let parsed = SwiftUI.KeyPress.Phases(syntax: expr) { parsed } else { [.down, .repeat] }
                 self = .onKeyPressWithCharacterSetPhasesResult(characters: characters, phases: phases)
             case "keys":
-                guard let keys = Swift.Set<SwiftUI.KeyEquivalent>(syntax: syntax.arguments[0].expression) else {
+                guard let expr_keys = syntax.argument(named: "keys")?.expression, let keys = Swift.Set<SwiftUI.KeyEquivalent>(syntax: expr_keys) else {
                     throw ModifierParseError.invalidArguments(modifier: "OnKeyPressModifier", variant: "onKeyPressWithKeyEquivalentPhasesResult1", expectedTypes: "Swift.Set<SwiftUI.KeyEquivalent>, SwiftUI.KeyPress.Phases")
                 }
-                guard let phases = SwiftUI.KeyPress.Phases(syntax: syntax.arguments[1].expression) else {
-                    throw ModifierParseError.invalidArguments(modifier: "OnKeyPressModifier", variant: "onKeyPressWithKeyEquivalentPhasesResult1", expectedTypes: "Swift.Set<SwiftUI.KeyEquivalent>, SwiftUI.KeyPress.Phases")
-                }
+                let phases: SwiftUI.KeyPress.Phases = if let expr = syntax.argument(named: "phases")?.expression, let parsed = SwiftUI.KeyPress.Phases(syntax: expr) { parsed } else { [.down, .repeat] }
                 self = .onKeyPressWithKeyEquivalentPhasesResult1(keys: keys, phases: phases)
             default:
-                throw ModifierParseError.ambiguousVariant(modifier: "OnKeyPressModifier", expectedLabels: ["keys", "characters"])
+                throw ModifierParseError.ambiguousVariant(modifier: "OnKeyPressModifier", expectedLabels: ["characters", "keys"])
             }
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "OnKeyPressModifier", expected: [1, 2], found: syntax.arguments.count)

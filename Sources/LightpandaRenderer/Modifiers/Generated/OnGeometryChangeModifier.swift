@@ -16,9 +16,9 @@ extension OnGeometryChangeModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let for = T.Type(syntax: syntax.arguments[0].expression) {
+            if let expr_for = syntax.argument(named: "for")?.expression, let for = T.Type(syntax: expr_for) {
                 self = .onGeometryChangeWithTypeClosureTVoid(for: for)
-            } else if let for = T.Type(syntax: syntax.arguments[0].expression) {
+            } else if let expr_for = syntax.argument(named: "for")?.expression, let for = T.Type(syntax: expr_for) {
                 self = .onGeometryChangeWithTypeClosureTVoid1(for: for)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "OnGeometryChangeModifier", variant: "multiple variants", expectedTypes: "T.Type or T.Type")

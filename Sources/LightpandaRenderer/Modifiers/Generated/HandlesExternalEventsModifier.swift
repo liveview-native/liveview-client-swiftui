@@ -15,10 +15,10 @@ extension HandlesExternalEventsModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let preferring = Swift.Set<Swift.String>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_preferring = syntax.argument(named: "preferring")?.expression, let preferring = Swift.Set<Swift.String>(syntax: expr_preferring) else {
                 throw ModifierParseError.invalidArguments(modifier: "HandlesExternalEventsModifier", variant: "handlesExternalEvents", expectedTypes: "Swift.Set<Swift.String>, Swift.Set<Swift.String>")
             }
-            guard let allowing = Swift.Set<Swift.String>(syntax: syntax.arguments[1].expression) else {
+            guard let expr_allowing = syntax.argument(named: "allowing")?.expression, let allowing = Swift.Set<Swift.String>(syntax: expr_allowing) else {
                 throw ModifierParseError.invalidArguments(modifier: "HandlesExternalEventsModifier", variant: "handlesExternalEvents", expectedTypes: "Swift.Set<Swift.String>, Swift.Set<Swift.String>")
             }
             self = .handlesExternalEvents(preferring: preferring, allowing: allowing)

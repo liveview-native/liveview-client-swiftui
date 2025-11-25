@@ -19,12 +19,12 @@ extension MultilineTextAlignmentModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case nil:
-                guard let value0 = SwiftUICore.TextAlignment(syntax: syntax.arguments[0].expression) else {
+                guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.TextAlignment(syntax: expr_value0) else {
                     throw ModifierParseError.invalidArguments(modifier: "MultilineTextAlignmentModifier", variant: "multilineTextAlignmentWithTextAlignment", expectedTypes: "SwiftUICore.TextAlignment")
                 }
                 self = .multilineTextAlignmentWithTextAlignment(value0)
             case "strategy":
-                guard let strategy = SwiftUICore.Text.AlignmentStrategy(syntax: syntax.arguments[0].expression) else {
+                guard let expr_strategy = syntax.argument(named: "strategy")?.expression, let strategy = SwiftUICore.Text.AlignmentStrategy(syntax: expr_strategy) else {
                     throw ModifierParseError.invalidArguments(modifier: "MultilineTextAlignmentModifier", variant: "multilineTextAlignmentWithAlignmentStrategy", expectedTypes: "SwiftUICore.Text.AlignmentStrategy")
                 }
                 self = .multilineTextAlignmentWithAlignmentStrategy(strategy: strategy)

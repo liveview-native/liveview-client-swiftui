@@ -15,7 +15,7 @@ extension FontDesignModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUICore.Font.Design(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUICore.Font.Design? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.Font.Design(syntax: expr) } else { nil }
             self = .fontDesign(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "FontDesignModifier", expected: [1], found: syntax.arguments.count)

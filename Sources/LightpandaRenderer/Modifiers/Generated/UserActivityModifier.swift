@@ -16,10 +16,11 @@ extension UserActivityModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let value0 = Swift.String(syntax: syntax.arguments[0].expression), let isActive = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            if let value0: Swift.String = Swift.String(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let isActive: Swift.Bool = if let expr = syntax.argument(named: "isActive")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .userActivityWithStringBoolClosure(value0, isActive: isActive)
-            } else if let value0 = Swift.String(syntax: syntax.arguments[0].expression) {
-                let element = P(syntax: syntax.arguments[1].expression)
+            } else if let value0: Swift.String = Swift.String(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let element: P = if let expr = syntax.argument(named: "element")?.expression { P(syntax: expr) } else { nil }
                 self = .userActivityWithStringPOptionalClosure(value0, element: element)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "UserActivityModifier", variant: "multiple variants", expectedTypes: "Swift.String, Swift.Bool or Swift.String, P?")

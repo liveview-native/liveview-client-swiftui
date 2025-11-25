@@ -15,13 +15,9 @@ extension StrikethroughModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            guard let value0 = Swift.Bool(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "StrikethroughModifier", variant: "strikethrough", expectedTypes: "Swift.Bool, SwiftUICore.Text.LineStyle.Pattern, SwiftUICore.Color?")
-            }
-            guard let pattern = SwiftUICore.Text.LineStyle.Pattern(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "StrikethroughModifier", variant: "strikethrough", expectedTypes: "Swift.Bool, SwiftUICore.Text.LineStyle.Pattern, SwiftUICore.Color?")
-            }
-            let color = SwiftUICore.Color(syntax: syntax.arguments[2].expression)
+            let value0: Swift.Bool = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
+            let pattern: SwiftUICore.Text.LineStyle.Pattern = if let expr = syntax.argument(named: "pattern")?.expression, let parsed = SwiftUICore.Text.LineStyle.Pattern(syntax: expr) { parsed } else { .solid }
+            let color: SwiftUICore.Color? = if let expr = syntax.argument(named: "color")?.expression, let parsed = SwiftUICore.Color(syntax: expr) { parsed } else { nil }
             self = .strikethrough(value0, pattern: pattern, color: color)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "StrikethroughModifier", expected: [3], found: syntax.arguments.count)

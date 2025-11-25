@@ -16,9 +16,9 @@ extension MatchedTransitionSourceModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let id = some Hashable(syntax: syntax.arguments[0].expression), let in = SwiftUICore.Namespace.ID(syntax: syntax.arguments[1].expression) {
+            if let expr_id = syntax.argument(named: "id")?.expression, let id = some Hashable(syntax: expr_id), let expr_in = syntax.argument(named: "in")?.expression, let in = SwiftUICore.Namespace.ID(syntax: expr_in) {
                 self = .matchedTransitionSourceWithsomeHashableID(id: id, in: in)
-            } else if let id = some Hashable(syntax: syntax.arguments[0].expression), let in = SwiftUICore.Namespace.ID(syntax: syntax.arguments[1].expression) {
+            } else if let expr_id = syntax.argument(named: "id")?.expression, let id = some Hashable(syntax: expr_id), let expr_in = syntax.argument(named: "in")?.expression, let in = SwiftUICore.Namespace.ID(syntax: expr_in) {
                 self = .matchedTransitionSourceWithsomeHashableIDClosuresomeMatchedTransitionSourceConfiguration(id: id, in: in)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "MatchedTransitionSourceModifier", variant: "multiple variants", expectedTypes: "some Hashable, SwiftUICore.Namespace.ID or some Hashable, SwiftUICore.Namespace.ID")

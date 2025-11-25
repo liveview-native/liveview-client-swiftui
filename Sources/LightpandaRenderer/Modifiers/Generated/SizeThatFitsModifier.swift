@@ -16,9 +16,9 @@ extension SizeThatFitsModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            if let value0 = SwiftUICore.ProposedViewSize(syntax: syntax.arguments[0].expression), let uiViewController = Self.UIViewControllerType(syntax: syntax.arguments[1].expression), let context = Self.Context(syntax: syntax.arguments[2].expression) {
+            if let value0: SwiftUICore.ProposedViewSize = SwiftUICore.ProposedViewSize(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_uiViewController = syntax.argument(named: "uiViewController")?.expression, let uiViewController = Self.UIViewControllerType(syntax: expr_uiViewController), let expr_context = syntax.argument(named: "context")?.expression, let context = Self.Context(syntax: expr_context) {
                 self = .sizeThatFitsWithProposedViewSizeUIViewControllerTypeContext(value0, uiViewController: uiViewController, context: context)
-            } else if let value0 = SwiftUICore.ProposedViewSize(syntax: syntax.arguments[0].expression), let uiView = Self.UIViewType(syntax: syntax.arguments[1].expression), let context = Self.Context(syntax: syntax.arguments[2].expression) {
+            } else if let value0: SwiftUICore.ProposedViewSize = SwiftUICore.ProposedViewSize(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_uiView = syntax.argument(named: "uiView")?.expression, let uiView = Self.UIViewType(syntax: expr_uiView), let expr_context = syntax.argument(named: "context")?.expression, let context = Self.Context(syntax: expr_context) {
                 self = .sizeThatFitsWithProposedViewSizeUIViewTypeContext(value0, uiView: uiView, context: context)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "SizeThatFitsModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.ProposedViewSize, Self.UIViewControllerType, Self.Context or SwiftUICore.ProposedViewSize, Self.UIViewType, Self.Context")

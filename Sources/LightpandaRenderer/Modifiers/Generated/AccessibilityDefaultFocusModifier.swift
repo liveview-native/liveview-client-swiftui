@@ -15,10 +15,10 @@ extension AccessibilityDefaultFocusModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = SwiftUI.AccessibilityFocusState<AnyHashable>.Binding(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.AccessibilityFocusState<AnyHashable>.Binding(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityDefaultFocusModifier", variant: "accessibilityDefaultFocus", expectedTypes: "SwiftUI.AccessibilityFocusState<AnyHashable>.Binding, AnyHashable")
             }
-            guard let value1 = AnyHashable(syntax: syntax.arguments[1].expression) else {
+            guard let expr_value1 = (syntax.arguments.count > 1 ? syntax.arguments[1].expression : nil), let value1 = AnyHashable(syntax: expr_value1) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityDefaultFocusModifier", variant: "accessibilityDefaultFocus", expectedTypes: "SwiftUI.AccessibilityFocusState<AnyHashable>.Binding, AnyHashable")
             }
             self = .accessibilityDefaultFocus(value0, value1)

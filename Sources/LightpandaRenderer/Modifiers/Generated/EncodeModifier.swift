@@ -15,7 +15,7 @@ extension EncodeModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let to = any Swift.Encoder(syntax: syntax.arguments[0].expression) else {
+            guard let expr_to = syntax.argument(named: "to")?.expression, let to = any Swift.Encoder(syntax: expr_to) else {
                 throw ModifierParseError.invalidArguments(modifier: "EncodeModifier", variant: "encode", expectedTypes: "any Swift.Encoder")
             }
             self = .encode(to: to)

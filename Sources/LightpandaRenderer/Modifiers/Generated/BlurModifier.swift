@@ -15,12 +15,10 @@ extension BlurModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let radius = CoreFoundation.CGFloat(syntax: syntax.arguments[0].expression) else {
+            guard let expr_radius = syntax.argument(named: "radius")?.expression, let radius = CoreFoundation.CGFloat(syntax: expr_radius) else {
                 throw ModifierParseError.invalidArguments(modifier: "BlurModifier", variant: "blur", expectedTypes: "CoreFoundation.CGFloat, Swift.Bool")
             }
-            guard let opaque = Swift.Bool(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "BlurModifier", variant: "blur", expectedTypes: "CoreFoundation.CGFloat, Swift.Bool")
-            }
+            let opaque: Swift.Bool = if let expr = syntax.argument(named: "opaque")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { false }
             self = .blur(radius: radius, opaque: opaque)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "BlurModifier", expected: [2], found: syntax.arguments.count)

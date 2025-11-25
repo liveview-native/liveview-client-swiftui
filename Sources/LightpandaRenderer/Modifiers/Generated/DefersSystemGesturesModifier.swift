@@ -15,7 +15,7 @@ extension DefersSystemGesturesModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let on = SwiftUICore.Edge.Set(syntax: syntax.arguments[0].expression) else {
+            guard let expr_on = syntax.argument(named: "on")?.expression, let on = SwiftUICore.Edge.Set(syntax: expr_on) else {
                 throw ModifierParseError.invalidArguments(modifier: "DefersSystemGesturesModifier", variant: "defersSystemGestures", expectedTypes: "SwiftUICore.Edge.Set")
             }
             self = .defersSystemGestures(on: on)

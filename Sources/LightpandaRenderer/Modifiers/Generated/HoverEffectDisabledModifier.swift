@@ -15,9 +15,7 @@ extension HoverEffectDisabledModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = Swift.Bool(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "HoverEffectDisabledModifier", variant: "hoverEffectDisabled", expectedTypes: "Swift.Bool")
-            }
+            let value0: Swift.Bool = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .hoverEffectDisabled(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "HoverEffectDisabledModifier", expected: [1], found: syntax.arguments.count)

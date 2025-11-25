@@ -16,9 +16,9 @@ extension ButtonStyleModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = AnyPrimitiveButtonStyle(syntax: syntax.arguments[0].expression) {
+            if let value0: AnyPrimitiveButtonStyle = AnyPrimitiveButtonStyle(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .buttonStyleWithAnyPrimitiveButtonStyle(value0)
-            } else if let value0 = AnyButtonStyle(syntax: syntax.arguments[0].expression) {
+            } else if let value0: AnyButtonStyle = AnyButtonStyle(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .buttonStyleWithAnyButtonStyle(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "ButtonStyleModifier", variant: "multiple variants", expectedTypes: "AnyPrimitiveButtonStyle or AnyButtonStyle")

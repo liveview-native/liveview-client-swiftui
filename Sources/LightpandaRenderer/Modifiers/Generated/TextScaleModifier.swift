@@ -15,12 +15,10 @@ extension TextScaleModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = SwiftUICore.Text.Scale(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Text.Scale(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "TextScaleModifier", variant: "textScale", expectedTypes: "SwiftUICore.Text.Scale, Swift.Bool")
             }
-            guard let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "TextScaleModifier", variant: "textScale", expectedTypes: "SwiftUICore.Text.Scale, Swift.Bool")
-            }
+            let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .textScale(value0, isEnabled: isEnabled)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "TextScaleModifier", expected: [2], found: syntax.arguments.count)

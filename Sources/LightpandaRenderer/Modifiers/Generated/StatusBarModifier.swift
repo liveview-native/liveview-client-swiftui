@@ -15,7 +15,7 @@ extension StatusBarModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let hidden = Swift.Bool(syntax: syntax.arguments[0].expression) else {
+            guard let expr_hidden = syntax.argument(named: "hidden")?.expression, let hidden = Swift.Bool(syntax: expr_hidden) else {
                 throw ModifierParseError.invalidArguments(modifier: "StatusBarModifier", variant: "statusBar", expectedTypes: "Swift.Bool")
             }
             self = .statusBar(hidden: hidden)

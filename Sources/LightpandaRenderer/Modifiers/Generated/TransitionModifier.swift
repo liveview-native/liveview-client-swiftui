@@ -16,9 +16,9 @@ extension TransitionModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = SwiftUICore.AnyTransition(syntax: syntax.arguments[0].expression) {
+            if let value0: SwiftUICore.AnyTransition = SwiftUICore.AnyTransition(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .transitionWithAnyTransition(value0)
-            } else if let value0 = AnyTransition(syntax: syntax.arguments[0].expression) {
+            } else if let value0: AnyTransition = AnyTransition(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .transitionWithAnyTransition1(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "TransitionModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.AnyTransition or AnyTransition")

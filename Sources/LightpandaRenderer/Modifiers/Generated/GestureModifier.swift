@@ -19,31 +19,30 @@ extension GestureModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = some NSGestureRecognizerRepresentable(syntax: syntax.arguments[0].expression) {
+            if let value0: some NSGestureRecognizerRepresentable = some NSGestureRecognizerRepresentable(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .gestureWithsomeNSGestureRecognizerRepresentable(value0)
-            } else if let value0 = some UIGestureRecognizerRepresentable(syntax: syntax.arguments[0].expression) {
+            } else if let value0: some UIGestureRecognizerRepresentable = some UIGestureRecognizerRepresentable(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .gestureWithsomeUIGestureRecognizerRepresentable(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "GestureModifier", variant: "multiple variants", expectedTypes: "some NSGestureRecognizerRepresentable or some UIGestureRecognizerRepresentable")
             }
         case 2:
-            if let value0 = AnyGesture<Any>(syntax: syntax.arguments[0].expression), let including = SwiftUICore.GestureMask(syntax: syntax.arguments[1].expression) {
+            if let value0: AnyGesture<Any> = AnyGesture<Any>(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let including: SwiftUICore.GestureMask = if let expr = syntax.argument(named: "including")?.expression, let parsed = SwiftUICore.GestureMask(syntax: expr) { parsed } else { .all }
                 self = .gestureWithAnyGestureAnyGestureMask(value0, including: including)
-            } else if let value0 = AnyGesture<Any>(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            } else if let value0: AnyGesture<Any> = AnyGesture<Any>(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_isEnabled = syntax.argument(named: "isEnabled")?.expression, let isEnabled = Swift.Bool(syntax: expr_isEnabled) {
                 self = .gestureWithAnyGestureAnyBool(value0, isEnabled: isEnabled)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "GestureModifier", variant: "multiple variants", expectedTypes: "AnyGesture<Any>, SwiftUICore.GestureMask or AnyGesture<Any>, Swift.Bool")
             }
         case 3:
-            guard let value0 = AnyGesture<Any>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = AnyGesture<Any>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "GestureModifier", variant: "gestureWithAnyGestureAnyStringBool", expectedTypes: "AnyGesture<Any>, Swift.String, Swift.Bool")
             }
-            guard let name = Swift.String(syntax: syntax.arguments[1].expression) else {
+            guard let expr_name = syntax.argument(named: "name")?.expression, let name = Swift.String(syntax: expr_name) else {
                 throw ModifierParseError.invalidArguments(modifier: "GestureModifier", variant: "gestureWithAnyGestureAnyStringBool", expectedTypes: "AnyGesture<Any>, Swift.String, Swift.Bool")
             }
-            guard let isEnabled = Swift.Bool(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "GestureModifier", variant: "gestureWithAnyGestureAnyStringBool", expectedTypes: "AnyGesture<Any>, Swift.String, Swift.Bool")
-            }
+            let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .gestureWithAnyGestureAnyStringBool(value0, name: name, isEnabled: isEnabled)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "GestureModifier", expected: [1, 2, 3], found: syntax.arguments.count)

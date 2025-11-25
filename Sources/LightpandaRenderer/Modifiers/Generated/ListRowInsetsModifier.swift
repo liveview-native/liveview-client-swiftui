@@ -16,13 +16,11 @@ extension ListRowInsetsModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUICore.EdgeInsets(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUICore.EdgeInsets? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.EdgeInsets(syntax: expr) } else { nil }
             self = .listRowInsetsWithEdgeInsetsOptional(value0)
         case 2:
-            guard let value0 = SwiftUICore.Edge.Set(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "ListRowInsetsModifier", variant: "listRowInsetsWithSetCGFloatOptional", expectedTypes: "SwiftUICore.Edge.Set, CoreFoundation.CGFloat?")
-            }
-            let value1 = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression)
+            let value0: SwiftUICore.Edge.Set = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = SwiftUICore.Edge.Set(syntax: expr) { parsed } else { .all }
+            let value1: CoreFoundation.CGFloat? = if let expr = (syntax.arguments.count > 1 ? syntax.arguments[1].expression : nil) { CoreFoundation.CGFloat(syntax: expr) } else { nil }
             self = .listRowInsetsWithSetCGFloatOptional(value0, value1)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "ListRowInsetsModifier", expected: [1, 2], found: syntax.arguments.count)

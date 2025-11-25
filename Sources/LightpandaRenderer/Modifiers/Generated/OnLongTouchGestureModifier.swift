@@ -15,9 +15,7 @@ extension OnLongTouchGestureModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let minimumDuration = Swift.Double(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "OnLongTouchGestureModifier", variant: "onLongTouchGesture", expectedTypes: "Swift.Double")
-            }
+            let minimumDuration: Swift.Double = if let expr = syntax.argument(named: "minimumDuration")?.expression, let parsed = Swift.Double(syntax: expr) { parsed } else { 0.5 }
             self = .onLongTouchGesture(minimumDuration: minimumDuration)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "OnLongTouchGestureModifier", expected: [1], found: syntax.arguments.count)

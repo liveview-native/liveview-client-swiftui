@@ -15,7 +15,7 @@ extension SymbolVariableValueModeModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUICore.SymbolVariableValueMode(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUICore.SymbolVariableValueMode? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.SymbolVariableValueMode(syntax: expr) } else { nil }
             self = .symbolVariableValueMode(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "SymbolVariableValueModeModifier", expected: [1], found: syntax.arguments.count)

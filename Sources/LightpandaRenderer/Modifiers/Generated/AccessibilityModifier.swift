@@ -29,65 +29,65 @@ extension AccessibilityModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case "activationPoint":
-                if let activationPoint = CoreFoundation.CGPoint(syntax: syntax.arguments[0].expression) {
+                if let expr_activationPoint = syntax.argument(named: "activationPoint")?.expression, let activationPoint = CoreFoundation.CGPoint(syntax: expr_activationPoint) {
                     self = .accessibilityWithCGPoint(activationPoint: activationPoint)
-                } else if let activationPoint = SwiftUICore.UnitPoint(syntax: syntax.arguments[0].expression) {
+                } else if let expr_activationPoint = syntax.argument(named: "activationPoint")?.expression, let activationPoint = SwiftUICore.UnitPoint(syntax: expr_activationPoint) {
                     self = .accessibilityWithUnitPoint(activationPoint: activationPoint)
                 } else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "multiple variants", expectedTypes: "CoreFoundation.CGPoint or SwiftUICore.UnitPoint")
                 }
             case "addTraits":
-                guard let addTraits = SwiftUICore.AccessibilityTraits(syntax: syntax.arguments[0].expression) else {
+                guard let expr_addTraits = syntax.argument(named: "addTraits")?.expression, let addTraits = SwiftUICore.AccessibilityTraits(syntax: expr_addTraits) else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "accessibilityWithAccessibilityTraits", expectedTypes: "SwiftUICore.AccessibilityTraits")
                 }
                 self = .accessibilityWithAccessibilityTraits(addTraits: addTraits)
             case "hidden":
-                guard let hidden = Swift.Bool(syntax: syntax.arguments[0].expression) else {
+                guard let expr_hidden = syntax.argument(named: "hidden")?.expression, let hidden = Swift.Bool(syntax: expr_hidden) else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "accessibilityWithBool", expectedTypes: "Swift.Bool")
                 }
                 self = .accessibilityWithBool(hidden: hidden)
             case "hint":
-                guard let hint = SwiftUICore.Text(syntax: syntax.arguments[0].expression) else {
+                guard let expr_hint = syntax.argument(named: "hint")?.expression, let hint = SwiftUICore.Text(syntax: expr_hint) else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "accessibilityWithText2", expectedTypes: "SwiftUICore.Text")
                 }
                 self = .accessibilityWithText2(hint: hint)
             case "identifier":
-                guard let identifier = Swift.String(syntax: syntax.arguments[0].expression) else {
+                guard let expr_identifier = syntax.argument(named: "identifier")?.expression, let identifier = Swift.String(syntax: expr_identifier) else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "accessibilityWithString", expectedTypes: "Swift.String")
                 }
                 self = .accessibilityWithString(identifier: identifier)
             case "inputLabels":
-                guard let inputLabels = [SwiftUICore.Text](syntax: syntax.arguments[0].expression) else {
+                guard let expr_inputLabels = syntax.argument(named: "inputLabels")?.expression, let inputLabels = [SwiftUICore.Text](syntax: expr_inputLabels) else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "accessibilityWithText3", expectedTypes: "[SwiftUICore.Text]")
                 }
                 self = .accessibilityWithText3(inputLabels: inputLabels)
             case "label":
-                guard let label = SwiftUICore.Text(syntax: syntax.arguments[0].expression) else {
+                guard let expr_label = syntax.argument(named: "label")?.expression, let label = SwiftUICore.Text(syntax: expr_label) else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "accessibilityWithText1", expectedTypes: "SwiftUICore.Text")
                 }
                 self = .accessibilityWithText1(label: label)
             case "removeTraits":
-                guard let removeTraits = SwiftUICore.AccessibilityTraits(syntax: syntax.arguments[0].expression) else {
+                guard let expr_removeTraits = syntax.argument(named: "removeTraits")?.expression, let removeTraits = SwiftUICore.AccessibilityTraits(syntax: expr_removeTraits) else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "accessibilityWithAccessibilityTraits1", expectedTypes: "SwiftUICore.AccessibilityTraits")
                 }
                 self = .accessibilityWithAccessibilityTraits1(removeTraits: removeTraits)
             case "selectionIdentifier":
-                guard let selectionIdentifier = Swift.AnyHashable(syntax: syntax.arguments[0].expression) else {
+                guard let expr_selectionIdentifier = syntax.argument(named: "selectionIdentifier")?.expression, let selectionIdentifier = Swift.AnyHashable(syntax: expr_selectionIdentifier) else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "accessibilityWithAnyHashable", expectedTypes: "Swift.AnyHashable")
                 }
                 self = .accessibilityWithAnyHashable(selectionIdentifier: selectionIdentifier)
             case "sortPriority":
-                guard let sortPriority = Swift.Double(syntax: syntax.arguments[0].expression) else {
+                guard let expr_sortPriority = syntax.argument(named: "sortPriority")?.expression, let sortPriority = Swift.Double(syntax: expr_sortPriority) else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "accessibilityWithDouble", expectedTypes: "Swift.Double")
                 }
                 self = .accessibilityWithDouble(sortPriority: sortPriority)
             case "value":
-                guard let value = SwiftUICore.Text(syntax: syntax.arguments[0].expression) else {
+                guard let expr_value = syntax.argument(named: "value")?.expression, let value = SwiftUICore.Text(syntax: expr_value) else {
                     throw ModifierParseError.invalidArguments(modifier: "AccessibilityModifier", variant: "accessibilityWithText", expectedTypes: "SwiftUICore.Text")
                 }
                 self = .accessibilityWithText(value: value)
             default:
-                throw ModifierParseError.ambiguousVariant(modifier: "AccessibilityModifier", expectedLabels: ["activationPoint", "addTraits", "removeTraits", "hidden", "hint", "inputLabels", "identifier", "value", "selectionIdentifier", "sortPriority", "label"])
+                throw ModifierParseError.ambiguousVariant(modifier: "AccessibilityModifier", expectedLabels: ["inputLabels", "addTraits", "selectionIdentifier", "identifier", "hint", "value", "hidden", "activationPoint", "removeTraits", "label", "sortPriority"])
             }
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "AccessibilityModifier", expected: [1], found: syntax.arguments.count)

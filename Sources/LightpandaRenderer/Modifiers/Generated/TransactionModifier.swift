@@ -19,7 +19,7 @@ extension TransactionModifier: RuntimeViewModifier {
         case 0:
             self = .transactionWithVoid()
         case 1:
-            guard let value = some Equatable(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value = syntax.argument(named: "value")?.expression, let value = some Equatable(syntax: expr_value) else {
                 throw ModifierParseError.invalidArguments(modifier: "TransactionModifier", variant: "transactionWithsomeEquatableVoid", expectedTypes: "some Equatable")
             }
             self = .transactionWithsomeEquatableVoid(value: value)

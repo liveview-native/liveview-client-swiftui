@@ -18,7 +18,7 @@ extension DigitalCrownAccessoryModifier: RuntimeViewModifier {
         case 0:
             self = .digitalCrownAccessoryWithClosureAnyView
         case 1:
-            guard let value0 = SwiftUICore.Visibility(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Visibility(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "DigitalCrownAccessoryModifier", variant: "digitalCrownAccessoryWithVisibility", expectedTypes: "SwiftUICore.Visibility")
             }
             self = .digitalCrownAccessoryWithVisibility(value0)

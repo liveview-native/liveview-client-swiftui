@@ -19,13 +19,13 @@ extension LineLimitModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = Swift.Int(syntax: syntax.arguments[0].expression)
+            let value0: Swift.Int? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { Swift.Int(syntax: expr) } else { nil }
             self = .lineLimitWithIntOptional(value0)
         case 2:
-            guard let value0 = Swift.Int(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Swift.Int(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "LineLimitModifier", variant: "lineLimitWithIntBool", expectedTypes: "Swift.Int, Swift.Bool")
             }
-            guard let reservesSpace = Swift.Bool(syntax: syntax.arguments[1].expression) else {
+            guard let expr_reservesSpace = syntax.argument(named: "reservesSpace")?.expression, let reservesSpace = Swift.Bool(syntax: expr_reservesSpace) else {
                 throw ModifierParseError.invalidArguments(modifier: "LineLimitModifier", variant: "lineLimitWithIntBool", expectedTypes: "Swift.Int, Swift.Bool")
             }
             self = .lineLimitWithIntBool(value0, reservesSpace: reservesSpace)

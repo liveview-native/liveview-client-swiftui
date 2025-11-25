@@ -15,7 +15,7 @@ extension AllowedDynamicRangeModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUICore.Image.DynamicRange(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUICore.Image.DynamicRange? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.Image.DynamicRange(syntax: expr) } else { nil }
             self = .allowedDynamicRange(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "AllowedDynamicRangeModifier", expected: [1], found: syntax.arguments.count)

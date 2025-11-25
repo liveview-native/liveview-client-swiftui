@@ -16,11 +16,13 @@ extension SafeAreaInsetModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            if let edge = SwiftUICore.VerticalEdge(syntax: syntax.arguments[0].expression), let alignment = SwiftUICore.HorizontalAlignment(syntax: syntax.arguments[1].expression) {
-                let spacing = CoreFoundation.CGFloat(syntax: syntax.arguments[2].expression)
+            if let expr_edge = syntax.argument(named: "edge")?.expression, let edge = SwiftUICore.VerticalEdge(syntax: expr_edge) {
+                let alignment: SwiftUICore.HorizontalAlignment = if let expr = syntax.argument(named: "alignment")?.expression, let parsed = SwiftUICore.HorizontalAlignment(syntax: expr) { parsed } else { .center }
+                let spacing: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "spacing")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
                 self = .safeAreaInsetWithVerticalEdgeHorizontalAlignmentCGFloatOptionalClosureAnyView(edge: edge, alignment: alignment, spacing: spacing)
-            } else if let edge = SwiftUICore.HorizontalEdge(syntax: syntax.arguments[0].expression), let alignment = SwiftUICore.VerticalAlignment(syntax: syntax.arguments[1].expression) {
-                let spacing = CoreFoundation.CGFloat(syntax: syntax.arguments[2].expression)
+            } else if let expr_edge = syntax.argument(named: "edge")?.expression, let edge = SwiftUICore.HorizontalEdge(syntax: expr_edge) {
+                let alignment: SwiftUICore.VerticalAlignment = if let expr = syntax.argument(named: "alignment")?.expression, let parsed = SwiftUICore.VerticalAlignment(syntax: expr) { parsed } else { .center }
+                let spacing: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "spacing")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { nil }
                 self = .safeAreaInsetWithHorizontalEdgeVerticalAlignmentCGFloatOptionalClosureAnyView(edge: edge, alignment: alignment, spacing: spacing)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "SafeAreaInsetModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.VerticalEdge, SwiftUICore.HorizontalAlignment, CoreFoundation.CGFloat? or SwiftUICore.HorizontalEdge, SwiftUICore.VerticalAlignment, CoreFoundation.CGFloat?")

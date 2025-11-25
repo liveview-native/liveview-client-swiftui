@@ -15,7 +15,7 @@ extension SetEnvironmentModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUICore.EnvironmentValues(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUICore.EnvironmentValues? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUICore.EnvironmentValues(syntax: expr) } else { nil }
             self = .setEnvironment(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "SetEnvironmentModifier", expected: [1], found: syntax.arguments.count)

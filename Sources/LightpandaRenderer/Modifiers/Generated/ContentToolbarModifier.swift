@@ -16,9 +16,9 @@ extension ContentToolbarModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let for = SwiftUI.ContentToolbarPlacement(syntax: syntax.arguments[0].expression) {
+            if let expr_for = syntax.argument(named: "for")?.expression, let for = SwiftUI.ContentToolbarPlacement(syntax: expr_for) {
                 self = .contentToolbarWithContentToolbarPlacementClosureAnyView(for: for)
-            } else if let for = SwiftUI.ContentToolbarPlacement(syntax: syntax.arguments[0].expression) {
+            } else if let expr_for = syntax.argument(named: "for")?.expression, let for = SwiftUI.ContentToolbarPlacement(syntax: expr_for) {
                 self = .contentToolbarWithContentToolbarPlacementClosureContent(for: for)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "ContentToolbarModifier", variant: "multiple variants", expectedTypes: "SwiftUI.ContentToolbarPlacement or SwiftUI.ContentToolbarPlacement")

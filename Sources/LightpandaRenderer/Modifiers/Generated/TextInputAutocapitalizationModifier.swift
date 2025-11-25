@@ -15,7 +15,7 @@ extension TextInputAutocapitalizationModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = SwiftUI.TextInputAutocapitalization(syntax: syntax.arguments[0].expression)
+            let value0: SwiftUI.TextInputAutocapitalization? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { SwiftUI.TextInputAutocapitalization(syntax: expr) } else { nil }
             self = .textInputAutocapitalization(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "TextInputAutocapitalizationModifier", expected: [1], found: syntax.arguments.count)

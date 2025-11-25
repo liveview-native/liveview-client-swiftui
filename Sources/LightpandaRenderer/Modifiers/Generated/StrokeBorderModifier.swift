@@ -16,9 +16,14 @@ extension StrokeBorderModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            if let value0 = AnyShapeStyle(syntax: syntax.arguments[0].expression), let style = SwiftUICore.StrokeStyle(syntax: syntax.arguments[1].expression), let antialiased = Swift.Bool(syntax: syntax.arguments[2].expression) {
+            if let expr_style = syntax.argument(named: "style")?.expression, let style = SwiftUICore.StrokeStyle(syntax: expr_style) {
+                let value0: AnyShapeStyle = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = AnyShapeStyle(syntax: expr) { parsed } else { .foreground }
+                let antialiased: Swift.Bool = if let expr = syntax.argument(named: "antialiased")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .strokeBorderWithAnyShapeStyleStrokeStyleBool(value0, style: style, antialiased: antialiased)
-            } else if let value0 = AnyShapeStyle(syntax: syntax.arguments[0].expression), let lineWidth = CoreFoundation.CGFloat(syntax: syntax.arguments[1].expression), let antialiased = Swift.Bool(syntax: syntax.arguments[2].expression) {
+            } else if true {
+                let value0: AnyShapeStyle = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = AnyShapeStyle(syntax: expr) { parsed } else { .foreground }
+                let lineWidth: CoreFoundation.CGFloat = if let expr = syntax.argument(named: "lineWidth")?.expression, let parsed = CoreFoundation.CGFloat(syntax: expr) { parsed } else { 1 }
+                let antialiased: Swift.Bool = if let expr = syntax.argument(named: "antialiased")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .strokeBorderWithAnyShapeStyleCGFloatBool(value0, lineWidth: lineWidth, antialiased: antialiased)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "StrokeBorderModifier", variant: "multiple variants", expectedTypes: "AnyShapeStyle, SwiftUICore.StrokeStyle, Swift.Bool or AnyShapeStyle, CoreFoundation.CGFloat, Swift.Bool")

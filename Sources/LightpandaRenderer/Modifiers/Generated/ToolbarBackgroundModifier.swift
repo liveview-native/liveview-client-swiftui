@@ -16,9 +16,9 @@ extension ToolbarBackgroundModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let value0 = AnyShapeStyle(syntax: syntax.arguments[0].expression), let for = SwiftUI.ToolbarPlacement(syntax: syntax.arguments[1].expression) {
+            if let value0: AnyShapeStyle = AnyShapeStyle(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_for = syntax.argument(named: "for")?.expression, let for = SwiftUI.ToolbarPlacement(syntax: expr_for) {
                 self = .toolbarBackgroundWithAnyShapeStyleToolbarPlacement(value0, for: for)
-            } else if let value0 = SwiftUICore.Visibility(syntax: syntax.arguments[0].expression), let for = SwiftUI.ToolbarPlacement(syntax: syntax.arguments[1].expression) {
+            } else if let value0: SwiftUICore.Visibility = SwiftUICore.Visibility(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_for = syntax.argument(named: "for")?.expression, let for = SwiftUI.ToolbarPlacement(syntax: expr_for) {
                 self = .toolbarBackgroundWithVisibilityToolbarPlacement(value0, for: for)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "ToolbarBackgroundModifier", variant: "multiple variants", expectedTypes: "AnyShapeStyle, SwiftUI.ToolbarPlacement or SwiftUICore.Visibility, SwiftUI.ToolbarPlacement")

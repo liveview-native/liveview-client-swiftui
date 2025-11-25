@@ -15,7 +15,7 @@ extension BuildIfModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = AnyView(syntax: syntax.arguments[0].expression)
+            let value0: AnyView? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { AnyView(syntax: expr) } else { nil }
             self = .buildIf(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "BuildIfModifier", expected: [1], found: syntax.arguments.count)

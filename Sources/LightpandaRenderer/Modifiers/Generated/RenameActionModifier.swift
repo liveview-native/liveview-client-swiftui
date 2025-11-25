@@ -18,7 +18,7 @@ extension RenameActionModifier: RuntimeViewModifier {
         case 0:
             self = .renameActionWithVoid
         case 1:
-            guard let value0 = SwiftUI.FocusState<Swift.Bool>.Binding(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.FocusState<Swift.Bool>.Binding(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "RenameActionModifier", variant: "renameActionWithBinding", expectedTypes: "SwiftUI.FocusState<Swift.Bool>.Binding")
             }
             self = .renameActionWithBinding(value0)

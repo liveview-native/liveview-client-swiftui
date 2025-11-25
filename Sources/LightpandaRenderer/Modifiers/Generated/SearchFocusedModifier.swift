@@ -16,15 +16,15 @@ extension SearchFocusedModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUI.FocusState<Swift.Bool>.Binding(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.FocusState<Swift.Bool>.Binding(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "SearchFocusedModifier", variant: "searchFocusedWithBinding", expectedTypes: "SwiftUI.FocusState<Swift.Bool>.Binding")
             }
             self = .searchFocusedWithBinding(value0)
         case 2:
-            guard let value0 = SwiftUI.FocusState<AnyHashable>.Binding(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.FocusState<AnyHashable>.Binding(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "SearchFocusedModifier", variant: "searchFocusedWithBindingAnyHashable", expectedTypes: "SwiftUI.FocusState<AnyHashable>.Binding, AnyHashable")
             }
-            guard let equals = AnyHashable(syntax: syntax.arguments[1].expression) else {
+            guard let expr_equals = syntax.argument(named: "equals")?.expression, let equals = AnyHashable(syntax: expr_equals) else {
                 throw ModifierParseError.invalidArguments(modifier: "SearchFocusedModifier", variant: "searchFocusedWithBindingAnyHashable", expectedTypes: "SwiftUI.FocusState<AnyHashable>.Binding, AnyHashable")
             }
             self = .searchFocusedWithBindingAnyHashable(value0, equals: equals)

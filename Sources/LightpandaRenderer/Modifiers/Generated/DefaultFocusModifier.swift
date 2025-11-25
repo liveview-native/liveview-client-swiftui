@@ -15,15 +15,13 @@ extension DefaultFocusModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            guard let value0 = SwiftUI.FocusState<AnyHashable>.Binding(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUI.FocusState<AnyHashable>.Binding(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "DefaultFocusModifier", variant: "defaultFocus", expectedTypes: "SwiftUI.FocusState<AnyHashable>.Binding, AnyHashable, SwiftUI.DefaultFocusEvaluationPriority")
             }
-            guard let value1 = AnyHashable(syntax: syntax.arguments[1].expression) else {
+            guard let expr_value1 = (syntax.arguments.count > 1 ? syntax.arguments[1].expression : nil), let value1 = AnyHashable(syntax: expr_value1) else {
                 throw ModifierParseError.invalidArguments(modifier: "DefaultFocusModifier", variant: "defaultFocus", expectedTypes: "SwiftUI.FocusState<AnyHashable>.Binding, AnyHashable, SwiftUI.DefaultFocusEvaluationPriority")
             }
-            guard let priority = SwiftUI.DefaultFocusEvaluationPriority(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "DefaultFocusModifier", variant: "defaultFocus", expectedTypes: "SwiftUI.FocusState<AnyHashable>.Binding, AnyHashable, SwiftUI.DefaultFocusEvaluationPriority")
-            }
+            let priority: SwiftUI.DefaultFocusEvaluationPriority = if let expr = syntax.argument(named: "priority")?.expression, let parsed = SwiftUI.DefaultFocusEvaluationPriority(syntax: expr) { parsed } else { .automatic }
             self = .defaultFocus(value0, value1, priority: priority)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "DefaultFocusModifier", expected: [3], found: syntax.arguments.count)

@@ -15,9 +15,7 @@ extension OnSubmitModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let of = SwiftUI.SubmitTriggers(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "OnSubmitModifier", variant: "onSubmit", expectedTypes: "SwiftUI.SubmitTriggers")
-            }
+            let of: SwiftUI.SubmitTriggers = if let expr = syntax.argument(named: "of")?.expression, let parsed = SwiftUI.SubmitTriggers(syntax: expr) { parsed } else { .text }
             self = .onSubmit(of: of)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "OnSubmitModifier", expected: [1], found: syntax.arguments.count)

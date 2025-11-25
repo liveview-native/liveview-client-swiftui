@@ -16,9 +16,9 @@ extension ContainerShapeModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = some RoundedRectangularShape(syntax: syntax.arguments[0].expression) {
+            if let value0: some RoundedRectangularShape = some RoundedRectangularShape(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .containerShapeWithsomeRoundedRectangularShape(value0)
-            } else if let value0 = AnyShape(syntax: syntax.arguments[0].expression) {
+            } else if let value0: AnyShape = AnyShape(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .containerShapeWithAnyShape(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "ContainerShapeModifier", variant: "multiple variants", expectedTypes: "some RoundedRectangularShape or AnyShape")

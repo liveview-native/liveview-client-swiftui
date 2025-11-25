@@ -19,16 +19,16 @@ extension ScrollPositionModifier: RuntimeViewModifier {
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case nil:
-                guard let value0 = SwiftUICore.Binding<SwiftUICore.ScrollPosition>(syntax: syntax.arguments[0].expression) else {
+                guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Binding<SwiftUICore.ScrollPosition>(syntax: expr_value0) else {
                     throw ModifierParseError.invalidArguments(modifier: "ScrollPositionModifier", variant: "scrollPositionWithScrollPositionUnitPointOptional", expectedTypes: "SwiftUICore.Binding<SwiftUICore.ScrollPosition>, SwiftUICore.UnitPoint?")
                 }
-                let anchor = SwiftUICore.UnitPoint(syntax: syntax.arguments[1].expression)
+                let anchor: SwiftUICore.UnitPoint? = if let expr = syntax.argument(named: "anchor")?.expression, let parsed = SwiftUICore.UnitPoint(syntax: expr) { parsed } else { nil }
                 self = .scrollPositionWithScrollPositionUnitPointOptional(value0, anchor: anchor)
             case "id":
-                guard let id = SwiftUICore.Binding<(some Hashable)?>(syntax: syntax.arguments[0].expression) else {
+                guard let expr_id = syntax.argument(named: "id")?.expression, let id = SwiftUICore.Binding<(some Hashable)?>(syntax: expr_id) else {
                     throw ModifierParseError.invalidArguments(modifier: "ScrollPositionModifier", variant: "scrollPositionWithBindingsomeHashableOptionalUnitPointOptional", expectedTypes: "SwiftUICore.Binding<(some Hashable)?>, SwiftUICore.UnitPoint?")
                 }
-                let anchor = SwiftUICore.UnitPoint(syntax: syntax.arguments[1].expression)
+                let anchor: SwiftUICore.UnitPoint? = if let expr = syntax.argument(named: "anchor")?.expression, let parsed = SwiftUICore.UnitPoint(syntax: expr) { parsed } else { nil }
                 self = .scrollPositionWithBindingsomeHashableOptionalUnitPointOptional(id: id, anchor: anchor)
             default:
                 throw ModifierParseError.ambiguousVariant(modifier: "ScrollPositionModifier", expectedLabels: ["id"])

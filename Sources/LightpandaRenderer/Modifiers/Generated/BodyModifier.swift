@@ -15,7 +15,7 @@ extension BodyModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let children = SwiftUICore._VariadicView.Children(syntax: syntax.arguments[0].expression) else {
+            guard let expr_children = syntax.argument(named: "children")?.expression, let children = SwiftUICore._VariadicView.Children(syntax: expr_children) else {
                 throw ModifierParseError.invalidArguments(modifier: "BodyModifier", variant: "body", expectedTypes: "SwiftUICore._VariadicView.Children")
             }
             self = .body(children: children)

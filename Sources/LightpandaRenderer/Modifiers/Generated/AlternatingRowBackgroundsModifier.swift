@@ -15,9 +15,7 @@ extension AlternatingRowBackgroundsModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = SwiftUI.AlternatingRowBackgroundBehavior(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "AlternatingRowBackgroundsModifier", variant: "alternatingRowBackgrounds", expectedTypes: "SwiftUI.AlternatingRowBackgroundBehavior")
-            }
+            let value0: SwiftUI.AlternatingRowBackgroundBehavior = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = SwiftUI.AlternatingRowBackgroundBehavior(syntax: expr) { parsed } else { .enabled }
             self = .alternatingRowBackgrounds(value0)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "AlternatingRowBackgroundsModifier", expected: [1], found: syntax.arguments.count)

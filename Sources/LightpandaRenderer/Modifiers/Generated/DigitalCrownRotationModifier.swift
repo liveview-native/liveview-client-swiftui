@@ -20,61 +20,55 @@ extension DigitalCrownRotationModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = SwiftUICore.Binding<V>(syntax: syntax.arguments[0].expression) {
+            if let value0: SwiftUICore.Binding<V> = SwiftUICore.Binding<V>(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .digitalCrownRotationWithBindingV(value0)
-            } else if let value0 = SwiftUICore.Binding<V>(syntax: syntax.arguments[0].expression) {
+            } else if let value0: SwiftUICore.Binding<V> = SwiftUICore.Binding<V>(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .digitalCrownRotationWithBindingVVoidVoid(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Binding<V> or SwiftUICore.Binding<V>")
             }
         case 6:
-            guard let value0 = SwiftUICore.Binding<V>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Binding<V>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVDigitalCrownRotationalSensitivityBoolBoolVoidVoid", expectedTypes: "SwiftUICore.Binding<V>, V, V, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
             }
-            guard let from = V(syntax: syntax.arguments[1].expression) else {
+            guard let expr_from = syntax.argument(named: "from")?.expression, let from = V(syntax: expr_from) else {
                 throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVDigitalCrownRotationalSensitivityBoolBoolVoidVoid", expectedTypes: "SwiftUICore.Binding<V>, V, V, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
             }
-            guard let through = V(syntax: syntax.arguments[2].expression) else {
+            guard let expr_through = syntax.argument(named: "through")?.expression, let through = V(syntax: expr_through) else {
                 throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVDigitalCrownRotationalSensitivityBoolBoolVoidVoid", expectedTypes: "SwiftUICore.Binding<V>, V, V, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
             }
-            guard let sensitivity = SwiftUI.DigitalCrownRotationalSensitivity(syntax: syntax.arguments[3].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVDigitalCrownRotationalSensitivityBoolBoolVoidVoid", expectedTypes: "SwiftUICore.Binding<V>, V, V, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
-            }
-            guard let isContinuous = Swift.Bool(syntax: syntax.arguments[4].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVDigitalCrownRotationalSensitivityBoolBoolVoidVoid", expectedTypes: "SwiftUICore.Binding<V>, V, V, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
-            }
-            guard let isHapticFeedbackEnabled = Swift.Bool(syntax: syntax.arguments[5].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVDigitalCrownRotationalSensitivityBoolBoolVoidVoid", expectedTypes: "SwiftUICore.Binding<V>, V, V, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
-            }
+            let sensitivity: SwiftUI.DigitalCrownRotationalSensitivity = if let expr = syntax.argument(named: "sensitivity")?.expression, let parsed = SwiftUI.DigitalCrownRotationalSensitivity(syntax: expr) { parsed } else { .high }
+            let isContinuous: Swift.Bool = if let expr = syntax.argument(named: "isContinuous")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { false }
+            let isHapticFeedbackEnabled: Swift.Bool = if let expr = syntax.argument(named: "isHapticFeedbackEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .digitalCrownRotationWithBindingVVVDigitalCrownRotationalSensitivityBoolBoolVoidVoid(value0, from: from, through: through, sensitivity: sensitivity, isContinuous: isContinuous, isHapticFeedbackEnabled: isHapticFeedbackEnabled)
         case 7:
             let firstLabel = syntax.arguments.first?.label?.text
             switch firstLabel {
             case nil:
-                guard let value0 = SwiftUICore.Binding<V>(syntax: syntax.arguments[0].expression) else {
+                guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Binding<V>(syntax: expr_value0) else {
                     throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVStrideOptionalDigitalCrownRotationalSensitivityBoolBool", expectedTypes: "SwiftUICore.Binding<V>, V, V, V.Stride?, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
                 }
-                guard let from = V(syntax: syntax.arguments[1].expression) else {
+                guard let expr_from = syntax.argument(named: "from")?.expression, let from = V(syntax: expr_from) else {
                     throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVStrideOptionalDigitalCrownRotationalSensitivityBoolBool", expectedTypes: "SwiftUICore.Binding<V>, V, V, V.Stride?, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
                 }
-                guard let through = V(syntax: syntax.arguments[2].expression) else {
+                guard let expr_through = syntax.argument(named: "through")?.expression, let through = V(syntax: expr_through) else {
                     throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVStrideOptionalDigitalCrownRotationalSensitivityBoolBool", expectedTypes: "SwiftUICore.Binding<V>, V, V, V.Stride?, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
                 }
-                let by = V.Stride(syntax: syntax.arguments[3].expression)
-                guard let sensitivity = SwiftUI.DigitalCrownRotationalSensitivity(syntax: syntax.arguments[4].expression) else {
-                    throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVStrideOptionalDigitalCrownRotationalSensitivityBoolBool", expectedTypes: "SwiftUICore.Binding<V>, V, V, V.Stride?, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
-                }
-                guard let isContinuous = Swift.Bool(syntax: syntax.arguments[5].expression) else {
-                    throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVStrideOptionalDigitalCrownRotationalSensitivityBoolBool", expectedTypes: "SwiftUICore.Binding<V>, V, V, V.Stride?, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
-                }
-                guard let isHapticFeedbackEnabled = Swift.Bool(syntax: syntax.arguments[6].expression) else {
-                    throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "digitalCrownRotationWithBindingVVVStrideOptionalDigitalCrownRotationalSensitivityBoolBool", expectedTypes: "SwiftUICore.Binding<V>, V, V, V.Stride?, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")
-                }
+                let by: V.Stride? = if let expr = syntax.argument(named: "by")?.expression, let parsed = V.Stride(syntax: expr) { parsed } else { nil }
+                let sensitivity: SwiftUI.DigitalCrownRotationalSensitivity = if let expr = syntax.argument(named: "sensitivity")?.expression, let parsed = SwiftUI.DigitalCrownRotationalSensitivity(syntax: expr) { parsed } else { .high }
+                let isContinuous: Swift.Bool = if let expr = syntax.argument(named: "isContinuous")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { false }
+                let isHapticFeedbackEnabled: Swift.Bool = if let expr = syntax.argument(named: "isHapticFeedbackEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .digitalCrownRotationWithBindingVVVStrideOptionalDigitalCrownRotationalSensitivityBoolBool(value0, from: from, through: through, by: by, sensitivity: sensitivity, isContinuous: isContinuous, isHapticFeedbackEnabled: isHapticFeedbackEnabled)
             case "detent":
-                if let detent = SwiftUICore.Binding<V>(syntax: syntax.arguments[0].expression), let from = V(syntax: syntax.arguments[1].expression), let through = V(syntax: syntax.arguments[2].expression), let by = V.Stride(syntax: syntax.arguments[3].expression), let sensitivity = SwiftUI.DigitalCrownRotationalSensitivity(syntax: syntax.arguments[4].expression), let isContinuous = Swift.Bool(syntax: syntax.arguments[5].expression), let isHapticFeedbackEnabled = Swift.Bool(syntax: syntax.arguments[6].expression) {
+                if let expr_detent = syntax.argument(named: "detent")?.expression, let detent = SwiftUICore.Binding<V>(syntax: expr_detent), let expr_from = syntax.argument(named: "from")?.expression, let from = V(syntax: expr_from), let expr_through = syntax.argument(named: "through")?.expression, let through = V(syntax: expr_through), let expr_by = syntax.argument(named: "by")?.expression, let by = V.Stride(syntax: expr_by) {
+                    let sensitivity: SwiftUI.DigitalCrownRotationalSensitivity = if let expr = syntax.argument(named: "sensitivity")?.expression, let parsed = SwiftUI.DigitalCrownRotationalSensitivity(syntax: expr) { parsed } else { .high }
+                    let isContinuous: Swift.Bool = if let expr = syntax.argument(named: "isContinuous")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { false }
+                    let isHapticFeedbackEnabled: Swift.Bool = if let expr = syntax.argument(named: "isHapticFeedbackEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                     self = .digitalCrownRotationWithBindingVVVStrideDigitalCrownRotationalSensitivityBoolBoolVoidVoid(detent: detent, from: from, through: through, by: by, sensitivity: sensitivity, isContinuous: isContinuous, isHapticFeedbackEnabled: isHapticFeedbackEnabled)
-                } else if let detent = SwiftUICore.Binding<V>(syntax: syntax.arguments[0].expression), let from = V(syntax: syntax.arguments[1].expression), let through = V(syntax: syntax.arguments[2].expression), let by = V.Stride(syntax: syntax.arguments[3].expression), let sensitivity = SwiftUI.DigitalCrownRotationalSensitivity(syntax: syntax.arguments[4].expression), let isContinuous = Swift.Bool(syntax: syntax.arguments[5].expression), let isHapticFeedbackEnabled = Swift.Bool(syntax: syntax.arguments[6].expression) {
+                } else if let expr_detent = syntax.argument(named: "detent")?.expression, let detent = SwiftUICore.Binding<V>(syntax: expr_detent), let expr_from = syntax.argument(named: "from")?.expression, let from = V(syntax: expr_from), let expr_through = syntax.argument(named: "through")?.expression, let through = V(syntax: expr_through), let expr_by = syntax.argument(named: "by")?.expression, let by = V.Stride(syntax: expr_by) {
+                    let sensitivity: SwiftUI.DigitalCrownRotationalSensitivity = if let expr = syntax.argument(named: "sensitivity")?.expression, let parsed = SwiftUI.DigitalCrownRotationalSensitivity(syntax: expr) { parsed } else { .high }
+                    let isContinuous: Swift.Bool = if let expr = syntax.argument(named: "isContinuous")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { false }
+                    let isHapticFeedbackEnabled: Swift.Bool = if let expr = syntax.argument(named: "isHapticFeedbackEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                     self = .digitalCrownRotationWithBindingVVVStrideDigitalCrownRotationalSensitivityBoolBoolVoidVoid1(detent: detent, from: from, through: through, by: by, sensitivity: sensitivity, isContinuous: isContinuous, isHapticFeedbackEnabled: isHapticFeedbackEnabled)
                 } else {
                     throw ModifierParseError.invalidArguments(modifier: "DigitalCrownRotationModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Binding<V>, V, V, V.Stride, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool or SwiftUICore.Binding<V>, V, V, V.Stride, SwiftUI.DigitalCrownRotationalSensitivity, Swift.Bool, Swift.Bool")

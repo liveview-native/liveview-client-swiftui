@@ -15,7 +15,7 @@ extension OnScrollGeometryChangeModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let for = T.Type(syntax: syntax.arguments[0].expression) else {
+            guard let expr_for = syntax.argument(named: "for")?.expression, let for = T.Type(syntax: expr_for) else {
                 throw ModifierParseError.invalidArguments(modifier: "OnScrollGeometryChangeModifier", variant: "onScrollGeometryChange", expectedTypes: "T.Type")
             }
             self = .onScrollGeometryChange(for: for)

@@ -15,7 +15,7 @@ extension GaugeStyleModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let value0 = AnyGaugeStyle(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = AnyGaugeStyle(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "GaugeStyleModifier", variant: "gaugeStyle", expectedTypes: "AnyGaugeStyle")
             }
             self = .gaugeStyle(value0)

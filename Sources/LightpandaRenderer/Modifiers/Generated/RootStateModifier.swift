@@ -16,15 +16,11 @@ extension RootStateModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let type = S.Type(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "RootStateModifier", variant: "rootStateWithType", expectedTypes: "S.Type")
-            }
+            let type: S.Type = if let expr = syntax.argument(named: "type")?.expression, let parsed = S.Type(syntax: expr) { parsed } else { S.self }
             self = .rootStateWithType(type: type)
         case 2:
-            guard let type = S.Type(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "RootStateModifier", variant: "rootStateWithTypeType", expectedTypes: "S.Type, AnyView.Type")
-            }
-            guard let in = AnyView.Type(syntax: syntax.arguments[1].expression) else {
+            let type: S.Type = if let expr = syntax.argument(named: "type")?.expression, let parsed = S.Type(syntax: expr) { parsed } else { S.self }
+            guard let expr_in = syntax.argument(named: "in")?.expression, let in = AnyView.Type(syntax: expr_in) else {
                 throw ModifierParseError.invalidArguments(modifier: "RootStateModifier", variant: "rootStateWithTypeType", expectedTypes: "S.Type, AnyView.Type")
             }
             self = .rootStateWithTypeType(type: type, in: in)

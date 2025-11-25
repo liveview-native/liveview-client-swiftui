@@ -17,14 +17,16 @@ extension OnChangeModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let of = V(syntax: syntax.arguments[0].expression) else {
+            guard let expr_of = syntax.argument(named: "of")?.expression, let of = V(syntax: expr_of) else {
                 throw ModifierParseError.invalidArguments(modifier: "OnChangeModifier", variant: "onChangeWithVVoid", expectedTypes: "V")
             }
             self = .onChangeWithVVoid(of: of)
         case 2:
-            if let of = V(syntax: syntax.arguments[0].expression), let initial = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            if let expr_of = syntax.argument(named: "of")?.expression, let of = V(syntax: expr_of) {
+                let initial: Swift.Bool = if let expr = syntax.argument(named: "initial")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { false }
                 self = .onChangeWithVBoolVoid(of: of, initial: initial)
-            } else if let of = V(syntax: syntax.arguments[0].expression), let initial = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            } else if let expr_of = syntax.argument(named: "of")?.expression, let of = V(syntax: expr_of) {
+                let initial: Swift.Bool = if let expr = syntax.argument(named: "initial")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { false }
                 self = .onChangeWithVBoolVoid1(of: of, initial: initial)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "OnChangeModifier", variant: "multiple variants", expectedTypes: "V, Swift.Bool or V, Swift.Bool")

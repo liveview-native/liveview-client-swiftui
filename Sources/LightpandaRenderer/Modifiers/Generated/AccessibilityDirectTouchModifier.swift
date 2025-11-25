@@ -15,12 +15,8 @@ extension AccessibilityDirectTouchModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = Swift.Bool(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "AccessibilityDirectTouchModifier", variant: "accessibilityDirectTouch", expectedTypes: "Swift.Bool, SwiftUI.AccessibilityDirectTouchOptions")
-            }
-            guard let options = SwiftUI.AccessibilityDirectTouchOptions(syntax: syntax.arguments[1].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "AccessibilityDirectTouchModifier", variant: "accessibilityDirectTouch", expectedTypes: "Swift.Bool, SwiftUI.AccessibilityDirectTouchOptions")
-            }
+            let value0: Swift.Bool = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
+            let options: SwiftUI.AccessibilityDirectTouchOptions = if let expr = syntax.argument(named: "options")?.expression, let parsed = SwiftUI.AccessibilityDirectTouchOptions(syntax: expr) { parsed } else { [] }
             self = .accessibilityDirectTouch(value0, options: options)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "AccessibilityDirectTouchModifier", expected: [2], found: syntax.arguments.count)

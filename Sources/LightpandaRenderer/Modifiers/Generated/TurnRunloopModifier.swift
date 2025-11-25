@@ -15,9 +15,7 @@ extension TurnRunloopModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let times = Swift.Int(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "TurnRunloopModifier", variant: "turnRunloop", expectedTypes: "Swift.Int")
-            }
+            let times: Swift.Int = if let expr = syntax.argument(named: "times")?.expression, let parsed = Swift.Int(syntax: expr) { parsed } else { 1 }
             self = .turnRunloop(times: times)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "TurnRunloopModifier", expected: [1], found: syntax.arguments.count)

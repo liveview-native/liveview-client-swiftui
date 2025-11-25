@@ -18,13 +18,13 @@ extension HelpModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[0].expression) {
+            if let value0: SwiftUICore.LocalizedStringKey = SwiftUICore.LocalizedStringKey(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .helpWithLocalizedStringKey(value0)
-            } else if let value0 = Foundation.LocalizedStringResource(syntax: syntax.arguments[0].expression) {
+            } else if let value0: Foundation.LocalizedStringResource = Foundation.LocalizedStringResource(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .helpWithLocalizedStringResource(value0)
-            } else if let value0 = SwiftUICore.Text(syntax: syntax.arguments[0].expression) {
+            } else if let value0: SwiftUICore.Text = SwiftUICore.Text(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .helpWithText(value0)
-            } else if let value0 = String(syntax: syntax.arguments[0].expression) {
+            } else if let value0: String = String(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .helpWithString(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "HelpModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.LocalizedStringKey or Foundation.LocalizedStringResource or SwiftUICore.Text or String")

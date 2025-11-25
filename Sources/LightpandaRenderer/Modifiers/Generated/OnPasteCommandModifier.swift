@@ -18,13 +18,13 @@ extension OnPasteCommandModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let of = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[0].expression) {
+            if let expr_of = syntax.argument(named: "of")?.expression, let of = [UniformTypeIdentifiers.UTType](syntax: expr_of) {
                 self = .onPasteCommandWithUTTypeVoid(of: of)
-            } else if let of = [UniformTypeIdentifiers.UTType](syntax: syntax.arguments[0].expression) {
+            } else if let expr_of = syntax.argument(named: "of")?.expression, let of = [UniformTypeIdentifiers.UTType](syntax: expr_of) {
                 self = .onPasteCommandWithUTTypeClosurePayloadOptionalVoid(of: of)
-            } else if let of = [Swift.String](syntax: syntax.arguments[0].expression) {
+            } else if let expr_of = syntax.argument(named: "of")?.expression, let of = [Swift.String](syntax: expr_of) {
                 self = .onPasteCommandWithStringVoid(of: of)
-            } else if let of = [Swift.String](syntax: syntax.arguments[0].expression) {
+            } else if let expr_of = syntax.argument(named: "of")?.expression, let of = [Swift.String](syntax: expr_of) {
                 self = .onPasteCommandWithStringClosurePayloadOptionalVoid(of: of)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "OnPasteCommandModifier", variant: "multiple variants", expectedTypes: "[UniformTypeIdentifiers.UTType] or [UniformTypeIdentifiers.UTType] or [Swift.String] or [Swift.String]")

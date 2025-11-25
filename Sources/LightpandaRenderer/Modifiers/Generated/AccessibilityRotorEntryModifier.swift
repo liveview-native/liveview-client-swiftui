@@ -15,10 +15,10 @@ extension AccessibilityRotorEntryModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let id = AnyHashable(syntax: syntax.arguments[0].expression) else {
+            guard let expr_id = syntax.argument(named: "id")?.expression, let id = AnyHashable(syntax: expr_id) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityRotorEntryModifier", variant: "accessibilityRotorEntry", expectedTypes: "AnyHashable, SwiftUICore.Namespace.AnyHashable")
             }
-            guard let in = SwiftUICore.Namespace.AnyHashable(syntax: syntax.arguments[1].expression) else {
+            guard let expr_in = syntax.argument(named: "in")?.expression, let in = SwiftUICore.Namespace.AnyHashable(syntax: expr_in) else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityRotorEntryModifier", variant: "accessibilityRotorEntry", expectedTypes: "AnyHashable, SwiftUICore.Namespace.AnyHashable")
             }
             self = .accessibilityRotorEntry(id: id, in: in)

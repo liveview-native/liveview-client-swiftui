@@ -15,8 +15,8 @@ extension GlassEffectIDModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            let value0 = (some (Hashable & Sendable))(syntax: syntax.arguments[0].expression)
-            guard let in = SwiftUICore.Namespace.ID(syntax: syntax.arguments[1].expression) else {
+            let value0: (some (Hashable & Sendable))? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { (some (Hashable & Sendable))(syntax: expr) } else { nil }
+            guard let expr_in = syntax.argument(named: "in")?.expression, let in = SwiftUICore.Namespace.ID(syntax: expr_in) else {
                 throw ModifierParseError.invalidArguments(modifier: "GlassEffectIDModifier", variant: "glassEffectID", expectedTypes: "(some (Hashable & Sendable))?, SwiftUICore.Namespace.ID")
             }
             self = .glassEffectID(value0, in: in)

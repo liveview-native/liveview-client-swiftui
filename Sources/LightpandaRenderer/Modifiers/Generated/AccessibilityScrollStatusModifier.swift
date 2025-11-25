@@ -18,13 +18,17 @@ extension AccessibilityScrollStatusModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            if let value0 = SwiftUICore.Text(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            if let value0: SwiftUICore.Text = SwiftUICore.Text(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .accessibilityScrollStatusWithTextBool(value0, isEnabled: isEnabled)
-            } else if let value0 = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            } else if let value0: SwiftUICore.LocalizedStringKey = SwiftUICore.LocalizedStringKey(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .accessibilityScrollStatusWithLocalizedStringKeyBool(value0, isEnabled: isEnabled)
-            } else if let value0 = some StringProtocol(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            } else if let value0: some StringProtocol = some StringProtocol(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .accessibilityScrollStatusWithsomeStringProtocolBool(value0, isEnabled: isEnabled)
-            } else if let value0 = Foundation.LocalizedStringResource(syntax: syntax.arguments[0].expression), let isEnabled = Swift.Bool(syntax: syntax.arguments[1].expression) {
+            } else if let value0: Foundation.LocalizedStringResource = Foundation.LocalizedStringResource(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
+                let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
                 self = .accessibilityScrollStatusWithLocalizedStringResourceBool(value0, isEnabled: isEnabled)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "AccessibilityScrollStatusModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Text, Swift.Bool or SwiftUICore.LocalizedStringKey, Swift.Bool or some StringProtocol, Swift.Bool or Foundation.LocalizedStringResource, Swift.Bool")

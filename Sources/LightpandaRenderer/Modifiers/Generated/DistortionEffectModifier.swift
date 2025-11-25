@@ -15,15 +15,13 @@ extension DistortionEffectModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 3:
-            guard let value0 = SwiftUICore.Shader(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = SwiftUICore.Shader(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "DistortionEffectModifier", variant: "distortionEffect", expectedTypes: "SwiftUICore.Shader, CoreFoundation.CGSize, Swift.Bool")
             }
-            guard let maxSampleOffset = CoreFoundation.CGSize(syntax: syntax.arguments[1].expression) else {
+            guard let expr_maxSampleOffset = syntax.argument(named: "maxSampleOffset")?.expression, let maxSampleOffset = CoreFoundation.CGSize(syntax: expr_maxSampleOffset) else {
                 throw ModifierParseError.invalidArguments(modifier: "DistortionEffectModifier", variant: "distortionEffect", expectedTypes: "SwiftUICore.Shader, CoreFoundation.CGSize, Swift.Bool")
             }
-            guard let isEnabled = Swift.Bool(syntax: syntax.arguments[2].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "DistortionEffectModifier", variant: "distortionEffect", expectedTypes: "SwiftUICore.Shader, CoreFoundation.CGSize, Swift.Bool")
-            }
+            let isEnabled: Swift.Bool = if let expr = syntax.argument(named: "isEnabled")?.expression, let parsed = Swift.Bool(syntax: expr) { parsed } else { true }
             self = .distortionEffect(value0, maxSampleOffset: maxSampleOffset, isEnabled: isEnabled)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "DistortionEffectModifier", expected: [3], found: syntax.arguments.count)

@@ -16,13 +16,13 @@ extension EnvironmentModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            let value0 = T(syntax: syntax.arguments[0].expression)
+            let value0: T? = if let expr = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil) { T(syntax: expr) } else { nil }
             self = .environmentWithTOptional(value0)
         case 2:
-            guard let value0 = Swift.WritableKeyPath<SwiftUICore.EnvironmentValues, V>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Swift.WritableKeyPath<SwiftUICore.EnvironmentValues, V>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "EnvironmentModifier", variant: "environmentWithEnvironmentValuesVV", expectedTypes: "Swift.WritableKeyPath<SwiftUICore.EnvironmentValues, V>, V")
             }
-            guard let value1 = V(syntax: syntax.arguments[1].expression) else {
+            guard let expr_value1 = (syntax.arguments.count > 1 ? syntax.arguments[1].expression : nil), let value1 = V(syntax: expr_value1) else {
                 throw ModifierParseError.invalidArguments(modifier: "EnvironmentModifier", variant: "environmentWithEnvironmentValuesVV", expectedTypes: "Swift.WritableKeyPath<SwiftUICore.EnvironmentValues, V>, V")
             }
             self = .environmentWithEnvironmentValuesVV(value0, value1)

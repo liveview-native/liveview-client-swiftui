@@ -18,7 +18,7 @@ extension OnOpenURLModifier: RuntimeViewModifier {
         case 0:
             self = .onOpenURLWithClosure
         case 1:
-            guard let prefersInApp = Swift.Bool(syntax: syntax.arguments[0].expression) else {
+            guard let expr_prefersInApp = syntax.argument(named: "prefersInApp")?.expression, let prefersInApp = Swift.Bool(syntax: expr_prefersInApp) else {
                 throw ModifierParseError.invalidArguments(modifier: "OnOpenURLModifier", variant: "onOpenURLWithBool", expectedTypes: "Swift.Bool")
             }
             self = .onOpenURLWithBool(prefersInApp: prefersInApp)

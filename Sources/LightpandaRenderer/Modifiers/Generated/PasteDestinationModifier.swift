@@ -15,9 +15,7 @@ extension PasteDestinationModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let for = T.Type(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "PasteDestinationModifier", variant: "pasteDestination", expectedTypes: "T.Type")
-            }
+            let for: T.Type = if let expr = syntax.argument(named: "for")?.expression, let parsed = T.Type(syntax: expr) { parsed } else { T.self }
             self = .pasteDestination(for: for)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "PasteDestinationModifier", expected: [1], found: syntax.arguments.count)

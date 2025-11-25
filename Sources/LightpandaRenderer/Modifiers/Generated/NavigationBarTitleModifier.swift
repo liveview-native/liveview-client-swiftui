@@ -20,21 +20,21 @@ extension NavigationBarTitleModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            if let value0 = SwiftUICore.Text(syntax: syntax.arguments[0].expression) {
+            if let value0: SwiftUICore.Text = SwiftUICore.Text(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .navigationBarTitleWithText(value0)
-            } else if let value0 = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[0].expression) {
+            } else if let value0: SwiftUICore.LocalizedStringKey = SwiftUICore.LocalizedStringKey(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .navigationBarTitleWithLocalizedStringKey(value0)
-            } else if let value0 = String(syntax: syntax.arguments[0].expression) {
+            } else if let value0: String = String(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!) {
                 self = .navigationBarTitleWithString(value0)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "NavigationBarTitleModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Text or SwiftUICore.LocalizedStringKey or String")
             }
         case 2:
-            if let value0 = SwiftUICore.Text(syntax: syntax.arguments[0].expression), let displayMode = SwiftUI.NavigationBarItem.TitleDisplayMode(syntax: syntax.arguments[1].expression) {
+            if let value0: SwiftUICore.Text = SwiftUICore.Text(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_displayMode = syntax.argument(named: "displayMode")?.expression, let displayMode = SwiftUI.NavigationBarItem.TitleDisplayMode(syntax: expr_displayMode) {
                 self = .navigationBarTitleWithTextTitleDisplayMode(value0, displayMode: displayMode)
-            } else if let value0 = SwiftUICore.LocalizedStringKey(syntax: syntax.arguments[0].expression), let displayMode = SwiftUI.NavigationBarItem.TitleDisplayMode(syntax: syntax.arguments[1].expression) {
+            } else if let value0: SwiftUICore.LocalizedStringKey = SwiftUICore.LocalizedStringKey(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_displayMode = syntax.argument(named: "displayMode")?.expression, let displayMode = SwiftUI.NavigationBarItem.TitleDisplayMode(syntax: expr_displayMode) {
                 self = .navigationBarTitleWithLocalizedStringKeyTitleDisplayMode(value0, displayMode: displayMode)
-            } else if let value0 = String(syntax: syntax.arguments[0].expression), let displayMode = SwiftUI.NavigationBarItem.TitleDisplayMode(syntax: syntax.arguments[1].expression) {
+            } else if let value0: String = String(syntax: (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil)!), let expr_displayMode = syntax.argument(named: "displayMode")?.expression, let displayMode = SwiftUI.NavigationBarItem.TitleDisplayMode(syntax: expr_displayMode) {
                 self = .navigationBarTitleWithStringTitleDisplayMode(value0, displayMode: displayMode)
             } else {
                 throw ModifierParseError.invalidArguments(modifier: "NavigationBarTitleModifier", variant: "multiple variants", expectedTypes: "SwiftUICore.Text, SwiftUI.NavigationBarItem.TitleDisplayMode or SwiftUICore.LocalizedStringKey, SwiftUI.NavigationBarItem.TitleDisplayMode or String, SwiftUI.NavigationBarItem.TitleDisplayMode")

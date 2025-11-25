@@ -17,18 +17,12 @@ extension OnTapGestureModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 1:
-            guard let count = Swift.Int(syntax: syntax.arguments[0].expression) else {
-                throw ModifierParseError.invalidArguments(modifier: "OnTapGestureModifier", variant: "onTapGestureWithIntVoid", expectedTypes: "Swift.Int")
-            }
+            let count: Swift.Int = if let expr = syntax.argument(named: "count")?.expression, let parsed = Swift.Int(syntax: expr) { parsed } else { 1 }
             self = .onTapGestureWithIntVoid(count: count)
         case 2:
-            if let count = Swift.Int(syntax: syntax.arguments[0].expression), let coordinateSpace = SwiftUICore.CoordinateSpace(syntax: syntax.arguments[1].expression) {
-                self = .onTapGestureWithIntCoordinateSpaceVoid(count: count, coordinateSpace: coordinateSpace)
-            } else if let count = Swift.Int(syntax: syntax.arguments[0].expression), let coordinateSpace = some CoordinateSpaceProtocol(syntax: syntax.arguments[1].expression) {
-                self = .onTapGestureWithIntsomeCoordinateSpaceProtocolVoid(count: count, coordinateSpace: coordinateSpace)
-            } else {
-                throw ModifierParseError.invalidArguments(modifier: "OnTapGestureModifier", variant: "multiple variants", expectedTypes: "Swift.Int, SwiftUICore.CoordinateSpace or Swift.Int, some CoordinateSpaceProtocol")
-            }
+            let count: Swift.Int? = if let expr = syntax.argument(named: "count")?.expression { Swift.Int(syntax: expr) } else { nil }
+            let coordinateSpace: SwiftUICore.CoordinateSpace? = if let expr = syntax.argument(named: "coordinateSpace")?.expression { SwiftUICore.CoordinateSpace(syntax: expr) } else { nil }
+            self = .onTapGestureWithIntCoordinateSpaceVoid(count: count, coordinateSpace: coordinateSpace)
         default:
             throw ModifierParseError.unexpectedArgumentCount(modifier: "OnTapGestureModifier", expected: [1, 2], found: syntax.arguments.count)
         }

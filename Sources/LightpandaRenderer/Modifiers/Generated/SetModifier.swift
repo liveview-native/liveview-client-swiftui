@@ -15,10 +15,10 @@ extension SetModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let value0 = Swift.WritableKeyPath<Self.RootStateType, V>(syntax: syntax.arguments[0].expression) else {
+            guard let expr_value0 = (syntax.arguments.count > 0 ? syntax.arguments[0].expression : nil), let value0 = Swift.WritableKeyPath<Self.RootStateType, V>(syntax: expr_value0) else {
                 throw ModifierParseError.invalidArguments(modifier: "SetModifier", variant: "set", expectedTypes: "Swift.WritableKeyPath<Self.RootStateType, V>, V")
             }
-            guard let to = V(syntax: syntax.arguments[1].expression) else {
+            guard let expr_to = syntax.argument(named: "to")?.expression, let to = V(syntax: expr_to) else {
                 throw ModifierParseError.invalidArguments(modifier: "SetModifier", variant: "set", expectedTypes: "Swift.WritableKeyPath<Self.RootStateType, V>, V")
             }
             self = .set(value0, to: to)

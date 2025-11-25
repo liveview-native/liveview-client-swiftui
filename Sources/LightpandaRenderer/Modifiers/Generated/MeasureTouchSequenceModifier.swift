@@ -15,10 +15,10 @@ extension MeasureTouchSequenceModifier: RuntimeViewModifier {
     public init(syntax: FunctionCallExprSyntax) throws {
         switch syntax.arguments.count {
         case 2:
-            guard let host = any SwiftUICore._BenchmarkHost(syntax: syntax.arguments[0].expression) else {
+            guard let expr_host = syntax.argument(named: "host")?.expression, let host = any SwiftUICore._BenchmarkHost(syntax: expr_host) else {
                 throw ModifierParseError.invalidArguments(modifier: "MeasureTouchSequenceModifier", variant: "measureTouchSequence", expectedTypes: "any SwiftUICore._BenchmarkHost, [Self.Touch]")
             }
-            guard let value1 = [Self.Touch](syntax: syntax.arguments[1].expression) else {
+            guard let expr_value1 = (syntax.arguments.count > 1 ? syntax.arguments[1].expression : nil), let value1 = [Self.Touch](syntax: expr_value1) else {
                 throw ModifierParseError.invalidArguments(modifier: "MeasureTouchSequenceModifier", variant: "measureTouchSequence", expectedTypes: "any SwiftUICore._BenchmarkHost, [Self.Touch]")
             }
             self = .measureTouchSequence(host: host, value1)
