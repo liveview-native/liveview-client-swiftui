@@ -70,7 +70,7 @@ enum ImageView<Library: ElementLibrary>: View {
     private var systemName: String? {
         switch self {
         case let .node(node):
-            return node.attributeValue(for: "systemImage")
+            return node.attributeValue(for: "systemName")
         default:
             return nil
         }
