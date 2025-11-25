@@ -31,15 +31,8 @@ final class ModifierParser {
             if let parentModifier = node.calledExpression.as(MemberAccessExprSyntax.self)?.base?.as(FunctionCallExprSyntax.self) {
                 visit(parentModifier)
             }
-            let modifierName = if let modifierName = node.calledExpression.as(MemberAccessExprSyntax.self)?.declName.baseName.text {
-                modifierName
-            } else if let modifierName = node.calledExpression.as(DeclReferenceExprSyntax.self)?.baseName.text {
-                modifierName
-            } else {
-                ""
-            }
             
-            if let modifier = AnyModifier(modifierName, arguments: node.arguments) {
+            if let modifier = try? AnyRuntimeViewModifier(node) {
                 modifiers.modifiers.append(modifier)
             }
             
@@ -49,7 +42,7 @@ final class ModifierParser {
 }
 
 struct ModifierCollection: ViewModifier {
-    var modifiers: [AnyModifier] = []
+    var modifiers: [AnyRuntimeViewModifier] = []
     
     func body(content: Content) -> some View {
         if modifiers.isEmpty {
@@ -62,55 +55,41 @@ struct ModifierCollection: ViewModifier {
     }
 }
 
-enum AnyModifier: ViewModifier {
-    case padding(PaddingModifier)
-    case background(BackgroundModifier)
+struct AnyRuntimeViewModifier: ViewModifier {
+    static let types: [any RuntimeViewModifier.Type] = [
+        PaddingModifier.self,
+    ]
     
-    init?(_ modifierName: String, arguments: LabeledExprListSyntax) {
-        switch modifierName {
-        case "padding":
-            guard let padding = PaddingModifier(arguments: arguments)
-            else { return nil }
-            self = .padding(padding)
-        case "background":
-            guard let background = BackgroundModifier(arguments: arguments)
-            else { return nil }
-            self = .background(background)
-        default:
-            return nil
+    let modifier: any RuntimeViewModifier
+    
+    init(_ node: FunctionCallExprSyntax) throws {
+        let modifierName = if let modifierName = node.calledExpression.as(MemberAccessExprSyntax.self)?.declName.baseName.text {
+            modifierName
+        } else if let modifierName = node.calledExpression.as(DeclReferenceExprSyntax.self)?.baseName.text {
+            modifierName
+        } else {
+            ""
         }
-    }
-    
-    enum BackgroundModifier: ViewModifier {
-        case color(SwiftUI.Color)
-        
-        init?(arguments: LabeledExprListSyntax) {
-            switch arguments.first?.expression.trimmedDescription {
-            case ".red":
-                self = .color(.red)
-            case ".green":
-                self = .color(.green)
-            case ".blue":
-                self = .color(.blue)
-            default:
-                return nil
+        for modifierType in Self.types where modifierType.baseName == modifierName {
+            do {
+                self.modifier = try modifierType.init(syntax: node)
+                return
+            } catch {
+                continue
             }
         }
-        
-        func body(content: Content) -> some View {
-            switch self {
-            case .color(let color):
-                content.background(color)
-            }
-        }
+        throw AnyRuntimeViewModifierError.noMatchingRuntimeViewModifier
     }
     
     func body(content: Content) -> some View {
-        switch self {
-        case .padding(let paddingModifier):
-            content.modifier(paddingModifier)
-        case .background(let backgroundModifier):
-            content.modifier(backgroundModifier)
-        }
+        AnyView(_unwrap(content: content, modifier: modifier))
     }
+    
+    func _unwrap(content: Content, modifier: some ViewModifier) -> some View {
+        content.modifier(modifier)
+    }
+}
+
+enum AnyRuntimeViewModifierError: Error {
+    case noMatchingRuntimeViewModifier
 }

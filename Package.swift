@@ -3,9 +3,122 @@
 
 import PackageDescription
 
+import Foundation
+
+let includeViews = [
+    "Button",
+    
+    "ContentUnavailableView",
+    "Gauge",
+    "ProgressView",
+    
+    "Link",
+    "ShareLink",
+    
+    "Menu",
+    
+    "ColorView",
+    "NamespaceContext",
+    
+    "AsyncImage",
+    "ImageView",
+    
+    "List",
+    "Section",
+    
+    "Form",
+    "LabeledContent",
+    
+    "Grid",
+    "GridRow",
+    
+    "ControlGroup",
+    "DisclosureGroup",
+    "Group",
+    "GroupBox",
+    
+    "LazyHGrid",
+    "LazyVGrid",
+    
+    "LazyHStack",
+    "LazyVStack",
+    
+    "HSplitView",
+    "TabView",
+    "VSplitView",
+    
+    "ScrollView",
+    
+    "Spacer",
+    
+    "ViewThatFits",
+    
+    "HStack",
+    "VStack",
+    "ZStack",
+    
+    "NavigationSplitView",
+    "NavigationStack",
+    
+    "ShapeView",
+    
+    "Label",
+    "TextField",
+    "TextFieldProtocol",
+    "TextView",
+    
+    "ToolbarItem",
+    "ToolbarItemGroup",
+    "ToolbarTitleMenu",
+]
+
+let includeModifiers = [
+    "PaddingModifier",
+    "StrikethroughModifier",
+    "ButtonStyleModifier",
+    "ClipShapeModifier",
+    "MultilineTextAlignmentModifier",
+    "ForegroundStyleModifier",
+    "TintModifier"
+]
+
+func findAllSwiftFiles(in directory: String) -> [String] {
+    var results: [String] = []
+
+    if let items = try? FileManager.default.contentsOfDirectory(
+        at: URL(filePath: directory, relativeTo: URL(fileURLWithPath: #filePath).deletingLastPathComponent()),
+        includingPropertiesForKeys: [.isDirectoryKey],
+        options: [.skipsHiddenFiles]
+    ) {
+        for item in items {
+            let isDirectory = (try? item.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory ?? false
+
+            if isDirectory {
+                // 🔁 recurse into subdirectory
+                results += findAllSwiftFiles(in: item.path)
+            } else if item.pathExtension == "swift" {
+                results.append(item.path)
+            }
+        }
+    }
+
+    return results
+}
+
+func filterIncludedFiles(_ files: [String], filter: [String]) -> [String] {
+    return files.compactMap { file in
+        let filename = URL(fileURLWithPath: file).deletingPathExtension().lastPathComponent
+        if filter.contains(filename) {
+            return nil
+        } else {
+            return file.replacing("\(URL(fileURLWithPath: #filePath).deletingLastPathComponent().path())Sources/LightpandaRenderer/", with: "")
+        }
+    }
+}
+
 let package = Package(
     name: "LightpandaClient",
-    platforms: [.iOS(.v26), .macOS(.v15)],
+    platforms: [.iOS(.v26), .macOS("15.4.0")],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
@@ -37,21 +150,8 @@ let package = Package(
                 "LightpandaClient",
                 .product(name: "SwiftParser", package: "swift-syntax")
             ],
-            exclude: [
-                "Views/Controls and Indicators/Pickers/ColorPicker.swift",
-                "Views/Controls and Indicators/Buttons/PasteButton.swift",
-                "Views/Controls and Indicators/Links/TextFieldLink.swift",
-                "Views/Controls and Indicators/Pickers/DatePicker.swift",
-                "Views/Controls and Indicators/Pickers/MultiDatePicker.swift",
-                "Views/Controls and Indicators/Pickers/Picker.swift",
-                "Views/Controls and Indicators/Value Inputs/Slider.swift",
-                "Views/Controls and Indicators/Value Inputs/Stepper.swift",
-                "Views/Controls and Indicators/Value Inputs/Toggle.swift",
-                "Views/Text Input and Output/SecureField.swift",
-                "Views/Text Input and Output/TextEditor.swift",
-                "Views/Layout Containers/Collection Containers/Table.swift",
-                "Views/Layout Containers/Presentation Containers/NavigationLink.swift",
-            ]
+            exclude: filterIncludedFiles(findAllSwiftFiles(in: "Sources/LightpandaRenderer/Views"), filter: includeViews)
+                + filterIncludedFiles(findAllSwiftFiles(in: "Sources/LightpandaRenderer/Modifiers/Generated"), filter: includeModifiers)
         ),
         
         .executableTarget(

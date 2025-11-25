@@ -45,7 +45,7 @@ struct NodeView<Library: ElementLibrary>: View {
                 EmptyView()
             default:
                 if let tagName = Library.TagName(rawValue: node.name) {
-                    if let style = node.attributeValue(for: "style") {
+                    if let style = node.attributeValue(for: "modifiers") {
                         let collection = modifierParser.parse(style)
                         Library.render(tagName, for: node)
                             .modifier(collection)
