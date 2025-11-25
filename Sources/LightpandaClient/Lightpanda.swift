@@ -168,9 +168,12 @@ public final class LightpandaRuntime {
                     parentNode?.children.append(newNode)
                 }
             case let .childNodeRemoved(childNodeRemoved):
-                
                 let parentNode = self.nodeRegistry.nodes[childNodeRemoved.parentNodeId]
                 parentNode?.children.removeAll(where: { $0.id == childNodeRemoved.nodeId })
+            case let .attributeModified(attributeModified):
+                self.nodeRegistry.nodes[attributeModified.nodeId]?.attributes[attributeModified.name] = attributeModified.value
+            case let .attributeRemoved(attributedRemoved):
+                self.nodeRegistry.nodes[attributedRemoved.nodeId]?.attributes.removeValue(forKey: attributedRemoved.name)
             default:
                 break
             }

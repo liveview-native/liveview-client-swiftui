@@ -69,6 +69,17 @@ extension CDP {
             public let nodeId: Node.ID
         }
         
+        public struct AttributeModified: Decodable, Sendable {
+            public let nodeId: Node.ID
+            public let name: String
+            public let value: String
+        }
+        
+        public struct AttributeRemoved: Decodable, Sendable {
+            public let nodeId: Node.ID
+            public let name: String
+        }
+        
         // Types
         
         public struct Node: Decodable, Identifiable, Sendable {

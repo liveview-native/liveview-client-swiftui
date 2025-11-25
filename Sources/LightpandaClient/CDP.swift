@@ -156,8 +156,8 @@ public final class CDP {
         case result(id: Int)
         case targetCreated(Target.TargetCreated)
         case documentUpdated
-        case attributeModified
-        case attributeRemoved
+        case attributeModified(DOM.AttributeModified)
+        case attributeRemoved(DOM.AttributeRemoved)
         case characterDataModified(DOM.CharacterDataModified)
         case childNodeInserted(DOM.ChildNodeInserted)
         case childNodeRemoved(DOM.ChildNodeRemoved)
@@ -180,9 +180,9 @@ public final class CDP {
                 case "DOM.documentUpdated":
                     self = .documentUpdated
                 case "DOM.attributeModified":
-                    self = .attributeModified
+                    self = .attributeModified(try container.decode(DOM.AttributeModified.self, forKey: .params))
                 case "DOM.attributeRemoved":
-                    self = .attributeRemoved
+                    self = .attributeRemoved(try container.decode(DOM.AttributeRemoved.self, forKey: .params))
                 case "DOM.characterDataModified":
                     self = .characterDataModified(try container.decode(DOM.CharacterDataModified.self, forKey: .params))
                 case "DOM.childNodeInserted":
