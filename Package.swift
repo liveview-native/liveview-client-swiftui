@@ -82,7 +82,8 @@ let includeModifiers = [
     "MultilineTextAlignmentModifier",
     "ForegroundStyleModifier",
     "TintModifier",
-    "FrameModifier"
+    "FrameModifier",
+    "FontModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {

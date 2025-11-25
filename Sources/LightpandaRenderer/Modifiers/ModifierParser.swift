@@ -64,7 +64,8 @@ struct AnyRuntimeViewModifier: ViewModifier {
         MultilineTextAlignmentModifier.self,
         ForegroundStyleModifier.self,
         TintModifier.self,
-        FrameModifier.self
+        FrameModifier.self,
+        FontModifier.self
     ]
     
     let modifier: any RuntimeViewModifier
