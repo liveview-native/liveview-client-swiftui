@@ -25,5 +25,13 @@ extension CDP {
             
             public struct Response: Decodable, Sendable {}
         }
+        
+        public struct Reload: CDP.Method {
+            public static let method = "Page.reload"
+            
+            public init() {}
+            
+            public struct Response: Decodable, Sendable {}
+        }
     }
 }

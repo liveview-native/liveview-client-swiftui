@@ -65,7 +65,8 @@ struct AnyRuntimeViewModifier: ViewModifier {
         ForegroundStyleModifier.self,
         TintModifier.self,
         FrameModifier.self,
-        FontModifier.self
+        FontModifier.self,
+        SwipeActionsModifier.self
     ]
     
     let modifier: any RuntimeViewModifier

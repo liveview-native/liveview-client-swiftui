@@ -186,7 +186,7 @@ public final class LightpandaRuntime {
 //        self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Network.Enable(maxPostDataSize: 65536, reportDirectSocketTraffic: true)))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Log.Enable()))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Runtime.Enable()))
-        self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Target.SetAutoAttach(autoAttach: true, flatten: true, waitForDebuggerOnStart: true)))
+        self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Target.SetAutoAttach(autoAttach: true, flatten: true, waitForDebuggerOnStart: false)))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Page.Navigate(url: self.url.absoluteString)))
         
 //        self.cdp?.eventCallback = { event in

@@ -31,6 +31,7 @@ struct NodeView<Library: ElementLibrary>: View {
                         .matchedGeometryEffect(id: "lightpanda:focused_node", in: lightpandaNamespace!)
                 }
             })
+            .environment(node)
         #else
         nodeContent
         #endif
@@ -74,7 +75,9 @@ extension Node {
         library: Library.Type = Library.self
     ) -> some View {
         ForEach(self.children) { child in
-            NodeView<Library>(node: child)
+            if !child.attributes.keys.contains("template") {
+                NodeView<Library>(node: child)
+            }
         }
     }
     

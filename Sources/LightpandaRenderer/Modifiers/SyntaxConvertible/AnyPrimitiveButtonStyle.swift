@@ -18,10 +18,12 @@ public struct AnyPrimitiveButtonStyle: PrimitiveButtonStyle, @preconcurrency Syn
                 self.style = .borderedProminent
             case "borderless":
                 self.style = .borderless
+            #if os(iOS)
             case "glass":
                 self.style = .glass
             case "glassProminent":
                 self.style = .glassProminent
+            #endif
             case "plain":
                 self.style = .plain
             default:

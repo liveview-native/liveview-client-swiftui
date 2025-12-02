@@ -44,8 +44,10 @@ extension Font: SyntaxConvertible {
                 self = .caption
             case "caption2":
                 self = .caption2
+            #if os(iOS)
             case "default":
                 self = .default
+            #endif
             default:
                 return nil
             }
@@ -192,6 +194,7 @@ extension Font: SyntaxConvertible {
 // Helper to apply font modifiers
 private func applyModifier(to font: Font, modifier: String, arguments: LabeledExprListSyntax) -> Font {
     switch modifier {
+    #if os(iOS)
     case "italic":
         if let arg = arguments.first, arg.label == nil {
             if let isActive = Bool(syntax: arg.expression) {
@@ -199,7 +202,6 @@ private func applyModifier(to font: Font, modifier: String, arguments: LabeledEx
             }
         }
         return font.italic()
-        
     case "bold":
         if let arg = arguments.first, arg.label == nil {
             if let isActive = Bool(syntax: arg.expression) {
@@ -207,7 +209,7 @@ private func applyModifier(to font: Font, modifier: String, arguments: LabeledEx
             }
         }
         return font.bold()
-        
+    #endif
     case "weight":
         if let arg = arguments.first,
            let weight = Font.Weight(syntax: arg.expression) {
@@ -232,6 +234,7 @@ private func applyModifier(to font: Font, modifier: String, arguments: LabeledEx
     case "monospacedDigit":
         return font.monospacedDigit()
         
+    #if os(iOS)
     case "monospaced":
         if let arg = arguments.first, arg.label == nil {
             if let isActive = Bool(syntax: arg.expression) {
@@ -277,7 +280,7 @@ private func applyModifier(to font: Font, modifier: String, arguments: LabeledEx
             return font.scaled(by: factor)
         }
         return font
-        
+    #endif
     default:
         return font
     }

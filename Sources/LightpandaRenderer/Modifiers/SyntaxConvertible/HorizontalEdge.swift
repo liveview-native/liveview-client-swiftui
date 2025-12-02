@@ -1,20 +1,17 @@
-#if os(iOS)
 import SwiftUI
 import SwiftSyntax
 
-extension Text.AlignmentStrategy: SyntaxConvertible {
+extension HorizontalEdge: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
         guard let memberAccess = syntax.as(MemberAccessExprSyntax.self)
         else { return nil }
         
         if memberAccess.base == nil {
             switch memberAccess.declName.baseName.text {
-            case "default":
-                self = .default
-            case "layoutBased":
-                self = .layoutBased
-            case "writingDirectionBased":
-                self = .writingDirectionBased
+            case "leading":
+                self = .leading
+            case "trailing":
+                self = .trailing
             default:
                 return nil
             }
@@ -24,4 +21,3 @@ extension Text.AlignmentStrategy: SyntaxConvertible {
         }
     }
 }
-#endif
