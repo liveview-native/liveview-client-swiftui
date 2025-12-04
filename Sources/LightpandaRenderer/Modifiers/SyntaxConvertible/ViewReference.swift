@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftSyntax
 import LightpandaClient
 
-public struct ViewReference: View, @preconcurrency SyntaxConvertible {
+public struct ViewReference<Library: ElementLibrary>: View, @preconcurrency SyntaxConvertible {
     @Environment(Node.self) private var node
     
     let reference: String?
@@ -17,7 +17,7 @@ public struct ViewReference: View, @preconcurrency SyntaxConvertible {
     
     public var body: some View {
         if let reference {
-            node.children(in: reference, default: false, library: SwiftUIElementLibrary.self)
+            node.children(in: reference, default: false, library: Library.self)
         }
     }
 }

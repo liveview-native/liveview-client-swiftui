@@ -2,12 +2,11 @@ import Foundation
 
 /// Errors that can occur when parsing modifiers from syntax.
 public enum ModifierParseError: Error, CustomStringConvertible {
-    /// The number of arguments doesn't match any known variant.
     case unexpectedArgumentCount(modifier: String, expected: [Int], found: Int)
-    /// The arguments could not be parsed for the specified variant.
     case invalidArguments(modifier: String, variant: String, expectedTypes: String)
-    /// Multiple variants match the argument count but labels don't match.
     case ambiguousVariant(modifier: String, expectedLabels: [String])
+    case noMatchingVariant(modifier: String, errors: [Error])
+    case missingRequiredArgument(modifier: String, argument: String)
 
     public var description: String {
         switch self {
@@ -17,6 +16,10 @@ public enum ModifierParseError: Error, CustomStringConvertible {
             return "\(modifier): invalid arguments for '\(variant)', expected types: \(expectedTypes)"
         case .ambiguousVariant(let modifier, let expectedLabels):
             return "\(modifier): ambiguous variant, expected first argument label to be one of \(expectedLabels)"
+        case .noMatchingVariant(let modifier, let errors):
+            return "\(modifier): no matching variant found. Errors: \(errors)"
+        case .missingRequiredArgument(let modifier, let argument):
+            return "\(modifier): missing required argument '\(argument)'"
         }
     }
 }

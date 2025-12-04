@@ -10,7 +10,7 @@ import LightpandaClient
 
 public struct LightpandaRenderer<Library: ElementLibrary>: View {
     @State private var lightpanda: LightpandaRuntime
-    @State private var modifierParser = ModifierParser()
+    @State private var modifierParser = ModifierParser<Library>()
     @Namespace private var namespace
     
     public init(url: URL) {

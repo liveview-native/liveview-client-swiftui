@@ -12,7 +12,7 @@ import LightpandaClient
 struct NodeView<Library: ElementLibrary>: View {
     let node: Node
     
-    @Environment(ModifierParser.self) private var modifierParser
+    @Environment(ModifierParser<Library>.self) private var modifierParser
     
     #if DEBUG
     @Environment(LightpandaRuntime.self) private var runtime

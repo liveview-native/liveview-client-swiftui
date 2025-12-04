@@ -5,34 +5,34 @@ import SwiftUI
 
 @Observable
 @MainActor
-final class ModifierParser {
+final class ModifierParser<Library: ElementLibrary> {
     /// Pre-parsed segments.
-    static var cache = [String:ModifierCollection]()
+    var cache = [String:ModifierCollection<Library>]()
     
     public init() {}
     
     /// Parse an input string into a collection of modifiers.
-    public func parse(_ input: String) -> ModifierCollection {
-        if let cached = Self.cache[input] {
+    public func parse(_ input: String) -> ModifierCollection<Library> {
+        if let cached = cache[input] {
             return cached
         }
         print("PARSING")
         let syntax = Parser.parse(source: input)
         let visitor = ModifierVisitor(viewMode: .fixedUp)
         visitor.walk(syntax)
-        Self.cache[input] = visitor.modifiers
+        cache[input] = visitor.modifiers
         return visitor.modifiers
     }
     
     final class ModifierVisitor: SyntaxVisitor {
-        var modifiers = ModifierCollection()
+        var modifiers = ModifierCollection<Library>()
         
         override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
             if let parentModifier = node.calledExpression.as(MemberAccessExprSyntax.self)?.base?.as(FunctionCallExprSyntax.self) {
                 visit(parentModifier)
             }
             
-            if let modifier = try? AnyRuntimeViewModifier(node) {
+            if let modifier = try? AnyRuntimeViewModifier<Library>(node) {
                 modifiers.modifiers.append(modifier)
             }
             
@@ -41,8 +41,8 @@ final class ModifierParser {
     }
 }
 
-struct ModifierCollection: ViewModifier {
-    var modifiers: [AnyRuntimeViewModifier] = []
+struct ModifierCollection<Library: ElementLibrary>: ViewModifier {
+    var modifiers: [AnyRuntimeViewModifier<Library>] = []
     
     func body(content: Content) -> some View {
         if modifiers.isEmpty {
@@ -55,19 +55,21 @@ struct ModifierCollection: ViewModifier {
     }
 }
 
-struct AnyRuntimeViewModifier: ViewModifier {
-    static let types: [any RuntimeViewModifier.Type] = [
-        PaddingModifier.self,
-        StrikethroughModifier.self,
-        ButtonStyleModifier.self,
-        ClipShapeModifier.self,
-        MultilineTextAlignmentModifier.self,
-        ForegroundStyleModifier.self,
-        TintModifier.self,
-        FrameModifier.self,
-        FontModifier.self,
-        SwipeActionsModifier.self
-    ]
+struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
+    static var types: [any RuntimeViewModifier<Library>.Type] {
+        [
+            PaddingModifier<Library>.self,
+            StrikethroughModifier<Library>.self,
+            ButtonStyleModifier<Library>.self,
+            ClipShapeModifier<Library>.self,
+            MultilineTextAlignmentModifier<Library>.self,
+            ForegroundStyleModifier<Library>.self,
+            TintModifier<Library>.self,
+            FrameModifier<Library>.self,
+            FontModifier<Library>.self,
+            SwipeActionsModifier<Library>.self
+        ]
+    }
     
     let modifier: any RuntimeViewModifier
     
