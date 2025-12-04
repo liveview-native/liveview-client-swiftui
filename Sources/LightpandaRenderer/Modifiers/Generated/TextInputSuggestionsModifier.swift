@@ -52,6 +52,7 @@ extension TextInputSuggestionsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TextInputSuggestionsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .textInputSuggestionsWithView(let value0):

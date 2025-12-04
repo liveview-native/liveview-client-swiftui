@@ -21,6 +21,7 @@ extension ListRowBackgroundModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ListRowBackgroundModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .listRowBackground(let value0):

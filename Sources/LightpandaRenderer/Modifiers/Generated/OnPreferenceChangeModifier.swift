@@ -24,6 +24,7 @@ extension OnPreferenceChangeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnPreferenceChangeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onPreferenceChange(let value0, let perform):

@@ -23,6 +23,7 @@ extension PresentedWindowStyleModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PresentedWindowStyleModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .presentedWindowStyle(let value0):

@@ -23,6 +23,7 @@ extension PreviewLayoutModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PreviewLayoutModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .previewLayout(let value0):

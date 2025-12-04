@@ -129,6 +129,7 @@ extension AccessibilityDropPointModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityDropPointModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityDropPointWithSwiftUICoreUnitPointSwiftUICoreTextSwiftBool(let value0, let description, let isEnabled):

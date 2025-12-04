@@ -23,6 +23,7 @@ extension IdModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "IdModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .id(let value0):

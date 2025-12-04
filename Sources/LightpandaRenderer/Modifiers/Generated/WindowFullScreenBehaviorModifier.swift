@@ -23,6 +23,7 @@ extension WindowFullScreenBehaviorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "WindowFullScreenBehaviorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .windowFullScreenBehavior(let value0):

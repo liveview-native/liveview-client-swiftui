@@ -6,39 +6,135 @@ import SwiftSyntax
 public enum SearchableModifier<Library: ElementLibrary>: Sendable {
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreTextOptional(text: SwiftUICore.Binding<Swift.String>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.Text?)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKey(text: SwiftUICore.Binding<Swift.String>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.LocalizedStringKey)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementFoundationLocalizedStringResource(text: SwiftUICore.Binding<Swift.String>, placement: SwiftUI.SearchFieldPlacement, prompt: Foundation.LocalizedStringResource)
+    #endif
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementString(text: SwiftUICore.Binding<Swift.String>, placement: SwiftUI.SearchFieldPlacement, prompt: String)
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptional(text: SwiftUICore.Binding<Swift.String>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.Text?)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKey(text: SwiftUICore.Binding<Swift.String>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.LocalizedStringKey)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResource(text: SwiftUICore.Binding<Swift.String>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: Foundation.LocalizedStringResource)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementString(text: SwiftUICore.Binding<Swift.String>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: String)
+    #endif
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: SwiftUICore.Binding<Swift.String>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.Text?, suggestions: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: SwiftUICore.Binding<Swift.String>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.LocalizedStringKey, suggestions: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementStringView(text: SwiftUICore.Binding<Swift.String>, placement: SwiftUI.SearchFieldPlacement, prompt: String, suggestions: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 16.0, macOS 13.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.Text?, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView1(text: SwiftUICore.Binding<Swift.String>, editableTokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.Text?, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 16.0, macOS 13.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.LocalizedStringKey, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 16.0, macOS 13.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: Foundation.LocalizedStringResource, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView1(text: SwiftUICore.Binding<Swift.String>, editableTokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.LocalizedStringKey, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView1(text: SwiftUICore.Binding<Swift.String>, editableTokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: Foundation.LocalizedStringResource, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 16.0, macOS 13.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementStringView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: String, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementsomeStringProtocolView(text: SwiftUICore.Binding<Swift.String>, editableTokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: some StringProtocol, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.Text?, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView1(text: SwiftUICore.Binding<Swift.String>, editableTokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.Text?, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.LocalizedStringKey, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: Foundation.LocalizedStringResource, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView1(text: SwiftUICore.Binding<Swift.String>, editableTokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.LocalizedStringKey, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView1(text: SwiftUICore.Binding<Swift.String>, editableTokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: Foundation.LocalizedStringResource, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementStringView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: String, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementsomeStringProtocolView(text: SwiftUICore.Binding<Swift.String>, editableTokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: some StringProtocol, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 16.0, macOS 13.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, suggestedTokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.Text?, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 16.0, macOS 13.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, suggestedTokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.LocalizedStringKey, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 16.0, macOS 13.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, suggestedTokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: Foundation.LocalizedStringResource, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 16.0, macOS 13.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementStringView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, suggestedTokens: SwiftUICore.Binding<C>, placement: SwiftUI.SearchFieldPlacement, prompt: String, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, suggestedTokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.Text?, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, suggestedTokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: SwiftUICore.LocalizedStringKey, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, suggestedTokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: Foundation.LocalizedStringResource, token: ViewReference<Library>)
+    #endif
+    #if os(iOS) || os(macOS)
+    @available(iOS 17.0, macOS 14.0, *)
     case searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementStringView(text: SwiftUICore.Binding<Swift.String>, tokens: SwiftUICore.Binding<C>, suggestedTokens: SwiftUICore.Binding<C>, isPresented: SwiftUICore.Binding<Swift.Bool>, placement: SwiftUI.SearchFieldPlacement, prompt: String, token: ViewReference<Library>)
+    #endif
 }
 
 extension SearchableModifier: RuntimeViewModifier {
@@ -46,618 +142,742 @@ extension SearchableModifier: RuntimeViewModifier {
 
     public init(syntax: FunctionCallExprSyntax) throws {
         var errors: [Error] = []
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementStringView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementStringView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView1(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView1(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView1(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView1(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementStringView(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementStringView(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ some StringProtocol(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementsomeStringProtocolView(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ some StringProtocol(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementsomeStringProtocolView(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 13.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 13.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 13.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementStringView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementStringView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView1(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
-            }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView1(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 13.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            guard let suggestedTokens = syntax.argument(named: "suggestedTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestedTokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 13.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: text, tokens: tokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: text, tokens: tokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 13.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: text, tokens: tokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(text: text, tokens: tokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView1(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView1(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView1(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView1(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 13.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementStringView(text: text, tokens: tokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementStringView(text: text, tokens: tokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ some StringProtocol(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementsomeStringProtocolView(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ some StringProtocol(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementsomeStringProtocolView(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 13.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: text, tokens: tokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let tokens = syntax.argument(named: "tokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "tokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: text, tokens: tokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
+                guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView1(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: token)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let editableTokens = syntax.argument(named: "editableTokens").flatMap({ SwiftUICore.Binding<C>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "editableTokens")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
-            guard let token = syntax.argument(named: "token").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "token")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView1(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: token)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKey(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKey(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResource(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResource(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementString(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementString(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let suggestions = syntax.argument(named: "suggestions").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestions")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: text, placement: placement, prompt: prompt, suggestions: suggestions)
+                return
+            } catch {
+                errors.append(error)
             }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let suggestions = syntax.argument(named: "suggestions").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestions")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(text: text, placement: placement, prompt: prompt, suggestions: suggestions)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                guard let suggestions = syntax.argument(named: "suggestions").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestions")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementStringView(text: text, placement: placement, prompt: prompt, suggestions: suggestions)
+                return
+            } catch {
+                errors.append(error)
             }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ String(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            guard let suggestions = syntax.argument(named: "suggestions").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestions")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementStringView(text: text, placement: placement, prompt: prompt, suggestions: suggestions)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptional(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let isPresented = syntax.argument(named: "isPresented").flatMap({ SwiftUICore.Binding<Swift.Bool>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "isPresented")
-            }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptional(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
-            return
-        } catch {
-            errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #endif
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
+                guard let suggestions = syntax.argument(named: "suggestions").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestions")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: text, placement: placement, prompt: prompt, suggestions: suggestions)
+                return
+            } catch {
+                errors.append(error)
             }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            let prompt: SwiftUICore.Text? = syntax.argument(named: "prompt").flatMap({ SwiftUICore.Text(syntax: $0.expression) }) ?? nil
-            guard let suggestions = syntax.argument(named: "suggestions").flatMap({ ViewReference<Library>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "suggestions")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(text: text, placement: placement, prompt: prompt, suggestions: suggestions)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
@@ -671,19 +891,23 @@ extension SearchableModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
+                }
+                let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
+                guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
+                }
+                self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementFoundationLocalizedStringResource(text: text, placement: placement, prompt: prompt)
+                return
+            } catch {
+                errors.append(error)
             }
-            let placement: SwiftUI.SearchFieldPlacement = syntax.argument(named: "placement").flatMap({ SwiftUI.SearchFieldPlacement(syntax: $0.expression) }) ?? .automatic
-            guard let prompt = syntax.argument(named: "prompt").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "prompt")
-            }
-            self = .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementFoundationLocalizedStringResource(text: text, placement: placement, prompt: prompt)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let text = syntax.argument(named: "text").flatMap({ SwiftUICore.Binding<Swift.String>(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "SearchableModifier", argument: "text")
@@ -710,78 +934,271 @@ extension SearchableModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SearchableModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreTextOptional(let text, let placement, let prompt):
             content.searchable(text: text, placement: placement, prompt: prompt)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKey(let text, let placement, let prompt):
             content.searchable(text: text, placement: placement, prompt: prompt)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementFoundationLocalizedStringResource(let text, let placement, let prompt):
-            content.searchable(text: text, placement: placement, prompt: prompt)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.searchable(text: text, placement: placement, prompt: prompt)
+            } else {
+                content
+            }
+        #endif
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementString(let text, let placement, let prompt):
             content.searchable(text: text, placement: placement, prompt: prompt)
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptional(let text, let isPresented, let placement, let prompt):
-            content.searchable(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKey(let text, let isPresented, let placement, let prompt):
-            content.searchable(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResource(let text, let isPresented, let placement, let prompt):
-            content.searchable(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementString(let text, let isPresented, let placement, let prompt):
-            content.searchable(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, isPresented: isPresented, placement: placement, prompt: prompt)
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(let text, let placement, let prompt, let suggestions):
-            content.searchable(text: text, placement: placement, prompt: prompt, suggestions: { suggestions })
+            if #available(iOS) {
+                content.searchable(text: text, placement: placement, prompt: prompt, suggestions: { suggestions })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(let text, let placement, let prompt, let suggestions):
-            content.searchable(text: text, placement: placement, prompt: prompt, suggestions: { suggestions })
+            if #available(iOS) {
+                content.searchable(text: text, placement: placement, prompt: prompt, suggestions: { suggestions })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUISearchFieldPlacementStringView(let text, let placement, let prompt, let suggestions):
-            content.searchable(text: text, placement: placement, prompt: prompt, suggestions: { suggestions })
+            if #available(iOS) {
+                content.searchable(text: text, placement: placement, prompt: prompt, suggestions: { suggestions })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(let text, let tokens, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 16.0, macOS 13.0, *) {
+                content.searchable(text: text, tokens: tokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView1(let text, let editableTokens, let placement, let prompt, let token):
-            content.searchable(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(let text, let tokens, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 16.0, macOS 13.0, *) {
+                content.searchable(text: text, tokens: tokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(let text, let tokens, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 16.0, macOS 13.0, *) {
+                content.searchable(text: text, tokens: tokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView1(let text, let editableTokens, let placement, let prompt, let token):
-            content.searchable(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView1(let text, let editableTokens, let placement, let prompt, let token):
-            content.searchable(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementStringView(let text, let tokens, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 16.0, macOS 13.0, *) {
+                content.searchable(text: text, tokens: tokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUISearchFieldPlacementsomeStringProtocolView(let text, let editableTokens, let placement, let prompt, let token):
-            content.searchable(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, editableTokens: editableTokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(let text, let tokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView1(let text, let editableTokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(let text, let tokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(let text, let tokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView1(let text, let editableTokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView1(let text, let editableTokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementStringView(let text, let tokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, tokens: tokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementsomeStringProtocolView(let text, let editableTokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, editableTokens: editableTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(let text, let tokens, let suggestedTokens, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 16.0, macOS 13.0, *) {
+                content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(let text, let tokens, let suggestedTokens, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 16.0, macOS 13.0, *) {
+                content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(let text, let tokens, let suggestedTokens, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 16.0, macOS 13.0, *) {
+                content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUISearchFieldPlacementStringView(let text, let tokens, let suggestedTokens, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 16.0, macOS 13.0, *) {
+                content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreTextOptionalView(let text, let tokens, let suggestedTokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementSwiftUICoreLocalizedStringKeyView(let text, let tokens, let suggestedTokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementFoundationLocalizedStringResourceView(let text, let tokens, let suggestedTokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
+        #if os(iOS) || os(macOS)
         case .searchableWithSwiftUICoreBindingSwiftStringSwiftUICoreBindingCSwiftUICoreBindingCSwiftUICoreBindingSwiftBoolSwiftUISearchFieldPlacementStringView(let text, let tokens, let suggestedTokens, let isPresented, let placement, let prompt, let token):
-            content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            if #available(iOS 17.0, macOS 14.0, *) {
+                content.searchable(text: text, tokens: tokens, suggestedTokens: suggestedTokens, isPresented: isPresented, placement: placement, prompt: prompt, token: { token })
+            } else {
+                content
+            }
+        #endif
         }
     }
 }

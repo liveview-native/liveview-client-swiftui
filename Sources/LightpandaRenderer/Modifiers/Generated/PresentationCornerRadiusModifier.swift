@@ -21,6 +21,7 @@ extension PresentationCornerRadiusModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PresentationCornerRadiusModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .presentationCornerRadius(let value0):

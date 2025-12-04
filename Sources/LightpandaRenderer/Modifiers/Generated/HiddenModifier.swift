@@ -20,6 +20,7 @@ extension HiddenModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "HiddenModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .hidden:

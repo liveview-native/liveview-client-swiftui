@@ -129,6 +129,7 @@ extension AccessibilityDragPointModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityDragPointModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityDragPointWithSwiftUICoreUnitPointSwiftUICoreTextSwiftBool(let value0, let description, let isEnabled):

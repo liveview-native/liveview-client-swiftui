@@ -51,6 +51,7 @@ extension TypeSelectEquivalentModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TypeSelectEquivalentModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .typeSelectEquivalentWithSwiftUICoreTextOptional(let value0):

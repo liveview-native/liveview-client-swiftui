@@ -23,6 +23,7 @@ extension TextEditorStyleModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TextEditorStyleModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .textEditorStyle(let value0):

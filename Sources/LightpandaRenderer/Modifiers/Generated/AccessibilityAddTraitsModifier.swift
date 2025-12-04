@@ -23,6 +23,7 @@ extension AccessibilityAddTraitsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityAddTraitsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityAddTraits(let value0):

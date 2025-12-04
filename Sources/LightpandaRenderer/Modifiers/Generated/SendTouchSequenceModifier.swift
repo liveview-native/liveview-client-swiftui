@@ -23,6 +23,7 @@ extension SendTouchSequenceModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SendTouchSequenceModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .sendTouchSequence(let value0):

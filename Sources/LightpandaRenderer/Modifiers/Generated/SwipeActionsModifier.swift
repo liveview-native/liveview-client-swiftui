@@ -25,6 +25,7 @@ extension SwipeActionsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SwipeActionsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .swipeActions(let edge, let allowsFullSwipe, let swipeContent):

@@ -24,6 +24,7 @@ extension ColorEffectModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ColorEffectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .colorEffect(let value0, let isEnabled):

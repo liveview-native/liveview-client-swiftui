@@ -24,6 +24,7 @@ extension ListSectionSeparatorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ListSectionSeparatorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .listSectionSeparator(let value0, let edges):

@@ -23,6 +23,7 @@ extension IndexViewStyleModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "IndexViewStyleModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .indexViewStyle(let value0):

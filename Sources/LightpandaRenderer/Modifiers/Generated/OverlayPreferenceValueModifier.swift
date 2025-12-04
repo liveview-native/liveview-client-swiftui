@@ -55,6 +55,7 @@ extension OverlayPreferenceValueModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OverlayPreferenceValueModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .overlayPreferenceValueWithKTypeSwiftUICoreAlignmentView(let value0, let alignment, let value2):

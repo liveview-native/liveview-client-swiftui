@@ -21,6 +21,7 @@ extension BuildIfModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "BuildIfModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .buildIf(let value0):

@@ -42,6 +42,7 @@ extension ExportsItemProvidersModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ExportsItemProvidersModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .exportsItemProvidersWithArrayUniformTypeIdentifiersUTTypeescapingArrayFoundationNSItemProvider(let value0, let onExport):

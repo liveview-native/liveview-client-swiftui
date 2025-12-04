@@ -39,6 +39,7 @@ extension ContentToolbarModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ContentToolbarModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .contentToolbarWithSwiftUIContentToolbarPlacementView(let for, let content):

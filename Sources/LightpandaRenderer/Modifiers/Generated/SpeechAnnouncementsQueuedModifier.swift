@@ -21,6 +21,7 @@ extension SpeechAnnouncementsQueuedModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SpeechAnnouncementsQueuedModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .speechAnnouncementsQueued(let value0):

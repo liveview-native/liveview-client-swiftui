@@ -23,6 +23,7 @@ extension PropertiesModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PropertiesModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .properties(let context):

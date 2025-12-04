@@ -24,6 +24,7 @@ extension TagModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TagModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .tag(let value0, let includeOptional):

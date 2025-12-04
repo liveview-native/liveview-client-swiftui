@@ -23,6 +23,7 @@ extension WindowResizeBehaviorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "WindowResizeBehaviorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .windowResizeBehavior(let value0):

@@ -21,6 +21,7 @@ extension AccessibilityIgnoresInvertColorsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityIgnoresInvertColorsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityIgnoresInvertColors(let value0):

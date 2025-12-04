@@ -82,6 +82,7 @@ extension AccessibilityInputLabelsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityInputLabelsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityInputLabelsWithArraySwiftUICoreTextSwiftBool(let value0, let isEnabled):

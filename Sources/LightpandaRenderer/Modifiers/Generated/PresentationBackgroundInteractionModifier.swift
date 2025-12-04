@@ -23,6 +23,7 @@ extension PresentationBackgroundInteractionModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PresentationBackgroundInteractionModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .presentationBackgroundInteraction(let value0):

@@ -23,6 +23,7 @@ extension SearchModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SearchModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .search(let text):

@@ -23,6 +23,7 @@ extension NavigationBarTitleDisplayModeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "NavigationBarTitleDisplayModeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .navigationBarTitleDisplayMode(let value0):

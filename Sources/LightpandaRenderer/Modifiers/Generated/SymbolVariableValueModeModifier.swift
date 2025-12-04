@@ -21,6 +21,7 @@ extension SymbolVariableValueModeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SymbolVariableValueModeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .symbolVariableValueMode(let value0):

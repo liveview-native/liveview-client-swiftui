@@ -23,6 +23,7 @@ extension OnMoveModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnMoveModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onMove(let perform):

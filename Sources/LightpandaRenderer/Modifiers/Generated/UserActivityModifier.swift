@@ -41,6 +41,7 @@ extension UserActivityModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "UserActivityModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .userActivityWithSwiftStringSwiftBoolescapingFoundationNSUserActivity(let value0, let isActive, let value2):

@@ -51,6 +51,7 @@ extension HighPriorityGestureModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "HighPriorityGestureModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .highPriorityGestureWithAnyGestureAnySwiftUICoreGestureMask(let value0, let including):

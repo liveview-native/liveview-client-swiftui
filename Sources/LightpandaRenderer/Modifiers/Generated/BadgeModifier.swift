@@ -7,7 +7,10 @@ public enum BadgeModifier<Library: ElementLibrary>: Sendable {
     case badgeWithSwiftInt(Swift.Int)
     case badgeWithSwiftUICoreTextOptional(SwiftUICore.Text?)
     case badgeWithSwiftUICoreLocalizedStringKeyOptional(SwiftUICore.LocalizedStringKey?)
+    #if os(iOS) || os(macOS)
+    @available(iOS 16.0, macOS 13.0, *)
     case badgeWithFoundationLocalizedStringResourceOptional(Foundation.LocalizedStringResource?)
+    #endif
     case badgeWithStringOptional(String?)
 }
 
@@ -39,13 +42,17 @@ extension BadgeModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            let value0: Foundation.LocalizedStringResource? = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) ?? nil
-            self = .badgeWithFoundationLocalizedStringResourceOptional(value0)
-            return
-        } catch {
-            errors.append(error)
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 13.0, *) {
+            do {
+                let value0: Foundation.LocalizedStringResource? = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) ?? nil
+                self = .badgeWithFoundationLocalizedStringResourceOptional(value0)
+                return
+            } catch {
+                errors.append(error)
+            }
         }
+        #endif
         do {
             let value0: String? = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) ?? nil
             self = .badgeWithStringOptional(value0)
@@ -55,6 +62,7 @@ extension BadgeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "BadgeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .badgeWithSwiftInt(let value0):
@@ -63,8 +71,14 @@ extension BadgeModifier: RuntimeViewModifier {
             content.badge(value0)
         case .badgeWithSwiftUICoreLocalizedStringKeyOptional(let value0):
             content.badge(value0)
+        #if os(iOS) || os(macOS)
         case .badgeWithFoundationLocalizedStringResourceOptional(let value0):
-            content.badge(value0)
+            if #available(iOS 16.0, macOS 13.0, *) {
+                content.badge(value0)
+            } else {
+                content
+            }
+        #endif
         case .badgeWithStringOptional(let value0):
             content.badge(value0)
         }

@@ -23,6 +23,7 @@ extension DefaultGestureMaskModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DefaultGestureMaskModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .defaultGestureMask(let proxy):

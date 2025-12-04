@@ -23,6 +23,7 @@ extension FileDialogURLEnabledModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FileDialogURLEnabledModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fileDialogURLEnabled(let value0):

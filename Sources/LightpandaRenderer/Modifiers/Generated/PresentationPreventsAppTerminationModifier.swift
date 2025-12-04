@@ -21,6 +21,7 @@ extension PresentationPreventsAppTerminationModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PresentationPreventsAppTerminationModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .presentationPreventsAppTermination(let value0):

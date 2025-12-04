@@ -21,6 +21,7 @@ extension TabViewCustomizationModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TabViewCustomizationModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .tabViewCustomization(let value0):

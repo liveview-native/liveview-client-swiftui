@@ -36,6 +36,7 @@ extension AccessibilityIdentifierModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityIdentifierModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityIdentifierWithSwiftStringSwiftBool(let value0, let isEnabled):

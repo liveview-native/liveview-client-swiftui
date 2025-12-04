@@ -67,6 +67,7 @@ extension DragContainerModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DragContainerModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .dragContainerWithItemTypeSwiftKeyPathItemItemIDSwiftUICoreNamespaceIDOptionalescapingdraggedItemIDItemIDData(let for, let itemID, let in, let value3):

@@ -21,6 +21,7 @@ extension TextInputAutocapitalizationModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TextInputAutocapitalizationModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .textInputAutocapitalization(let value0):

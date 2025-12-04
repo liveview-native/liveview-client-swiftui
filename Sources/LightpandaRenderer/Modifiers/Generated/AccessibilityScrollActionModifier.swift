@@ -23,6 +23,7 @@ extension AccessibilityScrollActionModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityScrollActionModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityScrollAction(let value0):

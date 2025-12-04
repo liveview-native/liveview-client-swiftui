@@ -23,6 +23,7 @@ extension ColorMultiplyModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ColorMultiplyModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .colorMultiply(let value0):

@@ -21,6 +21,7 @@ extension HoverEffectDisabledModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "HoverEffectDisabledModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .hoverEffectDisabled(let value0):

@@ -23,6 +23,7 @@ extension FileDialogImportsUnresolvedAliasesModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FileDialogImportsUnresolvedAliasesModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fileDialogImportsUnresolvedAliases(let value0):

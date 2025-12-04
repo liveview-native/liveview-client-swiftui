@@ -23,6 +23,7 @@ extension OnDropSessionUpdatedModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnDropSessionUpdatedModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onDropSessionUpdated(let value0):

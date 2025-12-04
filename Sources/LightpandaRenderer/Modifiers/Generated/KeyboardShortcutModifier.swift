@@ -6,7 +6,10 @@ import SwiftSyntax
 public enum KeyboardShortcutModifier<Library: ElementLibrary>: Sendable {
     case keyboardShortcutWithSwiftUIKeyEquivalentSwiftUICoreEventModifiers(SwiftUI.KeyEquivalent, modifiers: SwiftUICore.EventModifiers)
     case keyboardShortcutWithSwiftUIKeyboardShortcut(SwiftUI.KeyboardShortcut)
+    #if os(iOS) || os(macOS)
+    @available(iOS 15.4, macOS 12.3, *)
     case keyboardShortcutWithSwiftUIKeyboardShortcutOptional(SwiftUI.KeyboardShortcut?)
+    #endif
     case keyboardShortcutWithSwiftUIKeyEquivalentSwiftUICoreEventModifiersSwiftUIKeyboardShortcutLocalization(SwiftUI.KeyEquivalent, modifiers: SwiftUICore.EventModifiers, localization: SwiftUI.KeyboardShortcut.Localization)
 }
 
@@ -47,23 +50,34 @@ extension KeyboardShortcutModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            let value0: SwiftUI.KeyboardShortcut? = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ SwiftUI.KeyboardShortcut(syntax: $0.expression) }) ?? nil
-            self = .keyboardShortcutWithSwiftUIKeyboardShortcutOptional(value0)
-            return
-        } catch {
-            errors.append(error)
+        #if os(iOS) || os(macOS)
+        if #available(iOS 15.4, macOS 12.3, *) {
+            do {
+                let value0: SwiftUI.KeyboardShortcut? = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ SwiftUI.KeyboardShortcut(syntax: $0.expression) }) ?? nil
+                self = .keyboardShortcutWithSwiftUIKeyboardShortcutOptional(value0)
+                return
+            } catch {
+                errors.append(error)
+            }
         }
+        #endif
         throw ModifierParseError.noMatchingVariant(modifier: "KeyboardShortcutModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .keyboardShortcutWithSwiftUIKeyEquivalentSwiftUICoreEventModifiers(let value0, let modifiers):
             content.keyboardShortcut(value0, modifiers: modifiers)
         case .keyboardShortcutWithSwiftUIKeyboardShortcut(let value0):
             content.keyboardShortcut(value0)
+        #if os(iOS) || os(macOS)
         case .keyboardShortcutWithSwiftUIKeyboardShortcutOptional(let value0):
-            content.keyboardShortcut(value0)
+            if #available(iOS 15.4, macOS 12.3, *) {
+                content.keyboardShortcut(value0)
+            } else {
+                content
+            }
+        #endif
         case .keyboardShortcutWithSwiftUIKeyEquivalentSwiftUICoreEventModifiersSwiftUIKeyboardShortcutLocalization(let value0, let modifiers, let localization):
             content.keyboardShortcut(value0, modifiers: modifiers, localization: localization)
         }

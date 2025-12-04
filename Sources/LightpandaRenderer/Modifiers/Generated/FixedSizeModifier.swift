@@ -33,6 +33,7 @@ extension FixedSizeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FixedSizeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fixedSizeWithSwiftBoolSwiftBool(let horizontal, let vertical):

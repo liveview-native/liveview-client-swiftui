@@ -23,6 +23,7 @@ extension SpringLoadingBehaviorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SpringLoadingBehaviorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .springLoadingBehavior(let value0):

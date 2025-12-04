@@ -21,6 +21,7 @@ extension RenderModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "RenderModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .render(let seconds):

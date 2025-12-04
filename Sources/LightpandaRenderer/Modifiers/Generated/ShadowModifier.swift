@@ -26,6 +26,7 @@ extension ShadowModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ShadowModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .shadow(let color, let radius, let x, let y):

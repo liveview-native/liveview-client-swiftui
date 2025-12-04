@@ -23,6 +23,7 @@ extension MenuIndicatorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "MenuIndicatorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .menuIndicator(let value0):

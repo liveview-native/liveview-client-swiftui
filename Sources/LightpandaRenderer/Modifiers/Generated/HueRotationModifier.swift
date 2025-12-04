@@ -23,6 +23,7 @@ extension HueRotationModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "HueRotationModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .hueRotation(let value0):

@@ -24,6 +24,7 @@ extension ListRowSeparatorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ListRowSeparatorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .listRowSeparator(let value0, let edges):

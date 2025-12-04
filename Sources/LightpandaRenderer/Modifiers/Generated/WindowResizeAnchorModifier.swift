@@ -21,6 +21,7 @@ extension WindowResizeAnchorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "WindowResizeAnchorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .windowResizeAnchor(let value0):

@@ -64,6 +64,7 @@ extension SensoryFeedbackModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SensoryFeedbackModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .sensoryFeedbackWithSwiftUISensoryFeedbackT(let value0, let trigger):

@@ -35,6 +35,7 @@ extension InspectorColumnWidthModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "InspectorColumnWidthModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .inspectorColumnWidthWithCoreFoundationCGFloatOptionalCoreFoundationCGFloatCoreFoundationCGFloatOptional(let min, let ideal, let max):

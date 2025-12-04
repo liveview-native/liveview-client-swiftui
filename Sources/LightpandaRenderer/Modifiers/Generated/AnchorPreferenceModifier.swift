@@ -27,6 +27,7 @@ extension AnchorPreferenceModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AnchorPreferenceModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .anchorPreference(let key, let value, let transform):

@@ -23,6 +23,7 @@ extension WindowDismissBehaviorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "WindowDismissBehaviorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .windowDismissBehavior(let value0):

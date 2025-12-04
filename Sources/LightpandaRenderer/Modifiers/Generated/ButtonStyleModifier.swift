@@ -33,6 +33,7 @@ extension ButtonStyleModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ButtonStyleModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .buttonStyleWithAnyPrimitiveButtonStyle(let value0):

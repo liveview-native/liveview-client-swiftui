@@ -22,6 +22,7 @@ extension AccessibilityDirectTouchModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityDirectTouchModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityDirectTouch(let value0, let options):

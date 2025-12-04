@@ -23,6 +23,7 @@ extension TransformEffectModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TransformEffectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .transformEffect(let value0):

@@ -36,6 +36,7 @@ extension PresentationCompactAdaptationModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PresentationCompactAdaptationModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .presentationCompactAdaptationWithSwiftUIPresentationAdaptation(let value0):

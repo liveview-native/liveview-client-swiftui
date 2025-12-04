@@ -45,6 +45,7 @@ extension OnGeometryChangeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnGeometryChangeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onGeometryChangeWithTTypeescapingSendableSwiftUICoreGeometryProxyTescapingnewValueTSwiftVoid(let for, let of, let action):

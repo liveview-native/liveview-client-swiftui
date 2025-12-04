@@ -23,6 +23,7 @@ extension TableColumnHeadersModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TableColumnHeadersModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .tableColumnHeaders(let value0):

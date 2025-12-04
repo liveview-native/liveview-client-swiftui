@@ -26,6 +26,7 @@ extension AccessibilityLinkedGroupModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityLinkedGroupModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityLinkedGroup(let id, let in):

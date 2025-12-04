@@ -23,6 +23,7 @@ extension AllowsTighteningModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AllowsTighteningModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .allowsTightening(let value0):

@@ -8,7 +8,10 @@ public enum AccessibilityActionModifier<Library: ElementLibrary>: Sendable {
     case accessibilityActionWithSwiftUICoreTextescapingSwiftVoid(named: SwiftUICore.Text, () -> Swift.Void)
     case accessibilityActionWithescapingSwiftVoidView(action: () -> Swift.Void, label: ViewReference<Library>)
     case accessibilityActionWithSwiftUICoreLocalizedStringKeyescapingSwiftVoid(named: SwiftUICore.LocalizedStringKey, () -> Swift.Void)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityActionWithFoundationLocalizedStringResourceescapingSwiftVoid(named: Foundation.LocalizedStringResource, () -> Swift.Void)
+    #endif
     case accessibilityActionWithStringescapingSwiftVoid(named: String, () -> Swift.Void)
 }
 
@@ -53,18 +56,22 @@ extension AccessibilityActionModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let named = syntax.argument(named: "named").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityActionModifier", argument: "nameResource")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let named = syntax.argument(named: "named").flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityActionModifier", argument: "nameResource")
+                }
+                guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ () -> Swift.Void(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityActionModifier", argument: "handler")
+                }
+                self = .accessibilityActionWithFoundationLocalizedStringResourceescapingSwiftVoid(named: named, value1)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ () -> Swift.Void(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityActionModifier", argument: "handler")
-            }
-            self = .accessibilityActionWithFoundationLocalizedStringResourceescapingSwiftVoid(named: named, value1)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let named = syntax.argument(named: "named").flatMap({ String(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityActionModifier", argument: "name")
@@ -89,6 +96,7 @@ extension AccessibilityActionModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityActionModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityActionWithSwiftUIAccessibilityActionKindescapingSwiftVoid(let value0, let value1):
@@ -99,8 +107,14 @@ extension AccessibilityActionModifier: RuntimeViewModifier {
             content.accessibilityAction(action: action, label: { label })
         case .accessibilityActionWithSwiftUICoreLocalizedStringKeyescapingSwiftVoid(let named, let value1):
             content.accessibilityAction(named: named, value1)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityActionWithFoundationLocalizedStringResourceescapingSwiftVoid(let named, let value1):
-            content.accessibilityAction(named: named, value1)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityAction(named: named, value1)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityActionWithStringescapingSwiftVoid(let named, let value1):
             content.accessibilityAction(named: named, value1)
         }

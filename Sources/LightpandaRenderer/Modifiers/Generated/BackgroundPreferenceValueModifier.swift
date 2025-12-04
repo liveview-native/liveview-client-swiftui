@@ -55,6 +55,7 @@ extension BackgroundPreferenceValueModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "BackgroundPreferenceValueModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .backgroundPreferenceValueWithKTypeSwiftUICoreAlignmentView(let value0, let alignment, let value2):

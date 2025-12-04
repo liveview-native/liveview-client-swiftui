@@ -30,6 +30,7 @@ extension ListRowInsetsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ListRowInsetsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .listRowInsetsWithSwiftUICoreEdgeInsetsOptional(let value0):

@@ -33,6 +33,7 @@ extension BuildEitherModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "BuildEitherModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .buildEitherWithAnyView(let first):

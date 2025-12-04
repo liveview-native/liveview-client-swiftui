@@ -23,6 +23,7 @@ extension ButtonRepeatBehaviorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ButtonRepeatBehaviorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .buttonRepeatBehavior(let value0):

@@ -38,6 +38,7 @@ extension ContentShapeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ContentShapeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .contentShapeWithAnyShapeSwiftBool(let value0, let eoFill):

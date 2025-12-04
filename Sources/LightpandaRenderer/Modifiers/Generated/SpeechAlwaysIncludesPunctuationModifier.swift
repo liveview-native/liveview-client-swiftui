@@ -21,6 +21,7 @@ extension SpeechAlwaysIncludesPunctuationModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SpeechAlwaysIncludesPunctuationModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .speechAlwaysIncludesPunctuation(let value0):

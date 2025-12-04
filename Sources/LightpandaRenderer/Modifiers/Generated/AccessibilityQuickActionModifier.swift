@@ -42,6 +42,7 @@ extension AccessibilityQuickActionModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityQuickActionModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityQuickActionWithStyleView(let style, let content):

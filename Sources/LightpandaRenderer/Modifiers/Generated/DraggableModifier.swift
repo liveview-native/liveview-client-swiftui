@@ -93,6 +93,7 @@ extension DraggableModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DraggableModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .draggableWithItemIDSwiftUICoreNamespaceIDOptional(let containerItemID, let containerNamespace):

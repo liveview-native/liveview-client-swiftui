@@ -27,6 +27,7 @@ extension AnimateModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AnimateModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .animate(let value0, let changes, let completion):

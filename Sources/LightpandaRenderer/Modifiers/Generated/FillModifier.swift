@@ -22,6 +22,7 @@ extension FillModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FillModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fill(let value0, let style):

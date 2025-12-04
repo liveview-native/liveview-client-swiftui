@@ -23,6 +23,7 @@ extension BuildLimitedAvailabilityModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "BuildLimitedAvailabilityModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .buildLimitedAvailability(let value0):

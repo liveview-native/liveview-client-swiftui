@@ -51,6 +51,7 @@ extension SimultaneousGestureModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SimultaneousGestureModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .simultaneousGestureWithAnyGestureAnySwiftUICoreGestureMask(let value0, let including):

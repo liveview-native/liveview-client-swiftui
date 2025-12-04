@@ -7,9 +7,15 @@ public enum OnDropModifier<Library: ElementLibrary>: Sendable {
     case onDropWithArrayUniformTypeIdentifiersUTTypeSwiftUICoreBindingSwiftBoolOptionalescapingprovidersArrayFoundationNSItemProviderSwiftBool(of: [UniformTypeIdentifiers.UTType], isTargeted: SwiftUICore.Binding<Swift.Bool>?, perform: (_ providers: [Foundation.NSItemProvider]) -> Swift.Bool)
     case onDropWithArrayUniformTypeIdentifiersUTTypeSwiftUICoreBindingSwiftBoolOptionalescapingprovidersArrayFoundationNSItemProviderlocationCoreFoundationCGPointSwiftBool(of: [UniformTypeIdentifiers.UTType], isTargeted: SwiftUICore.Binding<Swift.Bool>?, perform: (_ providers: [Foundation.NSItemProvider], _ location: CoreFoundation.CGPoint) -> Swift.Bool)
     case onDropWithArrayUniformTypeIdentifiersUTTypeanySwiftUIDropDelegate(of: [UniformTypeIdentifiers.UTType], delegate: any SwiftUI.DropDelegate)
+    #if !os(tvOS) && !os(watchOS)
     case onDropWithArraySwiftStringSwiftUICoreBindingSwiftBoolOptionalescapingprovidersArrayFoundationNSItemProviderSwiftBool(of: [Swift.String], isTargeted: SwiftUICore.Binding<Swift.Bool>?, perform: (_ providers: [Foundation.NSItemProvider]) -> Swift.Bool)
+    #endif
+    #if !os(tvOS) && !os(watchOS)
     case onDropWithArraySwiftStringSwiftUICoreBindingSwiftBoolOptionalescapingprovidersArrayFoundationNSItemProviderlocationCoreFoundationCGPointSwiftBool(of: [Swift.String], isTargeted: SwiftUICore.Binding<Swift.Bool>?, perform: (_ providers: [Foundation.NSItemProvider], _ location: CoreFoundation.CGPoint) -> Swift.Bool)
+    #endif
+    #if !os(tvOS) && !os(watchOS)
     case onDropWithArraySwiftStringanySwiftUIDropDelegate(of: [Swift.String], delegate: any SwiftUI.DropDelegate)
+    #endif
 }
 
 extension OnDropModifier: RuntimeViewModifier {
@@ -43,6 +49,7 @@ extension OnDropModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
+        #if !os(tvOS) && !os(watchOS)
         do {
             guard let of = syntax.argument(named: "of").flatMap({ [Swift.String](syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "OnDropModifier", argument: "supportedTypes")
@@ -56,6 +63,8 @@ extension OnDropModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
+        #endif
+        #if !os(tvOS) && !os(watchOS)
         do {
             guard let of = syntax.argument(named: "of").flatMap({ [Swift.String](syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "OnDropModifier", argument: "supportedTypes")
@@ -69,6 +78,7 @@ extension OnDropModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
+        #endif
         do {
             guard let of = syntax.argument(named: "of").flatMap({ [UniformTypeIdentifiers.UTType](syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "OnDropModifier", argument: "supportedContentTypes")
@@ -81,6 +91,7 @@ extension OnDropModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
+        #if !os(tvOS) && !os(watchOS)
         do {
             guard let of = syntax.argument(named: "of").flatMap({ [Swift.String](syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "OnDropModifier", argument: "supportedTypes")
@@ -93,8 +104,10 @@ extension OnDropModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
+        #endif
         throw ModifierParseError.noMatchingVariant(modifier: "OnDropModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onDropWithArrayUniformTypeIdentifiersUTTypeSwiftUICoreBindingSwiftBoolOptionalescapingprovidersArrayFoundationNSItemProviderSwiftBool(let of, let isTargeted, let perform):
@@ -103,12 +116,18 @@ extension OnDropModifier: RuntimeViewModifier {
             content.onDrop(of: of, isTargeted: isTargeted, perform: perform)
         case .onDropWithArrayUniformTypeIdentifiersUTTypeanySwiftUIDropDelegate(let of, let delegate):
             content.onDrop(of: of, delegate: delegate)
+        #if !os(tvOS) && !os(watchOS)
         case .onDropWithArraySwiftStringSwiftUICoreBindingSwiftBoolOptionalescapingprovidersArrayFoundationNSItemProviderSwiftBool(let of, let isTargeted, let perform):
             content.onDrop(of: of, isTargeted: isTargeted, perform: perform)
+        #endif
+        #if !os(tvOS) && !os(watchOS)
         case .onDropWithArraySwiftStringSwiftUICoreBindingSwiftBoolOptionalescapingprovidersArrayFoundationNSItemProviderlocationCoreFoundationCGPointSwiftBool(let of, let isTargeted, let perform):
             content.onDrop(of: of, isTargeted: isTargeted, perform: perform)
+        #endif
+        #if !os(tvOS) && !os(watchOS)
         case .onDropWithArraySwiftStringanySwiftUIDropDelegate(let of, let delegate):
             content.onDrop(of: of, delegate: delegate)
+        #endif
         }
     }
 }

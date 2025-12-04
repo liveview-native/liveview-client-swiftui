@@ -24,6 +24,7 @@ extension OnSubmitModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnSubmitModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onSubmit(let of, let value1):

@@ -26,6 +26,7 @@ extension AccessibilityRotorEntryModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityRotorEntryModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityRotorEntry(let id, let in):

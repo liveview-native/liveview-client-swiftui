@@ -23,6 +23,7 @@ extension ScrollContentBackgroundModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ScrollContentBackgroundModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .scrollContentBackground(let value0):

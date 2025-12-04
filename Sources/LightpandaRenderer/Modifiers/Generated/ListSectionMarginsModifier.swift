@@ -22,6 +22,7 @@ extension ListSectionMarginsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ListSectionMarginsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .listSectionMargins(let value0, let value1):

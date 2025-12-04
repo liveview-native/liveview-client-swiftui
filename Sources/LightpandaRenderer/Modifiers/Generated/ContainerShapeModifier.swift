@@ -33,6 +33,7 @@ extension ContainerShapeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ContainerShapeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .containerShapeWithsomeRoundedRectangularShape(let value0):

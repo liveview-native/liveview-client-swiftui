@@ -23,6 +23,7 @@ extension MenuButtonStyleModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "MenuButtonStyleModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .menuButtonStyle(let value0):

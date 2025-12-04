@@ -59,6 +59,8 @@ public struct SwiftUIElementLibrary: ElementLibrary {
         case text = "Text"
         case textField = "TextField"
         
+        case navigationStack = "NavigationStack"
+        
         public init?(rawValue: String) {
             switch rawValue.lowercased() {
             case "button":
@@ -125,6 +127,8 @@ public struct SwiftUIElementLibrary: ElementLibrary {
                 self = .text
             case "textfield":
                 self = .textField
+            case "navigationstack":
+                self = .navigationStack
             default:
                 return nil
             }
@@ -198,6 +202,8 @@ public struct SwiftUIElementLibrary: ElementLibrary {
             TextView<Self>(node: node)
         case .textField:
             TextField<Self>(node: node)
+        case .navigationStack:
+            NavigationStack<Self>(node: node)
         }
     }
 }

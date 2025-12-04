@@ -24,6 +24,7 @@ extension HandGestureShortcutModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "HandGestureShortcutModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .handGestureShortcut(let value0, let isEnabled):

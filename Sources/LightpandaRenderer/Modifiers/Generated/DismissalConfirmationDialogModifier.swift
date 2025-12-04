@@ -153,6 +153,7 @@ extension DismissalConfirmationDialogModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DismissalConfirmationDialogModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .dismissalConfirmationDialogWithSwiftUICoreLocalizedStringKeySwiftBoolView(let value0, let shouldPresent, let actions):

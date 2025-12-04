@@ -23,6 +23,7 @@ extension SpeechAdjustedPitchModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SpeechAdjustedPitchModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .speechAdjustedPitch(let value0):

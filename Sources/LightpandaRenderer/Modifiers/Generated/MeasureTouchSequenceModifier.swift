@@ -26,6 +26,7 @@ extension MeasureTouchSequenceModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "MeasureTouchSequenceModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .measureTouchSequence(let host, let value1):

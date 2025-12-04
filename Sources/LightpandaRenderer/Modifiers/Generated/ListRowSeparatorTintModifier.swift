@@ -22,6 +22,7 @@ extension ListRowSeparatorTintModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ListRowSeparatorTintModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .listRowSeparatorTint(let value0, let edges):

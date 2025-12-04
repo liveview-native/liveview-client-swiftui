@@ -23,6 +23,7 @@ extension OnInteractiveResizeChangeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnInteractiveResizeChangeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onInteractiveResizeChange(let value0):

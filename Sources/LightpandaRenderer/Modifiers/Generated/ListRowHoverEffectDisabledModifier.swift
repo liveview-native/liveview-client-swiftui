@@ -21,6 +21,7 @@ extension ListRowHoverEffectDisabledModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ListRowHoverEffectDisabledModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .listRowHoverEffectDisabled(let value0):

@@ -35,6 +35,7 @@ extension NavigationSplitViewColumnWidthModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "NavigationSplitViewColumnWidthModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .navigationSplitViewColumnWidthWithCoreFoundationCGFloat(let value0):

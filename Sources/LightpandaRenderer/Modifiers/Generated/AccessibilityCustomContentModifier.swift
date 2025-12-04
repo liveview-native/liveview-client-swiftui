@@ -6,16 +6,30 @@ import SwiftSyntax
 public enum AccessibilityCustomContentModifier<Library: ElementLibrary>: Sendable {
     case accessibilityCustomContentWithSwiftUICoreAccessibilityCustomContentKeySwiftUICoreTextOptionalAccessibilityAXCustomContentImportance(SwiftUICore.AccessibilityCustomContentKey, SwiftUICore.Text?, importance: Accessibility.AXCustomContent.Importance)
     case accessibilityCustomContentWithSwiftUICoreAccessibilityCustomContentKeySwiftUICoreLocalizedStringKeyAccessibilityAXCustomContentImportance(SwiftUICore.AccessibilityCustomContentKey, SwiftUICore.LocalizedStringKey, importance: Accessibility.AXCustomContent.Importance)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityCustomContentWithSwiftUICoreAccessibilityCustomContentKeyFoundationLocalizedStringResourceAccessibilityAXCustomContentImportance(SwiftUICore.AccessibilityCustomContentKey, Foundation.LocalizedStringResource, importance: Accessibility.AXCustomContent.Importance)
+    #endif
     case accessibilityCustomContentWithSwiftUICoreAccessibilityCustomContentKeyStringAccessibilityAXCustomContentImportance(SwiftUICore.AccessibilityCustomContentKey, String, importance: Accessibility.AXCustomContent.Importance)
     case accessibilityCustomContentWithSwiftUICoreTextSwiftUICoreTextAccessibilityAXCustomContentImportance(SwiftUICore.Text, SwiftUICore.Text, importance: Accessibility.AXCustomContent.Importance)
     case accessibilityCustomContentWithSwiftUICoreLocalizedStringKeySwiftUICoreTextAccessibilityAXCustomContentImportance(SwiftUICore.LocalizedStringKey, SwiftUICore.Text, importance: Accessibility.AXCustomContent.Importance)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityCustomContentWithFoundationLocalizedStringResourceSwiftUICoreTextAccessibilityAXCustomContentImportance(Foundation.LocalizedStringResource, SwiftUICore.Text, importance: Accessibility.AXCustomContent.Importance)
+    #endif
     case accessibilityCustomContentWithSwiftUICoreLocalizedStringKeySwiftUICoreLocalizedStringKeyAccessibilityAXCustomContentImportance(SwiftUICore.LocalizedStringKey, SwiftUICore.LocalizedStringKey, importance: Accessibility.AXCustomContent.Importance)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityCustomContentWithFoundationLocalizedStringResourceFoundationLocalizedStringResourceAccessibilityAXCustomContentImportance(Foundation.LocalizedStringResource, Foundation.LocalizedStringResource, importance: Accessibility.AXCustomContent.Importance)
+    #endif
     case accessibilityCustomContentWithSwiftUICoreLocalizedStringKeyStringAccessibilityAXCustomContentImportance(SwiftUICore.LocalizedStringKey, String, importance: Accessibility.AXCustomContent.Importance)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityCustomContentWithFoundationLocalizedStringResourceStringAccessibilityAXCustomContentImportance(Foundation.LocalizedStringResource, String, importance: Accessibility.AXCustomContent.Importance)
+    #endif
+    #if !os(*)
     case accessibilityCustomContentWithStringStringAccessibilityAXCustomContentImportance(String, String, importance: Accessibility.AXCustomContent.Importance)
+    #endif
 }
 
 extension AccessibilityCustomContentModifier: RuntimeViewModifier {
@@ -47,19 +61,23 @@ extension AccessibilityCustomContentModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ SwiftUICore.AccessibilityCustomContentKey(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "key")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ SwiftUICore.AccessibilityCustomContentKey(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "key")
+                }
+                guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "valueResource")
+                }
+                let importance: Accessibility.AXCustomContent.Importance = syntax.argument(named: "importance").flatMap({ Accessibility.AXCustomContent.Importance(syntax: $0.expression) }) ?? .default
+                self = .accessibilityCustomContentWithSwiftUICoreAccessibilityCustomContentKeyFoundationLocalizedStringResourceAccessibilityAXCustomContentImportance(value0, value1, importance: importance)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "valueResource")
-            }
-            let importance: Accessibility.AXCustomContent.Importance = syntax.argument(named: "importance").flatMap({ Accessibility.AXCustomContent.Importance(syntax: $0.expression) }) ?? .default
-            self = .accessibilityCustomContentWithSwiftUICoreAccessibilityCustomContentKeyFoundationLocalizedStringResourceAccessibilityAXCustomContentImportance(value0, value1, importance: importance)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ SwiftUICore.AccessibilityCustomContentKey(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "key")
@@ -99,19 +117,23 @@ extension AccessibilityCustomContentModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "label")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "label")
+                }
+                guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ SwiftUICore.Text(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "value")
+                }
+                let importance: Accessibility.AXCustomContent.Importance = syntax.argument(named: "importance").flatMap({ Accessibility.AXCustomContent.Importance(syntax: $0.expression) }) ?? .default
+                self = .accessibilityCustomContentWithFoundationLocalizedStringResourceSwiftUICoreTextAccessibilityAXCustomContentImportance(value0, value1, importance: importance)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ SwiftUICore.Text(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "value")
-            }
-            let importance: Accessibility.AXCustomContent.Importance = syntax.argument(named: "importance").flatMap({ Accessibility.AXCustomContent.Importance(syntax: $0.expression) }) ?? .default
-            self = .accessibilityCustomContentWithFoundationLocalizedStringResourceSwiftUICoreTextAccessibilityAXCustomContentImportance(value0, value1, importance: importance)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "labelKey")
@@ -125,19 +147,23 @@ extension AccessibilityCustomContentModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "label")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "label")
+                }
+                guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "valueResource")
+                }
+                let importance: Accessibility.AXCustomContent.Importance = syntax.argument(named: "importance").flatMap({ Accessibility.AXCustomContent.Importance(syntax: $0.expression) }) ?? .default
+                self = .accessibilityCustomContentWithFoundationLocalizedStringResourceFoundationLocalizedStringResourceAccessibilityAXCustomContentImportance(value0, value1, importance: importance)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "valueResource")
-            }
-            let importance: Accessibility.AXCustomContent.Importance = syntax.argument(named: "importance").flatMap({ Accessibility.AXCustomContent.Importance(syntax: $0.expression) }) ?? .default
-            self = .accessibilityCustomContentWithFoundationLocalizedStringResourceFoundationLocalizedStringResourceAccessibilityAXCustomContentImportance(value0, value1, importance: importance)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ SwiftUICore.LocalizedStringKey(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "labelKey")
@@ -151,19 +177,24 @@ extension AccessibilityCustomContentModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "label")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "label")
+                }
+                guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ String(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "value")
+                }
+                let importance: Accessibility.AXCustomContent.Importance = syntax.argument(named: "importance").flatMap({ Accessibility.AXCustomContent.Importance(syntax: $0.expression) }) ?? .default
+                self = .accessibilityCustomContentWithFoundationLocalizedStringResourceStringAccessibilityAXCustomContentImportance(value0, value1, importance: importance)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ String(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "value")
-            }
-            let importance: Accessibility.AXCustomContent.Importance = syntax.argument(named: "importance").flatMap({ Accessibility.AXCustomContent.Importance(syntax: $0.expression) }) ?? .default
-            self = .accessibilityCustomContentWithFoundationLocalizedStringResourceStringAccessibilityAXCustomContentImportance(value0, value1, importance: importance)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
+        #if !os(*)
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "label")
@@ -177,34 +208,62 @@ extension AccessibilityCustomContentModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
+        #endif
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityCustomContentModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityCustomContentWithSwiftUICoreAccessibilityCustomContentKeySwiftUICoreTextOptionalAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
             content.accessibilityCustomContent(value0, value1, importance: importance)
         case .accessibilityCustomContentWithSwiftUICoreAccessibilityCustomContentKeySwiftUICoreLocalizedStringKeyAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
             content.accessibilityCustomContent(value0, value1, importance: importance)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityCustomContentWithSwiftUICoreAccessibilityCustomContentKeyFoundationLocalizedStringResourceAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
-            content.accessibilityCustomContent(value0, value1, importance: importance)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityCustomContent(value0, value1, importance: importance)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityCustomContentWithSwiftUICoreAccessibilityCustomContentKeyStringAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
             content.accessibilityCustomContent(value0, value1, importance: importance)
         case .accessibilityCustomContentWithSwiftUICoreTextSwiftUICoreTextAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
             content.accessibilityCustomContent(value0, value1, importance: importance)
         case .accessibilityCustomContentWithSwiftUICoreLocalizedStringKeySwiftUICoreTextAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
             content.accessibilityCustomContent(value0, value1, importance: importance)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityCustomContentWithFoundationLocalizedStringResourceSwiftUICoreTextAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
-            content.accessibilityCustomContent(value0, value1, importance: importance)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityCustomContent(value0, value1, importance: importance)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityCustomContentWithSwiftUICoreLocalizedStringKeySwiftUICoreLocalizedStringKeyAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
             content.accessibilityCustomContent(value0, value1, importance: importance)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityCustomContentWithFoundationLocalizedStringResourceFoundationLocalizedStringResourceAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
-            content.accessibilityCustomContent(value0, value1, importance: importance)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityCustomContent(value0, value1, importance: importance)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityCustomContentWithSwiftUICoreLocalizedStringKeyStringAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
             content.accessibilityCustomContent(value0, value1, importance: importance)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityCustomContentWithFoundationLocalizedStringResourceStringAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
-            content.accessibilityCustomContent(value0, value1, importance: importance)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityCustomContent(value0, value1, importance: importance)
+            } else {
+                content
+            }
+        #endif
+        #if !os(*)
         case .accessibilityCustomContentWithStringStringAccessibilityAXCustomContentImportance(let value0, let value1, let importance):
             content.accessibilityCustomContent(value0, value1, importance: importance)
+        #endif
         }
     }
 }

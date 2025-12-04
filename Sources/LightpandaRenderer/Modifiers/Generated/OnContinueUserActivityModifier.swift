@@ -26,6 +26,7 @@ extension OnContinueUserActivityModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnContinueUserActivityModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onContinueUserActivity(let value0, let perform):

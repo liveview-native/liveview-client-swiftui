@@ -21,6 +21,7 @@ extension SetEnvironmentModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SetEnvironmentModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .setEnvironment(let value0):

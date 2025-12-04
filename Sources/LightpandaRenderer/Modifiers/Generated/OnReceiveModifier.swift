@@ -26,6 +26,7 @@ extension OnReceiveModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnReceiveModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onReceive(let value0, let perform):

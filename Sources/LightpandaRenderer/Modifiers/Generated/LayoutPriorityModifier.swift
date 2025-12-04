@@ -23,6 +23,7 @@ extension LayoutPriorityModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "LayoutPriorityModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .layoutPriority(let value0):

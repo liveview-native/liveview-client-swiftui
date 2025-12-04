@@ -23,6 +23,7 @@ extension GridColumnAlignmentModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "GridColumnAlignmentModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .gridColumnAlignment(let value0):

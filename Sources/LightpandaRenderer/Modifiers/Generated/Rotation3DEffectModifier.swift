@@ -29,6 +29,7 @@ extension Rotation3DEffectModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "Rotation3DEffectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .rotation3DEffect(let value0, let axis, let anchor, let anchorZ, let perspective):

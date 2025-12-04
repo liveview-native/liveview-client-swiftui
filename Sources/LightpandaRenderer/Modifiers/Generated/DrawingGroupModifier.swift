@@ -22,6 +22,7 @@ extension DrawingGroupModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DrawingGroupModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .drawingGroup(let opaque, let colorMode):

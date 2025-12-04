@@ -36,6 +36,7 @@ extension FocusedModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FocusedModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .focusedWithSwiftUIFocusStateAnyHashableBindingAnyHashable(let value0, let equals):

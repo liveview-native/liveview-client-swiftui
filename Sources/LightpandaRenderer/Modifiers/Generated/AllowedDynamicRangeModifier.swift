@@ -21,6 +21,7 @@ extension AllowedDynamicRangeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AllowedDynamicRangeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .allowedDynamicRange(let value0):

@@ -23,6 +23,7 @@ extension FindNavigatorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FindNavigatorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .findNavigator(let isPresented):

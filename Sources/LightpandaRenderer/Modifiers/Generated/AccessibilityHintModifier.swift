@@ -10,7 +10,10 @@ public enum AccessibilityHintModifier<Library: ElementLibrary>: Sendable {
     case accessibilityHintWithStringSwiftBool(String, isEnabled: Swift.Bool)
     case accessibilityHintWithSwiftUICoreText(SwiftUICore.Text)
     case accessibilityHintWithSwiftUICoreLocalizedStringKey(SwiftUICore.LocalizedStringKey)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityHintWithFoundationLocalizedStringResource(Foundation.LocalizedStringResource)
+    #endif
     case accessibilityHintWithString(String)
 }
 
@@ -85,15 +88,19 @@ extension AccessibilityHintModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityHintModifier", argument: "hint")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityHintModifier", argument: "hint")
+                }
+                self = .accessibilityHintWithFoundationLocalizedStringResource(value0)
+                return
+            } catch {
+                errors.append(error)
             }
-            self = .accessibilityHintWithFoundationLocalizedStringResource(value0)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityHintModifier", argument: "hint")
@@ -105,6 +112,7 @@ extension AccessibilityHintModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityHintModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityHintWithSwiftUICoreTextSwiftBool(let value0, let isEnabled):
@@ -119,8 +127,14 @@ extension AccessibilityHintModifier: RuntimeViewModifier {
             content.accessibilityHint(value0)
         case .accessibilityHintWithSwiftUICoreLocalizedStringKey(let value0):
             content.accessibilityHint(value0)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityHintWithFoundationLocalizedStringResource(let value0):
-            content.accessibilityHint(value0)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityHint(value0)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityHintWithString(let value0):
             content.accessibilityHint(value0)
         }

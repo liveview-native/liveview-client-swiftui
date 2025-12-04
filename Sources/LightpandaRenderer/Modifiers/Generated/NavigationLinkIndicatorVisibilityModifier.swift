@@ -23,6 +23,7 @@ extension NavigationLinkIndicatorVisibilityModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "NavigationLinkIndicatorVisibilityModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .navigationLinkIndicatorVisibility(let value0):

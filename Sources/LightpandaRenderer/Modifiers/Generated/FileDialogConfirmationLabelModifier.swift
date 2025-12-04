@@ -51,6 +51,7 @@ extension FileDialogConfirmationLabelModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FileDialogConfirmationLabelModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fileDialogConfirmationLabelWithString(let value0):

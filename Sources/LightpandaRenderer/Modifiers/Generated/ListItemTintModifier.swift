@@ -29,6 +29,7 @@ extension ListItemTintModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ListItemTintModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .listItemTintWithSwiftUIListItemTintOptional(let value0):

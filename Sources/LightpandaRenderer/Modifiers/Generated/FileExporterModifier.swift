@@ -192,6 +192,7 @@ extension FileExporterModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FileExporterModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fileExporterWithSwiftUICoreBindingSwiftBoolDOptionalUniformTypeIdentifiersUTTypeSwiftStringOptionalescapingresultSwiftResultFoundationURLanySwiftErrorSwiftVoid(let isPresented, let document, let contentType, let defaultFilename, let onCompletion):

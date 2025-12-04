@@ -23,6 +23,7 @@ extension DefaultScrollableDirectionsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DefaultScrollableDirectionsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .defaultScrollableDirections(let proxy):

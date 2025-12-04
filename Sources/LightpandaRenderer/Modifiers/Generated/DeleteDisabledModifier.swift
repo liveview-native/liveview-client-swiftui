@@ -23,6 +23,7 @@ extension DeleteDisabledModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DeleteDisabledModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .deleteDisabled(let value0):

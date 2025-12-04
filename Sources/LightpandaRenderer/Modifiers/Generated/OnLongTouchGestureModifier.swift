@@ -25,6 +25,7 @@ extension OnLongTouchGestureModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnLongTouchGestureModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onLongTouchGesture(let minimumDuration, let perform, let onTouchingChanged):

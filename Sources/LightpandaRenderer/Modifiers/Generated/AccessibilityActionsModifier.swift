@@ -36,6 +36,7 @@ extension AccessibilityActionsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityActionsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityActionsWithSwiftUIAccessibilityActionCategoryView(let category, let value1):

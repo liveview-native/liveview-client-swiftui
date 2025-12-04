@@ -26,6 +26,7 @@ extension ImportsItemProvidersModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ImportsItemProvidersModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .importsItemProviders(let value0, let onImport):

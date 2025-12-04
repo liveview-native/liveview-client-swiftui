@@ -23,6 +23,7 @@ extension DialogSeverityModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DialogSeverityModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .dialogSeverity(let value0):

@@ -67,7 +67,12 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             TintModifier<Library>.self,
             FrameModifier<Library>.self,
             FontModifier<Library>.self,
-            SwipeActionsModifier<Library>.self
+            SwipeActionsModifier<Library>.self,
+            SafeAreaInsetModifier<Library>.self,
+            BackgroundModifier<Library>.self,
+            OverlayModifier<Library>.self,
+            GlassEffectModifier<Library>.self,
+            NavigationTitleModifier<Library>.self,
         ]
     }
     

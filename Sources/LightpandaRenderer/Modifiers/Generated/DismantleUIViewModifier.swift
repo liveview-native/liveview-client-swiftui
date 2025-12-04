@@ -26,6 +26,7 @@ extension DismantleUIViewModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DismantleUIViewModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .dismantleUIView(let value0, let coordinator):

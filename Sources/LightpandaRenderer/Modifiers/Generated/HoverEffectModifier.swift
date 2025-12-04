@@ -6,7 +6,10 @@ import SwiftSyntax
 public enum HoverEffectModifier<Library: ElementLibrary>: Sendable {
     case hoverEffectWithsomeCustomHoverEffectSwiftBool(some CustomHoverEffect, isEnabled: Swift.Bool)
     case hoverEffectWithsomeCustomHoverEffectSwiftUIHoverEffectGroupOptionalSwiftBool(some CustomHoverEffect, in: SwiftUI.HoverEffectGroup?, isEnabled: Swift.Bool)
+    #if os(iOS) || os(tvOS) || os(visionOS)
+    @available(iOS 13.4, tvOS 16.0, visionOS 1.0, *)
     case hoverEffectWithSwiftUIHoverEffect(SwiftUI.HoverEffect)
+    #endif
     case hoverEffectWithSwiftUIHoverEffectSwiftBool(SwiftUI.HoverEffect, isEnabled: Swift.Bool)
     case hoverEffectWithSwiftUIHoverEffectGroupOptionalSwiftBoolescapingSwiftUICoreEmptyHoverEffectContentSwiftBoolSwiftUICoreGeometryProxysomeHoverEffectContent(in: SwiftUI.HoverEffectGroup?, isEnabled: Swift.Bool, body: (SwiftUICore.EmptyHoverEffectContent, Swift.Bool, SwiftUICore.GeometryProxy) -> some HoverEffectContent)
 }
@@ -54,23 +57,34 @@ extension HoverEffectModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            let value0: SwiftUI.HoverEffect = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ SwiftUI.HoverEffect(syntax: $0.expression) }) ?? .automatic
-            self = .hoverEffectWithSwiftUIHoverEffect(value0)
-            return
-        } catch {
-            errors.append(error)
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        if #available(iOS 13.4, tvOS 16.0, visionOS 1.0, *) {
+            do {
+                let value0: SwiftUI.HoverEffect = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ SwiftUI.HoverEffect(syntax: $0.expression) }) ?? .automatic
+                self = .hoverEffectWithSwiftUIHoverEffect(value0)
+                return
+            } catch {
+                errors.append(error)
+            }
         }
+        #endif
         throw ModifierParseError.noMatchingVariant(modifier: "HoverEffectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .hoverEffectWithsomeCustomHoverEffectSwiftBool(let value0, let isEnabled):
             content.hoverEffect(value0, isEnabled: isEnabled)
         case .hoverEffectWithsomeCustomHoverEffectSwiftUIHoverEffectGroupOptionalSwiftBool(let value0, let in, let isEnabled):
             content.hoverEffect(value0, in: in, isEnabled: isEnabled)
+        #if os(iOS) || os(tvOS) || os(visionOS)
         case .hoverEffectWithSwiftUIHoverEffect(let value0):
-            content.hoverEffect(value0)
+            if #available(iOS 13.4, tvOS 16.0, visionOS 1.0, *) {
+                content.hoverEffect(value0)
+            } else {
+                content
+            }
+        #endif
         case .hoverEffectWithSwiftUIHoverEffectSwiftBool(let value0, let isEnabled):
             content.hoverEffect(value0, isEnabled: isEnabled)
         case .hoverEffectWithSwiftUIHoverEffectGroupOptionalSwiftBoolescapingSwiftUICoreEmptyHoverEffectContentSwiftBoolSwiftUICoreGeometryProxysomeHoverEffectContent(let in, let isEnabled, let body):

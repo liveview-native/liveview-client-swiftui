@@ -22,6 +22,7 @@ extension IgnoresSafeAreaModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "IgnoresSafeAreaModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .ignoresSafeArea(let value0, let edges):

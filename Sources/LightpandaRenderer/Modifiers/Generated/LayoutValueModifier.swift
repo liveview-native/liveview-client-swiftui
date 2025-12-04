@@ -26,6 +26,7 @@ extension LayoutValueModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "LayoutValueModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .layoutValue(let key, let value):

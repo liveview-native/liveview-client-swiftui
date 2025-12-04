@@ -23,6 +23,7 @@ extension TextSelectionAffinityModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TextSelectionAffinityModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .textSelectionAffinity(let value0):

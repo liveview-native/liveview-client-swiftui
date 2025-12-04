@@ -23,6 +23,7 @@ extension PresentationDragIndicatorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PresentationDragIndicatorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .presentationDragIndicator(let value0):

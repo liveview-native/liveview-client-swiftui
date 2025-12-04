@@ -23,6 +23,7 @@ extension ButtonBorderShapeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ButtonBorderShapeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .buttonBorderShape(let value0):

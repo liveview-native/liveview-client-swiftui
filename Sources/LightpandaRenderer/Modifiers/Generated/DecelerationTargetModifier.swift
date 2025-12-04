@@ -32,6 +32,7 @@ extension DecelerationTargetModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DecelerationTargetModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .decelerationTarget(let contentOffset, let originalContentOffset, let velocity, let size):

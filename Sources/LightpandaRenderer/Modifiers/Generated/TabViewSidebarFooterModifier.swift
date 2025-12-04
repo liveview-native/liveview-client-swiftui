@@ -23,6 +23,7 @@ extension TabViewSidebarFooterModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TabViewSidebarFooterModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .tabViewSidebarFooter(let content):

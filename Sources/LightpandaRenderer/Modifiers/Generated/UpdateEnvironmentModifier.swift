@@ -23,6 +23,7 @@ extension UpdateEnvironmentModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "UpdateEnvironmentModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .updateEnvironment(let value0):

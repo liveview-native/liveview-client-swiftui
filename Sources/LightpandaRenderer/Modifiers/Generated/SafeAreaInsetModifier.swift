@@ -43,12 +43,13 @@ extension SafeAreaInsetModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SafeAreaInsetModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
-        case .safeAreaInsetWithSwiftUICoreVerticalEdgeSwiftUICoreHorizontalAlignmentCoreFoundationCGFloatOptionalView(let edge, let alignment, let spacing, let content):
-            content.safeAreaInset(edge: edge, alignment: alignment, spacing: spacing, content: { content })
-        case .safeAreaInsetWithSwiftUICoreHorizontalEdgeSwiftUICoreVerticalAlignmentCoreFoundationCGFloatOptionalView(let edge, let alignment, let spacing, let content):
-            content.safeAreaInset(edge: edge, alignment: alignment, spacing: spacing, content: { content })
+        case .safeAreaInsetWithSwiftUICoreVerticalEdgeSwiftUICoreHorizontalAlignmentCoreFoundationCGFloatOptionalView(let edge, let alignment, let spacing, let safeAreaInsetContent):
+            content.safeAreaInset(edge: edge, alignment: alignment, spacing: spacing, content: { safeAreaInsetContent })
+        case .safeAreaInsetWithSwiftUICoreHorizontalEdgeSwiftUICoreVerticalAlignmentCoreFoundationCGFloatOptionalView(let edge, let alignment, let spacing, let safeAreaInsetContent):
+            content.safeAreaInset(edge: edge, alignment: alignment, spacing: spacing, content: { safeAreaInsetContent })
         }
     }
 }

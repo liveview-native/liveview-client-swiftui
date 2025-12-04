@@ -6,7 +6,10 @@ import SwiftSyntax
 public enum NavigationSubtitleModifier<Library: ElementLibrary>: Sendable {
     case navigationSubtitleWithSwiftUICoreText(SwiftUICore.Text)
     case navigationSubtitleWithSwiftUICoreLocalizedStringKey(SwiftUICore.LocalizedStringKey)
+    #if os(macOS)
+    @available(macOS 13.0, macCatalyst 16.0, *)
     case navigationSubtitleWithFoundationLocalizedStringResource(Foundation.LocalizedStringResource)
+    #endif
     case navigationSubtitleWithString(String)
 }
 
@@ -33,15 +36,19 @@ extension NavigationSubtitleModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "NavigationSubtitleModifier", argument: "subtitleKey")
+        #if os(macOS)
+        if #available(macOS 13.0, macCatalyst 16.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "NavigationSubtitleModifier", argument: "subtitleKey")
+                }
+                self = .navigationSubtitleWithFoundationLocalizedStringResource(value0)
+                return
+            } catch {
+                errors.append(error)
             }
-            self = .navigationSubtitleWithFoundationLocalizedStringResource(value0)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "NavigationSubtitleModifier", argument: "subtitle")
@@ -53,14 +60,21 @@ extension NavigationSubtitleModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "NavigationSubtitleModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .navigationSubtitleWithSwiftUICoreText(let value0):
             content.navigationSubtitle(value0)
         case .navigationSubtitleWithSwiftUICoreLocalizedStringKey(let value0):
             content.navigationSubtitle(value0)
+        #if os(macOS)
         case .navigationSubtitleWithFoundationLocalizedStringResource(let value0):
-            content.navigationSubtitle(value0)
+            if #available(macOS 13.0, macCatalyst 16.0, *) {
+                content.navigationSubtitle(value0)
+            } else {
+                content
+            }
+        #endif
         case .navigationSubtitleWithString(let value0):
             content.navigationSubtitle(value0)
         }

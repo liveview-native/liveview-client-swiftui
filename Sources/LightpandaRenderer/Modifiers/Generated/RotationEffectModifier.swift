@@ -24,6 +24,7 @@ extension RotationEffectModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "RotationEffectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .rotationEffect(let value0, let anchor):

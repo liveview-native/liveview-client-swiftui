@@ -23,6 +23,7 @@ extension FlipsForRightToLeftLayoutDirectionModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FlipsForRightToLeftLayoutDirectionModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .flipsForRightToLeftLayoutDirection(let value0):

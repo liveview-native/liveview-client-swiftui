@@ -35,6 +35,7 @@ extension StrokeBorderModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "StrokeBorderModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .strokeBorderWithAnyShapeStyleSwiftUICoreStrokeStyleSwiftBool(let value0, let style, let antialiased):

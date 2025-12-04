@@ -38,6 +38,7 @@ extension TaskModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TaskModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .taskWithConcurrencyTaskPriorityescapingSendableasyncSwiftVoid(let priority, let value1):

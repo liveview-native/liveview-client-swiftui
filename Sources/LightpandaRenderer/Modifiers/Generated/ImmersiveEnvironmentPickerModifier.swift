@@ -23,6 +23,7 @@ extension ImmersiveEnvironmentPickerModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ImmersiveEnvironmentPickerModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .immersiveEnvironmentPicker(let content):

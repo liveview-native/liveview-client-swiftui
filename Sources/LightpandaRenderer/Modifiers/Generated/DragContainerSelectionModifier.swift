@@ -24,6 +24,7 @@ extension DragContainerSelectionModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DragContainerSelectionModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .dragContainerSelection(let value0, let containerNamespace):

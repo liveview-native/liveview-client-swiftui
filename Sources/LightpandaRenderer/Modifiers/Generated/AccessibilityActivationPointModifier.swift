@@ -59,6 +59,7 @@ extension AccessibilityActivationPointModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityActivationPointModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityActivationPointWithCoreFoundationCGPointSwiftBool(let value0, let isEnabled):

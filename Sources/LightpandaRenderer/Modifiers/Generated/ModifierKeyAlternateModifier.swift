@@ -26,6 +26,7 @@ extension ModifierKeyAlternateModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ModifierKeyAlternateModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .modifierKeyAlternate(let value0, let value1):

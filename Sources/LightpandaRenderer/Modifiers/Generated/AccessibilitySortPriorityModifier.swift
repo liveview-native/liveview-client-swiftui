@@ -23,6 +23,7 @@ extension AccessibilitySortPriorityModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilitySortPriorityModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilitySortPriority(let value0):

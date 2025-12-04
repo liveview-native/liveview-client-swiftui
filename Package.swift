@@ -75,6 +75,20 @@ let includeViews = [
 let includeModifiers = [
     "ModifierParseError",
     
+//    "AccentColorModifier",
+//    "ActionSheetModifier",
+//    "AlertModifier",
+//    "AllowsHitTestingModifier",
+//    "AllowsTighteningModifier",
+//    "AlternatingRowBackgroundsModifier",
+//    "AspectRatioModifier",
+//    "AutocapitalizationModifier",
+//    "AutocorrectionDisabledModifier",
+//    "BackgroundModifier",
+//    "BackgroundStyleModifier",
+//    "BadgeModifier",
+//    "BadgeProminenceModifier",
+    
     "PaddingModifier",
     "StrikethroughModifier",
     "ButtonStyleModifier",
@@ -84,7 +98,12 @@ let includeModifiers = [
     "TintModifier",
     "FrameModifier",
     "FontModifier",
-    "SwipeActionsModifier"
+    "SwipeActionsModifier",
+    "SafeAreaInsetModifier",
+    "BackgroundModifier",
+    "OverlayModifier",
+    "GlassEffectModifier",
+    "NavigationTitleModifier"
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {

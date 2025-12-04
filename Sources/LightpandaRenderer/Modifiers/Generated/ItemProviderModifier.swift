@@ -23,6 +23,7 @@ extension ItemProviderModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ItemProviderModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .itemProvider(let value0):

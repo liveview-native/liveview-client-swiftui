@@ -36,6 +36,7 @@ extension AccessibilityFocusedModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityFocusedModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityFocusedWithSwiftUIAccessibilityFocusStateAnyHashableBindingAnyHashable(let value0, let equals):

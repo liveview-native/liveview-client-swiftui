@@ -23,6 +23,7 @@ extension TextInputCompletionModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TextInputCompletionModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .textInputCompletion(let value0):

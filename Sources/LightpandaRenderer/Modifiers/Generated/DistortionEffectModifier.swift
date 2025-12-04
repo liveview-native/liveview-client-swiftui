@@ -27,6 +27,7 @@ extension DistortionEffectModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DistortionEffectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .distortionEffect(let value0, let maxSampleOffset, let isEnabled):

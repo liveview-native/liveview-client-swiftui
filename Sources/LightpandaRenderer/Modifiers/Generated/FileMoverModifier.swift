@@ -79,6 +79,7 @@ extension FileMoverModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FileMoverModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fileMoverWithSwiftUICoreBindingSwiftBoolFoundationURLOptionalescapingresultSwiftResultFoundationURLanySwiftErrorSwiftVoid(let isPresented, let file, let onCompletion):

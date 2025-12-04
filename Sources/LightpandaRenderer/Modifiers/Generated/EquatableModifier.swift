@@ -20,6 +20,7 @@ extension EquatableModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "EquatableModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .equatable:

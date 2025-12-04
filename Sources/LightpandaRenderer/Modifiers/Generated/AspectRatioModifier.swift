@@ -37,6 +37,7 @@ extension AspectRatioModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AspectRatioModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .aspectRatioWithCoreFoundationCGFloatOptionalSwiftUICoreContentMode(let value0, let contentMode):

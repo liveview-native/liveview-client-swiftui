@@ -49,6 +49,7 @@ extension KeyframeAnimatorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "KeyframeAnimatorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .keyframeAnimatorWithValuesomeEquatableViewescapingValuesomeKeyframesValue(let initialValue, let trigger, let content, let keyframes):

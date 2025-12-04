@@ -23,6 +23,7 @@ extension OnPencilDoubleTapModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnPencilDoubleTapModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onPencilDoubleTap(let perform):

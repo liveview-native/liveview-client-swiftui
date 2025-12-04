@@ -23,6 +23,7 @@ extension AccessibilityChartDescriptorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityChartDescriptorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityChartDescriptor(let value0):

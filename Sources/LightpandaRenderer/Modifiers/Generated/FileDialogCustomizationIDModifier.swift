@@ -23,6 +23,7 @@ extension FileDialogCustomizationIDModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FileDialogCustomizationIDModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fileDialogCustomizationID(let value0):

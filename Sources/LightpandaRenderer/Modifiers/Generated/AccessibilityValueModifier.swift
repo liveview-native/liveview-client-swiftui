@@ -10,7 +10,10 @@ public enum AccessibilityValueModifier<Library: ElementLibrary>: Sendable {
     case accessibilityValueWithStringSwiftBool(String, isEnabled: Swift.Bool)
     case accessibilityValueWithSwiftUICoreText(SwiftUICore.Text)
     case accessibilityValueWithSwiftUICoreLocalizedStringKey(SwiftUICore.LocalizedStringKey)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityValueWithFoundationLocalizedStringResource(Foundation.LocalizedStringResource)
+    #endif
     case accessibilityValueWithString(String)
 }
 
@@ -85,15 +88,19 @@ extension AccessibilityValueModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityValueModifier", argument: "valueResource")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityValueModifier", argument: "valueResource")
+                }
+                self = .accessibilityValueWithFoundationLocalizedStringResource(value0)
+                return
+            } catch {
+                errors.append(error)
             }
-            self = .accessibilityValueWithFoundationLocalizedStringResource(value0)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityValueModifier", argument: "value")
@@ -105,6 +112,7 @@ extension AccessibilityValueModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityValueModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityValueWithSwiftUICoreTextSwiftBool(let value0, let isEnabled):
@@ -119,8 +127,14 @@ extension AccessibilityValueModifier: RuntimeViewModifier {
             content.accessibilityValue(value0)
         case .accessibilityValueWithSwiftUICoreLocalizedStringKey(let value0):
             content.accessibilityValue(value0)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityValueWithFoundationLocalizedStringResource(let value0):
-            content.accessibilityValue(value0)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityValue(value0)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityValueWithString(let value0):
             content.accessibilityValue(value0)
         }

@@ -71,6 +71,7 @@ extension GestureModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "GestureModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .gestureWithsomeNSGestureRecognizerRepresentable(let value0):

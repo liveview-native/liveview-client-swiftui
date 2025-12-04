@@ -21,6 +21,7 @@ extension PreferredColorSchemeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PreferredColorSchemeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .preferredColorScheme(let value0):

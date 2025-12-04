@@ -21,6 +21,7 @@ extension InteractiveDismissDisabledModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "InteractiveDismissDisabledModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .interactiveDismissDisabled(let value0):

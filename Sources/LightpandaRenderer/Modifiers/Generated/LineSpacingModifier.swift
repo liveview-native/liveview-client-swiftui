@@ -23,6 +23,7 @@ extension LineSpacingModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "LineSpacingModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .lineSpacing(let value0):

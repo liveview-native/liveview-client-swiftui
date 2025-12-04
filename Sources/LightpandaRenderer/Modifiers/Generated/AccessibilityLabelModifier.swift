@@ -11,7 +11,10 @@ public enum AccessibilityLabelModifier<Library: ElementLibrary>: Sendable {
     case accessibilityLabelWithView(content: ViewReference<Library>)
     case accessibilityLabelWithSwiftUICoreText(SwiftUICore.Text)
     case accessibilityLabelWithSwiftUICoreLocalizedStringKey(SwiftUICore.LocalizedStringKey)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityLabelWithFoundationLocalizedStringResource(Foundation.LocalizedStringResource)
+    #endif
     case accessibilityLabelWithString(String)
 }
 
@@ -95,15 +98,19 @@ extension AccessibilityLabelModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityLabelModifier", argument: "label")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityLabelModifier", argument: "label")
+                }
+                self = .accessibilityLabelWithFoundationLocalizedStringResource(value0)
+                return
+            } catch {
+                errors.append(error)
             }
-            self = .accessibilityLabelWithFoundationLocalizedStringResource(value0)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityLabelModifier", argument: "label")
@@ -115,6 +122,7 @@ extension AccessibilityLabelModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityLabelModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityLabelWithSwiftUICoreTextSwiftBool(let value0, let isEnabled):
@@ -131,8 +139,14 @@ extension AccessibilityLabelModifier: RuntimeViewModifier {
             content.accessibilityLabel(value0)
         case .accessibilityLabelWithSwiftUICoreLocalizedStringKey(let value0):
             content.accessibilityLabel(value0)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityLabelWithFoundationLocalizedStringResource(let value0):
-            content.accessibilityLabel(value0)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityLabel(value0)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityLabelWithString(let value0):
             content.accessibilityLabel(value0)
         }

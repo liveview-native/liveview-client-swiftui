@@ -44,6 +44,7 @@ extension PhaseAnimatorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PhaseAnimatorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .phaseAnimatorWithsomeSequencePhasesomeEquatableViewescapingPhaseSwiftUICoreAnimationOptional(let value0, let trigger, let content, let animation):

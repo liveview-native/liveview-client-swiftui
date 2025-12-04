@@ -41,6 +41,7 @@ extension FullScreenCoverModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FullScreenCoverModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fullScreenCoverWithSwiftUICoreBindingItemOptionalSwiftVoidOptionalView(let item, let onDismiss, let content):

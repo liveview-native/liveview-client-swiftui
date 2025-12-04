@@ -13,16 +13,28 @@ public enum AccessibilityRotorModifier<Library: ElementLibrary>: Sendable {
     case accessibilityRotorWithSwiftUICoreTextArraySwiftRangeSwiftStringIndex(SwiftUICore.Text, textRanges: [Swift.Range<Swift.String.Index>])
     case accessibilityRotorWithSwiftUIAccessibilitySystemRotorArraySwiftRangeSwiftStringIndex(SwiftUI.AccessibilitySystemRotor, textRanges: [Swift.Range<Swift.String.Index>])
     case accessibilityRotorWithSwiftUICoreLocalizedStringKeyescapingContent(SwiftUICore.LocalizedStringKey, entries: () -> Content)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityRotorWithFoundationLocalizedStringResourceescapingContent(Foundation.LocalizedStringResource, entries: () -> Content)
+    #endif
     case accessibilityRotorWithStringescapingContent(String, entries: () -> Content)
     case accessibilityRotorWithSwiftUICoreLocalizedStringKeyArrayEntryModelSwiftKeyPathEntryModelSwiftString(SwiftUICore.LocalizedStringKey, entries: [EntryModel], entryLabel: Swift.KeyPath<EntryModel, Swift.String>)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityRotorWithFoundationLocalizedStringResourceArrayEntryModelSwiftKeyPathEntryModelSwiftString(Foundation.LocalizedStringResource, entries: [EntryModel], entryLabel: Swift.KeyPath<EntryModel, Swift.String>)
+    #endif
     case accessibilityRotorWithStringArrayEntryModelSwiftKeyPathEntryModelSwiftString(String, entries: [EntryModel], entryLabel: Swift.KeyPath<EntryModel, Swift.String>)
     case accessibilityRotorWithSwiftUICoreLocalizedStringKeyArrayEntryModelSwiftKeyPathEntryModelAnyHashableSwiftKeyPathEntryModelSwiftString(SwiftUICore.LocalizedStringKey, entries: [EntryModel], entryID: Swift.KeyPath<EntryModel, AnyHashable>, entryLabel: Swift.KeyPath<EntryModel, Swift.String>)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityRotorWithFoundationLocalizedStringResourceArrayEntryModelSwiftKeyPathEntryModelAnyHashableSwiftKeyPathEntryModelSwiftString(Foundation.LocalizedStringResource, entries: [EntryModel], entryID: Swift.KeyPath<EntryModel, AnyHashable>, entryLabel: Swift.KeyPath<EntryModel, Swift.String>)
+    #endif
     case accessibilityRotorWithStringArrayEntryModelSwiftKeyPathEntryModelAnyHashableSwiftKeyPathEntryModelSwiftString(String, entries: [EntryModel], entryID: Swift.KeyPath<EntryModel, AnyHashable>, entryLabel: Swift.KeyPath<EntryModel, Swift.String>)
     case accessibilityRotorWithSwiftUICoreLocalizedStringKeyArraySwiftRangeSwiftStringIndex(SwiftUICore.LocalizedStringKey, textRanges: [Swift.Range<Swift.String.Index>])
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     case accessibilityRotorWithFoundationLocalizedStringResourceArraySwiftRangeSwiftStringIndex(Foundation.LocalizedStringResource, textRanges: [Swift.Range<Swift.String.Index>])
+    #endif
     case accessibilityRotorWithStringArraySwiftRangeSwiftStringIndex(String, textRanges: [Swift.Range<Swift.String.Index>])
 }
 
@@ -85,24 +97,28 @@ extension AccessibilityRotorModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "rotorLabelResource")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "rotorLabelResource")
+                }
+                guard let entries = syntax.argument(named: "entries").flatMap({ [EntryModel](syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entries")
+                }
+                guard let entryID = syntax.argument(named: "entryID").flatMap({ Swift.KeyPath<EntryModel, AnyHashable>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entryID")
+                }
+                guard let entryLabel = syntax.argument(named: "entryLabel").flatMap({ Swift.KeyPath<EntryModel, Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entryLabel")
+                }
+                self = .accessibilityRotorWithFoundationLocalizedStringResourceArrayEntryModelSwiftKeyPathEntryModelAnyHashableSwiftKeyPathEntryModelSwiftString(value0, entries: entries, entryID: entryID, entryLabel: entryLabel)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let entries = syntax.argument(named: "entries").flatMap({ [EntryModel](syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entries")
-            }
-            guard let entryID = syntax.argument(named: "entryID").flatMap({ Swift.KeyPath<EntryModel, AnyHashable>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entryID")
-            }
-            guard let entryLabel = syntax.argument(named: "entryLabel").flatMap({ Swift.KeyPath<EntryModel, Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entryLabel")
-            }
-            self = .accessibilityRotorWithFoundationLocalizedStringResourceArrayEntryModelSwiftKeyPathEntryModelAnyHashableSwiftKeyPathEntryModelSwiftString(value0, entries: entries, entryID: entryID, entryLabel: entryLabel)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "rotorLabel")
@@ -166,21 +182,25 @@ extension AccessibilityRotorModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "rotorLabelResource")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "rotorLabelResource")
+                }
+                guard let entries = syntax.argument(named: "entries").flatMap({ [EntryModel](syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entries")
+                }
+                guard let entryLabel = syntax.argument(named: "entryLabel").flatMap({ Swift.KeyPath<EntryModel, Swift.String>(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entryLabel")
+                }
+                self = .accessibilityRotorWithFoundationLocalizedStringResourceArrayEntryModelSwiftKeyPathEntryModelSwiftString(value0, entries: entries, entryLabel: entryLabel)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let entries = syntax.argument(named: "entries").flatMap({ [EntryModel](syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entries")
-            }
-            guard let entryLabel = syntax.argument(named: "entryLabel").flatMap({ Swift.KeyPath<EntryModel, Swift.String>(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entryLabel")
-            }
-            self = .accessibilityRotorWithFoundationLocalizedStringResourceArrayEntryModelSwiftKeyPathEntryModelSwiftString(value0, entries: entries, entryLabel: entryLabel)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "rotorLabel")
@@ -256,18 +276,22 @@ extension AccessibilityRotorModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "label")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "label")
+                }
+                guard let entries = syntax.argument(named: "entries").flatMap({ () -> Content(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entries")
+                }
+                self = .accessibilityRotorWithFoundationLocalizedStringResourceescapingContent(value0, entries: entries)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let entries = syntax.argument(named: "entries").flatMap({ () -> Content(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "entries")
-            }
-            self = .accessibilityRotorWithFoundationLocalizedStringResourceescapingContent(value0, entries: entries)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "label")
@@ -292,18 +316,22 @@ extension AccessibilityRotorModifier: RuntimeViewModifier {
         } catch {
             errors.append(error)
         }
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "label")
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.LocalizedStringResource(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "label")
+                }
+                guard let textRanges = syntax.argument(named: "textRanges").flatMap({ [Swift.Range<Swift.String.Index>](syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "textRanges")
+                }
+                self = .accessibilityRotorWithFoundationLocalizedStringResourceArraySwiftRangeSwiftStringIndex(value0, textRanges: textRanges)
+                return
+            } catch {
+                errors.append(error)
             }
-            guard let textRanges = syntax.argument(named: "textRanges").flatMap({ [Swift.Range<Swift.String.Index>](syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "textRanges")
-            }
-            self = .accessibilityRotorWithFoundationLocalizedStringResourceArraySwiftRangeSwiftStringIndex(value0, textRanges: textRanges)
-            return
-        } catch {
-            errors.append(error)
         }
+        #endif
         do {
             guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) else {
                 throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityRotorModifier", argument: "label")
@@ -318,6 +346,7 @@ extension AccessibilityRotorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityRotorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityRotorWithSwiftUICoreTextescapingContent(let value0, let entries):
@@ -338,26 +367,50 @@ extension AccessibilityRotorModifier: RuntimeViewModifier {
             content.accessibilityRotor(value0, textRanges: textRanges)
         case .accessibilityRotorWithSwiftUICoreLocalizedStringKeyescapingContent(let value0, let entries):
             content.accessibilityRotor(value0, entries: entries)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityRotorWithFoundationLocalizedStringResourceescapingContent(let value0, let entries):
-            content.accessibilityRotor(value0, entries: entries)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityRotor(value0, entries: entries)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityRotorWithStringescapingContent(let value0, let entries):
             content.accessibilityRotor(value0, entries: entries)
         case .accessibilityRotorWithSwiftUICoreLocalizedStringKeyArrayEntryModelSwiftKeyPathEntryModelSwiftString(let value0, let entries, let entryLabel):
             content.accessibilityRotor(value0, entries: entries, entryLabel: entryLabel)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityRotorWithFoundationLocalizedStringResourceArrayEntryModelSwiftKeyPathEntryModelSwiftString(let value0, let entries, let entryLabel):
-            content.accessibilityRotor(value0, entries: entries, entryLabel: entryLabel)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityRotor(value0, entries: entries, entryLabel: entryLabel)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityRotorWithStringArrayEntryModelSwiftKeyPathEntryModelSwiftString(let value0, let entries, let entryLabel):
             content.accessibilityRotor(value0, entries: entries, entryLabel: entryLabel)
         case .accessibilityRotorWithSwiftUICoreLocalizedStringKeyArrayEntryModelSwiftKeyPathEntryModelAnyHashableSwiftKeyPathEntryModelSwiftString(let value0, let entries, let entryID, let entryLabel):
             content.accessibilityRotor(value0, entries: entries, entryID: entryID, entryLabel: entryLabel)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityRotorWithFoundationLocalizedStringResourceArrayEntryModelSwiftKeyPathEntryModelAnyHashableSwiftKeyPathEntryModelSwiftString(let value0, let entries, let entryID, let entryLabel):
-            content.accessibilityRotor(value0, entries: entries, entryID: entryID, entryLabel: entryLabel)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityRotor(value0, entries: entries, entryID: entryID, entryLabel: entryLabel)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityRotorWithStringArrayEntryModelSwiftKeyPathEntryModelAnyHashableSwiftKeyPathEntryModelSwiftString(let value0, let entries, let entryID, let entryLabel):
             content.accessibilityRotor(value0, entries: entries, entryID: entryID, entryLabel: entryLabel)
         case .accessibilityRotorWithSwiftUICoreLocalizedStringKeyArraySwiftRangeSwiftStringIndex(let value0, let textRanges):
             content.accessibilityRotor(value0, textRanges: textRanges)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .accessibilityRotorWithFoundationLocalizedStringResourceArraySwiftRangeSwiftStringIndex(let value0, let textRanges):
-            content.accessibilityRotor(value0, textRanges: textRanges)
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                content.accessibilityRotor(value0, textRanges: textRanges)
+            } else {
+                content
+            }
+        #endif
         case .accessibilityRotorWithStringArraySwiftRangeSwiftStringIndex(let value0, let textRanges):
             content.accessibilityRotor(value0, textRanges: textRanges)
         }

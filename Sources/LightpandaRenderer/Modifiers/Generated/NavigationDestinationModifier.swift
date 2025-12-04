@@ -52,6 +52,7 @@ extension NavigationDestinationModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "NavigationDestinationModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .navigationDestinationWithAnyHashableTypeView(let for, let destination):

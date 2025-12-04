@@ -23,6 +23,7 @@ extension SubmitLabelModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SubmitLabelModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .submitLabel(let value0):

@@ -1,0 +1,23 @@
+import SwiftUI
+import SwiftSyntax
+
+extension ContentMode: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self)
+        else { return nil }
+        
+        if memberAccess.base == nil {
+            switch memberAccess.declName.baseName.text {
+            case "fill":
+                self = .fill
+            case "fit":
+                self = .fit
+            default:
+                return nil
+            }
+        } else {
+            // FIXME: Handle base name
+            return nil
+        }
+    }
+}

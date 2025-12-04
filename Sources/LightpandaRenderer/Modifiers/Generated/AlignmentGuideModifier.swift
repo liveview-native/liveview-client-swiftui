@@ -39,6 +39,7 @@ extension AlignmentGuideModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AlignmentGuideModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .alignmentGuideWithSwiftUICoreHorizontalAlignmentescapingSendableSwiftUICoreViewDimensionsCoreFoundationCGFloat(let value0, let computeValue):

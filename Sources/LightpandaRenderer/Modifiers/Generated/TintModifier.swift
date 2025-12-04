@@ -29,6 +29,7 @@ extension TintModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TintModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .tintWithAnyShapeStyleOptional(let value0):

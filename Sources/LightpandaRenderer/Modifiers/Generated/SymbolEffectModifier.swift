@@ -39,6 +39,7 @@ extension SymbolEffectModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SymbolEffectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .symbolEffectWithTSymbolsSymbolEffectOptionsSwiftBool(let value0, let options, let isActive):

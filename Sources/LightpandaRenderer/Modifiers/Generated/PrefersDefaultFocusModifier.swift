@@ -24,6 +24,7 @@ extension PrefersDefaultFocusModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PrefersDefaultFocusModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .prefersDefaultFocus(let value0, let in):

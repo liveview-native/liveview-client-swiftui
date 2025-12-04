@@ -39,6 +39,7 @@ extension StrokeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "StrokeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .strokeWithAnyShapeStyleSwiftUICoreStrokeStyleSwiftBool(let value0, let style, let antialiased):

@@ -25,6 +25,7 @@ extension OnModifierKeysChangedModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "OnModifierKeysChangedModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .onModifierKeysChanged(let mask, let initial, let value2):

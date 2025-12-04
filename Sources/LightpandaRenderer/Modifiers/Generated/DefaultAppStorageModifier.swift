@@ -23,6 +23,7 @@ extension DefaultAppStorageModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DefaultAppStorageModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .defaultAppStorage(let value0):

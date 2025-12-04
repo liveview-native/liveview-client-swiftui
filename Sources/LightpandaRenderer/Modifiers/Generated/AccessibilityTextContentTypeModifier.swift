@@ -23,6 +23,7 @@ extension AccessibilityTextContentTypeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityTextContentTypeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityTextContentType(let value0):

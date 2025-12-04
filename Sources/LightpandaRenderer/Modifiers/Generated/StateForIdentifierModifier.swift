@@ -25,6 +25,7 @@ extension StateForIdentifierModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "StateForIdentifierModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .stateForIdentifier(let value0, let type, let in):

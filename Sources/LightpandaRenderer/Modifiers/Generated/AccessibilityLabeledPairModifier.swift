@@ -29,6 +29,7 @@ extension AccessibilityLabeledPairModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityLabeledPairModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityLabeledPair(let role, let id, let in):

@@ -21,6 +21,7 @@ extension SymbolColorRenderingModeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "SymbolColorRenderingModeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .symbolColorRenderingMode(let value0):

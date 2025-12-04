@@ -26,6 +26,7 @@ extension TextInputFormattingControlVisibilityModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TextInputFormattingControlVisibilityModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .textInputFormattingControlVisibility(let value0, let for):

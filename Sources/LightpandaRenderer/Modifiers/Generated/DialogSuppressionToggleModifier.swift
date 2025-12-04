@@ -75,6 +75,7 @@ extension DialogSuppressionToggleModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DialogSuppressionToggleModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .dialogSuppressionToggleWithSwiftUICoreLocalizedStringKeySwiftUICoreBindingSwiftBool(let value0, let isSuppressed):

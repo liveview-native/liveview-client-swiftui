@@ -32,6 +32,7 @@ extension PositionModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "PositionModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .positionWithCoreFoundationCGPoint(let value0):

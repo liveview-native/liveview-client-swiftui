@@ -23,6 +23,7 @@ extension FileDialogBrowserOptionsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FileDialogBrowserOptionsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fileDialogBrowserOptions(let value0):

@@ -34,6 +34,7 @@ extension AccessibilityRespondsToUserInteractionModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityRespondsToUserInteractionModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .accessibilityRespondsToUserInteractionWithSwiftBoolSwiftBool(let value0, let isEnabled):

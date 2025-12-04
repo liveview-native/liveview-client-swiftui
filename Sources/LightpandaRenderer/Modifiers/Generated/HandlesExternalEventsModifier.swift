@@ -26,6 +26,7 @@ extension HandlesExternalEventsModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "HandlesExternalEventsModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .handlesExternalEvents(let preferring, let allowing):

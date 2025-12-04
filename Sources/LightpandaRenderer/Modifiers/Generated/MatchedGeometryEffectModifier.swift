@@ -29,6 +29,7 @@ extension MatchedGeometryEffectModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "MatchedGeometryEffectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .matchedGeometryEffect(let id, let in, let properties, let anchor, let isSource):

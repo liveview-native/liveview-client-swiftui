@@ -24,6 +24,7 @@ extension TransformPreferenceModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "TransformPreferenceModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .transformPreference(let value0, let value1):

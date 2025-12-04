@@ -21,6 +21,7 @@ extension FileDialogDefaultDirectoryModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FileDialogDefaultDirectoryModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .fileDialogDefaultDirectory(let value0):

@@ -42,6 +42,7 @@ extension ScrollTransitionModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ScrollTransitionModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .scrollTransitionWithSwiftUIScrollTransitionConfigurationSwiftUICoreAxisOptionalescapingSendableSwiftUICoreEmptyVisualEffectSwiftUIScrollTransitionPhasesomeVisualEffect(let value0, let axis, let transition):

@@ -33,6 +33,7 @@ extension DynamicTypeSizeModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "DynamicTypeSizeModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .dynamicTypeSizeWithSwiftUICoreDynamicTypeSize(let value0):

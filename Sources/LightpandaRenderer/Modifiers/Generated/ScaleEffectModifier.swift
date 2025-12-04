@@ -45,6 +45,7 @@ extension ScaleEffectModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ScaleEffectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .scaleEffectWithCoreFoundationCGSizeSwiftUICoreUnitPoint(let value0, let anchor):

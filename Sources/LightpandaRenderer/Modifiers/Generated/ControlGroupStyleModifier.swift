@@ -23,6 +23,7 @@ extension ControlGroupStyleModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ControlGroupStyleModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .controlGroupStyle(let value0):

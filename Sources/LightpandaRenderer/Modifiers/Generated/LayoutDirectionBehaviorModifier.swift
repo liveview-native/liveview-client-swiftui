@@ -23,6 +23,7 @@ extension LayoutDirectionBehaviorModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "LayoutDirectionBehaviorModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .layoutDirectionBehavior(let value0):

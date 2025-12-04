@@ -27,6 +27,7 @@ extension LayerEffectModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "LayerEffectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .layerEffect(let value0, let maxSampleOffset, let isEnabled):

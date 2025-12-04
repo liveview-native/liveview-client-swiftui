@@ -31,6 +31,7 @@ extension FocusedSceneObjectModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "FocusedSceneObjectModifier", errors: errors)
     }
+    @ViewBuilder
     public func body(content: Content) -> some View {
         switch self {
         case .focusedSceneObjectWithT(let value0):
