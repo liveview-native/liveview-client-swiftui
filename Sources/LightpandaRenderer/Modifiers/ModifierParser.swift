@@ -32,8 +32,11 @@ final class ModifierParser<Library: ElementLibrary> {
                 visit(parentModifier)
             }
             
-            if let modifier = try? AnyRuntimeViewModifier<Library>(node) {
+            do {
+                let modifier = try AnyRuntimeViewModifier<Library>(node)
                 modifiers.modifiers.append(modifier)
+            } catch {
+                fatalError(error.localizedDescription)
             }
             
             return .skipChildren
@@ -94,7 +97,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
                 continue
             }
         }
-        throw AnyRuntimeViewModifierError.noMatchingRuntimeViewModifier
+        throw AnyRuntimeViewModifierError.noMatchingRuntimeViewModifier(modifierName)
     }
     
     func body(content: Content) -> some View {
@@ -106,6 +109,13 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
     }
 }
 
-enum AnyRuntimeViewModifierError: Error {
-    case noMatchingRuntimeViewModifier
+enum AnyRuntimeViewModifierError: Error, LocalizedError {
+    case noMatchingRuntimeViewModifier(String)
+    
+    var errorDescription: String? {
+        switch self {
+        case .noMatchingRuntimeViewModifier(let name):
+            return "No matching modifier for '\(name)'"
+        }
+    }
 }
