@@ -109,6 +109,25 @@ public class Node: Identifiable {
         
         registry.nodes[id] = self
     }
+    
+    @MainActor
+    public func callFunction(
+        runtime: LightpandaRuntime,
+        function: String
+    ) async throws {
+        let remoteObject = try await runtime.cdp.send(CDP.DOM.ResolveNode(
+            nodeId: self.id,
+            backendId: nil,
+            objectGroup: nil,
+            executionContextId: nil
+        ))
+        runtime.cdp.sendMessage(
+            runtime.cdp.buildMessage(CDP.Runtime.CallFunctionOn(
+                functionDeclaration: function,
+                objectId: remoteObject.object.objectId!
+            ))
+        )
+    }
 }
 
 @Observable

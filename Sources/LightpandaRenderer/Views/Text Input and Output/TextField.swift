@@ -146,26 +146,18 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
         field
             .onChange(of: text) { oldValue, newValue in
                 Task {
-                    let remoteObject = try! await lightpanda.cdp.send(CDP.DOM.ResolveNode(
-                        nodeId: self.node.id,
-                        backendId: nil,
-                        objectGroup: nil,
-                        executionContextId: nil
-                    ))
-                    lightpanda.cdp.sendMessage(
-                        lightpanda.cdp.buildMessage(CDP.Runtime.CallFunctionOn(
-                            functionDeclaration: #"""
-                                function() {
-                                    this.dispatchEvent(new Event("input", {
-                                        inputType: "insertText",
-                                        data: "\#(newValue?.last ?? " ")",
-                                        bubbles: true
-                                    }));
-                                    this.value = \#(String(data: try! JSONEncoder().encode(newValue ?? ""), encoding: .utf8)!);
-                                }
-                                """#,
-                            objectId: remoteObject.object.objectId!
-                        ))
+                    try! await self.node.callFunction(
+                        runtime: lightpanda,
+                        function: #"""
+                        function() {
+                            this.dispatchEvent(new Event("input", {
+                                inputType: "insertText",
+                                data: "\#(newValue?.last ?? " ")",
+                                bubbles: true
+                            }));
+                            this.value = \#(String(data: try! JSONEncoder().encode(newValue ?? ""), encoding: .utf8)!);
+                        }
+                        """#
                     )
                 }
             }
@@ -181,49 +173,35 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
                     fatalError("Unhandled KeyPress.Phase \(press.phase)")
                 }
                 Task {
-                    let remoteObject = try! await lightpanda.cdp.send(CDP.DOM.ResolveNode(
-                        nodeId: self.node.id,
-                        backendId: nil,
-                        objectGroup: nil,
-                        executionContextId: nil
-                    ))
-                    lightpanda.cdp.sendMessage(
-                        lightpanda.cdp.buildMessage(CDP.Runtime.CallFunctionOn(
-                            functionDeclaration: #"""
-                                function() {
-                                    this.dispatchEvent(new KeyboardEvent("\#(event)", {
-                                        key: \#(String(data: try! JSONEncoder().encode(press.characters), encoding: .utf8)!),
-                                        repeat: \#(press.phase == .repeat),
-                                        ctrlKey: \#(press.modifiers.contains(.control) ? "true" : "false"),
-                                        metaKey: \#(press.modifiers.contains(.command) ? "true" : "false"),
-                                        shiftKey: \#(press.modifiers.contains(.shift) ? "true" : "false"),
-                                        bubbles: true
-                                    }));
-                                }
-                                """#,
-                            objectId: remoteObject.object.objectId!
-                        ))
-                    )
-                    if case .down = press.phase {
+                    let keypressEvent = if case .down = press.phase {
                         // also send a 'keypress' event
-                        lightpanda.cdp.sendMessage(
-                            lightpanda.cdp.buildMessage(CDP.Runtime.CallFunctionOn(
-                                functionDeclaration: #"""
-                                    function() {
-                                        this.dispatchEvent(new KeyboardEvent("keypress", {
-                                            key: \#(String(data: try! JSONEncoder().encode(press.characters), encoding: .utf8)!),
-                                            repeat: \#(press.phase == .repeat),
-                                            ctrlKey: \#(press.modifiers.contains(.control) ? "true" : "false"),
-                                            metaKey: \#(press.modifiers.contains(.command) ? "true" : "false"),
-                                            shiftKey: \#(press.modifiers.contains(.shift) ? "true" : "false"),
-                                            bubbles: true
-                                        }));
-                                    }
-                                    """#,
-                                objectId: remoteObject.object.objectId!
-                            ))
-                        )
-                    }
+                        #"""
+                        this.dispatchEvent(new KeyboardEvent("keypress", {
+                            key: \#(String(data: try! JSONEncoder().encode(press.characters), encoding: .utf8)!),
+                            repeat: \#(press.phase == .repeat),
+                            ctrlKey: \#(press.modifiers.contains(.control) ? "true" : "false"),
+                            metaKey: \#(press.modifiers.contains(.command) ? "true" : "false"),
+                            shiftKey: \#(press.modifiers.contains(.shift) ? "true" : "false"),
+                            bubbles: true
+                        }));
+                        """#
+                    } else { "" }
+                    try! await self.node.callFunction(
+                        runtime: lightpanda,
+                        function: #"""
+                        function() {
+                            this.dispatchEvent(new KeyboardEvent("\#(event)", {
+                                key: \#(String(data: try! JSONEncoder().encode(press.characters), encoding: .utf8)!),
+                                repeat: \#(press.phase == .repeat),
+                                ctrlKey: \#(press.modifiers.contains(.control) ? "true" : "false"),
+                                metaKey: \#(press.modifiers.contains(.command) ? "true" : "false"),
+                                shiftKey: \#(press.modifiers.contains(.shift) ? "true" : "false"),
+                                bubbles: true
+                            }));
+                            \#(keypressEvent)
+                        }
+                        """#
+                    )
                 }
                 return .ignored
             }
