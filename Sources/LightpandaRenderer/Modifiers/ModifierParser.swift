@@ -36,7 +36,8 @@ final class ModifierParser<Library: ElementLibrary> {
                 let modifier = try AnyRuntimeViewModifier<Library>(node)
                 modifiers.modifiers.append(modifier)
             } catch {
-                fatalError(error.localizedDescription)
+                print("=== MODIFIER PARSE ERROR ===")
+                print(error.localizedDescription)
             }
             
             return .skipChildren
@@ -76,6 +77,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             OverlayModifier<Library>.self,
             GlassEffectModifier<Library>.self,
             NavigationTitleModifier<Library>.self,
+            TextFieldStyleModifier<Library>.self,
         ]
     }
     

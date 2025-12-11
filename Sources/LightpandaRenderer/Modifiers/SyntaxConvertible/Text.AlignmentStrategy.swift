@@ -1,7 +1,8 @@
-#if os(iOS)
+#if os(iOS) || os(macOS)
 import SwiftUI
 import SwiftSyntax
 
+@available(macOS 26.0, *)
 extension Text.AlignmentStrategy: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
         guard let memberAccess = syntax.as(MemberAccessExprSyntax.self)

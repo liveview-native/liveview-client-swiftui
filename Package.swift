@@ -103,7 +103,8 @@ let includeModifiers = [
     "BackgroundModifier",
     "OverlayModifier",
     "GlassEffectModifier",
-    "NavigationTitleModifier"
+    "NavigationTitleModifier",
+    "TextFieldStyleModifier"
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {

@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftSyntax
 
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension Glass: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
         guard let memberAccess = syntax.as(MemberAccessExprSyntax.self)
