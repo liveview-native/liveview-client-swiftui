@@ -168,6 +168,11 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
             .task {
                 let id = UUID().uuidString
                 let binding = try! await lightpanda.cdp.addBinding(name: id)
+                
+                defer {
+                    Task { try! await lightpanda.cdp.removeBinding(name: id) }
+                }
+                
                 try! await self.node.callFunction(runtime: lightpanda, function: #"""
                 function() {
                     let internalValue = this.value;

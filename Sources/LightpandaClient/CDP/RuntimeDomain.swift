@@ -18,6 +18,14 @@ extension CDP {
             public struct Response: Decodable, Sendable {}
         }
         
+        public struct RemoveBinding: CDP.Method {
+            public static let method = "Runtime.removeBinding"
+            
+            public let name: String
+            
+            public struct Response: Decodable, Sendable {}
+        }
+        
         public struct RunIfWaitingForDebugger: CDP.Method {
             public static let method = "Runtime.runIfWaitingForDebugger"
             

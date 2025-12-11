@@ -95,6 +95,12 @@ public final class CDP {
         }
     }
     
+    public func removeBinding(name: String) async throws {
+        try await self.send(CDP.Runtime.RemoveBinding(name: name))
+        self.runtimeBindings[name]?.finish()
+        self.runtimeBindings.removeValue(forKey: name)
+    }
+    
     public func bindingCalled(_ binding: Runtime.BindingCalled) {
         runtimeBindings[binding.name]?.yield(binding)
     }
