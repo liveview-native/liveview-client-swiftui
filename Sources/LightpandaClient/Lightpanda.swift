@@ -111,22 +111,21 @@ public class Node: Identifiable {
     }
     
     @MainActor
+    @discardableResult
     public func callFunction(
         runtime: LightpandaRuntime,
         function: String
-    ) async throws {
+    ) async throws -> CDP.Runtime.CallFunctionOn.Response {
         let remoteObject = try await runtime.cdp.send(CDP.DOM.ResolveNode(
             nodeId: self.id,
             backendId: nil,
             objectGroup: nil,
             executionContextId: nil
         ))
-        runtime.cdp.sendMessage(
-            runtime.cdp.buildMessage(CDP.Runtime.CallFunctionOn(
-                functionDeclaration: function,
-                objectId: remoteObject.object.objectId!
-            ))
-        )
+        return try await runtime.cdp.send(CDP.Runtime.CallFunctionOn(
+            functionDeclaration: function,
+            objectId: remoteObject.object.objectId!
+        ))
     }
 }
 
@@ -193,6 +192,8 @@ public final class LightpandaRuntime {
                 self.nodeRegistry.nodes[attributeModified.nodeId]?.attributes[attributeModified.name] = attributeModified.value
             case let .attributeRemoved(attributedRemoved):
                 self.nodeRegistry.nodes[attributedRemoved.nodeId]?.attributes.removeValue(forKey: attributedRemoved.name)
+            case let .bindingCalled(bindingCalled):
+                self.cdp.bindingCalled(bindingCalled)
             default:
                 break
             }

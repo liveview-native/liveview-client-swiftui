@@ -12,7 +12,8 @@ extension CDP {
             public static let method = "Runtime.addBinding"
             
             public let name: String
-            public let executionContextName: String
+            public let executionContextId: ExecutionContextId?
+            public let executionContextName: String?
             
             public struct Response: Decodable, Sendable {}
         }
@@ -138,6 +139,14 @@ extension CDP {
                 public let result: RemoteObject?
                 public let exceptionDetails: ExceptionDetails?
             }
+        }
+        
+        // Events
+        
+        public struct BindingCalled: Decodable, Sendable {
+            public let name: String
+            public let payload: String
+            public let executionContextId: ExecutionContextId
         }
         
         // Types

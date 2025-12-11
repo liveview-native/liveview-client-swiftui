@@ -93,7 +93,28 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
     
     @Environment(LightpandaRuntime.self) private var lightpanda
     
-    @State var text: String?
+    var text: String? {
+        get {
+            node.value
+        }
+        nonmutating set {
+            Task { @MainActor in
+                try! await self.node.callFunction(
+                    runtime: lightpanda,
+                    function: #"""
+                    function() {
+                        this.dispatchEvent(new Event("input", {
+                            inputType: "insertText",
+                            data: "\#(newValue?.last ?? " ")",
+                            bubbles: true
+                        }));
+                        this.value = \#(String(data: try! JSONEncoder().encode(newValue ?? ""), encoding: .utf8)!);
+                    }
+                    """#
+                )
+            }
+        }
+    }
     
     /// The axis to scroll when the content doesn't fit.
     ///
@@ -144,6 +165,26 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
     
     var body: some View {
         field
+            .task {
+                let id = UUID().uuidString
+                let binding = try! await lightpanda.cdp.addBinding(name: id)
+                try! await self.node.callFunction(runtime: lightpanda, function: #"""
+                function() {
+                    let internalValue = this.value;
+                    Object.defineProperty(this, "value", {
+                        get() { return internalValue; },
+                        set(newValue) {
+                            internalValue = newValue;
+                            globalThis["\#(id)"](newValue);
+                        },
+                        configurable: true
+                    });
+                }
+                """#)
+                for await call in binding {
+                    self.node.value = call.payload
+                }
+            }
             .onChange(of: text) { oldValue, newValue in
                 Task {
                     try! await self.node.callFunction(

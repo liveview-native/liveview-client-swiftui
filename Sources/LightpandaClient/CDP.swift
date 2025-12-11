@@ -18,6 +18,8 @@ public final class CDP {
     
     public var pausedInDebuggerMessage: String?
     
+    private var runtimeBindings = [String:AsyncStream<Runtime.BindingCalled>.Continuation]()
+    
     init() {}
     
     @MainActor
@@ -83,6 +85,18 @@ public final class CDP {
         case let .success(response):
             return response
         }
+    }
+    
+    public func addBinding(name: String) async throws -> AsyncStream<Runtime.BindingCalled> {
+        let result = try await self.send(CDP.Runtime.AddBinding(name: name, executionContextId: nil, executionContextName: nil))
+        
+        return AsyncStream { continuation in
+            runtimeBindings[name] = continuation
+        }
+    }
+    
+    public func bindingCalled(_ binding: Runtime.BindingCalled) {
+        runtimeBindings[binding.name]?.yield(binding)
     }
     
     func handleMessage(_ message: UnsafePointer<CChar>?) {
@@ -161,6 +175,7 @@ public final class CDP {
         case characterDataModified(DOM.CharacterDataModified)
         case childNodeInserted(DOM.ChildNodeInserted)
         case childNodeRemoved(DOM.ChildNodeRemoved)
+        case bindingCalled(Runtime.BindingCalled)
         case unknown(method: String)
         
         enum CodingKeys: String, CodingKey {
@@ -189,6 +204,8 @@ public final class CDP {
                     self = .childNodeInserted(try container.decode(DOM.ChildNodeInserted.self, forKey: .params))
                 case "DOM.childNodeRemoved":
                     self = .childNodeRemoved(try container.decode(DOM.ChildNodeRemoved.self, forKey: .params))
+                case "Runtime.bindingCalled":
+                    self = .bindingCalled(try container.decode(Runtime.BindingCalled.self, forKey: .params))
                 case let method:
                     self = .unknown(method: method)
                 }
