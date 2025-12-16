@@ -33,5 +33,11 @@ extension CDP {
             
             public struct Response: Decodable, Sendable {}
         }
+        
+        // Events
+        
+        public struct LoadEventFired: Decodable, Sendable {
+            public let timestamp: Double
+        }
     }
 }

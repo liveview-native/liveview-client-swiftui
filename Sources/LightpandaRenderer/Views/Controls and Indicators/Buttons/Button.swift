@@ -52,7 +52,7 @@ public struct Button<Library: ElementLibrary>: View {
     
     private func handleClick() {
         Task {
-            try! await self.node.callFunction(
+            try await self.node.callFunction(
                 runtime: lightpanda,
                 function: #"""
                 function() {

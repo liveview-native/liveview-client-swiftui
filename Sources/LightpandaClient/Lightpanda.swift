@@ -157,13 +157,11 @@ public final class LightpandaRuntime {
         self.cdp?.eventCallback = { event, data in
             switch event {
             case .documentUpdated:
+                print("=== document updated ===")
                 let getDocumentMessage = self.cdp!.buildMessage(CDP.DOM.GetDocument(depth: -1, pierce: true))
                 print(getDocumentMessage.id)
                 self.docMessageId = getDocumentMessage.id
                 self.cdp!.sendMessage(getDocumentMessage)
-                
-                let logMessage = self.cdp!.buildMessage(CDP.Runtime.Evaluate(expression: "console.log(42)"))
-                self.cdp!.sendMessage(logMessage)
             case .result(id: self.docMessageId):
                 switch try! JSONDecoder().decode(CDP.MethodResult<CDP.DOM.GetDocument>.self, from: data) {
                 case let .success(result):
