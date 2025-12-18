@@ -31,24 +31,39 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "TabView")
 @MainActor
 struct TabView<Library: ElementLibrary>: View {
     let node: Node
-    // TODO: events
-//    /// Synchronizes the selected tab with the server.
-//    ///
-//    /// Use the ``TagModifier`` modifier to set the selection value for a given tab.
-//    @_documentation(visibility: public)
-//    @ChangeTracked(attribute: "selection") private var selection: String? = nil
+    
+    @Environment(LightpandaRuntime.self) private var runtime
     
     var body: some View {
-        SwiftUI.TabView {
+        SwiftUI.TabView(selection: selection) {
             ForEach(node.children) { node in
                 if node.name.lowercased() == "tab" {
                     Tab(
                         node.attributeValue(for: "title") ?? "",
-                        systemImage: node.attributeValue(for: "systemImage") ?? ""
+                        systemImage: node.attributeValue(for: "systemImage") ?? "",
+                        value: node.attributeValue(for: "value") ?? String(describing: ObjectIdentifier(node))
                     ) {
                         node.children(library: Library.self)
                     }
                 }
+            }
+        }
+    }
+    
+    var selection: Binding<String> {
+        Binding {
+            node.attributeValue(for: "selection") ?? node.children.first.flatMap({ String(describing: ObjectIdentifier($0)) }) ?? ""
+        } set: { newValue in
+            Task {
+                try! await self.node.callFunction(
+                    runtime: runtime,
+                    function: #"""
+                    function() {
+                        this.setAttribute("selection", "\#(newValue)");
+                        this.dispatchEvent(new Event("change", { bubbles: true }));
+                    }
+                    """#
+                )
             }
         }
     }

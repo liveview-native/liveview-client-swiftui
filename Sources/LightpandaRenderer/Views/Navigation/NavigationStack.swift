@@ -50,9 +50,7 @@ struct NavigationStack<Library: ElementLibrary>: View {
                 function() {
                     const originalPushState = history.pushState;
                     window.history.pushState = function(...args) {
-                        console.error("binding started");
                         globalThis["\#(bindingName)"]("");
-                        console.error("binding finished");
                 
                         return originalPushState.apply(this, args);
                     };
@@ -73,9 +71,7 @@ struct NavigationStack<Library: ElementLibrary>: View {
                         runtime: runtime,
                         function: #"""
                         function() {
-                            for (let i = 0; i < \#(diff); i++) {
-                                window.history.back();
-                            }
+                            window.history.go(-\#(diff));
                         }
                         """#
                     )
