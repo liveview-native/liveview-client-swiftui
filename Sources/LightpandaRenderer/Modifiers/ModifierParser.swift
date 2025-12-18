@@ -78,6 +78,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             GlassEffectModifier<Library>.self,
             NavigationTitleModifier<Library>.self,
             TextFieldStyleModifier<Library>.self,
+            TabViewStyleModifier<Library>.self,
         ]
     }
     
