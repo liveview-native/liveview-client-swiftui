@@ -18,7 +18,7 @@ public final class CDP {
     
     public var pausedInDebuggerMessage: String?
     
-    private var runtimeBindings = [String:AsyncStream<Runtime.BindingCalled>.Continuation]()
+    private var runtimeBindings = [String:@MainActor (Runtime.BindingCalled) -> ()]()
     
     init() {}
     
@@ -87,22 +87,20 @@ public final class CDP {
         }
     }
     
-    public func addBinding(name: String) async throws -> AsyncStream<Runtime.BindingCalled> {
+    public func addBinding(name: String, binding: @MainActor @escaping (Runtime.BindingCalled) -> ()) async throws {
         let result = try await self.send(CDP.Runtime.AddBinding(name: name, executionContextId: nil, executionContextName: nil))
         
-        return AsyncStream { continuation in
-            runtimeBindings[name] = continuation
-        }
+        runtimeBindings[name] = binding
     }
     
     public func removeBinding(name: String) async throws {
         try await self.send(CDP.Runtime.RemoveBinding(name: name))
-        self.runtimeBindings[name]?.finish()
         self.runtimeBindings.removeValue(forKey: name)
     }
     
+    @MainActor
     public func bindingCalled(_ binding: Runtime.BindingCalled) {
-        runtimeBindings[binding.name]?.yield(binding)
+        runtimeBindings[binding.name]?(binding)
     }
     
     func handleMessage(_ message: UnsafePointer<CChar>?) {

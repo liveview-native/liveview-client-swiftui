@@ -167,7 +167,9 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
         field
             .task {
                 let id = UUID().uuidString
-                let binding = try! await lightpanda.cdp.addBinding(name: id)
+                let binding = try! await lightpanda.cdp.addBinding(name: id) { [weak node] call in
+                    node?.value = call.payload
+                }
                 
                 defer {
                     Task { try! await lightpanda.cdp.removeBinding(name: id) }
@@ -186,9 +188,6 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
                     });
                 }
                 """#)
-                for await call in binding {
-                    self.node.value = call.payload
-                }
             }
             .onChange(of: text) { oldValue, newValue in
                 Task {

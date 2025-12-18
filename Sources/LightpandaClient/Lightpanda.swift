@@ -74,6 +74,26 @@ public class Node: Identifiable {
     
     public weak var parent: Node?
     
+    init(
+        id: Int,
+        type: NodeType,
+        name: String,
+        value: String,
+        childNodeCount: Int?,
+        children: [Node],
+        attributes: [String:String] = [:],
+        parent: Node?,
+    ) {
+        self.id = id
+        self.type = type
+        self.name = name
+        self.value = value
+        self.childNodeCount = childNodeCount
+        self.children = children
+        self.attributes = attributes
+        self.parent = parent
+    }
+    
     init(registry: NodeRegistry, id: Int, type: NodeType, name: String, value: String, childNodeCount: Int? = nil, children: [Node] = [], attributes: [String:String] = [:], parent: Node? = nil) {
         self.id = id
         self.type = type
@@ -126,6 +146,27 @@ public class Node: Identifiable {
             functionDeclaration: function,
             objectId: remoteObject.object.objectId!
         ))
+    }
+    
+    public func cloneForCaching() -> Node {
+        let clonedNode = Node(
+            id: id,
+            type: type,
+            name: name,
+            value: value,
+            childNodeCount: childNodeCount,
+            children: [],
+            attributes: attributes,
+            parent: parent
+        )
+        
+        clonedNode.children = children.map { child in
+            let clonedChild = child.cloneForCaching()
+            clonedChild.parent = clonedNode
+            return clonedChild
+        }
+        
+        return clonedNode
     }
 }
 

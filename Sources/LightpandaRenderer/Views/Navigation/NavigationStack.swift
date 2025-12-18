@@ -19,51 +19,70 @@ struct NavigationStack<Library: ElementLibrary>: View {
     
     @State private var path = NavigationPath()
     
+    @State private var cachedRootNode: Node?
+    @State private var cachedNodes = [Int:Node]()
+    
     var body: some View {
         SwiftUI.NavigationStack(path: $path) {
             SwiftUI.VStack {
-                if path.isEmpty {
+                if let cachedNode = cachedNodes[-1] {
+                    cachedNode.children(library: Library.self)
+                } else {
                     node.children(library: Library.self)
                 }
             }
-            .navigationDestination(for: UUID.self) { route in
-                node.children(library: Library.self)
+            .navigationDestination(for: Int.self) { index in
+                if let cachedNode = cachedNodes[index] {
+                    cachedNode.children(library: Library.self)
+                } else {
+                    node.children(library: Library.self)
+                }
             }
         }
         .task {
-            let id = UUID().uuidString
-            let binding = try! await runtime.cdp.addBinding(name: id)
-            
-            defer {
-                Task { try! await runtime.cdp.removeBinding(name: id) }
+            let bindingName = UUID().uuidString
+            try! await runtime.cdp.addBinding(name: bindingName) { [weak node] call in
+                cachedNodes[path.count - 1] = node?.cloneForCaching()
+                self.path.append(path.count)
             }
-            
             // monkey-patch pushState to observe changes
             try! await self.node.callFunction(runtime: runtime, function: #"""
-            function() {
-                const originalPushState = history.pushState;
-                window.history.pushState = function(...args) {
-                    globalThis["\#(id)"]("");
-            
-                    return originalPushState.apply(this, args);
-                };
-            }
-            """#)
-            
-            for await call in binding {
-                self.path.append(UUID())
+                function() {
+                    const originalPushState = history.pushState;
+                    window.history.pushState = function(...args) {
+                        console.error("binding started");
+                        globalThis["\#(bindingName)"]("");
+                        console.error("binding finished");
+                
+                        return originalPushState.apply(this, args);
+                    };
+                }
+                """#)
+            try? await withTaskCancellationHandler {
+                try await Task.sleep(nanoseconds: UInt64.max)
+            } onCancel: {
+                Task { try! await runtime.cdp.removeBinding(name: bindingName) }
             }
         }
-        // when navigation path loses an item, sync with browser history.back()
         .onChange(of: path) { oldValue, newValue in
             if newValue.count < oldValue.count {
+                let diff = oldValue.count - newValue.count
+                
                 Task {
-                    try! await self.node.callFunction(runtime: runtime, function: #"""
-                    function() {
-                        window.history.back()
-                    }
-                    """#)
+                    try? await self.node.callFunction(
+                        runtime: runtime,
+                        function: #"""
+                        function() {
+                            for (let i = 0; i < \#(diff); i++) {
+                                window.history.back();
+                            }
+                        }
+                        """#
+                    )
                 }
+                
+                let validIndices = Set(-1..<newValue.count - 1)
+                cachedNodes = cachedNodes.filter { validIndices.contains($0.key) }
             }
         }
     }

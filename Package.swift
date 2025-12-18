@@ -156,6 +156,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/swiftlang/swift-syntax", from: "602.0.0"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.1.1"),
     ],
     targets: [
         .binaryTarget(name: "lightpanda", path: "Frameworks/lightpanda.xcframework"),
@@ -163,7 +164,11 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "LightpandaClient",
-            dependencies: ["lightpanda"]),
+            dependencies: [
+                "lightpanda",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
+            ]
+        ),
         .testTarget(
             name: "LightpandaClientTests",
             dependencies: ["LightpandaClient"]
