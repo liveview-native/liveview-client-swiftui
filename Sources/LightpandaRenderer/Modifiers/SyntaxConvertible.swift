@@ -9,6 +9,20 @@ extension FunctionCallExprSyntax {
     func argument(named name: String) -> LabeledExprSyntax? {
         return arguments.first(where: { $0.label?.text == name })
     }
+    
+    func argument<T: SyntaxConvertible>(named name: String) -> T? {
+        guard let arg = arguments.first(where: { $0.label?.text == name }) else {
+            return nil
+        }
+        return T(syntax: arg.expression)
+    }
+    
+    func argument<T: SyntaxConvertible>(named name: String, default defaultValue: T) -> T {
+        guard let arg = arguments.first(where: { $0.label?.text == name }) else {
+            return defaultValue
+        }
+        return T(syntax: arg.expression) ?? defaultValue
+    }
 }
 
 extension LabeledExprListSyntax {
@@ -31,6 +45,13 @@ extension Optional: SyntaxConvertible where Wrapped: SyntaxConvertible {
 
 extension Int: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
+        // Handle negative numbers: -10 is parsed as PrefixOperatorExpr("-", IntegerLiteralExpr)
+        if let prefixExpr = syntax.as(PrefixOperatorExprSyntax.self),
+           prefixExpr.operator.text == "-",
+           let value = prefixExpr.expression.as(IntegerLiteralExprSyntax.self)?.representedLiteralValue {
+            self = -value
+            return
+        }
         guard let value = syntax.as(IntegerLiteralExprSyntax.self)?.representedLiteralValue
         else { return nil }
         self = value
@@ -39,6 +60,17 @@ extension Int: SyntaxConvertible {
 
 extension Double: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
+        // Handle negative numbers: -10.5 is parsed as PrefixOperatorExpr("-", FloatLiteralExpr)
+        if let prefixExpr = syntax.as(PrefixOperatorExprSyntax.self),
+           prefixExpr.operator.text == "-" {
+            if let value = prefixExpr.expression.as(FloatLiteralExprSyntax.self)?.representedLiteralValue {
+                self = -value
+                return
+            } else if let value = prefixExpr.expression.as(IntegerLiteralExprSyntax.self)?.representedLiteralValue {
+                self = -Double(value)
+                return
+            }
+        }
         guard let value = syntax.as(FloatLiteralExprSyntax.self)?.representedLiteralValue
             ?? Int(syntax: syntax).flatMap(Double.init)
         else { return nil }
@@ -48,10 +80,12 @@ extension Double: SyntaxConvertible {
 
 extension CGFloat: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
-        guard let value = Double(syntax: syntax).flatMap(CGFloat.init)
-                ?? Int(syntax: syntax).flatMap(CGFloat.init)
-        else { return nil }
-        self = value
+        // Handle negative numbers via Double which already handles PrefixOperatorExpr
+        if let value = Double(syntax: syntax) {
+            self = CGFloat(value)
+            return
+        }
+        return nil
     }
 }
 

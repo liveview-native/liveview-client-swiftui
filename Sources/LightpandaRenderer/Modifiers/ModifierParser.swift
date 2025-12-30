@@ -79,6 +79,15 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             NavigationTitleModifier<Library>.self,
             TextFieldStyleModifier<Library>.self,
             TabViewStyleModifier<Library>.self,
+            AspectRatioModifier<Library>.self,
+            OpacityModifier<Library>.self,
+            CornerRadiusModifier<Library>.self,
+            ScaleEffectModifier<Library>.self,
+            RotationEffectModifier<Library>.self,
+            OffsetModifier<Library>.self,
+            ShadowModifier<Library>.self,
+            BlurModifier<Library>.self,
+            BorderModifier<Library>.self,
         ]
     }
     

@@ -120,7 +120,16 @@ let includeModifiers = [
     "GlassEffectModifier",
     "NavigationTitleModifier",
     "TextFieldStyleModifier",
-    "TabViewStyleModifier"
+    "TabViewStyleModifier",
+    "AspectRatioModifier",
+    "OpacityModifier",
+    "CornerRadiusModifier",
+    "ScaleEffectModifier",
+    "RotationEffectModifier",
+    "OffsetModifier",
+        "ShadowModifier",
+    "BlurModifier",
+    "BorderModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {
