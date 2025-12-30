@@ -27,11 +27,45 @@ import LightpandaClient
 @_documentation(visibility: public)
 @available(iOS 16.0, *)
 struct MultiDatePicker<Library: ElementLibrary>: View {
-    let node: Node
+    var node: Node
     
     @Environment(LightpandaRuntime.self) private var lightpanda
     
-    @State private var selection: Set<DateComponents> = []
+    /// The current selection binding that reads/writes to node.attributes.
+    private var selection: Binding<Set<DateComponents>> {
+        Binding(
+            get: {
+                guard let value = node.attributes["selection"],
+                      let data = value.data(using: .utf8),
+                      let array = try? JSONDecoder().decode([String].self, from: data) else {
+                    return []
+                }
+                return Set(array.compactMap { dateString -> DateComponents? in
+                    guard let date = Self.parseDate(dateString) else { return nil }
+                    return Calendar.current.dateComponents([.year, .month, .day], from: date)
+                })
+            },
+            set: { newValue in
+                let dateStrings = newValue.compactMap { components -> String? in
+                    guard let date = Calendar.current.date(from: components) else { return nil }
+                    return Self.formatDate(date)
+                }
+                let jsonArray = String(data: try! JSONEncoder().encode(dateStrings), encoding: .utf8)!
+                node.attributes["selection"] = jsonArray
+                Task {
+                    try? await self.node.callFunction(
+                        runtime: lightpanda,
+                        function: #"""
+                        function() {
+                            this.value = \#(jsonArray);
+                            this.dispatchEvent(new Event("change", { bubbles: true }));
+                        }
+                        """#
+                    )
+                }
+            }
+        )
+    }
     
     /// The start date (inclusive) of the picker's range.
     @_documentation(visibility: public)
@@ -45,80 +79,37 @@ struct MultiDatePicker<Library: ElementLibrary>: View {
         node.attributeValue(for: "end").flatMap { Self.parseDate($0) }
     }
     
-    /// Initial selection as a JSON array of date strings.
-    @_documentation(visibility: public)
-    private var initialSelection: [String]? {
-        guard let value = node.attributeValue(for: "selection"),
-              let data = value.data(using: .utf8),
-              let array = try? JSONDecoder().decode([String].self, from: data) else {
-            return nil
-        }
-        return array
-    }
-    
     var body: some View {
         #if os(iOS)
         SwiftUI.Group {
             if let start, let end {
-                SwiftUI.MultiDatePicker(selection: $selection, in: start..<end) {
+                SwiftUI.MultiDatePicker(selection: selection, in: start..<end) {
                     node.children(library: Library.self)
                 }
             } else if let start {
-                SwiftUI.MultiDatePicker(selection: $selection, in: start...) {
+                SwiftUI.MultiDatePicker(selection: selection, in: start...) {
                     node.children(library: Library.self)
                 }
             } else if let end {
-                SwiftUI.MultiDatePicker(selection: $selection, in: ..<end) {
+                SwiftUI.MultiDatePicker(selection: selection, in: ..<end) {
                     node.children(library: Library.self)
                 }
             } else {
-                SwiftUI.MultiDatePicker(selection: $selection) {
+                SwiftUI.MultiDatePicker(selection: selection) {
                     node.children(library: Library.self)
                 }
-            }
-        }
-        .onAppear {
-            if let initialSelection {
-                selection = Set(initialSelection.compactMap { dateString -> DateComponents? in
-                    guard let date = Self.parseDate(dateString) else { return nil }
-                    return Calendar.current.dateComponents([.year, .month, .day], from: date)
-                })
-            }
-        }
-        .onChange(of: selection) { _, newValue in
-            Task {
-                let dateStrings = newValue.compactMap { components -> String? in
-                    guard let date = Calendar.current.date(from: components) else { return nil }
-                    return Self.formatDate(date)
-                }
-                let jsonArray = String(data: try! JSONEncoder().encode(dateStrings), encoding: .utf8)!
-                try await self.node.callFunction(
-                    runtime: lightpanda,
-                    function: #"""
-                    function() {
-                        this.value = \#(jsonArray);
-                        this.dispatchEvent(new Event("change", { bubbles: true }));
-                    }
-                    """#
-                )
             }
         }
         .task {
             let id = UUID().uuidString
-            _ = try? await lightpanda.cdp.addBinding(name: id) { call in
-                guard let data = call.payload.data(using: .utf8),
-                      let dateStrings = try? JSONDecoder().decode([String].self, from: data) else {
-                    return
-                }
+            _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
+                guard let node else { return }
                 Task { @MainActor in
-                    selection = Set(dateStrings.compactMap { dateString -> DateComponents? in
-                        guard let date = Self.parseDate(dateString) else { return nil }
-                        return Calendar.current.dateComponents([.year, .month, .day], from: date)
-                    })
+                    node.attributes["selection"] = call.payload
                 }
             }
             
-            let initialJSON = initialSelection.map { String(data: try! JSONEncoder().encode($0), encoding: .utf8)! } ?? "[]"
+            let initialJSON = node.attributes["selection"] ?? "[]"
             try? await self.node.callFunction(runtime: lightpanda, function: #"""
             function() {
                 let internalValue = \#(initialJSON);

@@ -58,3 +58,90 @@ Order: System frameworks → Package dependencies → Local modules
 - LightpandaRenderer redeclares some SwiftUI types (e.g., `Group`, `Text`, `Button`)
 - When referencing the original SwiftUI type in View implementations, use the `SwiftUI.` prefix
 - Example: Use `SwiftUI.Group { ... }` instead of `Group { ... }` to avoid collision with `Group<Library>`
+
+## Form Control Implementation Pattern
+
+Form controls (Toggle, Slider, TextField, etc.) should use **JavaScript as the single source of truth** for their values. Do NOT store local `@State` for control values.
+
+### Key Pattern
+
+1. **Use `var node: Node`** - Node is `@Observable`, so SwiftUI automatically observes changes to its properties
+2. **Create a computed `Binding`** that reads/writes directly to `node.attributes`
+3. **Dispatch events in the binding setter** - Update JS and dispatch DOM events when value changes
+4. **CDP binding callback updates `node.attributes`** - Triggers SwiftUI re-render since Node is `@Observable`
+
+### Example: Toggle Implementation
+
+```swift
+struct Toggle<Library: ElementLibrary>: View {
+    var node: Node
+    @Environment(LightpandaRuntime.self) private var lightpanda
+    
+    private var isOn: Binding<Bool> {
+        Binding(
+            get: { node.attributes["checked"] != nil },
+            set: { newValue in
+                // Update node attributes (triggers @Observable re-render)
+                if newValue {
+                    node.attributes["checked"] = ""
+                } else {
+                    node.attributes.removeValue(forKey: "checked")
+                }
+                // Dispatch change event to JS
+                Task {
+                    try? await self.node.callFunction(
+                        runtime: lightpanda,
+                        function: #"""
+                        function() {
+                            this.checked = \#(newValue);
+                            this.dispatchEvent(new Event("change", { bubbles: true }));
+                        }
+                        """#
+                    )
+                }
+            }
+        )
+    }
+    
+    public var body: some View {
+        SwiftUI.Toggle(isOn: isOn) {
+            node.children(library: Library.self)
+        }
+        .task {
+            // Setup CDP binding for JS → Swift updates
+            let id = UUID().uuidString
+            _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
+                guard let node else { return }
+                Task { @MainActor in
+                    if call.payload == "true" {
+                        node.attributes["checked"] = ""
+                    } else {
+                        node.attributes.removeValue(forKey: "checked")
+                    }
+                }
+            }
+            
+            // Define JS property with getter/setter that calls CDP binding
+            try? await self.node.callFunction(runtime: lightpanda, function: #"""
+            function() {
+                let internalValue = this.checked ?? false;
+                Object.defineProperty(this, "checked", {
+                    get() { return internalValue; },
+                    set(newValue) {
+                        internalValue = newValue;
+                        globalThis["\#(id)"](String(newValue));
+                    },
+                    configurable: true
+                });
+            }
+            """#)
+        }
+    }
+}
+```
+
+### Why This Pattern?
+
+- **No duplicate state** - JS is the single source of truth
+- **Automatic re-renders** - Node is `@Observable`, so SwiftUI updates when `node.attributes` changes
+- **Bidirectional sync** - Swift → JS via binding setter, JS → Swift via CDP binding callback

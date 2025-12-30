@@ -80,7 +80,6 @@ let includeViews = [
     "SecureField",
     "TextEditor",
     "TextField",
-    "TextFieldProtocol",
     "TextView",
     
     "ToolbarItem",

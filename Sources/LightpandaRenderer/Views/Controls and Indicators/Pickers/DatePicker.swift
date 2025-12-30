@@ -30,16 +30,32 @@ import LightpandaClient
 /// - ``displayedComponents``
 @_documentation(visibility: public)
 struct DatePicker<Library: ElementLibrary>: View {
-    let node: Node
+    var node: Node
     
     @Environment(LightpandaRuntime.self) private var lightpanda
     
-    @State private var selection: Date = Date()
-    
-    /// The initial selection as an ISO 8601 date string.
-    @_documentation(visibility: public)
-    private var initialSelection: Date? {
-        node.attributeValue(for: "selection").flatMap { Self.parseISO8601($0) }
+    /// The current selection binding that reads/writes to node.attributes.
+    private var selection: Binding<Date> {
+        Binding(
+            get: {
+                node.attributes["selection"].flatMap { Self.parseISO8601($0) } ?? Date()
+            },
+            set: { newValue in
+                let isoString = Self.formatISO8601(newValue)
+                node.attributes["selection"] = isoString
+                Task {
+                    try? await self.node.callFunction(
+                        runtime: lightpanda,
+                        function: #"""
+                        function() {
+                            this.value = "\#(isoString)";
+                            this.dispatchEvent(new Event("change", { bubbles: true }));
+                        }
+                        """#
+                    )
+                }
+            }
+        )
     }
     
     /// The start date (inclusive) of the valid date range. Encoded as an ISO 8601 date string.
@@ -84,53 +100,33 @@ struct DatePicker<Library: ElementLibrary>: View {
         #if os(iOS) || os(macOS)
         SwiftUI.Group {
             if let start, let end {
-                SwiftUI.DatePicker(selection: $selection, in: start...end, displayedComponents: datePickerComponents) {
+                SwiftUI.DatePicker(selection: selection, in: start...end, displayedComponents: datePickerComponents) {
                     node.children(library: Library.self)
                 }
             } else if let start {
-                SwiftUI.DatePicker(selection: $selection, in: start..., displayedComponents: datePickerComponents) {
+                SwiftUI.DatePicker(selection: selection, in: start..., displayedComponents: datePickerComponents) {
                     node.children(library: Library.self)
                 }
             } else if let end {
-                SwiftUI.DatePicker(selection: $selection, in: ...end, displayedComponents: datePickerComponents) {
+                SwiftUI.DatePicker(selection: selection, in: ...end, displayedComponents: datePickerComponents) {
                     node.children(library: Library.self)
                 }
             } else {
-                SwiftUI.DatePicker(selection: $selection, displayedComponents: datePickerComponents) {
+                SwiftUI.DatePicker(selection: selection, displayedComponents: datePickerComponents) {
                     node.children(library: Library.self)
                 }
-            }
-        }
-        .onAppear {
-            if let initialSelection {
-                selection = initialSelection
-            }
-        }
-        .onChange(of: selection) { _, newValue in
-            Task {
-                let isoString = Self.formatISO8601(newValue)
-                try await self.node.callFunction(
-                    runtime: lightpanda,
-                    function: #"""
-                    function() {
-                        this.value = "\#(isoString)";
-                        this.dispatchEvent(new Event("change", { bubbles: true }));
-                    }
-                    """#
-                )
             }
         }
         .task {
             let id = UUID().uuidString
-            _ = try? await lightpanda.cdp.addBinding(name: id) { call in
-                if let date = Self.parseISO8601(call.payload) {
-                    Task { @MainActor in
-                        selection = date
-                    }
+            _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
+                guard let node else { return }
+                Task { @MainActor in
+                    node.attributes["selection"] = call.payload
                 }
             }
             
-            let initialISO = initialSelection.map { Self.formatISO8601($0) } ?? Self.formatISO8601(Date())
+            let initialISO = node.attributes["selection"] ?? Self.formatISO8601(Date())
             try? await self.node.callFunction(runtime: lightpanda, function: #"""
             function() {
                 let internalValue = "\#(initialISO)";

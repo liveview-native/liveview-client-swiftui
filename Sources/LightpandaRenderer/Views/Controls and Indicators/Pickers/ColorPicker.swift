@@ -23,11 +23,9 @@ import LightpandaClient
 /// * ``supportsOpacity``
 @_documentation(visibility: public)
 struct ColorPicker<Library: ElementLibrary>: View {
-    let node: Node
+    var node: Node
     
     @Environment(LightpandaRuntime.self) private var lightpanda
-    
-    @State private var color: CGColor = CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 1)
     
     /// Enables the selection of transparent colors.
     @_documentation(visibility: public)
@@ -35,52 +33,52 @@ struct ColorPicker<Library: ElementLibrary>: View {
         node.attributeBoolean(for: "supportsOpacity")
     }
     
-    /// The initial color value as a hex string.
-    @_documentation(visibility: public)
-    private var initialSelection: String? {
-        node.attributeValue(for: "selection")
+    /// The current color binding that reads/writes to node.attributes.
+    private var color: Binding<CGColor> {
+        Binding(
+            get: {
+                Self.cgColor(from: node.attributes["selection"] ?? "#000000")
+            },
+            set: { newValue in
+                let hexString = Self.hexString(from: newValue, includeAlpha: supportsOpacity)
+                node.attributes["selection"] = hexString
+                Task {
+                    try? await self.node.callFunction(
+                        runtime: lightpanda,
+                        function: #"""
+                        function() {
+                            this.value = "\#(hexString)";
+                            this.dispatchEvent(new Event("input", { bubbles: true }));
+                            this.dispatchEvent(new Event("change", { bubbles: true }));
+                        }
+                        """#
+                    )
+                }
+            }
+        )
     }
     
     public var body: some View {
         #if os(iOS) || os(macOS)
         SwiftUI.ColorPicker(
-            selection: $color,
+            selection: color,
             supportsOpacity: supportsOpacity
         ) {
             node.children(library: Library.self)
         }
-        .onAppear {
-            if let hex = initialSelection {
-                color = Self.cgColor(from: hex)
-            }
-        }
-        .onChange(of: color) { _, newValue in
-            Task {
-                let hexString = Self.hexString(from: newValue, includeAlpha: supportsOpacity)
-                try await self.node.callFunction(
-                    runtime: lightpanda,
-                    function: #"""
-                    function() {
-                        this.value = "\#(hexString)";
-                        this.dispatchEvent(new Event("input", { bubbles: true }));
-                        this.dispatchEvent(new Event("change", { bubbles: true }));
-                    }
-                    """#
-                )
-            }
-        }
         .task {
             let id = UUID().uuidString
-            _ = try? await lightpanda.cdp.addBinding(name: id) { call in
+            _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
+                guard let node else { return }
                 Task { @MainActor in
-                    color = Self.cgColor(from: call.payload)
+                    node.attributes["selection"] = call.payload
                 }
             }
             
-            let initialHex = initialSelection ?? "#000000"
+            let initialValue = node.attributes["selection"] ?? "#000000"
             try? await self.node.callFunction(runtime: lightpanda, function: #"""
             function() {
-                let internalValue = "\#(initialHex)";
+                let internalValue = "\#(initialValue)";
                 Object.defineProperty(this, "value", {
                     get() { return internalValue; },
                     set(newValue) {

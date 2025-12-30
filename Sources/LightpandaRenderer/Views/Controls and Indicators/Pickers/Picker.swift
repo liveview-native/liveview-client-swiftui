@@ -33,20 +33,36 @@ import LightpandaClient
 /// - `label`
 @_documentation(visibility: public)
 struct Picker<Library: ElementLibrary>: View {
-    let node: Node
+    var node: Node
     
     @Environment(LightpandaRuntime.self) private var lightpanda
     
-    @State private var selection: String? = nil
-    
-    /// The initial selection value.
-    @_documentation(visibility: public)
-    private var initialSelection: String? {
-        node.attributeValue(for: "selection")
+    /// The current selection binding that reads/writes to node.attributes.
+    private var selection: Binding<String?> {
+        Binding(
+            get: {
+                node.attributes["selection"]
+            },
+            set: { newValue in
+                node.attributes["selection"] = newValue
+                Task {
+                    let encodedValue = newValue.map { String(data: try! JSONEncoder().encode($0), encoding: .utf8)! } ?? "null"
+                    try? await self.node.callFunction(
+                        runtime: lightpanda,
+                        function: #"""
+                        function() {
+                            this.value = \#(encodedValue);
+                            this.dispatchEvent(new Event("change", { bubbles: true }));
+                        }
+                        """#
+                    )
+                }
+            }
+        )
     }
     
     var body: some View {
-        SwiftUI.Picker(selection: $selection) {
+        SwiftUI.Picker(selection: selection) {
             ForEach(node.children.filter({ $0.attributeValue(for: "template") == "content" }).flatMap(\.children), id: \.id) { child in
                 NodeView<Library>(node: child)
                     .tag(child.attributeValue(for: "tag") as String?)
@@ -54,32 +70,16 @@ struct Picker<Library: ElementLibrary>: View {
         } label: {
             node.children(in: "label", library: Library.self)
         }
-        .onAppear {
-            selection = initialSelection
-        }
-        .onChange(of: selection) { _, newValue in
-            Task {
-                let encodedValue = newValue.map { String(data: try! JSONEncoder().encode($0), encoding: .utf8)! } ?? "null"
-                try await self.node.callFunction(
-                    runtime: lightpanda,
-                    function: #"""
-                    function() {
-                        this.value = \#(encodedValue);
-                        this.dispatchEvent(new Event("change", { bubbles: true }));
-                    }
-                    """#
-                )
-            }
-        }
         .task {
             let id = UUID().uuidString
-            _ = try? await lightpanda.cdp.addBinding(name: id) { call in
+            _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
+                guard let node else { return }
                 Task { @MainActor in
-                    selection = call.payload.isEmpty ? nil : call.payload
+                    node.attributes["selection"] = call.payload.isEmpty ? nil : call.payload
                 }
             }
             
-            let initialValueJS = initialSelection.map { "\"\($0)\"" } ?? "null"
+            let initialValueJS = node.attributes["selection"].map { "\"\($0)\"" } ?? "null"
             try? await self.node.callFunction(runtime: lightpanda, function: #"""
             function() {
                 let internalValue = \#(initialValueJS);

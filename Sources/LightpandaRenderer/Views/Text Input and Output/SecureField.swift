@@ -22,11 +22,9 @@ import LightpandaClient
 /// * ``prompt``
 @_documentation(visibility: public)
 struct SecureField<Library: ElementLibrary>: View {
-    let node: Node
+    var node: Node
     
     @Environment(LightpandaRuntime.self) private var lightpanda
-    
-    @State private var text: String = ""
     
     /// Additional guidance on what to enter.
     @_documentation(visibility: public)
@@ -36,38 +34,35 @@ struct SecureField<Library: ElementLibrary>: View {
     
     var body: some View {
         SwiftUI.SecureField(
-            text: $text,
+            text: Binding(
+                get: { node.value },
+                set: { newValue in
+                    node.value = newValue
+                    Task {
+                        try? await self.node.callFunction(
+                            runtime: lightpanda,
+                            function: #"""
+                            function() {
+                                this.value = \#(String(data: try! JSONEncoder().encode(newValue), encoding: .utf8)!);
+                                this.dispatchEvent(new Event("input", {
+                                    inputType: "insertText",
+                                    data: "\#(newValue.last ?? " ")",
+                                    bubbles: true
+                                }));
+                            }
+                            """#
+                        )
+                    }
+                }
+            ),
             prompt: prompt.flatMap(SwiftUI.Text.init)
         ) {
             node.children(library: Library.self)
-        }
-        .onAppear {
-            text = node.value ?? ""
-        }
-        .onChange(of: text) { _, newValue in
-            Task {
-                try await self.node.callFunction(
-                    runtime: lightpanda,
-                    function: #"""
-                    function() {
-                        this.value = \#(String(data: try! JSONEncoder().encode(newValue), encoding: .utf8)!);
-                        this.dispatchEvent(new Event("input", {
-                            inputType: "insertText",
-                            data: "\#(newValue.last ?? " ")",
-                            bubbles: true
-                        }));
-                    }
-                    """#
-                )
-            }
         }
         .task {
             let id = UUID().uuidString
             _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
                 node?.value = call.payload
-                Task { @MainActor in
-                    text = call.payload
-                }
             }
             
             try? await self.node.callFunction(runtime: lightpanda, function: #"""

@@ -88,30 +88,22 @@ import LightpandaClient
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 @_documentation(visibility: public)
-struct TextField<Library: ElementLibrary>: TextFieldProtocol {
+struct TextField<Library: ElementLibrary>: View {
     let node: Node
     
     @Environment(LightpandaRuntime.self) private var lightpanda
     
     var text: String? {
-        get {
-            node.value
-        }
+        get { node.value }
         nonmutating set {
-            Task { @MainActor in
-                try! await self.node.callFunction(
-                    runtime: lightpanda,
-                    function: #"""
-                    function() {
-                        this.dispatchEvent(new Event("input", {
-                            inputType: "insertText",
-                            data: "\#(newValue?.last ?? " ")",
-                            bubbles: true
-                        }));
-                        this.value = \#(String(data: try! JSONEncoder().encode(newValue ?? ""), encoding: .utf8)!);
-                    }
-                    """#
-                )
+            let value = newValue ?? ""
+            node.value = value
+            Task {
+                try? await node.callFunction(runtime: lightpanda, function: #"""
+                function() {
+                    this.value = \#(String(data: try! JSONEncoder().encode(value), encoding: .utf8)!);
+                }
+                """#)
             }
         }
     }
@@ -195,12 +187,12 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
                         runtime: lightpanda,
                         function: #"""
                         function() {
+                            this.value = \#(String(data: try! JSONEncoder().encode(newValue ?? ""), encoding: .utf8)!);
                             this.dispatchEvent(new Event("input", {
                                 inputType: "insertText",
                                 data: "\#(newValue?.last ?? " ")",
                                 bubbles: true
                             }));
-                            this.value = \#(String(data: try! JSONEncoder().encode(newValue ?? ""), encoding: .utf8)!);
                         }
                         """#
                     )
@@ -354,6 +346,24 @@ struct TextField<Library: ElementLibrary>: TextFieldProtocol {
     
     var label: some View {
         node.children(library: Library.self)
+    }
+    
+    // MARK: - Binding Helpers
+    
+    private func valueBinding<S: ParseableFormatStyle>(format: S) -> Binding<S.FormatInput?> where S.FormatOutput == String {
+        .init {
+            try? text.flatMap(format.parseStrategy.parse)
+        } set: {
+            text = $0.flatMap(format.format)
+        }
+    }
+    
+    private var textBinding: Binding<String> {
+        Binding {
+            text ?? ""
+        } set: {
+            text = $0
+        }
     }
 }
 

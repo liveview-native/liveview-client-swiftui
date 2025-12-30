@@ -59,11 +59,33 @@ import LightpandaClient
 /// * `maximumValueLabel`
 @_documentation(visibility: public)
 struct Slider<Library: ElementLibrary>: View {
-    let node: Node
+    var node: Node
     
     @Environment(LightpandaRuntime.self) private var lightpanda
     
-    @State private var value: Double = 0
+    /// The current value binding that reads/writes to node.attributes.
+    private var value: Binding<Double> {
+        Binding(
+            get: {
+                Double(node.attributes["value"] ?? "") ?? 0
+            },
+            set: { newValue in
+                node.attributes["value"] = String(newValue)
+                Task {
+                    try? await self.node.callFunction(
+                        runtime: lightpanda,
+                        function: #"""
+                        function() {
+                            this.value = \#(newValue);
+                            this.dispatchEvent(new Event("input", { bubbles: true }));
+                            this.dispatchEvent(new Event("change", { bubbles: true }));
+                        }
+                        """#
+                    )
+                }
+            }
+        )
+    }
     
     /// The lowest allowed value.
     @_documentation(visibility: public)
@@ -83,18 +105,14 @@ struct Slider<Library: ElementLibrary>: View {
         node.attributeValue(for: "step", strategy: .number)
     }
     
-    /// The initial value.
-    @_documentation(visibility: public)
-    private var initialValue: Double {
-        node.attributeValue(for: "value", strategy: .number) ?? 0
-    }
+
     
     public var body: some View {
         #if !os(tvOS)
         SwiftUI.Group {
             if let step {
                 SwiftUI.Slider(
-                    value: $value,
+                    value: value,
                     in: lowerBound...upperBound,
                     step: step
                 ) {
@@ -106,7 +124,7 @@ struct Slider<Library: ElementLibrary>: View {
                 }
             } else {
                 SwiftUI.Slider(
-                    value: $value,
+                    value: value,
                     in: lowerBound...upperBound
                 ) {
                     node.children(in: "label", default: true, library: Library.self)
@@ -117,36 +135,19 @@ struct Slider<Library: ElementLibrary>: View {
                 }
             }
         }
-        .onAppear {
-            value = initialValue
-        }
-        .onChange(of: value) { _, newValue in
-            Task {
-                try await self.node.callFunction(
-                    runtime: lightpanda,
-                    function: #"""
-                    function() {
-                        this.value = \#(newValue);
-                        this.dispatchEvent(new Event("input", { bubbles: true }));
-                        this.dispatchEvent(new Event("change", { bubbles: true }));
-                    }
-                    """#
-                )
-            }
-        }
         .task {
             let id = UUID().uuidString
-            _ = try? await lightpanda.cdp.addBinding(name: id) { call in
-                if let newValue = Double(call.payload) {
-                    Task { @MainActor in
-                        value = newValue
-                    }
+            _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
+                guard let node else { return }
+                Task { @MainActor in
+                    node.attributes["value"] = call.payload
                 }
             }
             
+            let initialValue = node.attributes["value"] ?? "0"
             try? await self.node.callFunction(runtime: lightpanda, function: #"""
             function() {
-                let internalValue = \#(initialValue);
+                let internalValue = Number("\#(initialValue)");
                 Object.defineProperty(this, "value", {
                     get() { return internalValue; },
                     set(newValue) {

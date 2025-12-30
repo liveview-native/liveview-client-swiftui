@@ -22,44 +22,50 @@ import LightpandaClient
 /// * ``checked``
 @_documentation(visibility: public)
 struct Toggle<Library: ElementLibrary>: View {
-    let node: Node
+    var node: Node
     
     @Environment(LightpandaRuntime.self) private var lightpanda
     
-    /// Whether the toggle is on.
-    @_documentation(visibility: public)
-    private var checked: Bool {
-        node.attributeBoolean(for: "checked")
+    /// Binding that reads/writes directly to the node's attributes
+    private var isOn: Binding<Bool> {
+        Binding(
+            get: { node.attributes["checked"] != nil },
+            set: { newValue in
+                if newValue {
+                    node.attributes["checked"] = ""
+                } else {
+                    node.attributes.removeValue(forKey: "checked")
+                }
+                // Dispatch change event to JS
+                Task {
+                    try? await self.node.callFunction(
+                        runtime: lightpanda,
+                        function: #"""
+                        function() {
+                            this.checked = \#(newValue);
+                            this.dispatchEvent(new Event("change", { bubbles: true }));
+                        }
+                        """#
+                    )
+                }
+            }
+        )
     }
     
-    @State private var isOn: Bool = false
-    
     public var body: some View {
-        SwiftUI.Toggle(isOn: $isOn) {
+        SwiftUI.Toggle(isOn: isOn) {
             node.children(library: Library.self)
-        }
-        .onAppear {
-            isOn = checked
-        }
-        .onChange(of: isOn) { _, newValue in
-            Task {
-                try await self.node.callFunction(
-                    runtime: lightpanda,
-                    function: #"""
-                    function() {
-                        this.checked = \#(newValue);
-                        this.dispatchEvent(new Event("change", { bubbles: true }));
-                    }
-                    """#
-                )
-            }
         }
         .task {
             let id = UUID().uuidString
             _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
-                if let value = Bool(call.payload) {
-                    Task { @MainActor in
-                        isOn = value
+                guard let node else { return }
+                Task { @MainActor in
+                    // Update node.attributes which triggers @Observable re-render
+                    if call.payload == "true" {
+                        node.attributes["checked"] = ""
+                    } else {
+                        node.attributes.removeValue(forKey: "checked")
                     }
                 }
             }
