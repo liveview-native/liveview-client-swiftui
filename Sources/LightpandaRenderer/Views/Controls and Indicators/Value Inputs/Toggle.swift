@@ -13,13 +13,13 @@ import LightpandaClient
 /// Add elements within the toggle to provide a label.
 ///
 /// ```html
-/// <Toggle checked>
+/// <toggle isOn>
 ///     Lights On
-/// </Toggle>
+/// </toggle>
 /// ```
 ///
 /// ## Attributes
-/// * ``checked``
+/// * ``isOn``
 @_documentation(visibility: public)
 struct Toggle<Library: ElementLibrary>: View {
     var node: Node
@@ -29,20 +29,22 @@ struct Toggle<Library: ElementLibrary>: View {
     /// Binding that reads/writes directly to the node's attributes
     private var isOn: Binding<Bool> {
         Binding(
-            get: { node.attributes["checked"] != nil },
-            set: { newValue in
-                if newValue {
-                    node.attributes["checked"] = ""
-                } else {
-                    node.attributes.removeValue(forKey: "checked")
+            get: {
+                // Check for "ison" attribute - value of "true" or presence of empty string means on
+                if let value = node.attributes["ison"] {
+                    return value == "true" || value == ""
                 }
+                return false
+            },
+            set: { newValue in
+                node.attributes["ison"] = newValue ? "true" : "false"
                 // Dispatch change event to JS
                 Task {
                     try? await self.node.callFunction(
                         runtime: lightpanda,
                         function: #"""
                         function() {
-                            this.checked = \#(newValue);
+                            this.isOn = \#(newValue);
                             this.dispatchEvent(new Event("change", { bubbles: true }));
                         }
                         """#
@@ -63,17 +65,17 @@ struct Toggle<Library: ElementLibrary>: View {
                 Task { @MainActor in
                     // Update node.attributes which triggers @Observable re-render
                     if call.payload == "true" {
-                        node.attributes["checked"] = ""
+                        node.attributes["ison"] = ""
                     } else {
-                        node.attributes.removeValue(forKey: "checked")
+                        node.attributes.removeValue(forKey: "ison")
                     }
                 }
             }
             
             try? await self.node.callFunction(runtime: lightpanda, function: #"""
             function() {
-                let internalValue = this.checked ?? false;
-                Object.defineProperty(this, "checked", {
+                let internalValue = this.isOn ?? false;
+                Object.defineProperty(this, "isOn", {
                     get() { return internalValue; },
                     set(newValue) {
                         internalValue = newValue;

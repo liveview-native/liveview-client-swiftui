@@ -30,22 +30,14 @@ struct MultiDatePicker<Library: ElementLibrary>: View {
     var node: Node
     
     @Environment(LightpandaRuntime.self) private var lightpanda
+    @State private var dates: Set<DateComponents> = []
     
-    /// The current selection binding that reads/writes to node.attributes.
+    /// The current selection binding that syncs with JS.
     private var selection: Binding<Set<DateComponents>> {
         Binding(
-            get: {
-                guard let value = node.attributes["selection"],
-                      let data = value.data(using: .utf8),
-                      let array = try? JSONDecoder().decode([String].self, from: data) else {
-                    return []
-                }
-                return Set(array.compactMap { dateString -> DateComponents? in
-                    guard let date = Self.parseDate(dateString) else { return nil }
-                    return Calendar.current.dateComponents([.year, .month, .day], from: date)
-                })
-            },
+            get: { dates },
             set: { newValue in
+                dates = newValue
                 let dateStrings = newValue.compactMap { components -> String? in
                     guard let date = Calendar.current.date(from: components) else { return nil }
                     return Self.formatDate(date)
@@ -100,12 +92,31 @@ struct MultiDatePicker<Library: ElementLibrary>: View {
                 }
             }
         }
+        .onAppear {
+            // Initialize from node attribute
+            if let value = node.attributes["selection"],
+               let data = value.data(using: .utf8),
+               let array = try? JSONDecoder().decode([String].self, from: data) {
+                dates = Set(array.compactMap { dateString -> DateComponents? in
+                    guard let date = Self.parseDate(dateString) else { return nil }
+                    return Calendar.current.dateComponents([.year, .month, .day], from: date)
+                })
+            }
+        }
         .task {
             let id = UUID().uuidString
             _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
                 guard let node else { return }
                 Task { @MainActor in
                     node.attributes["selection"] = call.payload
+                    // Update local state from JS
+                    if let data = call.payload.data(using: .utf8),
+                       let array = try? JSONDecoder().decode([String].self, from: data) {
+                        dates = Set(array.compactMap { dateString -> DateComponents? in
+                            guard let date = Self.parseDate(dateString) else { return nil }
+                            return Calendar.current.dateComponents([.year, .month, .day], from: date)
+                        })
+                    }
                 }
             }
             
