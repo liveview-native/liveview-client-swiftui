@@ -130,6 +130,8 @@ let includeModifiers = [
         "ShadowModifier",
     "BlurModifier",
     "BorderModifier",
+    "HiddenModifier",
+    "DisabledModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {

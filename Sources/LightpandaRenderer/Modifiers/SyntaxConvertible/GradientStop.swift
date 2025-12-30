@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftSyntax
 
-extension Gradient.Stop: @retroactive SyntaxConvertible {
+extension Gradient.Stop: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
         // Parse Gradient.Stop(color: .red, location: 0.5)
         // or .init(color: .red, location: 0.5)
@@ -15,17 +15,19 @@ extension Gradient.Stop: @retroactive SyntaxConvertible {
             return nil
         }
         
-        guard let color: Color = functionCall.argument(named: "color"),
-              let location: CGFloat = functionCall.argument(named: "location") else {
+        guard let colorArg = functionCall.argument(named: "color"),
+              let color = Color(syntax: colorArg.expression),
+              let locationArg = functionCall.argument(named: "location"),
+              let location = CGFloat(syntax: locationArg.expression) else {
             return nil
         }
         
-        self.init(color: color, location: location)
+        self = Gradient.Stop(color: color, location: location)
     }
 }
 
 // Helper to parse arrays of colors or stops
-extension Array: @retroactive SyntaxConvertible where Element: SyntaxConvertible {
+extension Array: SyntaxConvertible where Element: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
         // Parse array literal [element1, element2, ...]
         guard let arrayExpr = syntax.as(ArrayExprSyntax.self) else {

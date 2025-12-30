@@ -88,6 +88,8 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ShadowModifier<Library>.self,
             BlurModifier<Library>.self,
             BorderModifier<Library>.self,
+            HiddenModifier<Library>.self,
+            DisabledModifier<Library>.self,
         ]
     }
     
