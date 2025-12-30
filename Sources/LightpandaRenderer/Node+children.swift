@@ -100,7 +100,7 @@ extension Node {
     ) -> V?
         where S.ParseInput == String, S.ParseOutput == V
     {
-        return attributes[name].flatMap({ try? strategy.parse($0) })
+        return attributes[name.lowercased()].flatMap({ try? strategy.parse($0) })
     }
 
     public func attributeValue(for name: String) -> String? {

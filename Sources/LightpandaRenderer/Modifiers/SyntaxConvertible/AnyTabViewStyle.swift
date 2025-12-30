@@ -12,8 +12,10 @@ public struct AnyTabViewStyle: @preconcurrency SyntaxConvertible {
             switch memberAccess.declName.baseName.text {
             case "automatic":
                 self.style = .automatic
+            #if !os(macOS)
             case "page":
                 self.style = .page
+            #endif
             case "sidebarAdaptable":
                 self.style = .sidebarAdaptable
             case "tabBarOnly":

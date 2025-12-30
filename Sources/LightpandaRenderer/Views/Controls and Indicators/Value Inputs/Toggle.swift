@@ -13,23 +13,70 @@ import LightpandaClient
 /// Add elements within the toggle to provide a label.
 ///
 /// ```html
-/// <Toggle isOn={@lights_on} phx-change="toggled-lights">
+/// <Toggle checked>
 ///     Lights On
 /// </Toggle>
 /// ```
 ///
-/// ## See Also
-/// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
+/// ## Attributes
+/// * ``checked``
 @_documentation(visibility: public)
 struct Toggle<Library: ElementLibrary>: View {
     let node: Node
     
-    @FormState("isOn", default: false) var value: Bool
+    @Environment(LightpandaRuntime.self) private var lightpanda
+    
+    /// Whether the toggle is on.
+    @_documentation(visibility: public)
+    private var checked: Bool {
+        node.attributeBoolean(for: "checked")
+    }
+    
+    @State private var isOn: Bool = false
     
     public var body: some View {
-        SwiftUI.Toggle(isOn: $value) {
-            node.children()
+        SwiftUI.Toggle(isOn: $isOn) {
+            node.children(library: Library.self)
         }
-        .focused(_value.$isFocused)
+        .onAppear {
+            isOn = checked
+        }
+        .onChange(of: isOn) { _, newValue in
+            Task {
+                try await self.node.callFunction(
+                    runtime: lightpanda,
+                    function: #"""
+                    function() {
+                        this.checked = \#(newValue);
+                        this.dispatchEvent(new Event("change", { bubbles: true }));
+                    }
+                    """#
+                )
+            }
+        }
+        .task {
+            let id = UUID().uuidString
+            _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
+                if let value = Bool(call.payload) {
+                    Task { @MainActor in
+                        isOn = value
+                    }
+                }
+            }
+            
+            try? await self.node.callFunction(runtime: lightpanda, function: #"""
+            function() {
+                let internalValue = this.checked ?? false;
+                Object.defineProperty(this, "checked", {
+                    get() { return internalValue; },
+                    set(newValue) {
+                        internalValue = newValue;
+                        globalThis["\#(id)"](String(newValue));
+                    },
+                    configurable: true
+                });
+            }
+            """#)
+        }
     }
 }

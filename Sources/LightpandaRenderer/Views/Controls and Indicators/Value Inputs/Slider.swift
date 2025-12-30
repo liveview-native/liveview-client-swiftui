@@ -6,22 +6,23 @@
 //
 
 import SwiftUI
+import LightpandaClient
 
 /// A form element for selecting a value within a range.
 ///
 /// By default, sliders choose values in the range 0-1.
 ///
 /// ```html
-/// <Slider value="progress" />
+/// <Slider value="0.5" />
 /// ```
 ///
 /// Use ``lowerBound`` and ``upperBound`` to specify the range of possible values.
 ///
 /// ```html
 /// <Slider
-///     value="progress"
-///     lowerBound={-1}
-///     upperBound={2}
+///     value="0"
+///     lowerBound="-1"
+///     upperBound="2"
 /// />
 /// ```
 ///
@@ -29,17 +30,17 @@ import SwiftUI
 ///
 /// ```html
 /// <Slider
-///     value="progress"
-///     lowerBound={0}
-///     upperBound={10}
-///     step={1}
+///     value="5"
+///     lowerBound="0"
+///     upperBound="10"
+///     step="1"
 /// />
 /// ```
 ///
-/// Customize the appearance of the slider with the children `label`, `minimum-value-label` and `maximum-value-label`.
+/// Customize the appearance of the slider with the children `label`, `minimumValueLabel` and `maximumValueLabel`.
 ///
 /// ```html
-/// <Slider value="value">
+/// <Slider value="0.5">
 ///     <Text template="label">Percent Completed</Text>
 ///     <Text template="minimumValueLabel">0%</Text>
 ///     <Text template="maximumValueLabel">100%</Text>
@@ -56,13 +57,13 @@ import SwiftUI
 /// * `label`
 /// * `minimumValueLabel`
 /// * `maximumValueLabel`
-///
-/// ## See Also
-/// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 @_documentation(visibility: public)
-@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 struct Slider<Library: ElementLibrary>: View {
-    @FormState("value", default: 0) var value: Double
+    let node: Node
+    
+    @Environment(LightpandaRuntime.self) private var lightpanda
+    
+    @State private var value: Double = 0
     
     /// The lowest allowed value.
     @_documentation(visibility: public)
@@ -82,37 +83,80 @@ struct Slider<Library: ElementLibrary>: View {
         node.attributeValue(for: "step", strategy: .number)
     }
     
+    /// The initial value.
+    @_documentation(visibility: public)
+    private var initialValue: Double {
+        node.attributeValue(for: "value", strategy: .number) ?? 0
+    }
+    
     public var body: some View {
         #if !os(tvOS)
-        if let step {
-            SwiftUI.Slider(
-                value: $value,
-                in: lowerBound...upperBound,
-                step: step
-            ) {
-                node.children(in: "label", default: true)
-            } minimumValueLabel: {
-                node.children(in: "minimumValueLabel")
-            } maximumValueLabel: {
-                node.children(in: "maximumValueLabel")
-            } onEditingChanged: { isEditing in
-                _value.isEditing = isEditing
+        SwiftUI.Group {
+            if let step {
+                SwiftUI.Slider(
+                    value: $value,
+                    in: lowerBound...upperBound,
+                    step: step
+                ) {
+                    node.children(in: "label", default: true, library: Library.self)
+                } minimumValueLabel: {
+                    node.children(in: "minimumValueLabel", library: Library.self)
+                } maximumValueLabel: {
+                    node.children(in: "maximumValueLabel", library: Library.self)
+                }
+            } else {
+                SwiftUI.Slider(
+                    value: $value,
+                    in: lowerBound...upperBound
+                ) {
+                    node.children(in: "label", default: true, library: Library.self)
+                } minimumValueLabel: {
+                    node.children(in: "minimumValueLabel", library: Library.self)
+                } maximumValueLabel: {
+                    node.children(in: "maximumValueLabel", library: Library.self)
+                }
             }
-            .focused(_value.$isFocused)
-        } else {
-            SwiftUI.Slider(
-                value: $value,
-                in: lowerBound...upperBound
-            ) {
-                node.children(in: "label", default: true)
-            } minimumValueLabel: {
-                node.children(in: "minimumValueLabel")
-            } maximumValueLabel: {
-                node.children(in: "maximumValueLabel")
-            } onEditingChanged: { isEditing in
-                _value.isEditing = isEditing
+        }
+        .onAppear {
+            value = initialValue
+        }
+        .onChange(of: value) { _, newValue in
+            Task {
+                try await self.node.callFunction(
+                    runtime: lightpanda,
+                    function: #"""
+                    function() {
+                        this.value = \#(newValue);
+                        this.dispatchEvent(new Event("input", { bubbles: true }));
+                        this.dispatchEvent(new Event("change", { bubbles: true }));
+                    }
+                    """#
+                )
             }
-            .focused(_value.$isFocused)
+        }
+        .task {
+            let id = UUID().uuidString
+            _ = try? await lightpanda.cdp.addBinding(name: id) { call in
+                if let newValue = Double(call.payload) {
+                    Task { @MainActor in
+                        value = newValue
+                    }
+                }
+            }
+            
+            try? await self.node.callFunction(runtime: lightpanda, function: #"""
+            function() {
+                let internalValue = \#(initialValue);
+                Object.defineProperty(this, "value", {
+                    get() { return internalValue; },
+                    set(newValue) {
+                        internalValue = Number(newValue);
+                        globalThis["\#(id)"](String(newValue));
+                    },
+                    configurable: true
+                });
+            }
+            """#)
         }
         #endif
     }

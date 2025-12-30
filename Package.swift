@@ -7,6 +7,7 @@ import Foundation
 
 let includeViews = [
     "Button",
+    "PasteButton",
     
     "ContentUnavailableView",
     "Gauge",
@@ -14,6 +15,7 @@ let includeViews = [
     
     "Link",
     "ShareLink",
+    "TextFieldLink",
     
     "Menu",
     
@@ -25,6 +27,9 @@ let includeViews = [
     
     "List",
     "Section",
+    "Table",
+    "TableColumn",
+    "TableRow",
     
     "Form",
     "LabeledContent",
@@ -62,7 +67,18 @@ let includeViews = [
     
     "ShapeView",
     
+    "ColorPicker",
+    "DatePicker",
+    "MultiDatePicker",
+    "Picker",
+    
+    "Slider",
+    "Stepper",
+    "Toggle",
+    
     "Label",
+    "SecureField",
+    "TextEditor",
     "TextField",
     "TextFieldProtocol",
     "TextView",

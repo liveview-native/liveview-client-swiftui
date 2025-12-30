@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
+import LightpandaClient
 
 /// A form element for incrementing/decrementing a value in a range.
 ///
 /// This element displays buttons for incrementing/decrementing a value by a ``step`` amount.
 ///
-///
 /// ```html
-/// <Stepper value="attendees">
+/// <Stepper value="1">
 ///     Attendees
 /// </Stepper>
 /// ```
@@ -23,10 +23,10 @@ import SwiftUI
 ///
 /// ```html
 /// <Stepper
-///     value="attendees"
-///     lowerBound={0}
-///     upperBound={16}
-///     step={2}
+///     value="4"
+///     lowerBound="0"
+///     upperBound="16"
+///     step="2"
 /// >
 ///     Attendees
 /// </Stepper>
@@ -37,13 +37,13 @@ import SwiftUI
 /// * ``step``
 /// * ``lowerBound``
 /// * ``upperBound``
-///
-/// ## See Also
-/// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 @_documentation(visibility: public)
-@available(iOS 13.0, macOS 10.15, watchOS 9.0, *)
 struct Stepper<Library: ElementLibrary>: View {
-    @FormState("value", default: 0) var value: Double
+    let node: Node
+    
+    @Environment(LightpandaRuntime.self) private var lightpanda
+    
+    @State private var value: Double = 0
     
     /// The amount to increment/decrement the value by.
     @_documentation(visibility: public)
@@ -63,29 +63,66 @@ struct Stepper<Library: ElementLibrary>: View {
         node.attributeValue(for: "upperBound", strategy: .number)
     }
     
-    public var body: some View {
-        #if !os(tvOS)
-        if let lowerBound,
-           let upperBound
-        {
-            SwiftUI.Stepper(value: $value, in: lowerBound...upperBound, step: step) {
-                label
-            } onEditingChanged: { isEditing in
-                _value.isEditing = isEditing
-            }
-            .focused(_value.$isFocused)
-        } else {
-            SwiftUI.Stepper(value: $value, step: step) {
-                label
-            } onEditingChanged: { isEditing in
-                _value.isEditing = isEditing
-            }
-            .focused(_value.$isFocused)
-        }
-        #endif
+    /// The initial value.
+    @_documentation(visibility: public)
+    private var initialValue: Double {
+        node.attributeValue(for: "value", strategy: .number) ?? 0
     }
     
-    private var label: some View {
-        node.children()
+    public var body: some View {
+        #if !os(tvOS)
+        SwiftUI.Group {
+            if let lowerBound, let upperBound {
+                SwiftUI.Stepper(value: $value, in: lowerBound...upperBound, step: step) {
+                    node.children(library: Library.self)
+                }
+            } else {
+                SwiftUI.Stepper(value: $value, step: step) {
+                    node.children(library: Library.self)
+                }
+            }
+        }
+        .onAppear {
+            value = initialValue
+        }
+        .onChange(of: value) { _, newValue in
+            Task {
+                try await self.node.callFunction(
+                    runtime: lightpanda,
+                    function: #"""
+                    function() {
+                        this.value = \#(newValue);
+                        this.dispatchEvent(new Event("input", { bubbles: true }));
+                        this.dispatchEvent(new Event("change", { bubbles: true }));
+                    }
+                    """#
+                )
+            }
+        }
+        .task {
+            let id = UUID().uuidString
+            _ = try? await lightpanda.cdp.addBinding(name: id) { call in
+                if let newValue = Double(call.payload) {
+                    Task { @MainActor in
+                        value = newValue
+                    }
+                }
+            }
+            
+            try? await self.node.callFunction(runtime: lightpanda, function: #"""
+            function() {
+                let internalValue = \#(initialValue);
+                Object.defineProperty(this, "value", {
+                    get() { return internalValue; },
+                    set(newValue) {
+                        internalValue = Number(newValue);
+                        globalThis["\#(id)"](String(newValue));
+                    },
+                    configurable: true
+                });
+            }
+            """#)
+        }
+        #endif
     }
 }

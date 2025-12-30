@@ -13,61 +13,76 @@ import LightpandaClient
 /// This element is similar to ``TextField`` but for secure text, such as passwords.
 ///
 /// ```html
-/// <SecureField prompt="Required" text="password">
+/// <SecureField prompt="Required">
 ///     Password
 /// </SecureField>
 /// ```
 ///
 /// ## Attributes
-/// * ``TextFieldProtocol/text``
-/// * ``TextFieldProtocol/prompt``
-///
-/// ## Events
-/// * ``focusEvent``
-/// * ``blurEvent``
-///
-/// ## See Also
-/// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
+/// * ``prompt``
 @_documentation(visibility: public)
-struct SecureField<Library: ElementLibrary>: TextFieldProtocol {
+struct SecureField<Library: ElementLibrary>: View {
     let node: Node
     
-    @FormState("text", default: "") var text: String?
+    @Environment(LightpandaRuntime.self) private var lightpanda
     
-    /// Sends an event when the field gains focus.
-    @_documentation(visibility: public)
-    @Event("phx-focus", type: "focus") var focusEvent
-    /// Sends an event when the field loses focus.
-    @_documentation(visibility: public)
-    @Event("phx-blur", type: "blur") var blurEvent
+    @State private var text: String = ""
     
-    var axis: Axis = .horizontal
-    var prompt: String?
+    /// Additional guidance on what to enter.
+    @_documentation(visibility: public)
+    private var prompt: String? {
+        node.attributeValue(for: "prompt")
+    }
     
     var body: some View {
         SwiftUI.SecureField(
-            text: textBinding,
+            text: $text,
             prompt: prompt.flatMap(SwiftUI.Text.init)
         ) {
             node.children(library: Library.self)
         }
-            .focused(_text.$isFocused)
-            .onChange(of: _text.isFocused, perform: handleFocus)
-    }
-    
-    @MainActor
-    func handleFocus(_ isFocused: Bool) {
-        if isFocused {
-            focusEvent(value:
-                $liveElement.element.buildPhxValuePayload()
-                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
-            )
-        } else {
-            blurEvent(value:
-                $liveElement.element.buildPhxValuePayload()
-                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
-            )
+        .onAppear {
+            text = node.value ?? ""
+        }
+        .onChange(of: text) { _, newValue in
+            Task {
+                try await self.node.callFunction(
+                    runtime: lightpanda,
+                    function: #"""
+                    function() {
+                        this.value = \#(String(data: try! JSONEncoder().encode(newValue), encoding: .utf8)!);
+                        this.dispatchEvent(new Event("input", {
+                            inputType: "insertText",
+                            data: "\#(newValue.last ?? " ")",
+                            bubbles: true
+                        }));
+                    }
+                    """#
+                )
+            }
+        }
+        .task {
+            let id = UUID().uuidString
+            _ = try? await lightpanda.cdp.addBinding(name: id) { [weak node] call in
+                node?.value = call.payload
+                Task { @MainActor in
+                    text = call.payload
+                }
+            }
+            
+            try? await self.node.callFunction(runtime: lightpanda, function: #"""
+            function() {
+                let internalValue = this.value ?? "";
+                Object.defineProperty(this, "value", {
+                    get() { return internalValue; },
+                    set(newValue) {
+                        internalValue = newValue;
+                        globalThis["\#(id)"](newValue);
+                    },
+                    configurable: true
+                });
+            }
+            """#)
         }
     }
 }
-

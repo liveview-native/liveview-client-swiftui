@@ -10,10 +10,10 @@ import LightpandaClient
 
 /// A control that lets the user pick a date.
 ///
-/// The value of this control is an Elixir-style ISO 8601 date or datetime string (i.e., the result of `DateTime.to_iso8601`).
+/// The value of this control is an ISO 8601 date string.
 ///
 /// ```html
-/// <DatePicker selection="2023-03-14T15:19:26.535Z">
+/// <DatePicker selection="2023-03-14T15:19:26Z">
 ///     <Text>Pick a date</Text>
 /// </DatePicker>
 /// ```
@@ -27,31 +27,38 @@ import LightpandaClient
 /// - ``selection``
 /// - ``start``
 /// - ``end``
-/// - ``components``
+/// - ``displayedComponents``
 @_documentation(visibility: public)
-@available(iOS 16.0, macOS 13.0, *)
 struct DatePicker<Library: ElementLibrary>: View {
     let node: Node
     
-    @FormState("selection", default: CodableDate()) private var selection: CodableDate
+    @Environment(LightpandaRuntime.self) private var lightpanda
     
-    ///The start date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
+    @State private var selection: Date = Date()
+    
+    /// The initial selection as an ISO 8601 date string.
+    @_documentation(visibility: public)
+    private var initialSelection: Date? {
+        node.attributeValue(for: "selection").flatMap { Self.parseISO8601($0) }
+    }
+    
+    /// The start date (inclusive) of the valid date range. Encoded as an ISO 8601 date string.
     @_documentation(visibility: public)
     private var start: Date? {
-        node.attributeValue(for: "start", strategy: .dateTime)
+        node.attributeValue(for: "start").flatMap { Self.parseISO8601($0) }
     }
     
-    ///The end date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
+    /// The end date (inclusive) of the valid date range. Encoded as an ISO 8601 date string.
     @_documentation(visibility: public)
     private var end: Date? {
-        node.attributeValue(for: "end", strategy: .dateTime)
+        node.attributeValue(for: "end").flatMap { Self.parseISO8601($0) }
     }
     
-    ///Which components of the date to display in the picker. Defaults to all.
+    /// Which components of the date to display in the picker. Defaults to all.
     ///
-    ///Possible values:
-    ///- `hourAndMinute`
-    ///- `date`
+    /// Possible values:
+    /// - `hourAndMinute`
+    /// - `date`
     @_documentation(visibility: public)
     private var displayedComponents: String? {
         node.attributeValue(for: "displayedComponents")
@@ -59,85 +66,109 @@ struct DatePicker<Library: ElementLibrary>: View {
     
     #if os(iOS) || os(macOS)
     private var datePickerComponents: DatePickerComponents {
-        displayedComponents.flatMap({ DatePickerComponents.init(from: $0) }) ?? [.hourAndMinute, .date]
+        guard let displayedComponents else {
+            return [.hourAndMinute, .date]
+        }
+        switch displayedComponents {
+        case "hourAndMinute":
+            return .hourAndMinute
+        case "date":
+            return .date
+        default:
+            return [.hourAndMinute, .date]
+        }
     }
     #endif
     
     var body: some View {
-#if os(iOS) || os(macOS)
-        if let start, let end {
-            SwiftUI.DatePicker(selection: $selection.date, in: start...end, displayedComponents: datePickerComponents) {
-                node.children(library: Library.self)
-            }
-            .focused(_selection.$isFocused)
-        } else if let start {
-            SwiftUI.DatePicker(selection: $selection.date, in: start..., displayedComponents: datePickerComponents) {
-                node.children(library: Library.self)
-            }
-            .focused(_selection.$isFocused)
-        } else if let end {
-            SwiftUI.DatePicker(selection: $selection.date, in: ...end, displayedComponents: datePickerComponents) {
-                node.children(library: Library.self)
-            }
-            .focused(_selection.$isFocused)
-        } else {
-            SwiftUI.DatePicker(selection: $selection.date, displayedComponents: datePickerComponents) {
-                node.children(library: Library.self)
-            }
-            .focused(_selection.$isFocused)
-        }
-#endif
-    }
-}
-
-/// A `Date` wrapper that encodes/decodes using the Elixir date formats.
-private struct CodableDate: FormValue, AttributeDecodable {
-    var date: Date
-    
-    init() {
-        self.date = Date()
-    }
-    
-    init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
-        guard let value = attribute?.value else {
-            throw AttributeDecodingError.missingAttribute(CodableDate.self)
-        }
-        self.date = try Date(value, strategy: .elixirDateTimeOrDate)
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let s = try container.decode(String.self)
-        self.date = try Date(s, strategy: .elixirDateTimeOrDate)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(date.formatted(.elixirDateTime))
-    }
-    
-    func formQueryEncoded() throws -> String {
-        ElixirDateTimeFormat().format(self.date)
-    }
-}
-
-#if !os(iOS) && !os(macOS)
-typealias DatePickerComponents = Never
-#else
-extension DatePickerComponents {
-    public init(from string: String) {
         #if os(iOS) || os(macOS)
-        switch string {
-        case "hourAndMinute":
-            self = .hourAndMinute
-        case "date":
-            self = .date
-        default:
-            self = [.hourAndMinute, .date]
+        SwiftUI.Group {
+            if let start, let end {
+                SwiftUI.DatePicker(selection: $selection, in: start...end, displayedComponents: datePickerComponents) {
+                    node.children(library: Library.self)
+                }
+            } else if let start {
+                SwiftUI.DatePicker(selection: $selection, in: start..., displayedComponents: datePickerComponents) {
+                    node.children(library: Library.self)
+                }
+            } else if let end {
+                SwiftUI.DatePicker(selection: $selection, in: ...end, displayedComponents: datePickerComponents) {
+                    node.children(library: Library.self)
+                }
+            } else {
+                SwiftUI.DatePicker(selection: $selection, displayedComponents: datePickerComponents) {
+                    node.children(library: Library.self)
+                }
+            }
         }
-        #else
-        fatalError()
+        .onAppear {
+            if let initialSelection {
+                selection = initialSelection
+            }
+        }
+        .onChange(of: selection) { _, newValue in
+            Task {
+                let isoString = Self.formatISO8601(newValue)
+                try await self.node.callFunction(
+                    runtime: lightpanda,
+                    function: #"""
+                    function() {
+                        this.value = "\#(isoString)";
+                        this.dispatchEvent(new Event("change", { bubbles: true }));
+                    }
+                    """#
+                )
+            }
+        }
+        .task {
+            let id = UUID().uuidString
+            _ = try? await lightpanda.cdp.addBinding(name: id) { call in
+                if let date = Self.parseISO8601(call.payload) {
+                    Task { @MainActor in
+                        selection = date
+                    }
+                }
+            }
+            
+            let initialISO = initialSelection.map { Self.formatISO8601($0) } ?? Self.formatISO8601(Date())
+            try? await self.node.callFunction(runtime: lightpanda, function: #"""
+            function() {
+                let internalValue = "\#(initialISO)";
+                Object.defineProperty(this, "value", {
+                    get() { return internalValue; },
+                    set(newValue) {
+                        internalValue = newValue;
+                        globalThis["\#(id)"](newValue);
+                    },
+                    configurable: true
+                });
+            }
+            """#)
+        }
         #endif
     }
+    
+    /// Parses an ISO 8601 date string.
+    private static func parseISO8601(_ string: String) -> Date? {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        if let date = formatter.date(from: string) {
+            return date
+        }
+        // Try without fractional seconds
+        formatter.formatOptions = [.withInternetDateTime]
+        if let date = formatter.date(from: string) {
+            return date
+        }
+        // Try date only
+        formatter.formatOptions = [.withFullDate]
+        return formatter.date(from: string)
+    }
+    
+    /// Formats a date as ISO 8601 string.
+    private static func formatISO8601(_ date: Date) -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        return formatter.string(from: date)
+    }
 }
-#endif
