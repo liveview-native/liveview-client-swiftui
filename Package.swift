@@ -92,7 +92,7 @@ let includeModifiers = [
     
 //    "AccentColorModifier",
 //    "ActionSheetModifier",
-//    "AlertModifier",
+"AlertModifier",
 //    "AllowsHitTestingModifier",
 //    "AllowsTighteningModifier",
 //    "AlternatingRowBackgroundsModifier",
@@ -136,6 +136,31 @@ let includeModifiers = [
 "BoldModifier",
         "ItalicModifier",
         "UnderlineModifier",
+    
+    // Scaling modifiers
+    "ScaledToFitModifier",
+    "ScaledToFillModifier",
+    
+    // Visual effect modifiers
+    "HueRotationModifier",
+    
+    // Shape and mask modifiers
+    "ContentShapeModifier",
+    "MaskModifier",
+    "ContrastModifier",
+    "SaturationModifier",
+    "BrightnessModifier",
+    "GrayscaleModifier",
+    "ColorInvertModifier",
+    "ColorMultiplyModifier",
+    
+    // Shape modifiers
+    "ScaleShapeModifier",
+    "RotationShapeModifier",
+    "OffsetShapeModifier",
+    "SizeShapeModifier",
+    "TransformShapeModifier",
+    "ShapeBooleanModifiers",
         "BaselineOffsetModifier",
         "KerningModifier",
         "TrackingModifier",

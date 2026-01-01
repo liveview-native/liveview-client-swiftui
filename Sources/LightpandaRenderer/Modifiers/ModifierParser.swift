@@ -103,10 +103,22 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             BorderModifier<Library>.self,
             HiddenModifier<Library>.self,
             DisabledModifier<Library>.self,
+            AlertModifier<Library>.self,
             LabelsHiddenModifier<Library>.self,
             BoldModifier<Library>.self,
             ItalicModifier<Library>.self,
             UnderlineModifier<Library>.self,
+            // Scaling modifiers
+            ScaledToFitModifier<Library>.self,
+            ScaledToFillModifier<Library>.self,
+            // Visual effect modifiers
+            HueRotationModifier<Library>.self,
+            ContrastModifier<Library>.self,
+            SaturationModifier<Library>.self,
+            BrightnessModifier<Library>.self,
+            GrayscaleModifier<Library>.self,
+            ColorInvertModifier<Library>.self,
+            ColorMultiplyModifier<Library>.self,
             BaselineOffsetModifier<Library>.self,
             KerningModifier<Library>.self,
             TrackingModifier<Library>.self,
@@ -119,6 +131,8 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             FontWidthModifier<Library>.self,
             TextCaseModifier<Library>.self,
             TextScaleModifier<Library>.self,
+            ContentShapeModifier<Library>.self,
+            MaskModifier<Library>.self,
         ]
     }
     

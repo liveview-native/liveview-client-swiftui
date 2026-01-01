@@ -66,7 +66,7 @@ struct AsyncImage<Library: ElementLibrary>: View {
     public var body: some View {
         if image {
             if case let .success(image) = phase {
-                ImageView<Library>.image(image)
+                applyModifiers(to: image)
             }
         } else if error {
             if case let .failure(error) = phase {
@@ -74,6 +74,18 @@ struct AsyncImage<Library: ElementLibrary>: View {
             }
         } else {
             asyncImage
+        }
+    }
+    
+    /// Apply image and view modifiers from the node to an image
+    @ViewBuilder
+    private func applyModifiers(to image: SwiftUI.Image) -> some View {
+        if let modifiersString = node.attributeValue(for: "modifiers") {
+            let parsed = ModifierParser<Library>.parseStatic(modifiersString)
+            let (modifiedImage, viewModifiers) = parsed.applyToImage(image)
+            modifiedImage.modifier(viewModifiers)
+        } else {
+            image
         }
     }
     
@@ -95,7 +107,7 @@ struct AsyncImage<Library: ElementLibrary>: View {
                     if node.hasTemplate("phase.success") {
                         node.children(in: "phase.success", library: Library.self)
                     } else {
-                        image
+                        applyModifiers(to: image)
                     }
                 case .failure(let error):
                     if node.hasTemplate("phase.failure") {
