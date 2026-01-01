@@ -35,9 +35,7 @@ struct Shape<Library: ElementLibrary, S: SwiftUI.InsettableShape>: View {
     
     var body: some View {
         if let modifiersString = node.attributeValue(for: "modifiers") {
-            let parsed = modifierParser.parse(modifiersString)
-            let (shapeView, viewModifiers) = parsed.applyToShape(shape)
-            shapeView.modifier(viewModifiers)
+            modifierParser.parse(modifiersString).applyToShape(shape)
         } else {
             shape
         }

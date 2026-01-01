@@ -149,8 +149,10 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
     /// Shape modifier types that can be applied directly to `Shape` types.
     static var shapeModifierTypes: [any RuntimeShapeModifier.Type] {
         [
-            // Add Shape-specific modifiers here as they are implemented
-            // e.g., FillModifier.self, StrokeModifier.self,
+            FillModifier.self,
+            StrokeModifier.self,
+            StrokeBorderModifier.self,
+            TrimModifier.self,
         ]
     }
     
@@ -253,8 +255,10 @@ struct ParsedModifier<Library: ElementLibrary>: @unchecked Sendable {
         self.shapeModifier = shapeMod
         
         // Try to parse as RuntimeViewModifier
+        print("[ParsedModifier] Trying to parse '\(modifierName)' with arguments: \(node.arguments.map { $0.trimmedDescription })")
         var viewMod: AnyRuntimeViewModifier<Library>? = nil
         for modifierType in AnyRuntimeViewModifier<Library>.types where modifierType.baseName == modifierName {
+            print("[ParsedModifier]   Trying modifierType: \(modifierType)")
             if let modifier = try? modifierType.init(syntax: node) {
                 viewMod = AnyRuntimeViewModifier(modifier: modifier)
                 break
@@ -356,32 +360,51 @@ struct ParsedModifierCollection<Library: ElementLibrary>: @unchecked Sendable {
     // MARK: - Shape Application
     
     /// Apply modifiers to a Shape.
-    /// Since shape modifiers transform Shape -> View, we can only apply ONE shape modifier,
-    /// then all remaining modifiers must be ViewModifiers.
+    /// Shape-preserving modifiers (like trim) can be chained until a view-returning modifier (like fill/stroke) is encountered.
+    /// After a view-returning modifier, all remaining modifiers must be ViewModifiers.
+    /// Returns the final view with all modifiers applied.
     @MainActor
-    func applyToShape<S: SwiftUI.Shape>(_ shape: S) -> (view: AnyView, viewModifiers: ModifierCollection<Library>) {
-        var remainingViewModifiers: [AnyRuntimeViewModifier<Library>] = []
-        var startIndex = 0
-        var shapeView: AnyView = AnyView(shape)
+    func applyToShape<S: SwiftUI.Shape>(_ shape: S) -> AnyView {
+        var currentShape: any SwiftUI.Shape = shape
+        var resultView: AnyView? = nil
         
-        // Try to apply the first shape modifier (if any)
-        if let firstModifier = modifiers.first, let shapeMod = firstModifier.shapeModifier {
-            shapeView = shapeMod.shapeBody(content: shape)
-            startIndex = 1
-        }
+        modifierLogger.debug("applyToShape: processing \(modifiers.count) modifiers")
         
-        // Collect remaining modifiers as view modifiers
-        for i in startIndex..<modifiers.count {
-            let modifier = modifiers[i]
-            if let viewMod = modifier.viewModifier {
-                remainingViewModifiers.append(viewMod)
-            } else if modifier.shapeModifier != nil {
-                modifierLogger.warning("Shape modifier '\(modifier.name)' cannot be applied after another modifier; only the first shape modifier is used")
+        for modifier in modifiers {
+            modifierLogger.debug("  modifier '\(modifier.name)': shapeModifier=\(modifier.shapeModifier != nil), viewModifier=\(modifier.viewModifier != nil)")
+            
+            if let currentView = resultView {
+                // We've already converted to a View, apply view modifiers directly
+                if let viewMod = modifier.viewModifier {
+                    modifierLogger.debug("    -> applying as view modifier to existing view")
+                    let newView = AnyView(currentView.modifier(viewMod))
+                    modifierLogger.debug("    -> new view created: \(type(of: newView))")
+                    resultView = newView
+                } else if modifier.shapeModifier != nil {
+                    modifierLogger.warning("Shape modifier '\(modifier.name)' cannot be applied after a view-returning shape modifier (like fill/stroke)")
+                } else {
+                    modifierLogger.warning("Modifier '\(modifier.name)' has no Shape or View conformance")
+                }
+            } else if let shapeMod = modifier.shapeModifier {
+                // Apply shape modifier
+                let result = shapeMod.shapeBody(content: currentShape)
+                switch result {
+                case .shape(let newShape):
+                    // Shape-preserving modifier (like trim), continue chaining
+                    currentShape = newShape
+                case .view(let view):
+                    // View-returning modifier (like fill/stroke), stop shape chaining
+                    resultView = view
+                }
+            } else if let viewMod = modifier.viewModifier {
+                // Hit a view-only modifier, wrap current shape and apply
+                resultView = AnyView(AnyView(currentShape).modifier(viewMod))
             } else {
                 modifierLogger.warning("Modifier '\(modifier.name)' has no Shape or View conformance")
             }
         }
         
-        return (shapeView, ModifierCollection(modifiers: remainingViewModifiers))
+        // If no view-returning modifier was applied, wrap the final shape
+        return resultView ?? AnyView(currentShape)
     }
 }

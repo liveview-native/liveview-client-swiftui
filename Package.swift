@@ -148,6 +148,15 @@ let includeModifiers = [
         "FontWidthModifier",
         "TextCaseModifier",
         "TextScaleModifier",
+    
+    // Shape modifiers
+    "FillModifier",
+    "StrokeModifier",
+    "StrokeBorderModifier",
+    "TrimModifier",
+    
+    // Image modifiers
+    "ResizableModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {

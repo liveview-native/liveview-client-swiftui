@@ -262,11 +262,11 @@ public struct SwiftUIElementLibrary: ElementLibrary {
         case .rectangle:
             Shape<Self, Rectangle>(shape: Rectangle(), node: node)
         case .roundedRectangle:
-            RoundedRectangle(node: node)
+            Shape<Self, RoundedRectangle>(shape: RoundedRectangle(node: node), node: node)
         case .circle:
             Shape<Self, Circle>(shape: Circle(), node: node)
         case .capsule:
-            Capsule(node: node)
+            Shape<Self, Capsule>(shape: Capsule(node: node), node: node)
         case .label:
             Label<Self>(node: node)
         case .secureField:
