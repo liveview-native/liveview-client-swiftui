@@ -1,8 +1,17 @@
 import SwiftUI
 import SwiftSyntax
 
-public struct AnyTabViewStyle: @preconcurrency SyntaxConvertible {
-    let style: any TabViewStyle
+public struct AnyTabViewStyle: SyntaxConvertible, Sendable {
+    enum Style: Sendable {
+        case automatic
+        #if !os(macOS)
+        case page
+        #endif
+        case sidebarAdaptable
+        case tabBarOnly
+    }
+    
+    let style: Style
     
     public init?(syntax: some SyntaxProtocol) {
         guard let memberAccess = syntax.as(MemberAccessExprSyntax.self)
@@ -31,12 +40,25 @@ public struct AnyTabViewStyle: @preconcurrency SyntaxConvertible {
     
 }
 
+@MainActor
 func _unbox(style: some TabViewStyle, on view: some View) -> AnyView {
     AnyView(view.tabViewStyle(style))
 }
 
 extension View {
+    @MainActor
     func tabViewStyle(_ style: AnyTabViewStyle) -> AnyView {
-        _unbox(style: style.style, on: self)
+        switch style.style {
+        case .automatic:
+            return _unbox(style: .automatic, on: self)
+        #if !os(macOS)
+        case .page:
+            return _unbox(style: .page, on: self)
+        #endif
+        case .sidebarAdaptable:
+            return _unbox(style: .sidebarAdaptable, on: self)
+        case .tabBarOnly:
+            return _unbox(style: .tabBarOnly, on: self)
+        }
     }
 }

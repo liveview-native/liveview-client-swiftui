@@ -146,66 +146,113 @@ struct Toggle<Library: ElementLibrary>: View {
 - **Automatic re-renders** - Node is `@Observable`, so SwiftUI updates when `node.attributes` changes
 - **Bidirectional sync** - Swift → JS via binding setter, JS → Swift via CDP binding callback
 
-## Text Modifiers (RuntimeTextModifier)
+## Context-Specific Modifiers
 
-Text modifiers allow styling nested `<text>` elements directly on `Text` values (not as view modifiers). This enables rich text with inline styling.
+Some SwiftUI types have modifiers that only work on that specific type (e.g., `resizable()` for `Image`, `bold()` for `Text`, `stroke()` for `Shape`). These are handled by context-specific modifier protocols.
 
-### Protocol
+### How It Works
+
+1. **NodeView skips modifiers** for elements with context-specific modifiers (text, image, shapes)
+2. **The View handles all modifiers itself** - it applies context-specific modifiers until one fails, then applies remaining modifiers as generic `ViewModifier`s
+
+For example, `resizable().frame(width: 50)` on `<image>`:
+- `resizable()` → Applied as Image modifier (returns `Image`)
+- `frame(width: 50)` → NOT an Image modifier, stops Image parsing
+- `frame(width: 50)` → Applied as ViewModifier to the result
+
+### Protocols
 
 ```swift
+// For Text-specific modifiers (bold, italic, font, etc.)
 @MainActor
 protocol RuntimeTextModifier {
     static var baseName: String { get }
     init(syntax: FunctionCallExprSyntax) throws
     func textBody(content: SwiftUI.Text) -> SwiftUI.Text
 }
+
+// For Image-specific modifiers (resizable, interpolation, etc.)
+@MainActor
+protocol RuntimeImageModifier {
+    static var baseName: String { get }
+    init(syntax: FunctionCallExprSyntax) throws
+    func imageBody(content: SwiftUI.Image) -> SwiftUI.Image
+}
+
+// For Shape-specific modifiers (stroke, fill, etc.)
+@MainActor
+protocol RuntimeShapeModifier {
+    static var baseName: String { get }
+    init(syntax: FunctionCallExprSyntax) throws
+    func shapeBody<S: InsettableShape>(content: S) -> AnyView
+}
 ```
 
-### Adding Text Support to a Modifier
+### Adding Context-Specific Support to a Modifier
 
-Existing `RuntimeViewModifier` types can also conform to `RuntimeTextModifier` when they support `Text` transformations:
+1. Add the protocol conformance to the modifier in its Generated file:
 
 ```swift
-// In the Generated modifier file, add:
-extension MyModifier: RuntimeTextModifier {
+// Example: Adding RuntimeTextModifier to BoldModifier
+extension BoldModifier: RuntimeTextModifier {
     func textBody(content: SwiftUI.Text) -> SwiftUI.Text {
         switch self {
-        case .myCase(let value):
-            return content.myModifier(value)
+        case .bold0:
+            return content.bold()
+        case .bold1(let isActive):
+            return content.bold(isActive)
         }
     }
 }
 ```
 
-Then register in `TextModifierParser.swift`:
+2. Register in `ModifierParser.swift` in the appropriate types array:
 
 ```swift
-static let types: [any RuntimeTextModifier.Type] = [
+// For text modifiers
+static let textModifierTypes: [any RuntimeTextModifier.Type] = [
     BoldModifier.self,
     ItalicModifier.self,
-    MyModifier.self,  // Add here
-    ...
+    FontModifier.self,
+    // ...
+]
+
+// For image modifiers
+static let imageModifierTypes: [any RuntimeImageModifier.Type] = [
+    ResizableModifier.self,
+    // ...
+]
+
+// For shape modifiers
+static let shapeModifierTypes: [any RuntimeShapeModifier.Type] = [
+    // StrokeModifier.self,
+    // FillModifier.self,
+    // ...
 ]
 ```
 
-### Supported Text Modifiers
+### Supported Context-Specific Modifiers
 
-- `bold()`, `italic()`, `underline()`, `strikethrough()`
-- `font()`, `foregroundStyle()`
-- `baselineOffset()`, `kerning()`, `tracking()`
-- `monospaced()`, `monospacedDigit()`
+**Text**: `bold()`, `italic()`, `underline()`, `strikethrough()`, `font()`, `foregroundStyle()`, `baselineOffset()`, `kerning()`, `tracking()`, `monospaced()`, `monospacedDigit()`
+
+**Image**: `resizable()`, `resizable(capInsets:)`, `resizable(resizingMode:)`
+
+**Shape**: (register as needed)
 
 ### Usage in Markup
 
 ```html
-<!-- Nested styled text -->
+<!-- Text with nested styling -->
 <text>
     <text modifiers='bold()'>Bold</text> and 
     <text modifiers='italic()'>italic</text> text
 </text>
 
-<!-- Complex inline styles -->
-<text>
-    Hello <text modifiers='foregroundStyle(.red).bold()'>world</text>!
+<!-- Image with resizable + view modifiers -->
+<image systemname="star.fill" modifiers='resizable().frame(width: 50, height: 50)' />
+
+<!-- Mixed modifier chain - context-specific first, then view modifiers -->
+<text modifiers='font(.title).bold().padding(10).background(.blue)'>
+    Hello World
 </text>
 ```

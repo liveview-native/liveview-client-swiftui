@@ -2,48 +2,59 @@ import SwiftParser
 import SwiftSyntax
 import Observation
 import SwiftUI
+import os.log
+
+private let modifierLogger = Logger(subsystem: "LightpandaRenderer", category: "Modifiers")
 
 @Observable
 @MainActor
 final class ModifierParser<Library: ElementLibrary> {
-    /// Pre-parsed segments.
-    var cache = [String:ModifierCollection<Library>]()
+    /// Pre-parsed modifier collections.
+    var cache = [String: ParsedModifierCollection<Library>]()
     
     public init() {}
     
+    /// Static parsing method for use in contexts where environment is not available (e.g., enums).
+    /// Note: This does not use caching.
+    public static func parseStatic(_ input: String) -> ParsedModifierCollection<Library> {
+        let syntax = Parser.parse(source: input)
+        let collector = FunctionCallCollector(viewMode: .fixedUp)
+        collector.walk(syntax)
+        
+        let modifiers = collector.functionCalls.map { ParsedModifier<Library>($0) }
+        return ParsedModifierCollection(modifiers: modifiers)
+    }
+    
     /// Parse an input string into a collection of modifiers.
-    public func parse(_ input: String) -> ModifierCollection<Library> {
+    public func parse(_ input: String) -> ParsedModifierCollection<Library> {
         if let cached = cache[input] {
             return cached
         }
-        print("PARSING")
         let syntax = Parser.parse(source: input)
-        let visitor = ModifierVisitor(viewMode: .fixedUp)
-        visitor.walk(syntax)
-        cache[input] = visitor.modifiers
-        return visitor.modifiers
+        let collector = FunctionCallCollector(viewMode: .fixedUp)
+        collector.walk(syntax)
+        
+        let modifiers = collector.functionCalls.map { ParsedModifier<Library>($0) }
+        let result = ParsedModifierCollection(modifiers: modifiers)
+        cache[input] = result
+        return result
     }
     
-    final class ModifierVisitor: SyntaxVisitor {
-        var modifiers = ModifierCollection<Library>()
+    /// Collects function call syntax nodes in order (parent before child in chains)
+    final class FunctionCallCollector: SyntaxVisitor {
+        var functionCalls: [FunctionCallExprSyntax] = []
         
         override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
             if let parentModifier = node.calledExpression.as(MemberAccessExprSyntax.self)?.base?.as(FunctionCallExprSyntax.self) {
                 visit(parentModifier)
             }
-            
-            do {
-                let modifier = try AnyRuntimeViewModifier<Library>(node)
-                modifiers.modifiers.append(modifier)
-            } catch {
-                print("=== MODIFIER PARSE ERROR ===")
-                print(error.localizedDescription)
-            }
-            
+            functionCalls.append(node)
             return .skipChildren
         }
     }
 }
+
+// MARK: - Modifier Collection (ViewModifier)
 
 struct ModifierCollection<Library: ElementLibrary>: ViewModifier {
     var modifiers: [AnyRuntimeViewModifier<Library>] = []
@@ -58,6 +69,8 @@ struct ModifierCollection<Library: ElementLibrary>: ViewModifier {
         }
     }
 }
+
+// MARK: - AnyRuntimeViewModifier
 
 struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
     static var types: [any RuntimeViewModifier<Library>.Type] {
@@ -109,6 +122,38 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         ]
     }
     
+    /// Text modifier types that can be applied directly to `SwiftUI.Text`.
+    static var textModifierTypes: [any RuntimeTextModifier.Type] {
+        [
+            BoldModifier<Library>.self,
+            ItalicModifier<Library>.self,
+            UnderlineModifier<Library>.self,
+            StrikethroughModifier<Library>.self,
+            FontModifier<Library>.self,
+            ForegroundStyleModifier<Library>.self,
+            BaselineOffsetModifier<Library>.self,
+            KerningModifier<Library>.self,
+            TrackingModifier<Library>.self,
+            MonospacedModifier<Library>.self,
+            MonospacedDigitModifier<Library>.self,
+        ]
+    }
+    
+    /// Image modifier types that can be applied directly to `SwiftUI.Image`.
+    static var imageModifierTypes: [any RuntimeImageModifier.Type] {
+        [
+            ResizableModifier.self,
+        ]
+    }
+    
+    /// Shape modifier types that can be applied directly to `Shape` types.
+    static var shapeModifierTypes: [any RuntimeShapeModifier.Type] {
+        [
+            // Add Shape-specific modifiers here as they are implemented
+            // e.g., FillModifier.self, StrokeModifier.self,
+        ]
+    }
+    
     let modifier: any RuntimeViewModifier
     
     init(_ node: FunctionCallExprSyntax) throws {
@@ -130,6 +175,10 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         throw AnyRuntimeViewModifierError.noMatchingRuntimeViewModifier(modifierName)
     }
     
+    init(modifier: any RuntimeViewModifier) {
+        self.modifier = modifier
+    }
+    
     func body(content: Content) -> some View {
         AnyView(_unwrap(content: content, modifier: modifier))
     }
@@ -147,5 +196,192 @@ enum AnyRuntimeViewModifierError: Error, LocalizedError {
         case .noMatchingRuntimeViewModifier(let name):
             return "No matching modifier for '\(name)'"
         }
+    }
+}
+
+// MARK: - Parsed Modifier
+
+/// A single parsed modifier with all possible representations.
+/// Each view type can try to use its context-specific version first,
+/// then fall back to the generic view modifier.
+struct ParsedModifier<Library: ElementLibrary>: @unchecked Sendable {
+    let name: String
+    let textModifier: AnyRuntimeTextModifier?
+    let imageModifier: AnyRuntimeImageModifier?
+    let shapeModifier: AnyRuntimeShapeModifier?
+    let viewModifier: AnyRuntimeViewModifier<Library>?
+    
+    @MainActor
+    init(_ node: FunctionCallExprSyntax) {
+        let modifierName = if let name = node.calledExpression.as(MemberAccessExprSyntax.self)?.declName.baseName.text {
+            name
+        } else if let name = node.calledExpression.as(DeclReferenceExprSyntax.self)?.baseName.text {
+            name
+        } else {
+            ""
+        }
+        self.name = modifierName
+        
+        // Try to parse as RuntimeTextModifier
+        var textMod: AnyRuntimeTextModifier? = nil
+        for modifierType in AnyRuntimeViewModifier<Library>.textModifierTypes where modifierType.baseName == modifierName {
+            if let modifier = try? modifierType.init(syntax: node) {
+                textMod = AnyRuntimeTextModifier(modifier)
+                break
+            }
+        }
+        self.textModifier = textMod
+        
+        // Try to parse as RuntimeImageModifier
+        var imageMod: AnyRuntimeImageModifier? = nil
+        for modifierType in AnyRuntimeViewModifier<Library>.imageModifierTypes where modifierType.baseName == modifierName {
+            if let modifier = try? modifierType.init(syntax: node) {
+                imageMod = AnyRuntimeImageModifier(modifier)
+                break
+            }
+        }
+        self.imageModifier = imageMod
+        
+        // Try to parse as RuntimeShapeModifier
+        var shapeMod: AnyRuntimeShapeModifier? = nil
+        for modifierType in AnyRuntimeViewModifier<Library>.shapeModifierTypes where modifierType.baseName == modifierName {
+            if let modifier = try? modifierType.init(syntax: node) {
+                shapeMod = AnyRuntimeShapeModifier(modifier)
+                break
+            }
+        }
+        self.shapeModifier = shapeMod
+        
+        // Try to parse as RuntimeViewModifier
+        var viewMod: AnyRuntimeViewModifier<Library>? = nil
+        for modifierType in AnyRuntimeViewModifier<Library>.types where modifierType.baseName == modifierName {
+            if let modifier = try? modifierType.init(syntax: node) {
+                viewMod = AnyRuntimeViewModifier(modifier: modifier)
+                break
+            }
+        }
+        self.viewModifier = viewMod
+        
+        // Warn if no modifier type matched at all
+        if textMod == nil && imageMod == nil && shapeMod == nil && viewMod == nil && !modifierName.isEmpty {
+            modifierLogger.warning("No matching modifier for '\(modifierName)'")
+        }
+    }
+}
+
+// MARK: - Parsed Modifier Collection
+
+/// Collection of parsed modifiers.
+/// 
+/// Views with context-specific modifiers should iterate through the modifiers,
+/// applying their context-specific version until one fails, then apply remaining
+/// modifiers as generic view modifiers.
+struct ParsedModifierCollection<Library: ElementLibrary>: @unchecked Sendable {
+    let modifiers: [ParsedModifier<Library>]
+    
+    /// All modifiers that have RuntimeViewModifier conformance.
+    /// Used for generic views where all modifiers are applied as ViewModifiers.
+    var allAsViewModifiers: ModifierCollection<Library> {
+        ModifierCollection(modifiers: modifiers.compactMap(\.viewModifier))
+    }
+    
+    // MARK: - Text Application
+    
+    /// Apply modifiers to a Text value.
+    /// Applies text-specific modifiers until one fails (no text version),
+    /// then returns the modified Text and remaining modifiers as ViewModifiers.
+    @MainActor
+    func applyToText(_ text: SwiftUI.Text) -> (text: SwiftUI.Text, viewModifiers: ModifierCollection<Library>) {
+        var result = text
+        var remainingViewModifiers: [AnyRuntimeViewModifier<Library>] = []
+        var barrierReached = false
+        
+        for modifier in modifiers {
+            if barrierReached {
+                // After barrier, collect view modifiers
+                if let viewMod = modifier.viewModifier {
+                    remainingViewModifiers.append(viewMod)
+                }
+            } else if let textMod = modifier.textModifier {
+                // Apply text modifier
+                result = textMod.textBody(content: result)
+            } else {
+                // No text version - this is the barrier
+                barrierReached = true
+                if let viewMod = modifier.viewModifier {
+                    remainingViewModifiers.append(viewMod)
+                } else {
+                    modifierLogger.warning("Modifier '\(modifier.name)' has no Text or View conformance")
+                }
+            }
+        }
+        
+        return (result, ModifierCollection(modifiers: remainingViewModifiers))
+    }
+    
+    // MARK: - Image Application
+    
+    /// Apply modifiers to an Image value.
+    /// Applies image-specific modifiers until one fails (no image version),
+    /// then returns the modified Image and remaining modifiers as ViewModifiers.
+    @MainActor
+    func applyToImage(_ image: SwiftUI.Image) -> (image: SwiftUI.Image, viewModifiers: ModifierCollection<Library>) {
+        var result = image
+        var remainingViewModifiers: [AnyRuntimeViewModifier<Library>] = []
+        var barrierReached = false
+        
+        for modifier in modifiers {
+            if barrierReached {
+                // After barrier, collect view modifiers
+                if let viewMod = modifier.viewModifier {
+                    remainingViewModifiers.append(viewMod)
+                }
+            } else if let imageMod = modifier.imageModifier {
+                // Apply image modifier
+                result = imageMod.imageBody(content: result)
+            } else {
+                // No image version - this is the barrier
+                barrierReached = true
+                if let viewMod = modifier.viewModifier {
+                    remainingViewModifiers.append(viewMod)
+                } else {
+                    modifierLogger.warning("Modifier '\(modifier.name)' has no Image or View conformance")
+                }
+            }
+        }
+        
+        return (result, ModifierCollection(modifiers: remainingViewModifiers))
+    }
+    
+    // MARK: - Shape Application
+    
+    /// Apply modifiers to a Shape.
+    /// Since shape modifiers transform Shape -> View, we can only apply ONE shape modifier,
+    /// then all remaining modifiers must be ViewModifiers.
+    @MainActor
+    func applyToShape<S: SwiftUI.Shape>(_ shape: S) -> (view: AnyView, viewModifiers: ModifierCollection<Library>) {
+        var remainingViewModifiers: [AnyRuntimeViewModifier<Library>] = []
+        var startIndex = 0
+        var shapeView: AnyView = AnyView(shape)
+        
+        // Try to apply the first shape modifier (if any)
+        if let firstModifier = modifiers.first, let shapeMod = firstModifier.shapeModifier {
+            shapeView = shapeMod.shapeBody(content: shape)
+            startIndex = 1
+        }
+        
+        // Collect remaining modifiers as view modifiers
+        for i in startIndex..<modifiers.count {
+            let modifier = modifiers[i]
+            if let viewMod = modifier.viewModifier {
+                remainingViewModifiers.append(viewMod)
+            } else if modifier.shapeModifier != nil {
+                modifierLogger.warning("Shape modifier '\(modifier.name)' cannot be applied after another modifier; only the first shape modifier is used")
+            } else {
+                modifierLogger.warning("Modifier '\(modifier.name)' has no Shape or View conformance")
+            }
+        }
+        
+        return (shapeView, ModifierCollection(modifiers: remainingViewModifiers))
     }
 }

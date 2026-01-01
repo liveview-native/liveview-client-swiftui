@@ -46,10 +46,23 @@ struct NodeView<Library: ElementLibrary>: View {
                 EmptyView()
             default:
                 if let tagName = Library.TagName(rawValue: node.name) {
-                    if let style = node.attributeValue(for: "modifiers") {
-                        let collection = modifierParser.parse(style)
+                    // Views with context-specific modifiers (Text, Image, Shape) handle their own
+                    // modifier parsing and application internally
+                    let contextSpecificViews: Set<String> = [
+                        "text",
+                        "image", "asyncimage",
+                        "circle", "ellipse", "capsule", "rectangle", "roundedrectangle", "unevenroundedrectangle"
+                    ]
+                    
+                    if contextSpecificViews.contains(node.name),
+                       let _ = node.attributeValue(for: "modifiers") {
+                        // Let the view handle all modifiers itself
                         Library.render(tagName, for: node)
-                            .modifier(collection)
+                    } else if let style = node.attributeValue(for: "modifiers") {
+                        // Generic views: apply all modifiers as ViewModifiers
+                        let parsed = modifierParser.parse(style)
+                        Library.render(tagName, for: node)
+                            .modifier(parsed.allAsViewModifiers)
                     } else {
                         Library.render(tagName, for: node)
                     }

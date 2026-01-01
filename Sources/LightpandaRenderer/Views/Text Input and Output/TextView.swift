@@ -99,6 +99,8 @@ import LightpandaClient
 struct TextView<Library: ElementLibrary>: View {
     let node: Node
     
+    @Environment(ModifierParser<Library>.self) private var modifierParser
+    
     private let overrideText: SwiftUI.Text?
     
     private var content: String? {
@@ -144,9 +146,27 @@ struct TextView<Library: ElementLibrary>: View {
         self.overrideText = nil
     }
     
-    var body: SwiftUI.Text {
-        let modifiers = node.attributeValue(for: "modifiers").map { TextModifierParser.parse($0) } ?? TextModifierCollection()
-        return modifiers.apply(to: text)
+    var body: some View {
+        if let modifiersString = node.attributeValue(for: "modifiers") {
+            let parsed = modifierParser.parse(modifiersString)
+            let (modifiedText, viewModifiers) = parsed.applyToText(text)
+            modifiedText.modifier(viewModifiers)
+        } else {
+            text
+        }
+    }
+    
+    /// Returns the text content with text-specific modifiers applied.
+    /// Used for nested text composition where `Text` type must be preserved.
+    /// Uses static parsing since nested text isn't in the SwiftUI view hierarchy.
+    var textContent: SwiftUI.Text {
+        if let modifiersString = node.attributeValue(for: "modifiers") {
+            let parsed = ModifierParser<Library>.parseStatic(modifiersString)
+            let (modifiedText, _) = parsed.applyToText(text)
+            return modifiedText
+        } else {
+            return text
+        }
     }
     
     private var text: SwiftUI.Text {
@@ -222,13 +242,13 @@ struct TextView<Library: ElementLibrary>: View {
                     
                     switch next.name.lowercased() {
                     case "text":
-                        prev = prev + Self(node: next).body
+                        prev = prev + Self(node: next).textContent
                     case "link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(next.children.first?.value ?? "")](\(next.attributeValue(for: "destination") ?? ""))")
                         )
                     case "image":
-                        if let image = ImageView<Library>.node(next).body {
+                        if let image = ImageView<Library>.node(next).imageContent {
                             prev = prev + SwiftUI.Text(image)
                         }
                     default:

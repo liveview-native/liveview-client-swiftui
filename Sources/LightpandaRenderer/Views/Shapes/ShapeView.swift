@@ -12,6 +12,11 @@ import LightpandaClient
 ///
 /// This view isn't used directly as an element. Instead, use the shape itself (e.g., `<Rectangle>`).
 ///
+/// Use shape modifiers to customize the appearance:
+/// ```html
+/// <RoundedRectangle cornerRadius="8" modifiers='fill(.blue).stroke(.red, lineWidth: 2)' />
+/// ```
+///
 /// ## Attributes
 /// - ``fillColor``
 /// - ``strokeColor``
@@ -21,14 +26,21 @@ struct Shape<Library: ElementLibrary, S: SwiftUI.InsettableShape>: View {
     
     private let shape: S
     
+    @Environment(ModifierParser<Library>.self) private var modifierParser
+    
     init(shape: S, node: Node) {
         self.shape = shape
         self.node = node
     }
     
     var body: some View {
-        // TODO: shape modifiers
-        shape
+        if let modifiersString = node.attributeValue(for: "modifiers") {
+            let parsed = modifierParser.parse(modifiersString)
+            let (shapeView, viewModifiers) = parsed.applyToShape(shape)
+            shapeView.modifier(viewModifiers)
+        } else {
+            shape
+        }
     }
 }
 

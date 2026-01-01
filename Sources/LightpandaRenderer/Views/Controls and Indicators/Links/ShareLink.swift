@@ -345,10 +345,10 @@ struct ShareLink<Library: ElementLibrary>: View {
                 let title = element.attributeValue(for: "title") ?? ""
                 let image = element.children
                     .first(where: { $0.attributeValue(for: "template") == "image" })
-                    .flatMap({ ImageView<Library>.node($0).body })
+                    .flatMap({ ImageView<Library>.node($0).imageContent })
                 let icon = element.children
                     .first(where: { $0.attributeValue(for: "template") == "icon" })
-                    .flatMap({ ImageView<Library>.node($0).body })
+                    .flatMap({ ImageView<Library>.node($0).imageContent })
                 
                 let data = PreviewData(
                     title: title,

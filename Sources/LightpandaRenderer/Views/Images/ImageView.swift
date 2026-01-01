@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import SwiftSyntax
-import SwiftParser
 import LightpandaClient
 
 /// Displays an image.
@@ -45,15 +43,8 @@ import LightpandaClient
 /// ### Modifying Images
 /// Use image modifiers to customize the appearance of an image.
 ///
-/// ```elixir
-/// "heart" do
-///     resizable()
-///     symbolRenderingMode(.multicolor)
-/// end
-/// ```
-///
 /// ```html
-/// <Image systemName="heart.fill" class="heart" />
+/// <Image systemName="heart.fill" modifiers='resizable().symbolRenderingMode(.multicolor)' />
 /// ```
 ///
 /// ## Attributes
@@ -99,35 +90,39 @@ enum ImageView<Library: ElementLibrary>: View {
         }
     }
 
-    public var body: SwiftUI.Image? {
-        applyImageModifiers(to: image)
+    @ViewBuilder
+    public var body: some View {
+        if let image {
+            switch self {
+            case let .node(node):
+                if let modifiersString = node.attributeValue(for: "modifiers") {
+                    let parsed = ModifierParser<Library>.parseStatic(modifiersString)
+                    let (modifiedImage, viewModifiers) = parsed.applyToImage(image)
+                    modifiedImage.modifier(viewModifiers)
+                } else {
+                    image
+                }
+            case .image:
+                image
+            }
+        }
     }
-    
-    /// Parses image-specific modifiers from the node's modifiers attribute.
-    private func applyImageModifiers(to image: SwiftUI.Image?) -> SwiftUI.Image? {
+
+    /// Returns the image with image-specific modifiers applied.
+    /// Used for embedding images in Text where `Image` type must be preserved.
+    var imageContent: SwiftUI.Image? {
         guard var result = image else { return nil }
-        
         switch self {
         case let .node(node):
-            guard let modifiersString = node.attributeValue(for: "modifiers") else {
-                return result
+            if let modifiersString = node.attributeValue(for: "modifiers") {
+                let parsed = ModifierParser<Library>.parseStatic(modifiersString)
+                let (modifiedImage, _) = parsed.applyToImage(result)
+                result = modifiedImage
             }
-            
-            let syntax = Parser.parse(source: modifiersString)
-            let visitor = ImageModifierVisitor()
-            visitor.walk(syntax)
-            
-            for modifier in visitor.modifiers {
-                switch modifier {
-                case .resizable(let capInsets, let resizingMode):
-                    result = result.resizable(capInsets: capInsets, resizingMode: resizingMode)
-                }
-            }
-            
-            return result
         case .image:
-            return result
+            break
         }
+        return result
     }
 
     var image: SwiftUI.Image? {
@@ -163,7 +158,7 @@ enum ImageView<Library: ElementLibrary>: View {
             if let labelNode = node.children.first {
                 switch labelNode.type {
                 case .element:
-                    return TextView<Library>(node: labelNode).body
+                    return TextView<Library>(node: labelNode).textContent
                 case .text:
                     return .init(labelNode.value)
                 default:
@@ -182,47 +177,5 @@ extension ImageView {
     enum Mode {
         case symbol(String)
         case asset(String)
-    }
-}
-
-// MARK: - Image Modifier Parsing
-
-/// Represents image-specific modifiers that must be applied before general view modifiers.
-private enum ImageModifier {
-    case resizable(capInsets: EdgeInsets, resizingMode: SwiftUI.Image.ResizingMode)
-}
-
-/// Parses image-specific modifiers from SwiftUI modifier syntax.
-private final class ImageModifierVisitor: SyntaxVisitor {
-    var modifiers: [ImageModifier] = []
-    
-    init() {
-        super.init(viewMode: .fixedUp)
-    }
-    
-    override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
-        // Walk parent modifiers first (for chained calls)
-        if let parentModifier = node.calledExpression.as(MemberAccessExprSyntax.self)?.base?.as(FunctionCallExprSyntax.self) {
-            _ = visit(parentModifier)
-        }
-        
-        // Get the modifier name
-        let modifierName: String
-        if let memberAccess = node.calledExpression.as(MemberAccessExprSyntax.self) {
-            modifierName = memberAccess.declName.baseName.text
-        } else if let declRef = node.calledExpression.as(DeclReferenceExprSyntax.self) {
-            modifierName = declRef.baseName.text
-        } else {
-            return .skipChildren
-        }
-        
-        // Parse image-specific modifiers
-        if modifierName == "resizable" {
-            let capInsets: EdgeInsets = node.argument(named: "capInsets").flatMap({ EdgeInsets(syntax: $0.expression) }) ?? EdgeInsets()
-            let resizingMode: SwiftUI.Image.ResizingMode = node.argument(named: "resizingMode").flatMap({ SwiftUICore.Image.ResizingMode(syntax: $0.expression) }) ?? .stretch
-            modifiers.append(.resizable(capInsets: capInsets, resizingMode: resizingMode))
-        }
-        
-        return .skipChildren
     }
 }

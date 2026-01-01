@@ -42,13 +42,27 @@ static let types: [any RuntimeViewModifier.Type] = [
 > `style="..."` cannot be used due to limitations in some JS frameworks (such as React).
 > For example, use `modifiers=".buttonStyle(.borderedProminent).tint(.green)"`
 
-## Text Modifiers
+## Context-Specific Modifiers
 
-Some modifiers can be applied directly to `Text` values (not as view modifiers). This enables rich text with inline styling via nested `<text>` elements.
+Some SwiftUI types have modifiers that only work on that specific type. These are handled by context-specific modifier protocols:
+
+- **Text**: `RuntimeTextModifier` - `bold()`, `italic()`, `font()`, etc.
+- **Image**: `RuntimeImageModifier` - `resizable()`, etc.
+- **Shape**: `RuntimeShapeModifier` - `stroke()`, `fill()`, etc.
+
+### How It Works
+
+Views with context-specific modifiers (text, image, shapes) handle their own modifier parsing:
+1. Apply context-specific modifiers until one fails
+2. Apply remaining modifiers as generic `ViewModifier`s
+
+For example, `resizable().frame(width: 50)` on `<image>`:
+- `resizable()` → Applied as Image modifier
+- `frame(width: 50)` → Not an Image modifier, applied as ViewModifier
 
 ### Setup
 
-1. Add `RuntimeTextModifier` conformance to the modifier in its Generated file:
+1. Add the protocol conformance to the modifier in its Generated file:
 
 ```swift
 extension BoldModifier: RuntimeTextModifier {
@@ -63,40 +77,49 @@ extension BoldModifier: RuntimeTextModifier {
 }
 ```
 
-2. Register in `Sources/LightpandaRenderer/Modifiers/TextModifierParser.swift`:
+2. Register in `Sources/LightpandaRenderer/Modifiers/ModifierParser.swift`:
 
 ```swift
-static let types: [any RuntimeTextModifier.Type] = [
+// For text modifiers
+static let textModifierTypes: [any RuntimeTextModifier.Type] = [
     BoldModifier.self,
-    ItalicModifier.self,
-    // Add your modifier here
+    // ...
+]
+
+// For image modifiers
+static let imageModifierTypes: [any RuntimeImageModifier.Type] = [
+    ResizableModifier.self,
+    // ...
+]
+
+// For shape modifiers
+static let shapeModifierTypes: [any RuntimeShapeModifier.Type] = [
+    // ...
 ]
 ```
 
 ### Usage
 
 ```html
-<!-- Nested styled text -->
+<!-- Text with nested styling -->
 <text>
     <text modifiers='bold()'>Bold</text> and 
     <text modifiers='italic()'>italic</text> text
 </text>
 
-<!-- Complex inline styles -->
-<text>
-    Hello <text modifiers='foregroundStyle(.red).bold()'>world</text>!
-</text>
+<!-- Image with resizable + view modifiers -->
+<image systemname="star.fill" modifiers='resizable().frame(width: 50, height: 50)' />
 
-<!-- Multiple nested styles -->
-<text modifiers='font(.body)'>
-    This is <text modifiers='fontWeight(.heavy)'>heavy</text> and 
-    <text modifiers='fontWeight(.light)'>light</text> text.
+<!-- Mixed modifier chain -->
+<text modifiers='font(.title).bold().padding(10).background(.blue)'>
+    Hello World
 </text>
 ```
 
-### Currently Supported Text Modifiers
+### Supported Context-Specific Modifiers
 
-- `bold()`, `italic()`, `underline()`, `strikethrough()`
-- `font()`, `foregroundStyle()`
-- `baselineOffset()`, `kerning()`, `tracking()`
-- `monospaced()`, `monospacedDigit()`
+**Text**: `bold()`, `italic()`, `underline()`, `strikethrough()`, `font()`, `foregroundStyle()`, `baselineOffset()`, `kerning()`, `tracking()`, `monospaced()`, `monospacedDigit()`
+
+**Image**: `resizable()`, `resizable(capInsets:)`, `resizable(resizingMode:)`
+
+**Shape**: (register as needed)
