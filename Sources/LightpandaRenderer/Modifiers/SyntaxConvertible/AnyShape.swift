@@ -3,26 +3,30 @@ import SwiftSyntax
 
 extension AnyShape: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
+        guard let shape = Self._parse(syntax: syntax) else { return nil }
+        self = shape
+    }
+    
+    private static func _parse(syntax: some SyntaxProtocol) -> AnyShape? {
         // Handle simple member access (e.g., .circle, .rect)
         if let memberAccess = syntax.as(MemberAccessExprSyntax.self),
            memberAccess.base == nil {
             switch memberAccess.declName.baseName.text {
             case "buttonBorder":
-                self = AnyShape(.buttonBorder)
+                return AnyShape(.buttonBorder)
             case "capsule":
-                self = AnyShape(.capsule)
+                return AnyShape(.capsule)
             case "circle":
-                self = AnyShape(.circle)
+                return AnyShape(.circle)
             case "containerRelative":
-                self = AnyShape(.containerRelative)
+                return AnyShape(.containerRelative)
             case "ellipse":
-                self = AnyShape(.ellipse)
+                return AnyShape(.ellipse)
             case "rect":
-                self = AnyShape(.rect)
+                return AnyShape(.rect)
             default:
                 return nil
             }
-            return
         }
         
         // Handle function calls (e.g., .rect(cornerRadius: 10), .capsule(style: .continuous))
@@ -35,20 +39,15 @@ extension AnyShape: SyntaxConvertible {
             case "capsule":
                 // .capsule(style: RoundedCornerStyle)
                 let style: RoundedCornerStyle = functionCall.argument(named: "style", default: .circular)
-                self = AnyShape(Capsule(style: style))
+                return AnyShape(Capsule(style: style))
                 
             case "rect":
                 // Try different rect overloads
-                if let shape = Self.parseRect(from: functionCall) {
-                    self = shape
-                } else {
-                    return nil
-                }
+                return parseRect(from: functionCall)
                 
             default:
                 return nil
             }
-            return
         }
         
         return nil

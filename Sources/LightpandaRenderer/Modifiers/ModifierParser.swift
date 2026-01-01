@@ -149,10 +149,24 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
     /// Shape modifier types that can be applied directly to `Shape` types.
     static var shapeModifierTypes: [any RuntimeShapeModifier.Type] {
         [
+            // Fill and stroke
             FillModifier.self,
             StrokeModifier.self,
             StrokeBorderModifier.self,
+            // Transformations
             TrimModifier.self,
+            ScaleShapeModifier.self,
+            RotationShapeModifier.self,
+            OffsetShapeModifier.self,
+            SizeShapeModifier.self,
+            TransformShapeModifier.self,
+            // Boolean operations
+            UnionShapeModifier.self,
+            IntersectionShapeModifier.self,
+            SubtractingShapeModifier.self,
+            SymmetricDifferenceShapeModifier.self,
+            LineIntersectionShapeModifier.self,
+            LineSubtractionShapeModifier.self,
         ]
     }
     
@@ -258,7 +272,6 @@ struct ParsedModifier<Library: ElementLibrary>: @unchecked Sendable {
         print("[ParsedModifier] Trying to parse '\(modifierName)' with arguments: \(node.arguments.map { $0.trimmedDescription })")
         var viewMod: AnyRuntimeViewModifier<Library>? = nil
         for modifierType in AnyRuntimeViewModifier<Library>.types where modifierType.baseName == modifierName {
-            print("[ParsedModifier]   Trying modifierType: \(modifierType)")
             if let modifier = try? modifierType.init(syntax: node) {
                 viewMod = AnyRuntimeViewModifier(modifier: modifier)
                 break
@@ -368,18 +381,11 @@ struct ParsedModifierCollection<Library: ElementLibrary>: @unchecked Sendable {
         var currentShape: any SwiftUI.Shape = shape
         var resultView: AnyView? = nil
         
-        modifierLogger.debug("applyToShape: processing \(modifiers.count) modifiers")
-        
         for modifier in modifiers {
-            modifierLogger.debug("  modifier '\(modifier.name)': shapeModifier=\(modifier.shapeModifier != nil), viewModifier=\(modifier.viewModifier != nil)")
-            
             if let currentView = resultView {
                 // We've already converted to a View, apply view modifiers directly
                 if let viewMod = modifier.viewModifier {
-                    modifierLogger.debug("    -> applying as view modifier to existing view")
-                    let newView = AnyView(currentView.modifier(viewMod))
-                    modifierLogger.debug("    -> new view created: \(type(of: newView))")
-                    resultView = newView
+                    resultView = AnyView(currentView.modifier(viewMod))
                 } else if modifier.shapeModifier != nil {
                     modifierLogger.warning("Shape modifier '\(modifier.name)' cannot be applied after a view-returning shape modifier (like fill/stroke)")
                 } else {
