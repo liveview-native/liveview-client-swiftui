@@ -47,3 +47,17 @@ extension KerningModifier: RuntimeViewModifier {
         }
     }
 }
+
+extension KerningModifier: RuntimeTextModifier {
+    public func textBody(content: SwiftUI.Text) -> SwiftUI.Text {
+        switch self {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        case .kerning(let value0Any):
+            if let value0 = value0Any as? CoreFoundation.CGFloat {
+                return content.kerning(value0)
+            }
+        #endif
+        }
+        return content
+    }
+}

@@ -47,3 +47,17 @@ extension TrackingModifier: RuntimeViewModifier {
         }
     }
 }
+
+extension TrackingModifier: RuntimeTextModifier {
+    public func textBody(content: SwiftUI.Text) -> SwiftUI.Text {
+        switch self {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        case .tracking(let value0Any):
+            if let value0 = value0Any as? CoreFoundation.CGFloat {
+                return content.tracking(value0)
+            }
+        #endif
+        }
+        return content
+    }
+}

@@ -40,3 +40,17 @@ extension MonospacedDigitModifier: RuntimeViewModifier {
         }
     }
 }
+
+extension MonospacedDigitModifier: RuntimeTextModifier {
+    public func textBody(content: SwiftUI.Text) -> SwiftUI.Text {
+        switch self {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        case .monospacedDigit:
+            if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) {
+                return content.monospacedDigit()
+            }
+        #endif
+        }
+        return content
+    }
+}

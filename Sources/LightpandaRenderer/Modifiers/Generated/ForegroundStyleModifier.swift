@@ -64,3 +64,15 @@ extension ForegroundStyleModifier: RuntimeViewModifier {
         }
     }
 }
+
+extension ForegroundStyleModifier: RuntimeTextModifier {
+    public func textBody(content: SwiftUI.Text) -> SwiftUI.Text {
+        switch self {
+        case .foregroundStyleWithAnyShapeStyle(let value0):
+            return content.foregroundStyle(value0)
+        case .foregroundStyleWithAnyShapeStyleAnyShapeStyle, .foregroundStyleWithAnyShapeStyleAnyShapeStyleAnyShapeStyle:
+            // Text only supports single style, use the first one
+            return content
+        }
+    }
+}

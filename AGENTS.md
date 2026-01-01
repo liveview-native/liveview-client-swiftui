@@ -145,3 +145,67 @@ struct Toggle<Library: ElementLibrary>: View {
 - **No duplicate state** - JS is the single source of truth
 - **Automatic re-renders** - Node is `@Observable`, so SwiftUI updates when `node.attributes` changes
 - **Bidirectional sync** - Swift → JS via binding setter, JS → Swift via CDP binding callback
+
+## Text Modifiers (RuntimeTextModifier)
+
+Text modifiers allow styling nested `<text>` elements directly on `Text` values (not as view modifiers). This enables rich text with inline styling.
+
+### Protocol
+
+```swift
+@MainActor
+protocol RuntimeTextModifier {
+    static var baseName: String { get }
+    init(syntax: FunctionCallExprSyntax) throws
+    func textBody(content: SwiftUI.Text) -> SwiftUI.Text
+}
+```
+
+### Adding Text Support to a Modifier
+
+Existing `RuntimeViewModifier` types can also conform to `RuntimeTextModifier` when they support `Text` transformations:
+
+```swift
+// In the Generated modifier file, add:
+extension MyModifier: RuntimeTextModifier {
+    func textBody(content: SwiftUI.Text) -> SwiftUI.Text {
+        switch self {
+        case .myCase(let value):
+            return content.myModifier(value)
+        }
+    }
+}
+```
+
+Then register in `TextModifierParser.swift`:
+
+```swift
+static let types: [any RuntimeTextModifier.Type] = [
+    BoldModifier.self,
+    ItalicModifier.self,
+    MyModifier.self,  // Add here
+    ...
+]
+```
+
+### Supported Text Modifiers
+
+- `bold()`, `italic()`, `underline()`, `strikethrough()`
+- `font()`, `foregroundStyle()`
+- `baselineOffset()`, `kerning()`, `tracking()`
+- `monospaced()`, `monospacedDigit()`
+
+### Usage in Markup
+
+```html
+<!-- Nested styled text -->
+<text>
+    <text modifiers='bold()'>Bold</text> and 
+    <text modifiers='italic()'>italic</text> text
+</text>
+
+<!-- Complex inline styles -->
+<text>
+    Hello <text modifiers='foregroundStyle(.red).bold()'>world</text>!
+</text>
+```

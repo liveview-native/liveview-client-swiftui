@@ -145,8 +145,8 @@ struct TextView<Library: ElementLibrary>: View {
     }
     
     var body: SwiftUI.Text {
-        // TODO: text modifiers
-        return text
+        let modifiers = node.attributeValue(for: "modifiers").map { TextModifierParser.parse($0) } ?? TextModifierCollection()
+        return modifiers.apply(to: text)
     }
     
     private var text: SwiftUI.Text {
@@ -220,14 +220,14 @@ struct TextView<Library: ElementLibrary>: View {
                     guard !next.attributes.keys.contains("template")
                     else { return }
                     
-                    switch next.name {
-                    case "Text":
+                    switch next.name.lowercased() {
+                    case "text":
                         prev = prev + Self(node: next).body
-                    case "Link":
+                    case "link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(next.children.first?.value ?? "")](\(next.attributeValue(for: "destination") ?? ""))")
                         )
-                    case "Image":
+                    case "image":
                         if let image = ImageView<Library>.node(next).body {
                             prev = prev + SwiftUI.Text(image)
                         }

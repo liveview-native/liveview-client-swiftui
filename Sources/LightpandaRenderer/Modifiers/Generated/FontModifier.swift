@@ -29,3 +29,12 @@ extension FontModifier: RuntimeViewModifier {
         }
     }
 }
+
+extension FontModifier: RuntimeTextModifier {
+    public func textBody(content: SwiftUI.Text) -> SwiftUI.Text {
+        switch self {
+        case .font(let value0):
+            return content.font(value0)
+        }
+    }
+}

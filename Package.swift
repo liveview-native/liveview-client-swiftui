@@ -132,6 +132,22 @@ let includeModifiers = [
     "BorderModifier",
     "HiddenModifier",
     "DisabledModifier",
+    "LabelsHiddenModifier",
+"BoldModifier",
+        "ItalicModifier",
+        "UnderlineModifier",
+        "BaselineOffsetModifier",
+        "KerningModifier",
+        "TrackingModifier",
+        "LineSpacingModifier",
+        "LineLimitModifier",
+        "MonospacedModifier",
+        "MonospacedDigitModifier",
+        "FontWeightModifier",
+        "FontDesignModifier",
+        "FontWidthModifier",
+        "TextCaseModifier",
+        "TextScaleModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {

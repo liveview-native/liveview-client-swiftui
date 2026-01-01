@@ -47,3 +47,19 @@ extension StrikethroughModifier: RuntimeViewModifier {
         }
     }
 }
+
+extension StrikethroughModifier: RuntimeTextModifier {
+    public func textBody(content: SwiftUI.Text) -> SwiftUI.Text {
+        switch self {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        case .strikethrough(let value0Any, pattern: let patternAny, color: let colorAny):
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                if let value0 = value0Any as? Swift.Bool, let pattern = patternAny as? SwiftUICore.Text.LineStyle.Pattern, let color = colorAny as? SwiftUICore.Color? {
+                    return content.strikethrough(value0, pattern: pattern, color: color)
+                }
+            }
+        #endif
+        }
+        return content
+    }
+}

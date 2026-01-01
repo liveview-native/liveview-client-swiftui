@@ -45,3 +45,19 @@ extension MonospacedModifier: RuntimeViewModifier {
         }
     }
 }
+
+extension MonospacedModifier: RuntimeTextModifier {
+    public func textBody(content: SwiftUI.Text) -> SwiftUI.Text {
+        switch self {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        case .monospaced(let value0Any):
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                if let value0 = value0Any as? Swift.Bool {
+                    return content.monospaced(value0)
+                }
+            }
+        #endif
+        }
+        return content
+    }
+}

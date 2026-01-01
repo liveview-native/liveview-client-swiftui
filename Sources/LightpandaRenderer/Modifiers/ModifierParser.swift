@@ -90,6 +90,22 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             BorderModifier<Library>.self,
             HiddenModifier<Library>.self,
             DisabledModifier<Library>.self,
+            LabelsHiddenModifier<Library>.self,
+            BoldModifier<Library>.self,
+            ItalicModifier<Library>.self,
+            UnderlineModifier<Library>.self,
+            BaselineOffsetModifier<Library>.self,
+            KerningModifier<Library>.self,
+            TrackingModifier<Library>.self,
+            LineSpacingModifier<Library>.self,
+            LineLimitModifier<Library>.self,
+            MonospacedModifier<Library>.self,
+            MonospacedDigitModifier<Library>.self,
+            FontWeightModifier<Library>.self,
+            FontDesignModifier<Library>.self,
+            FontWidthModifier<Library>.self,
+            TextCaseModifier<Library>.self,
+            TextScaleModifier<Library>.self,
         ]
     }
     
