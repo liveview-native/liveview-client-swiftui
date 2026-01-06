@@ -182,6 +182,15 @@ let includeModifiers = [
     
     // Image modifiers
     "ResizableModifier",
+    
+    // Presentation modifiers
+    "SheetModifier",
+    "FullScreenCoverModifier",
+    "PopoverModifier",
+    "ConfirmationDialogModifier",
+    
+    // Toolbar modifiers
+    "ToolbarModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {
