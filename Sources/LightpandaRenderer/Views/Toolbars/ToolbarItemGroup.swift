@@ -53,7 +53,9 @@ struct ToolbarItemGroup<Library: ElementLibrary>: ToolbarContent {
 
 struct ToolbarItemPlacementParseStrategy: ParseStrategy {
     func parse(_ value: String) throws -> ToolbarItemPlacement {
-        switch value {
+        // Strip leading dot if present (e.g., ".bottomBar" -> "bottomBar")
+        let name = value.hasPrefix(".") ? String(value.dropFirst()) : value
+        switch name {
         case "automatic":
             return .automatic
         case "principal":
@@ -72,23 +74,41 @@ struct ToolbarItemPlacementParseStrategy: ParseStrategy {
             return .cancellationAction
         case "destructiveAction":
             return .destructiveAction
+        #if os(iOS) || os(visionOS)
         case "keyboard":
             return .keyboard
-        #if os(iOS)
-        case "topBarLeading":
+        case "topBarLeading", "navigationBarLeading":
             return .topBarLeading
-        case "topBarTrailing":
+        case "topBarTrailing", "navigationBarTrailing":
             return .topBarTrailing
-        case "title":
-            return .title
-        case "largeTitle":
-            return .largeTitle
         case "bottomBar":
             return .bottomBar
+        #endif
+        #if os(iOS)
+        case "title":
+            if #available(iOS 17.0, *) {
+                return .title
+            } else {
+                throw ParseError()
+            }
+        case "largeTitle":
+            if #available(iOS 17.0, *) {
+                return .largeTitle
+            } else {
+                throw ParseError()
+            }
         case "subtitle":
-            return .subtitle
+            if #available(iOS 17.0, *) {
+                return .subtitle
+            } else {
+                throw ParseError()
+            }
         case "largeSubtitle":
-            return .largeSubtitle
+            if #available(iOS 17.0, *) {
+                return .largeSubtitle
+            } else {
+                throw ParseError()
+            }
         #endif
         default:
             throw ParseError()

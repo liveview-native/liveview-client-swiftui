@@ -191,6 +191,13 @@ let includeModifiers = [
     
     // Toolbar modifiers
     "ToolbarModifier",
+    "ToolbarBackgroundModifier",
+    "ToolbarVisibilityModifier",
+    "ToolbarBackgroundVisibilityModifier",
+    "ToolbarTitleDisplayModeModifier",
+    "ToolbarRoleModifier",
+    "ToolbarColorSchemeModifier",
+    "ToolbarTitleMenuModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {
