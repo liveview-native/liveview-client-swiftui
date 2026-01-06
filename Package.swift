@@ -198,6 +198,19 @@ let includeModifiers = [
     "ToolbarRoleModifier",
     "ToolbarColorSchemeModifier",
     "ToolbarTitleMenuModifier",
+    
+    // Accessibility modifiers
+    "AccessibilityLabelModifier",
+    "AccessibilityHintModifier",
+    "AccessibilityValueModifier",
+    "AccessibilityHiddenModifier",
+    "AccessibilityIdentifierModifier",
+    "AccessibilityAddTraitsModifier",
+    "AccessibilityRemoveTraitsModifier",
+    "AccessibilityElementModifier",
+    "AccessibilitySortPriorityModifier",
+    "AccessibilityInputLabelsModifier",
+    "AccessibilityIgnoresInvertColorsModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {

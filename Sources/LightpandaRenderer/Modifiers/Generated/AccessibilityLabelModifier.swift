@@ -133,7 +133,7 @@ extension AccessibilityLabelModifier: RuntimeViewModifier {
         case .accessibilityLabelWithStringSwiftBool(let value0, isEnabled: let isEnabled):
             _content.accessibilityLabel(value0, isEnabled: isEnabled)
         case .accessibilityLabelWithView(content: let content):
-            _content.accessibilityLabel(content: { content })
+            _content.accessibilityLabel(content: { _ in content })
         case .accessibilityLabelWithSwiftUICoreText(let value0):
             _content.accessibilityLabel(value0)
         case .accessibilityLabelWithSwiftUICoreLocalizedStringKey(let value0):
