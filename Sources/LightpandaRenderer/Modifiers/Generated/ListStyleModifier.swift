@@ -23,11 +23,45 @@ extension ListStyleModifier: RuntimeViewModifier {
         }
         throw ModifierParseError.noMatchingVariant(modifier: "ListStyleModifier", errors: errors)
     }
+    
     @ViewBuilder
     public func body(content _content: Content) -> some View {
         switch self {
         case .listStyle(let value0):
-            _content.listStyle(value0)
+            switch value0.style {
+            case .automatic:
+                _content.listStyle(.automatic)
+            case .plain:
+                _content.listStyle(.plain)
+            #if os(iOS) || os(macOS) || os(visionOS)
+            case .inset:
+                _content.listStyle(.inset)
+            #endif
+            #if os(iOS) || os(visionOS)
+            case .insetGrouped:
+                _content.listStyle(.insetGrouped)
+            case .grouped:
+                _content.listStyle(.grouped)
+            #endif
+            #if os(macOS) || os(iOS) || os(visionOS)
+            case .sidebar:
+                _content.listStyle(.sidebar)
+            #endif
+            #if os(macOS)
+            case .bordered:
+                _content.listStyle(.bordered)
+            #endif
+            #if !os(iOS) && !os(macOS) && !os(visionOS)
+            case .inset, .insetGrouped, .grouped, .sidebar, .bordered:
+                _content.listStyle(.automatic)
+            #elseif !os(iOS) && !os(visionOS)
+            case .insetGrouped, .grouped:
+                _content.listStyle(.automatic)
+            #elseif !os(macOS)
+            case .bordered:
+                _content.listStyle(.automatic)
+            #endif
+            }
         }
     }
 }

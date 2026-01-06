@@ -128,6 +128,20 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             AccessibilitySortPriorityModifier<Library>.self,
             AccessibilityInputLabelsModifier<Library>.self,
             AccessibilityIgnoresInvertColorsModifier<Library>.self,
+            // List styling modifiers
+            AlternatingRowBackgroundsModifier<Library>.self,
+            ListStyleModifier<Library>.self,
+            ListRowBackgroundModifier<Library>.self,
+            ListRowInsetsModifier<Library>.self,
+            ListRowSeparatorModifier<Library>.self,
+            ListSectionSeparatorModifier<Library>.self,
+            // Table styling modifiers
+            TableStyleModifier<Library>.self,
+            TableColumnHeadersModifier<Library>.self,
+            // Control modifiers
+            ControlSizeModifier<Library>.self,
+            // Presentation modifiers
+            PresentationDetentsModifier<Library>.self,
             LabelsHiddenModifier<Library>.self,
             BoldModifier<Library>.self,
             ItalicModifier<Library>.self,

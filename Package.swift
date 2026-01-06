@@ -211,6 +211,24 @@ let includeModifiers = [
     "AccessibilitySortPriorityModifier",
     "AccessibilityInputLabelsModifier",
     "AccessibilityIgnoresInvertColorsModifier",
+    
+    // List styling modifiers
+    "AlternatingRowBackgroundsModifier",
+    "ListStyleModifier",
+    "ListRowBackgroundModifier",
+    "ListRowInsetsModifier",
+    "ListRowSeparatorModifier",
+    "ListSectionSeparatorModifier",
+    
+    // Table styling modifiers
+    "TableStyleModifier",
+    "TableColumnHeadersModifier",
+    
+    // Control modifiers
+    "ControlSizeModifier",
+    
+    // Presentation modifiers
+    "PresentationDetentsModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {
