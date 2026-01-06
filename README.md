@@ -123,3 +123,48 @@ static let shapeModifierTypes: [any RuntimeShapeModifier.Type] = [
 **Image**: `resizable()`, `resizable(capInsets:)`, `resizable(resizingMode:)`
 
 **Shape**: (register as needed)
+
+## Modifier Bindings
+
+Modifiers that require `Binding` parameters use `$identifier` syntax to bind to element attributes.
+
+### Usage
+
+```html
+<vstack modifiers='alert("Delete?", isPresented: $showAlert, actions: alertActions)'>
+    <button template="alertActions">
+        <text template="label">Delete</text>
+    </button>
+</vstack>
+```
+
+The `$showAlert` syntax:
+- Reads from the `showAlert` attribute on the element
+- Dispatches `showAlertChanged` event when the value changes
+
+### JavaScript Integration
+
+```javascript
+// Listen for binding changes
+element.addEventListener("showAlertChanged", (event) => {
+    console.log("Value:", event.detail.value);
+});
+
+// Set the attribute to trigger the binding
+element.setAttribute("showAlert", "true");
+```
+
+### Implementing Modifiers with Bindings
+
+1. Use `NodeBinding<Value>` instead of `Binding<Value>` in the modifier enum
+2. Parse with `NodeBinding<T>(syntax:)` in the initializer
+3. Resolve to `Binding` at runtime using a helper view with `@Environment(Node.self)` and `@Environment(LightpandaRuntime.self)`
+
+See `AlertModifier.swift` for a complete example.
+
+### Supported Value Types
+
+- `Bool` - Attribute presence or `"true"` = true
+- `String` - Direct attribute value
+- `String?` - Attribute value or nil
+- `Int` / `Double` - Parsed from attribute string

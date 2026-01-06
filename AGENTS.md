@@ -256,3 +256,110 @@ static let shapeModifierTypes: [any RuntimeShapeModifier.Type] = [
     Hello World
 </text>
 ```
+
+## Modifier Bindings with NodeBinding
+
+Modifiers that require `Binding` parameters (like `alert(isPresented:)`, `sheet(isPresented:)`) use `NodeBinding<Value>` to connect SwiftUI bindings to DOM attributes and events.
+
+### How It Works
+
+1. **Parse `$identifier` syntax** - `$showAlert` creates a `NodeBinding` with `attributeName = "showAlert"`
+2. **Read from attributes** - The binding getter reads from `node.attributes[attributeName]`
+3. **Dispatch events on set** - The binding setter dispatches a `{attributeName}Changed` CustomEvent
+
+### Usage in Markup
+
+```html
+<vstack modifiers='alert("Delete Item?", isPresented: $showDeleteAlert, actions: alertActions)'>
+    <button template="alertActions">
+        <text template="label">Delete</text>
+    </button>
+    
+    <button>
+        <text template="label">Show Alert</text>
+    </button>
+</vstack>
+```
+
+### JavaScript Event Handling
+
+```javascript
+// Listen for binding changes
+element.addEventListener("showDeleteAlertChanged", (event) => {
+    console.log("Alert visibility:", event.detail.value); // true or false
+});
+
+// Show the alert by setting the attribute
+element.setAttribute("showDeleteAlert", "true");
+```
+
+### Implementing Modifiers with Bindings
+
+1. **Use `NodeBinding<Value>` instead of `Binding<Value>`** in the modifier enum:
+
+```swift
+@MainActor
+public enum AlertModifier<Library: ElementLibrary>: @unchecked Sendable {
+    case titleIsPresentedActions(
+        title: String,
+        isPresented: NodeBinding<Bool>,  // NOT Binding<Bool>
+        actions: ViewReference<Library>
+    )
+}
+```
+
+2. **Parse with `NodeBinding<T>(syntax:)`**:
+
+```swift
+public init(syntax: FunctionCallExprSyntax) throws {
+    if let title = (syntax.arguments.first).flatMap({ String(syntax: $0.expression) }),
+       let isPresented = syntax.argument(named: "isPresented").flatMap({ NodeBinding<Bool>(syntax: $0.expression) }),
+       let actions = syntax.argument(named: "actions").flatMap({ ViewReference<Library>(syntax: $0.expression) }) {
+        self = .titleIsPresentedActions(title: title, isPresented: isPresented, actions: actions)
+        return
+    }
+    throw ModifierParseError.noMatchingVariant(modifier: "AlertModifier", errors: [])
+}
+```
+
+3. **Resolve to `Binding` at runtime** using a helper view with environment access:
+
+```swift
+@ViewBuilder
+public func body(content _content: Content) -> some View {
+    AlertModifierBody<Library>(modifier: self, content: _content)
+}
+
+private struct AlertModifierBody<Library: ElementLibrary>: View {
+    let modifier: AlertModifier<Library>
+    let content: AlertModifier<Library>.Content
+    
+    @Environment(Node.self) private var node
+    @Environment(LightpandaRuntime.self) private var runtime
+    
+    var body: some View {
+        switch modifier {
+        case .titleIsPresentedActions(let title, let isPresented, let actions):
+            content.alert(title, isPresented: isPresented.binding(node: node, runtime: runtime)) {
+                actions
+            }
+        }
+    }
+}
+```
+
+### Supported Value Types
+
+`NodeBinding` supports these value types:
+- `Bool` - Attribute presence or `"true"` = true, absent = false
+- `String` - Direct attribute value
+- `String?` - Attribute value or nil if absent
+- `Int` - Parsed from attribute string
+- `Double` - Parsed from attribute string
+
+### Key Points
+
+- **No internal state** - `NodeBinding` only stores the attribute name, not the value
+- **Attribute is source of truth** - Values are read from `node.attributes`
+- **JSON-encoded events** - Values are JSON-encoded when dispatched to JavaScript
+- **Automatic re-renders** - Node is `@Observable`, so SwiftUI updates when attributes change
