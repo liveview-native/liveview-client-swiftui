@@ -49,6 +49,7 @@ let includeViews = [
     "LazyVStack",
     
     "HSplitView",
+    "NavigationLink",
     "TabView",
     "VSplitView",
     
@@ -137,6 +138,7 @@ let includeModifiers = [
     "HiddenModifier",
     "DisabledModifier",
     "LabelsHiddenModifier",
+    "NavigationDestinationModifier",
     "RefreshableModifier",
     "SearchableModifier",
 "BoldModifier",

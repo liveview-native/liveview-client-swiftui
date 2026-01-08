@@ -84,6 +84,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ContextMenuModifier<Library>.self,
             RefreshableModifier<Library>.self,
             SearchableModifier<Library>.self,
+            NavigationDestinationModifier<Library>.self,
             MultilineTextAlignmentModifier<Library>.self,
             ForegroundStyleModifier<Library>.self,
             TintModifier<Library>.self,

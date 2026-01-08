@@ -82,6 +82,7 @@ public struct SwiftUIElementLibrary: ElementLibrary {
         case textField = "TextField"
         case textFieldLink = "TextFieldLink"
         
+        case navigationLink = "NavigationLink"
         case navigationStack = "NavigationStack"
         case navigationSplitView = "NavigationSplitView"
         
@@ -193,6 +194,8 @@ public struct SwiftUIElementLibrary: ElementLibrary {
                 self = .textField
             case "textfieldlink":
                 self = .textFieldLink
+            case "navigationlink":
+                self = .navigationLink
             case "navigationstack":
                 self = .navigationStack
             case "navigationsplitview":
@@ -312,6 +315,8 @@ public struct SwiftUIElementLibrary: ElementLibrary {
             TextField<Self>(node: node)
         case .textFieldLink:
             TextFieldLink<Self>(node: node)
+        case .navigationLink:
+            NavigationLinkView<Self>(node: node)
         case .navigationStack:
             NavigationStack<Self>(node: node)
         case .navigationSplitView:
