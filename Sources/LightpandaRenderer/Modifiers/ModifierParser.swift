@@ -76,10 +76,14 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
     static var types: [any RuntimeViewModifier<Library>.Type] {
         [
             PaddingModifier<Library>.self,
+            AnimationModifier<Library>.self,
             StrikethroughModifier<Library>.self,
             ButtonStyleModifier<Library>.self,
             ClipShapeModifier<Library>.self,
             ClippedModifier<Library>.self,
+            ContextMenuModifier<Library>.self,
+            RefreshableModifier<Library>.self,
+            SearchableModifier<Library>.self,
             MultilineTextAlignmentModifier<Library>.self,
             ForegroundStyleModifier<Library>.self,
             TintModifier<Library>.self,

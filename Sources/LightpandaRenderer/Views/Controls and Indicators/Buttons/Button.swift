@@ -74,7 +74,10 @@ struct ButtonRoleParseStrategy: ParseStrategy {
     typealias ParseOutput = ButtonRole
     
     func parse(_ value: String) throws -> ButtonRole {
-        switch value {
+        // Strip leading dot if present (e.g., ".destructive" -> "destructive")
+        let normalizedValue = value.hasPrefix(".") ? String(value.dropFirst()) : value
+        
+        switch normalizedValue {
         case "cancel":
             return .cancel
         #if os(iOS)
