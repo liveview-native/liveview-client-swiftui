@@ -37,12 +37,12 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
     /// The name of the attribute to bind to, lowercased to match node attributes.
     public let attributeName: String
     
-    /// The original name preserving casing, used for event names (e.g., "showAlertChanged").
-    public let eventBaseName: String
+    /// The event name, formed from the attribute name (`showAlert` -> `showalertchanged`)
+    public let eventName: String
     
     public init(attributeName: String) {
         self.attributeName = attributeName.lowercased()
-        self.eventBaseName = attributeName
+        self.eventName = "\(attributeName.lowercased())changed"
     }
     
     public init?(syntax: some SyntaxProtocol) {
@@ -55,7 +55,7 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
                 let baseName = String(name.dropFirst())
                 // Store lowercased for attribute matching, original for event names
                 self.attributeName = baseName.lowercased()
-                self.eventBaseName = baseName
+                self.eventName = "\(baseName.lowercased())changed"
                 return
             }
         }
@@ -65,24 +65,34 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
     /// Creates a SwiftUI `Binding` that reads from the node's attributes
     /// and dispatches change events when the value is set.
     ///
+    /// **Important**: This method reads from `node.attributes` to establish
+    /// `@Observable` tracking. Call this directly in your view's `body` property,
+    /// not in `onAppear` or other callbacks.
+    ///
     /// - Parameters:
     ///   - node: The node to read/write attributes from
     ///   - runtime: The Lightpanda runtime for dispatching events
     /// - Returns: A `Binding` connected to the node's attribute
     @MainActor
     public func binding(node: Node, runtime: LightpandaRuntime) -> Binding<Value> where Value == Bool {
-        Binding(
+        // Read the attribute here to establish @Observable tracking during view body evaluation.
+        // This ensures SwiftUI re-evaluates the body when node.attributes changes.
+        let _ = node.attributes[self.attributeName]
+        
+        // Capture attributeName for use in the getter/setter closures
+        let attributeName = self.attributeName
+        let eventName = self.eventName
+        
+        return Binding(
             get: {
-                // For Bool, any attribute value means true except explicit "false"
-                // Missing attribute = false, "false" = false, anything else = true
-                if let value = node.attributes[self.attributeName] {
-                    return value != "false"
-                }
-                return false
+                // Read fresh from node.attributes each time the getter is called
+                let currentValue = node.attributes[attributeName]
+                let result = currentValue.map { $0 != "false" } ?? false
+                print("[NodeBinding] get() for '\(attributeName)': currentValue=\(String(describing: currentValue)), returning \(result)")
+                return result
             },
             set: { newValue in
                 // Update attribute and dispatch change event via JS
-                let eventName = "\(self.eventBaseName)Changed"
                 let jsonValue = String(data: try! JSONEncoder().encode(newValue), encoding: .utf8)!
                 Task {
                     try? await node.callFunction(
@@ -90,9 +100,9 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
                         function: #"""
                         function() {
                             if (\#(jsonValue)) {
-                                this.setAttribute("\#(self.attributeName)", "true");
+                                this.setAttribute("\#(attributeName)", "true");
                             } else {
-                                this.removeAttribute("\#(self.attributeName)");
+                                this.removeAttribute("\#(attributeName)");
                             }
                             this.dispatchEvent(new CustomEvent("\#(eventName)", {
                                 bubbles: true,
@@ -109,20 +119,24 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
     /// Creates a SwiftUI `Binding` for String values.
     @MainActor
     public func binding(node: Node, runtime: LightpandaRuntime) -> Binding<Value> where Value == String {
-        Binding(
+        // Read the attribute here to establish @Observable tracking
+        let _ = node.attributes[self.attributeName]
+        let attributeName = self.attributeName
+        let eventName = self.eventName
+        
+        return Binding(
             get: {
-                node.attributes[self.attributeName] ?? ""
+                node.attributes[attributeName] ?? ""
             },
             set: { newValue in
                 // Update attribute and dispatch change event via JS
-                let eventName = "\(self.eventBaseName)Changed"
                 let encodedValue = String(data: try! JSONEncoder().encode(newValue), encoding: .utf8)!
                 Task {
                     try? await node.callFunction(
                         runtime: runtime,
                         function: #"""
                         function() {
-                            this.setAttribute("\#(self.attributeName)", \#(encodedValue));
+                            this.setAttribute("\#(attributeName)", \#(encodedValue));
                             this.dispatchEvent(new CustomEvent("\#(eventName)", {
                                 bubbles: true,
                                 detail: { value: \#(encodedValue) }
@@ -138,13 +152,17 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
     /// Creates a SwiftUI `Binding` for optional String values.
     @MainActor
     public func binding(node: Node, runtime: LightpandaRuntime) -> Binding<Value> where Value == String? {
-        Binding(
+        // Read the attribute here to establish @Observable tracking
+        let _ = node.attributes[self.attributeName]
+        let attributeName = self.attributeName
+        let eventName = self.eventName
+        
+        return Binding(
             get: {
-                node.attributes[self.attributeName]
+                node.attributes[attributeName]
             },
             set: { newValue in
                 // Update attribute and dispatch change event via JS
-                let eventName = "\(self.eventBaseName)Changed"
                 // JSON encode: String becomes quoted, nil becomes null
                 let jsonValue = String(data: try! JSONEncoder().encode(newValue), encoding: .utf8)!
                 Task {
@@ -153,9 +171,9 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
                         function: #"""
                         function() {
                             if (\#(jsonValue) !== null) {
-                                this.setAttribute("\#(self.attributeName)", \#(jsonValue));
+                                this.setAttribute("\#(attributeName)", \#(jsonValue));
                             } else {
-                                this.removeAttribute("\#(self.attributeName)");
+                                this.removeAttribute("\#(attributeName)");
                             }
                             this.dispatchEvent(new CustomEvent("\#(eventName)", {
                                 bubbles: true,
@@ -172,20 +190,24 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
     /// Creates a SwiftUI `Binding` for Double values.
     @MainActor
     public func binding(node: Node, runtime: LightpandaRuntime) -> Binding<Value> where Value == Double {
-        Binding(
+        // Read the attribute here to establish @Observable tracking
+        let _ = node.attributes[self.attributeName]
+        let attributeName = self.attributeName
+        let eventName = self.eventName
+        
+        return Binding(
             get: {
-                Double(node.attributes[self.attributeName] ?? "") ?? 0
+                Double(node.attributes[attributeName] ?? "") ?? 0
             },
             set: { newValue in
                 // Update attribute and dispatch change event via JS
-                let eventName = "\(self.eventBaseName)Changed"
                 let jsonValue = String(data: try! JSONEncoder().encode(newValue), encoding: .utf8)!
                 Task {
                     try? await node.callFunction(
                         runtime: runtime,
                         function: #"""
                         function() {
-                            this.setAttribute("\#(self.attributeName)", String(\#(jsonValue)));
+                            this.setAttribute("\#(attributeName)", String(\#(jsonValue)));
                             this.dispatchEvent(new CustomEvent("\#(eventName)", {
                                 bubbles: true,
                                 detail: { value: \#(jsonValue) }
@@ -201,20 +223,24 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
     /// Creates a SwiftUI `Binding` for Int values.
     @MainActor
     public func binding(node: Node, runtime: LightpandaRuntime) -> Binding<Value> where Value == Int {
-        Binding(
+        // Read the attribute here to establish @Observable tracking
+        let _ = node.attributes[self.attributeName]
+        let attributeName = self.attributeName
+        let eventName = self.eventName
+        
+        return Binding(
             get: {
-                Int(node.attributes[self.attributeName] ?? "") ?? 0
+                Int(node.attributes[attributeName] ?? "") ?? 0
             },
             set: { newValue in
                 // Update attribute and dispatch change event via JS
-                let eventName = "\(self.eventBaseName)Changed"
                 let jsonValue = String(data: try! JSONEncoder().encode(newValue), encoding: .utf8)!
                 Task {
                     try? await node.callFunction(
                         runtime: runtime,
                         function: #"""
                         function() {
-                            this.setAttribute("\#(self.attributeName)", String(\#(jsonValue)));
+                            this.setAttribute("\#(attributeName)", String(\#(jsonValue)));
                             this.dispatchEvent(new CustomEvent("\#(eventName)", {
                                 bubbles: true,
                                 detail: { value: \#(jsonValue) }

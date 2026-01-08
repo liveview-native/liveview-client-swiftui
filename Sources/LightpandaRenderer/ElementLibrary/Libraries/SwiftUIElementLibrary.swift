@@ -12,6 +12,8 @@ public struct SwiftUIElementLibrary: ElementLibrary {
     public enum TagName: String {
         case button = "Button"
         case pasteButton = "PasteButton"
+        case link = "Link"
+        case menu = "Menu"
         
         case contentUnavailableView = "ContentUnavailableView"
         
@@ -37,17 +39,21 @@ public struct SwiftUIElementLibrary: ElementLibrary {
         case tableColumn = "TableColumn"
         case tableRow = "TableRow"
         
+        case form = "Form"
         case labeledContent = "LabeledContent"
         
         case grid = "Grid"
         case gridRow = "GridRow"
         
+        case controlGroup = "ControlGroup"
         case disclosureGroup = "DisclosureGroup"
         case group = "Group"
         case groupBox = "GroupBox"
         
         case lazyHGrid = "LazyHGrid"
         case lazyVGrid = "LazyVGrid"
+        case lazyHStack = "LazyHStack"
+        case lazyVStack = "LazyVStack"
         
         case hSplitView = "HSplitView"
         case vSplitView = "VSplitView"
@@ -77,6 +83,7 @@ public struct SwiftUIElementLibrary: ElementLibrary {
         case textFieldLink = "TextFieldLink"
         
         case navigationStack = "NavigationStack"
+        case navigationSplitView = "NavigationSplitView"
         
         public init?(rawValue: String) {
             switch rawValue.lowercased() {
@@ -84,6 +91,10 @@ public struct SwiftUIElementLibrary: ElementLibrary {
                 self = .button
             case "pastebutton":
                 self = .pasteButton
+            case "link":
+                self = .link
+            case "menu":
+                self = .menu
             case "contentunavailableview":
                 self = .contentUnavailableView
             case "gauge":
@@ -120,12 +131,16 @@ public struct SwiftUIElementLibrary: ElementLibrary {
                 self = .tableColumn
             case "tablerow":
                 self = .tableRow
+            case "form":
+                self = .form
             case "labeledcontent":
                 self = .labeledContent
             case "grid":
                 self = .grid
             case "gridrow":
                 self = .gridRow
+            case "controlgroup":
+                self = .controlGroup
             case "disclosuregroup":
                 self = .disclosureGroup
             case "group":
@@ -136,6 +151,10 @@ public struct SwiftUIElementLibrary: ElementLibrary {
                 self = .lazyHGrid
             case "lazyvgrid":
                 self = .lazyVGrid
+            case "lazyhstack":
+                self = .lazyHStack
+            case "lazyvstack":
+                self = .lazyVStack
             case "hsplitview":
                 self = .hSplitView
             case "vsplitview":
@@ -176,6 +195,8 @@ public struct SwiftUIElementLibrary: ElementLibrary {
                 self = .textFieldLink
             case "navigationstack":
                 self = .navigationStack
+            case "navigationsplitview":
+                self = .navigationSplitView
             default:
                 return nil
             }
@@ -189,6 +210,10 @@ public struct SwiftUIElementLibrary: ElementLibrary {
             Button<Self>(node: node)
         case .pasteButton:
             PasteButton<Self>(node: node)
+        case .link:
+            Link<Self>(node: node)
+        case .menu:
+            Menu<Self>(node: node)
         case .contentUnavailableView:
             ContentUnavailableView<Self>(node: node)
         case .gauge:
@@ -225,12 +250,16 @@ public struct SwiftUIElementLibrary: ElementLibrary {
             EmptyView() // TableColumn is handled within Table
         case .tableRow:
             EmptyView() // TableRow is handled within Table
+        case .form:
+            Form<Self>(node: node)
         case .labeledContent:
             LabeledContent<Self>(node: node)
         case .grid:
             Grid<Self>(node: node)
         case .gridRow:
             GridRow<Self>(node: node)
+        case .controlGroup:
+            ControlGroup<Self>(node: node)
         case .disclosureGroup:
             DisclosureGroup<Self>(node: node)
         case .group:
@@ -241,6 +270,10 @@ public struct SwiftUIElementLibrary: ElementLibrary {
             LazyHGrid<Self>(node: node)
         case .lazyVGrid:
             LazyVGrid<Self>(node: node)
+        case .lazyHStack:
+            LazyHStack<Self>(node: node)
+        case .lazyVStack:
+            LazyVStack<Self>(node: node)
         case .hSplitView:
             HSplitView<Self>(node: node)
         case .vSplitView:
@@ -281,6 +314,8 @@ public struct SwiftUIElementLibrary: ElementLibrary {
             TextFieldLink<Self>(node: node)
         case .navigationStack:
             NavigationStack<Self>(node: node)
+        case .navigationSplitView:
+            NavigationSplitView<Self>(node: node)
         }
     }
 }

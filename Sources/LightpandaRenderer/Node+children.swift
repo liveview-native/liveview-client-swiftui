@@ -22,6 +22,7 @@ struct NodeView<Library: ElementLibrary>: View {
     var body: some View {
         #if DEBUG
         nodeContent
+            .environment(node)
             .overlay(SwiftUI.Group {
                 if runtime.cdp.focusedNode == node.id {
                     RoundedRectangle(cornerRadius: 4, style: .continuous)
@@ -31,9 +32,9 @@ struct NodeView<Library: ElementLibrary>: View {
                         .matchedGeometryEffect(id: "lightpanda:focused_node", in: lightpandaNamespace!)
                 }
             })
-            .environment(node)
         #else
         nodeContent
+            .environment(node)
         #endif
     }
     
@@ -60,8 +61,10 @@ struct NodeView<Library: ElementLibrary>: View {
                         Library.render(tagName, for: node)
                     } else if let style = node.attributeValue(for: "modifiers") {
                         // Generic views: apply all modifiers as ViewModifiers
+                        // Environment must be set BEFORE modifiers so modifier bodies can access the node
                         let parsed = modifierParser.parse(style)
                         Library.render(tagName, for: node)
+                            .environment(node)
                             .modifier(parsed.allAsViewModifiers)
                     } else {
                         Library.render(tagName, for: node)
@@ -101,7 +104,7 @@ extension Node {
         library: Library.Type = Library.self
     ) -> some View {
         ForEach(self.children) { child in
-            if child.attributes["template"] == template {
+            if child.attributes["template"] == template || (`default` && !child.attributes.keys.contains("template")) {
                 NodeView<Library>(node: child)
             }
         }

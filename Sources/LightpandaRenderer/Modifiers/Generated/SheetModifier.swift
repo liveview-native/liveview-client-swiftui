@@ -47,6 +47,7 @@ private struct SheetModifierBody<Library: ElementLibrary>: View {
     var body: some View {
         switch modifier {
         case .isPresented(let isPresented, let sheetContent):
+            let _ = print("[SheetModifierBody] body evaluated, node.id=\(node.id), attribute '\(isPresented.attributeName)'=\(node.attributes[isPresented.attributeName] ?? "nil")")
             content.sheet(isPresented: isPresented.binding(node: node, runtime: runtime)) {
                 sheetContent
             }

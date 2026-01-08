@@ -228,6 +228,7 @@ public final class LightpandaRuntime {
                 let parentNode = self.nodeRegistry.nodes[childNodeRemoved.parentNodeId]
                 parentNode?.children.removeAll(where: { $0.id == childNodeRemoved.nodeId })
             case let .attributeModified(attributeModified):
+                print("[CDP] attributeModified: nodeId=\(attributeModified.nodeId), name=\(attributeModified.name), value=\(attributeModified.value)")
                 self.nodeRegistry.nodes[attributeModified.nodeId]?.attributes[attributeModified.name] = attributeModified.value
             case let .attributeRemoved(attributedRemoved):
                 self.nodeRegistry.nodes[attributedRemoved.nodeId]?.attributes.removeValue(forKey: attributedRemoved.name)
@@ -245,6 +246,7 @@ public final class LightpandaRuntime {
 //        self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Network.Enable(maxPostDataSize: 65536, reportDirectSocketTraffic: true)))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Log.Enable()))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Runtime.Enable()))
+        self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.DOM.Enable()))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Target.SetAutoAttach(autoAttach: true, flatten: true, waitForDebuggerOnStart: false)))
         self.cdp!.sendMessage(self.cdp!.buildMessage(CDP.Page.Navigate(url: self.url.absoluteString)))
         

@@ -79,6 +79,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             StrikethroughModifier<Library>.self,
             ButtonStyleModifier<Library>.self,
             ClipShapeModifier<Library>.self,
+            ClippedModifier<Library>.self,
             MultilineTextAlignmentModifier<Library>.self,
             ForegroundStyleModifier<Library>.self,
             TintModifier<Library>.self,
@@ -171,7 +172,17 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             TextScaleModifier<Library>.self,
             ContentShapeModifier<Library>.self,
             MaskModifier<Library>.self,
+        ] + Self.platformSpecificTypes
+    }
+    
+    static var platformSpecificTypes: [any RuntimeViewModifier<Library>.Type] {
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        return [
+            NavigationBarTitleDisplayModeModifier<Library>.self,
         ]
+        #else
+        return []
+        #endif
     }
     
     /// Text modifier types that can be applied directly to `SwiftUI.Text`.
@@ -324,9 +335,13 @@ struct ParsedModifier<Library: ElementLibrary>: @unchecked Sendable {
         print("[ParsedModifier] Trying to parse '\(modifierName)' with arguments: \(node.arguments.map { $0.trimmedDescription })")
         var viewMod: AnyRuntimeViewModifier<Library>? = nil
         for modifierType in AnyRuntimeViewModifier<Library>.types where modifierType.baseName == modifierName {
-            if let modifier = try? modifierType.init(syntax: node) {
+            do {
+                let modifier = try modifierType.init(syntax: node)
                 viewMod = AnyRuntimeViewModifier(modifier: modifier)
+                print("[ParsedModifier] Successfully parsed '\(modifierName)' as \(type(of: modifier))")
                 break
+            } catch {
+                print("[ParsedModifier] Failed to parse '\(modifierName)' as \(modifierType): \(error)")
             }
         }
         self.viewModifier = viewMod

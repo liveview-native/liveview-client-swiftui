@@ -4,23 +4,62 @@ import SwiftSyntax
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension Glass: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
-        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self)
-        else { return nil }
-        
-        if memberAccess.base == nil {
+        // Handle simple member access like .regular, .clear, .identity
+        if let memberAccess = syntax.as(MemberAccessExprSyntax.self),
+           memberAccess.base == nil {
             switch memberAccess.declName.baseName.text {
-            case "automatic":
+            case "clear":
                 self = .clear
-            case "bordered":
+            case "identity":
                 self = .identity
-            case "borderedProminent":
+            case "regular":
                 self = .regular
             default:
                 return nil
             }
-        } else {
-            // FIXME: Handle base name
-            return nil
+            return
         }
+        
+        // Handle function calls like .regular.tint(.blue) or .regular.interactive(true)
+        if let functionCall = syntax.as(FunctionCallExprSyntax.self) {
+            // Get the base glass and the method being called
+            if let memberAccess = functionCall.calledExpression.as(MemberAccessExprSyntax.self) {
+                let methodName = memberAccess.declName.baseName.text
+                
+                // Parse the base glass (e.g., .regular from .regular.tint(...))
+                guard let base = memberAccess.base,
+                      var glass = Glass(syntax: base) else {
+                    return nil
+                }
+                
+                switch methodName {
+                case "tint":
+                    // .tint(Color?) -> Glass
+                    if let colorArg = functionCall.arguments.first?.expression,
+                       let color = Color(syntax: colorArg) {
+                        glass = glass.tint(color)
+                    } else if functionCall.arguments.first?.expression.as(NilLiteralExprSyntax.self) != nil {
+                        glass = glass.tint(nil)
+                    } else {
+                        return nil
+                    }
+                case "interactive":
+                    // .interactive(Bool) -> Glass
+                    if let boolArg = functionCall.arguments.first?.expression,
+                       let isInteractive = Bool(syntax: boolArg) {
+                        glass = glass.interactive(isInteractive)
+                    } else {
+                        return nil
+                    }
+                default:
+                    return nil
+                }
+                
+                self = glass
+                return
+            }
+        }
+        
+        return nil
     }
 }
