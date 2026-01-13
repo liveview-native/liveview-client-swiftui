@@ -205,6 +205,9 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             TextScaleModifier<Library>.self,
             ContentShapeModifier<Library>.self,
             MaskModifier<Library>.self,
+            // Focus modifiers
+            FocusableModifier<Library>.self,
+            FocusedModifier<Library>.self,
         ] + Self.platformSpecificTypes
     }
     
@@ -223,6 +226,17 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             types.append(ScrollTargetBehaviorModifier<Library>.self)
         }
+
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 17.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            types.append(DefaultFocusModifier<Library>.self)
+        }
+        #endif
+
+        #if os(macOS) || os(tvOS) || os(watchOS)
+        types.append(FocusScopeModifier<Library>.self)
+        types.append(PrefersDefaultFocusModifier<Library>.self)
+        #endif
 
         return types
     }

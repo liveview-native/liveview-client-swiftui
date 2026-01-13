@@ -278,6 +278,13 @@ let includeModifiers = [
 
     // Presentation modifiers
     "PresentationDetentsModifier",
+
+    // Focus modifiers
+    "FocusableModifier",
+    "FocusedModifier",
+    "FocusScopeModifier",
+    "DefaultFocusModifier",
+    "PrefersDefaultFocusModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {
