@@ -224,21 +224,45 @@ extension SearchFieldPlacement: SyntaxConvertible {
             }
             return
         }
-        
+
         // Handle .navigationBarDrawer(displayMode: .always) etc
+        #if os(iOS)
         if let functionCall = syntax.as(FunctionCallExprSyntax.self),
            let memberAccess = functionCall.calledExpression.as(MemberAccessExprSyntax.self),
-           memberAccess.base == nil {
-            #if os(iOS)
-            if memberAccess.declName.baseName.text == "navigationBarDrawer" {
-                // For simplicity, default to .automatic display mode
-                self = .navigationBarDrawer
-                return
+           memberAccess.base == nil,
+           memberAccess.declName.baseName.text == "navigationBarDrawer" {
+            // Parse displayMode argument
+            if let displayModeArg = functionCall.arguments.first(where: { $0.label?.text == "displayMode" }),
+               let displayMode = SearchFieldPlacement.NavigationBarDrawerDisplayMode(syntax: displayModeArg.expression) {
+                self = .navigationBarDrawer(displayMode: displayMode)
+            } else {
+                // Default to automatic if no displayMode specified
+                self = .navigationBarDrawer(displayMode: .automatic)
             }
-            #endif
-            return nil
+            return
         }
-        
+        #endif
+
         return nil
     }
 }
+
+#if os(iOS)
+extension SearchFieldPlacement.NavigationBarDrawerDisplayMode: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self),
+              memberAccess.base == nil else {
+            return nil
+        }
+
+        switch memberAccess.declName.baseName.text {
+        case "always":
+            self = .always
+        case "automatic":
+            self = .automatic
+        default:
+            return nil
+        }
+    }
+}
+#endif
