@@ -84,6 +84,10 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ContextMenuModifier<Library>.self,
             RefreshableModifier<Library>.self,
             OnTapGestureModifier<Library>.self,
+            OnLongPressGestureModifier<Library>.self,
+            GestureModifier<Library>.self,
+            HighPriorityGestureModifier<Library>.self,
+            SimultaneousGestureModifier<Library>.self,
             OnAppearModifier<Library>.self,
             OnDisappearModifier<Library>.self,
             SearchableModifier<Library>.self,
@@ -206,15 +210,20 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
     
     static var platformSpecificTypes: [any RuntimeViewModifier<Library>.Type] {
         var types: [any RuntimeViewModifier<Library>.Type] = []
-        
+
         #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
         types.append(NavigationBarTitleDisplayModeModifier<Library>.self)
         #endif
-        
+
+        #if os(iOS) || os(macOS)
+        types.append(DraggableModifier<Library>.self)
+        types.append(DropDestinationModifier<Library>.self)
+        #endif
+
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             types.append(ScrollTargetBehaviorModifier<Library>.self)
         }
-        
+
         return types
     }
     

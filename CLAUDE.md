@@ -458,6 +458,8 @@ private struct OnTapGestureModifierBody<Content: View>: View {
 | Modifier | Argument | Default | Example |
 |----------|----------|---------|---------|
 | `onTapGesture` | `perform:` | `"tap"` | `onTapGesture(count: 2, perform: doubleTap)` |
+| `onLongPressGesture` | `perform:` | `"longPress"` | `onLongPressGesture(minimumDuration: 1.0, perform: held)` |
 | `onAppear` | `perform:` | `"appear"` | `onAppear(perform: viewLoaded)` |
 | `onDisappear` | `perform:` | `"disappear"` | `onDisappear(perform: viewUnloaded)` |
+| `onSubmit` | `action:` | `"submit"` | `onSubmit(of: .search, action: performSearch)` |
 | `refreshable` | `action:` | `"refresh"` | `refreshable(action: reload)` |

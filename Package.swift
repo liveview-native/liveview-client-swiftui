@@ -204,6 +204,12 @@ let includeModifiers = [
 
     // Gesture modifiers
     "OnTapGestureModifier",
+    "OnLongPressGestureModifier",
+    "GestureModifier",
+    "HighPriorityGestureModifier",
+    "SimultaneousGestureModifier",
+    "DraggableModifier",
+    "DropDestinationModifier",
 
     // Lifecycle modifiers
     "OnAppearModifier",
