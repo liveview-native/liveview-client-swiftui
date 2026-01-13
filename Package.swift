@@ -259,7 +259,17 @@ let includeModifiers = [
     "ToggleStyleModifier",
     "ProgressViewStyleModifier",
     "LabeledContentStyleModifier",
-    
+
+    // Text input modifiers
+    "KeyboardShortcutModifier",
+    "KeyboardTypeModifier",
+    "OnSubmitModifier",
+    "SubmitLabelModifier",
+    "TextContentTypeModifier",
+    "TextInputAutocapitalizationModifier",
+    "AutocorrectionDisabledModifier",
+    "AutocapitalizationModifier",
+
     // Presentation modifiers
     "PresentationDetentsModifier",
 ]

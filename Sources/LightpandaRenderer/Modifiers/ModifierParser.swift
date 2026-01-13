@@ -166,6 +166,10 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ToggleStyleModifier<Library>.self,
             ProgressViewStyleModifier<Library>.self,
             LabeledContentStyleModifier<Library>.self,
+            // Text input modifiers
+            OnSubmitModifier<Library>.self,
+            SubmitLabelModifier<Library>.self,
+            AutocorrectionDisabledModifier<Library>.self,
             // Presentation modifiers
             PresentationDetentsModifier<Library>.self,
             LabelsHiddenModifier<Library>.self,
