@@ -85,6 +85,11 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             RefreshableModifier<Library>.self,
             SearchableModifier<Library>.self,
             NavigationDestinationModifier<Library>.self,
+            ScrollContentBackgroundModifier<Library>.self,
+            ScrollDisabledModifier<Library>.self,
+            ScrollDismissesKeyboardModifier<Library>.self,
+            ScrollIndicatorsModifier<Library>.self,
+
             MultilineTextAlignmentModifier<Library>.self,
             ForegroundStyleModifier<Library>.self,
             TintModifier<Library>.self,
@@ -181,13 +186,17 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
     }
     
     static var platformSpecificTypes: [any RuntimeViewModifier<Library>.Type] {
+        var types: [any RuntimeViewModifier<Library>.Type] = []
+        
         #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
-        return [
-            NavigationBarTitleDisplayModeModifier<Library>.self,
-        ]
-        #else
-        return []
+        types.append(NavigationBarTitleDisplayModeModifier<Library>.self)
         #endif
+        
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            types.append(ScrollTargetBehaviorModifier<Library>.self)
+        }
+        
+        return types
     }
     
     /// Text modifier types that can be applied directly to `SwiftUI.Text`.
