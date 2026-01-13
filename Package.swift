@@ -204,6 +204,10 @@ let includeModifiers = [
 
     // Gesture modifiers
     "OnTapGestureModifier",
+
+    // Lifecycle modifiers
+    "OnAppearModifier",
+    "OnDisappearModifier",
     
     // Toolbar modifiers
     "ToolbarModifier",
@@ -242,6 +246,19 @@ let includeModifiers = [
     
     // Control modifiers
     "ControlSizeModifier",
+
+    // Style modifiers
+    "PickerStyleModifier",
+    "DatePickerStyleModifier",
+    "GaugeStyleModifier",
+    "MenuStyleModifier",
+    "FormStyleModifier",
+    "GroupBoxStyleModifier",
+    "DisclosureGroupStyleModifier",
+    "LabelStyleModifier",
+    "ToggleStyleModifier",
+    "ProgressViewStyleModifier",
+    "LabeledContentStyleModifier",
     
     // Presentation modifiers
     "PresentationDetentsModifier",

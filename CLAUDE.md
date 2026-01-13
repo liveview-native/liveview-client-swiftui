@@ -458,4 +458,6 @@ private struct OnTapGestureModifierBody<Content: View>: View {
 | Modifier | Argument | Default | Example |
 |----------|----------|---------|---------|
 | `onTapGesture` | `perform:` | `"tap"` | `onTapGesture(count: 2, perform: doubleTap)` |
+| `onAppear` | `perform:` | `"appear"` | `onAppear(perform: viewLoaded)` |
+| `onDisappear` | `perform:` | `"disappear"` | `onDisappear(perform: viewUnloaded)` |
 | `refreshable` | `action:` | `"refresh"` | `refreshable(action: reload)` |

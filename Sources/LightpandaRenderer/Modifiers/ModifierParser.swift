@@ -84,6 +84,8 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ContextMenuModifier<Library>.self,
             RefreshableModifier<Library>.self,
             OnTapGestureModifier<Library>.self,
+            OnAppearModifier<Library>.self,
+            OnDisappearModifier<Library>.self,
             SearchableModifier<Library>.self,
             NavigationDestinationModifier<Library>.self,
             ScrollContentBackgroundModifier<Library>.self,
@@ -152,6 +154,18 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             TableColumnHeadersModifier<Library>.self,
             // Control modifiers
             ControlSizeModifier<Library>.self,
+            // Style modifiers
+            PickerStyleModifier<Library>.self,
+            DatePickerStyleModifier<Library>.self,
+            GaugeStyleModifier<Library>.self,
+            MenuStyleModifier<Library>.self,
+            FormStyleModifier<Library>.self,
+            GroupBoxStyleModifier<Library>.self,
+            DisclosureGroupStyleModifier<Library>.self,
+            LabelStyleModifier<Library>.self,
+            ToggleStyleModifier<Library>.self,
+            ProgressViewStyleModifier<Library>.self,
+            LabeledContentStyleModifier<Library>.self,
             // Presentation modifiers
             PresentationDetentsModifier<Library>.self,
             LabelsHiddenModifier<Library>.self,
