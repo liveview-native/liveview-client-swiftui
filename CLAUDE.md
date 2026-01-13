@@ -363,3 +363,99 @@ private struct AlertModifierBody<Library: ElementLibrary>: View {
 - **Attribute is source of truth** - Values are read from `node.attributes`
 - **JSON-encoded events** - Values are JSON-encoded when dispatched to JavaScript
 - **Automatic re-renders** - Node is `@Observable`, so SwiftUI updates when attributes change
+
+## Event-Dispatching Modifiers
+
+Modifiers that take closure parameters in SwiftUI (like `onTapGesture(perform:)`, `refreshable(action:)`) cannot parse closures from syntax. Instead, they accept an **identifier** for the event name and dispatch a `CustomEvent` to JavaScript.
+
+### Pattern
+
+Where SwiftUI expects a closure argument, use an **identifier** (not a string) for the event name:
+
+```html
+<!-- SwiftUI: .onTapGesture(perform: { ... }) -->
+<vstack modifiers="onTapGesture(perform: clicked)">
+
+<!-- SwiftUI: .refreshable(action: { ... }) -->
+<list modifiers="refreshable(action: reload)">
+```
+
+### Argument Labels
+
+Use the **same argument label** as the SwiftUI modifier's closure parameter:
+
+| SwiftUI Modifier | Closure Parameter | LightpandaRenderer Usage |
+|------------------|-------------------|--------------------------|
+| `onTapGesture(count:perform:)` | `perform:` | `onTapGesture(perform: eventName)` |
+| `refreshable(action:)` | `action:` | `refreshable(action: eventName)` |
+
+### Default Event Names
+
+If no event name is provided, a sensible default is used:
+
+```html
+<vstack modifiers="onTapGesture()">   <!-- dispatches "tap" -->
+<list modifiers="refreshable()">      <!-- dispatches "refresh" -->
+```
+
+### JavaScript Event Handling
+
+```javascript
+// Listen for custom events
+element.addEventListener("clicked", (e) => {
+    console.log("Clicked!", e.detail);
+});
+
+element.addEventListener("reload", (e) => {
+    console.log("Reloading...");
+});
+```
+
+### Implementing Event-Dispatching Modifiers
+
+1. **Parse the identifier** using `DeclReferenceExprSyntax`:
+
+```swift
+public init(syntax: FunctionCallExprSyntax) throws {
+    let eventName = syntax.argument(named: "perform")
+        .flatMap({ $0.expression.as(DeclReferenceExprSyntax.self)?.baseName.text }) ?? "tap"
+    self = .onTapGesture(perform: eventName)
+}
+```
+
+2. **Use a helper view** to access the environment and dispatch events:
+
+```swift
+private struct OnTapGestureModifierBody<Content: View>: View {
+    let eventName: String
+    let content: Content
+
+    @Environment(Node.self) private var node
+    @Environment(LightpandaRuntime.self) private var runtime
+
+    var body: some View {
+        content.onTapGesture {
+            Task {
+                try? await node.callFunction(
+                    runtime: runtime,
+                    function: #"""
+                    function() {
+                        this.dispatchEvent(new CustomEvent("\#(eventName)", {
+                            bubbles: true,
+                            detail: {}
+                        }));
+                    }
+                    """#
+                )
+            }
+        }
+    }
+}
+```
+
+### Supported Event-Dispatching Modifiers
+
+| Modifier | Argument | Default | Example |
+|----------|----------|---------|---------|
+| `onTapGesture` | `perform:` | `"tap"` | `onTapGesture(count: 2, perform: doubleTap)` |
+| `refreshable` | `action:` | `"refresh"` | `refreshable(action: reload)` |

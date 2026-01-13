@@ -83,6 +83,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ClippedModifier<Library>.self,
             ContextMenuModifier<Library>.self,
             RefreshableModifier<Library>.self,
+            OnTapGestureModifier<Library>.self,
             SearchableModifier<Library>.self,
             NavigationDestinationModifier<Library>.self,
             ScrollContentBackgroundModifier<Library>.self,

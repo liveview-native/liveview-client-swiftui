@@ -201,6 +201,9 @@ let includeModifiers = [
     "FullScreenCoverModifier",
     "PopoverModifier",
     "ConfirmationDialogModifier",
+
+    // Gesture modifiers
+    "OnTapGestureModifier",
     
     // Toolbar modifiers
     "ToolbarModifier",
