@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 import SwiftSyntax
 
@@ -43,3 +44,4 @@ extension DigitalCrownAccessoryModifier: RuntimeViewModifier {
         }
     }
 }
+#endif

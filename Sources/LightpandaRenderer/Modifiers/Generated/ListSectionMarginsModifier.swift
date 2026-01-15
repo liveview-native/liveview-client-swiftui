@@ -1,3 +1,4 @@
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 import SwiftUI
 import SwiftSyntax
 
@@ -30,3 +31,4 @@ extension ListSectionMarginsModifier: RuntimeViewModifier {
         }
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftUI
 import SwiftSyntax
 
@@ -175,3 +176,4 @@ extension DismissalConfirmationDialogModifier: RuntimeViewModifier {
         }
     }
 }
+#endif

@@ -17,7 +17,7 @@ extension NavigationSplitViewStyleModifier: RuntimeViewModifier {
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
             do {
-                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ S(syntax: $0.expression) }) else {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ AnyNavigationSplitViewStyle(syntax: $0.expression) }) else {
                     throw ModifierParseError.missingRequiredArgument(modifier: "NavigationSplitViewStyleModifier", argument: "style")
                 }
                 self = .navigationSplitViewStyle(value0)
@@ -35,11 +35,11 @@ extension NavigationSplitViewStyleModifier: RuntimeViewModifier {
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case .navigationSplitViewStyle(let value0Any):
             if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-                if let value0 = value0Any as? S {
-        _content.navigationSplitViewStyle(value0)
-    } else {
-        _content
-    }
+                if let value0 = value0Any as? AnyNavigationSplitViewStyle {
+                    _content.navigationSplitViewStyle(value0)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }

@@ -11,14 +11,7 @@ extension UnredactedModifier: RuntimeViewModifier {
     public static var baseName: String { "unredacted" }
 
     public init(syntax: FunctionCallExprSyntax) throws {
-        var errors: [Error] = []
-        do {
-            self = .unredacted
-            return
-        } catch {
-            errors.append(error)
-        }
-        throw ModifierParseError.noMatchingVariant(modifier: "UnredactedModifier", errors: errors)
+        self = .unredacted
     }
     @ViewBuilder
     public func body(content _content: Content) -> some View {

@@ -99,3 +99,86 @@ extension AccessibilityChildBehavior: SyntaxConvertible {
         return nil
     }
 }
+
+// MARK: - AccessibilityHeadingLevel
+
+extension AccessibilityHeadingLevel: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self) else {
+            return nil
+        }
+
+        let name = memberAccess.declName.baseName.text
+
+        switch name {
+        case "unspecified": self = .unspecified
+        case "h1": self = .h1
+        case "h2": self = .h2
+        case "h3": self = .h3
+        case "h4": self = .h4
+        case "h5": self = .h5
+        case "h6": self = .h6
+        default: return nil
+        }
+    }
+}
+
+// MARK: - AccessibilityTextContentType
+
+extension AccessibilityTextContentType: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self) else {
+            return nil
+        }
+
+        let name = memberAccess.declName.baseName.text
+
+        switch name {
+        case "plain": self = .plain
+        case "console": self = .console
+        case "fileSystem": self = .fileSystem
+        case "messaging": self = .messaging
+        case "narrative": self = .narrative
+        case "sourceCode": self = .sourceCode
+        case "spreadsheet": self = .spreadsheet
+        case "wordProcessing": self = .wordProcessing
+        default: return nil
+        }
+    }
+}
+
+// MARK: - AccessibilityDirectTouchOptions
+
+extension AccessibilityDirectTouchOptions: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self) else {
+            return nil
+        }
+
+        let name = memberAccess.declName.baseName.text
+
+        switch name {
+        case "silentOnTouch": self = .silentOnTouch
+        case "requiresActivation": self = .requiresActivation
+        default: return nil
+        }
+    }
+}
+
+// MARK: - AccessibilityActionCategory
+
+extension AccessibilityActionCategory: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self) else {
+            return nil
+        }
+
+        let name = memberAccess.declName.baseName.text
+
+        switch name {
+        case "default": self = .default
+        case "edit": self = .edit
+        default: return nil
+        }
+    }
+}

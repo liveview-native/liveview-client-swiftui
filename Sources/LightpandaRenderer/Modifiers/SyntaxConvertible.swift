@@ -112,3 +112,29 @@ extension Bool: SyntaxConvertible {
         }
     }
 }
+
+extension Set: SyntaxConvertible where Element: SyntaxConvertible & Hashable {
+    public init?(syntax: some SyntaxProtocol) {
+        // Handle array syntax like [.medium, .large] or ["event1", "event2"]
+        if let arrayExpr = syntax.as(ArrayExprSyntax.self) {
+            var elements = Set<Element>()
+            for arrayElement in arrayExpr.elements {
+                if let element = Element(syntax: arrayElement.expression) {
+                    elements.insert(element)
+                } else {
+                    return nil
+                }
+            }
+            self = elements
+            return
+        }
+
+        // Handle single element
+        if let element = Element(syntax: syntax) {
+            self = [element]
+            return
+        }
+
+        return nil
+    }
+}

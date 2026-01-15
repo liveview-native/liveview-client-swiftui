@@ -10,9 +10,6 @@ public enum ContainerRelativeFrameModifier<Library: ElementLibrary>: @unchecked 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
     case containerRelativeFrameWithSwiftUICoreAxisSetSwiftIntSwiftIntCoreFoundationCGFloatSwiftUICoreAlignment(Any, count: Any, span: Any, spacing: Any, alignment: Any)
     #endif
-    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    case containerRelativeFrameWithSwiftUICoreAxisSetSwiftUICoreAlignmentescapingCoreFoundationCGFloatSwiftUICoreAxisCoreFoundationCGFloat(Any, alignment: Any, Any)
-    #endif
 }
 
 extension ContainerRelativeFrameModifier: RuntimeViewModifier {
@@ -35,23 +32,6 @@ extension ContainerRelativeFrameModifier: RuntimeViewModifier {
                 }
                 let alignment: SwiftUICore.Alignment = syntax.argument(named: "alignment").flatMap({ SwiftUICore.Alignment(syntax: $0.expression) }) ?? .center
                 self = .containerRelativeFrameWithSwiftUICoreAxisSetSwiftIntSwiftIntCoreFoundationCGFloatSwiftUICoreAlignment(value0, count: count, span: span, spacing: spacing, alignment: alignment)
-                return
-            } catch {
-                errors.append(error)
-            }
-        }
-        #endif
-        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-            do {
-                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ SwiftUICore.Axis.Set(syntax: $0.expression) }) else {
-                    throw ModifierParseError.missingRequiredArgument(modifier: "ContainerRelativeFrameModifier", argument: "axes")
-                }
-                let alignment: SwiftUICore.Alignment = syntax.argument(named: "alignment").flatMap({ SwiftUICore.Alignment(syntax: $0.expression) }) ?? .center
-                guard let value2 = (syntax.arguments.count > 2 ? syntax.arguments[2] : nil).flatMap({ (CoreFoundation.CGFloat, SwiftUICore.Axis) -> CoreFoundation.CGFloat(syntax: $0.expression) }) else {
-                    throw ModifierParseError.missingRequiredArgument(modifier: "ContainerRelativeFrameModifier", argument: "length")
-                }
-                self = .containerRelativeFrameWithSwiftUICoreAxisSetSwiftUICoreAlignmentescapingCoreFoundationCGFloatSwiftUICoreAxisCoreFoundationCGFloat(value0, alignment: alignment, value2)
                 return
             } catch {
                 errors.append(error)
@@ -94,18 +74,6 @@ extension ContainerRelativeFrameModifier: RuntimeViewModifier {
             if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
                 if let value0 = value0Any as? SwiftUICore.Axis.Set, let count = countAny as? Swift.Int, let span = spanAny as? Swift.Int, let spacing = spacingAny as? CoreFoundation.CGFloat, let alignment = alignmentAny as? SwiftUICore.Alignment {
         _content.containerRelativeFrame(value0, count: count, span: span, spacing: spacing, alignment: alignment)
-    } else {
-        _content
-    }
-            } else {
-                _content
-            }
-        #endif
-        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-        case .containerRelativeFrameWithSwiftUICoreAxisSetSwiftUICoreAlignmentescapingCoreFoundationCGFloatSwiftUICoreAxisCoreFoundationCGFloat(let value0Any, alignment: let alignmentAny, let value2Any):
-            if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-                if let value0 = value0Any as? SwiftUICore.Axis.Set, let alignment = alignmentAny as? SwiftUICore.Alignment, let value2 = value2Any as? (CoreFoundation.CGFloat, SwiftUICore.Axis) -> CoreFoundation.CGFloat {
-        _content.containerRelativeFrame(value0, alignment: alignment, value2)
     } else {
         _content
     }

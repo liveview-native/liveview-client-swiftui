@@ -120,79 +120,73 @@ extension NavigationBarTitleModifier: RuntimeViewModifier {
     }
     @ViewBuilder
     public func body(content _content: Content) -> some View {
-        switch self {
         #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        switch self {
         case .navigationBarTitleWithSwiftUICoreText(let value0Any):
             if #available(iOS 13.0, tvOS 13.0, visionOS 1.0, watchOS 6.0, *) {
                 if let value0 = value0Any as? SwiftUICore.Text {
-        _content.navigationBarTitle(value0)
-    } else {
-        _content
-    }
+                    _content.navigationBarTitle(value0)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }
-        #endif
-        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
         case .navigationBarTitleWithSwiftUICoreLocalizedStringKey(let value0Any):
             if #available(iOS 13.0, tvOS 13.0, visionOS 1.0, watchOS 6.0, *) {
                 if let value0 = value0Any as? SwiftUICore.LocalizedStringKey {
-        _content.navigationBarTitle(value0)
-    } else {
-        _content
-    }
+                    _content.navigationBarTitle(value0)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }
-        #endif
-        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
         case .navigationBarTitleWithString(let value0Any):
             if #available(iOS 13.0, tvOS 13.0, visionOS 1.0, watchOS 6.0, *) {
                 if let value0 = value0Any as? String {
-        _content.navigationBarTitle(value0)
-    } else {
-        _content
-    }
+                    _content.navigationBarTitle(value0)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }
-        #endif
         #if os(iOS) || os(visionOS)
         case .navigationBarTitleWithSwiftUICoreTextSwiftUINavigationBarItemTitleDisplayMode(let value0Any, displayMode: let displayModeAny):
             if #available(iOS 13.0, visionOS 1.0, *) {
                 if let value0 = value0Any as? SwiftUICore.Text, let displayMode = displayModeAny as? SwiftUI.NavigationBarItem.TitleDisplayMode {
-        _content.navigationBarTitle(value0, displayMode: displayMode)
-    } else {
-        _content
-    }
+                    _content.navigationBarTitle(value0, displayMode: displayMode)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }
-        #endif
-        #if os(iOS) || os(visionOS)
         case .navigationBarTitleWithSwiftUICoreLocalizedStringKeySwiftUINavigationBarItemTitleDisplayMode(let value0Any, displayMode: let displayModeAny):
             if #available(iOS 13.0, visionOS 1.0, *) {
                 if let value0 = value0Any as? SwiftUICore.LocalizedStringKey, let displayMode = displayModeAny as? SwiftUI.NavigationBarItem.TitleDisplayMode {
-        _content.navigationBarTitle(value0, displayMode: displayMode)
-    } else {
-        _content
-    }
+                    _content.navigationBarTitle(value0, displayMode: displayMode)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }
-        #endif
-        #if os(iOS) || os(visionOS)
         case .navigationBarTitleWithStringSwiftUINavigationBarItemTitleDisplayMode(let value0Any, displayMode: let displayModeAny):
             if #available(iOS 14.0, visionOS 1.0, *) {
                 if let value0 = value0Any as? String, let displayMode = displayModeAny as? SwiftUI.NavigationBarItem.TitleDisplayMode {
-        _content.navigationBarTitle(value0, displayMode: displayMode)
-    } else {
-        _content
-    }
+                    _content.navigationBarTitle(value0, displayMode: displayMode)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }
         #endif
         }
+        #else
+        _content
+        #endif
     }
 }

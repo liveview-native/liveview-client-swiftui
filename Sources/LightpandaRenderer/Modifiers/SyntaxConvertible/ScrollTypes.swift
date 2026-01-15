@@ -82,3 +82,24 @@ public struct AnyScrollTargetBehavior: ScrollTargetBehavior, SyntaxConvertible {
         }
     }
 }
+
+// MARK: - ScrollEdgeEffectStyle
+
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension ScrollEdgeEffectStyle: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self),
+              memberAccess.base == nil else {
+            return nil
+        }
+
+        switch memberAccess.declName.baseName.text {
+        case "automatic": self = .automatic
+        case "soft": self = .soft
+        case "hard": self = .hard
+        default: return nil
+        }
+    }
+}
+#endif

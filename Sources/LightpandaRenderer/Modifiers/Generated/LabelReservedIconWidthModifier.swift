@@ -12,14 +12,16 @@ extension LabelReservedIconWidthModifier: RuntimeViewModifier {
 
     public init(syntax: FunctionCallExprSyntax) throws {
         var errors: [Error] = []
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ CoreFoundation.CGFloat(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "LabelReservedIconWidthModifier", argument: "value")
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            do {
+                guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ CoreFoundation.CGFloat(syntax: $0.expression) }) else {
+                    throw ModifierParseError.missingRequiredArgument(modifier: "LabelReservedIconWidthModifier", argument: "value")
+                }
+                self = .labelReservedIconWidth(value0)
+                return
+            } catch {
+                errors.append(error)
             }
-            self = .labelReservedIconWidth(value0)
-            return
-        } catch {
-            errors.append(error)
         }
         throw ModifierParseError.noMatchingVariant(modifier: "LabelReservedIconWidthModifier", errors: errors)
     }
@@ -27,7 +29,11 @@ extension LabelReservedIconWidthModifier: RuntimeViewModifier {
     public func body(content _content: Content) -> some View {
         switch self {
         case .labelReservedIconWidth(let value0):
-            _content.labelReservedIconWidth(value0)
+            if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+                _content.labelReservedIconWidth(value0)
+            } else {
+                _content
+            }
         }
     }
 }

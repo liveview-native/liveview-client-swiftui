@@ -7,6 +7,10 @@ public enum ModifierParseError: Error, CustomStringConvertible {
     case ambiguousVariant(modifier: String, expectedLabels: [String])
     case noMatchingVariant(modifier: String, errors: [Error])
     case missingRequiredArgument(modifier: String, argument: String)
+    case closureNotSupported(modifier: String, suggestion: String)
+    case publisherNotSupported(modifier: String, suggestion: String)
+    case invalidArgumentValue(modifier: String, argument: String, reason: String)
+    case unsupportedEnvironmentKey(modifier: String, key: String)
 
     public var description: String {
         switch self {
@@ -20,6 +24,14 @@ public enum ModifierParseError: Error, CustomStringConvertible {
             return "\(modifier): no matching variant found. Errors: \(errors)"
         case .missingRequiredArgument(let modifier, let argument):
             return "\(modifier): missing required argument '\(argument)'"
+        case .closureNotSupported(let modifier, let suggestion):
+            return "\(modifier): closures cannot be parsed from syntax at runtime. \(suggestion)"
+        case .publisherNotSupported(let modifier, let suggestion):
+            return "\(modifier): Combine Publisher types cannot be instantiated from syntax at runtime. \(suggestion)"
+        case .invalidArgumentValue(let modifier, let argument, let reason):
+            return "\(modifier): invalid value for argument '\(argument)'. \(reason)"
+        case .unsupportedEnvironmentKey(let modifier, let key):
+            return "\(modifier): unsupported environment key '\(key)'. Supported keys: colorScheme, layoutDirection, isEnabled"
         }
     }
 }

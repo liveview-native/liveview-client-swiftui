@@ -66,43 +66,41 @@ extension NavigationBarItemsModifier: RuntimeViewModifier {
     }
     @ViewBuilder
     public func body(content _content: Content) -> some View {
-        switch self {
         #if os(iOS) || os(tvOS) || os(visionOS)
+        switch self {
         case .navigationBarItemsWithViewView(leading: let leadingAny, trailing: let trailingAny):
             if #available(iOS 13.0, tvOS 13.0, visionOS 1.0, *) {
                 if let leading = leadingAny as? ViewReference<Library>, let trailing = trailingAny as? ViewReference<Library> {
-        _content.navigationBarItems(leading: leading, trailing: trailing)
-    } else {
-        _content
-    }
+                    _content.navigationBarItems(leading: leading, trailing: trailing)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }
-        #endif
-        #if os(iOS) || os(tvOS) || os(visionOS)
         case .navigationBarItemsWithView(leading: let leadingAny):
             if #available(iOS 13.0, tvOS 13.0, visionOS 1.0, *) {
                 if let leading = leadingAny as? ViewReference<Library> {
-        _content.navigationBarItems(leading: leading)
-    } else {
-        _content
-    }
+                    _content.navigationBarItems(leading: leading)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }
-        #endif
-        #if os(iOS) || os(tvOS) || os(visionOS)
         case .navigationBarItemsWithView1(trailing: let trailingAny):
             if #available(iOS 13.0, tvOS 13.0, visionOS 1.0, *) {
                 if let trailing = trailingAny as? ViewReference<Library> {
-        _content.navigationBarItems(trailing: trailing)
-    } else {
-        _content
-    }
+                    _content.navigationBarItems(trailing: trailing)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }
-        #endif
         }
+        #else
+        _content
+        #endif
     }
 }

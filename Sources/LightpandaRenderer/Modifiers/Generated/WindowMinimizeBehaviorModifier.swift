@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftUI
 import SwiftSyntax
 
@@ -31,3 +32,4 @@ extension WindowMinimizeBehaviorModifier: RuntimeViewModifier {
         }
     }
 }
+#endif

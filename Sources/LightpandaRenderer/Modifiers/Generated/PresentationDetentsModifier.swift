@@ -73,30 +73,3 @@ extension PresentationDetent: SyntaxConvertible {
         return nil
     }
 }
-
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
-extension Set<PresentationDetent>: SyntaxConvertible {
-    public init?(syntax: some SyntaxProtocol) {
-        // Handle array syntax like [.medium, .large]
-        if let arrayExpr = syntax.as(ArrayExprSyntax.self) {
-            var detents = Set<PresentationDetent>()
-            for element in arrayExpr.elements {
-                if let detent = PresentationDetent(syntax: element.expression) {
-                    detents.insert(detent)
-                } else {
-                    return nil
-                }
-            }
-            self = detents
-            return
-        }
-        
-        // Handle single detent
-        if let detent = PresentationDetent(syntax: syntax) {
-            self = [detent]
-            return
-        }
-        
-        return nil
-    }
-}

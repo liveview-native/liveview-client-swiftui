@@ -85,11 +85,15 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             RefreshableModifier<Library>.self,
             OnTapGestureModifier<Library>.self,
             OnLongPressGestureModifier<Library>.self,
+            OnHoverModifier<Library>.self,
             GestureModifier<Library>.self,
             HighPriorityGestureModifier<Library>.self,
             SimultaneousGestureModifier<Library>.self,
             OnAppearModifier<Library>.self,
             OnDisappearModifier<Library>.self,
+            OnChangeModifier<Library>.self,
+            TaskModifier<Library>.self,
+            OnOpenURLModifier<Library>.self,
             SearchableModifier<Library>.self,
             NavigationDestinationModifier<Library>.self,
             ScrollContentBackgroundModifier<Library>.self,
@@ -115,6 +119,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             CornerRadiusModifier<Library>.self,
             ScaleEffectModifier<Library>.self,
             RotationEffectModifier<Library>.self,
+            Rotation3DEffectModifier<Library>.self,
             OffsetModifier<Library>.self,
             ShadowModifier<Library>.self,
             BlurModifier<Library>.self,
@@ -146,6 +151,29 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             AccessibilitySortPriorityModifier<Library>.self,
             AccessibilityInputLabelsModifier<Library>.self,
             AccessibilityIgnoresInvertColorsModifier<Library>.self,
+            AccessibilityHeadingModifier<Library>.self,
+            AccessibilityActivationPointModifier<Library>.self,
+            AccessibilityRespondsToUserInteractionModifier<Library>.self,
+            AccessibilityTextContentTypeModifier<Library>.self,
+            AccessibilityDirectTouchModifier<Library>.self,
+            // Grid cell modifiers
+            GridCellColumnsModifier<Library>.self,
+            GridCellAnchorModifier<Library>.self,
+            GridCellUnsizedAxesModifier<Library>.self,
+            GridColumnAlignmentModifier<Library>.self,
+            // Transform effect modifiers
+            TransformEffectModifier<Library>.self,
+            // List tint modifiers
+            ListRowSeparatorTintModifier<Library>.self,
+            ListSectionSeparatorTintModifier<Library>.self,
+            ForegroundColorModifier<Library>.self,
+            // More accessibility modifiers
+            AccessibilityDragPointModifier<Library>.self,
+            AccessibilityDropPointModifier<Library>.self,
+            AccessibilityChildrenModifier<Library>.self,
+            AccessibilityRepresentationModifier<Library>.self,
+            AccessibilityShowsLargeContentViewerModifier<Library>.self,
+            AccessibilityActionsModifier<Library>.self,
             // List styling modifiers
             AlternatingRowBackgroundsModifier<Library>.self,
             ListStyleModifier<Library>.self,
@@ -153,6 +181,9 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ListRowInsetsModifier<Library>.self,
             ListRowSeparatorModifier<Library>.self,
             ListSectionSeparatorModifier<Library>.self,
+            // List action modifiers
+            OnMoveModifier<Library>.self,
+            OnDeleteModifier<Library>.self,
             // Table styling modifiers
             TableStyleModifier<Library>.self,
             TableColumnHeadersModifier<Library>.self,
@@ -170,12 +201,19 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ToggleStyleModifier<Library>.self,
             ProgressViewStyleModifier<Library>.self,
             LabeledContentStyleModifier<Library>.self,
+            ControlGroupStyleModifier<Library>.self,
             // Text input modifiers
             OnSubmitModifier<Library>.self,
             SubmitLabelModifier<Library>.self,
             AutocorrectionDisabledModifier<Library>.self,
+            TextEditorStyleModifier<Library>.self,
             // Presentation modifiers
             PresentationDetentsModifier<Library>.self,
+            PresentationCornerRadiusModifier<Library>.self,
+            PresentationDragIndicatorModifier<Library>.self,
+            PresentationCompactAdaptationModifier<Library>.self,
+            PresentationContentInteractionModifier<Library>.self,
+            PresentationBackgroundInteractionModifier<Library>.self,
             LabelsHiddenModifier<Library>.self,
             BoldModifier<Library>.self,
             ItalicModifier<Library>.self,
@@ -191,6 +229,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             GrayscaleModifier<Library>.self,
             ColorInvertModifier<Library>.self,
             ColorMultiplyModifier<Library>.self,
+            LuminanceToAlphaModifier<Library>.self,
             BaselineOffsetModifier<Library>.self,
             KerningModifier<Library>.self,
             TrackingModifier<Library>.self,
@@ -208,14 +247,110 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             // Focus modifiers
             FocusableModifier<Library>.self,
             FocusedModifier<Library>.self,
+            // Additional simple modifiers
+            AccentColorModifier<Library>.self,
+            AllowsHitTestingModifier<Library>.self,
+            AllowsTighteningModifier<Library>.self,
+            BadgeProminenceModifier<Library>.self,
+            BlendModeModifier<Library>.self,
+            ColorSchemeModifier<Library>.self,
+            CompositingGroupModifier<Library>.self,
+            DeleteDisabledModifier<Library>.self,
+            DrawingGroupModifier<Library>.self,
+            FixedSizeModifier<Library>.self,
+            HeaderProminenceModifier<Library>.self,
+            ImageScaleModifier<Library>.self,
+            InteractiveDismissDisabledModifier<Library>.self,
+            LayoutPriorityModifier<Library>.self,
+            MinimumScaleFactorModifier<Library>.self,
+            MoveDisabledModifier<Library>.self,
+            PreferredColorSchemeModifier<Library>.self,
+            PrivacySensitiveModifier<Library>.self,
+            RedactedModifier<Library>.self,
+            SymbolRenderingModeModifier<Library>.self,
+            SymbolVariantModifier<Library>.self,
+            TransitionModifier<Library>.self,
+            TruncationModeModifier<Library>.self,
+            ZIndexModifier<Library>.self,
+            BadgeModifier<Library>.self,
+            HelpModifier<Library>.self,
+            TabItemModifier<Library>.self,
+            UnredactedModifier<Library>.self,
+            DynamicTypeSizeModifier<Library>.self,
+            FlipsForRightToLeftLayoutDirectionModifier<Library>.self,
+            SpeechSpellsOutCharactersModifier<Library>.self,
+            SpeechAlwaysIncludesPunctuationModifier<Library>.self,
+            SpeechAdjustedPitchModifier<Library>.self,
+            SpeechAnnouncementsQueuedModifier<Library>.self,
+            ScenePaddingModifier<Library>.self,
+            ContentTransitionModifier<Library>.self,
+            ButtonBorderShapeModifier<Library>.self,
+            ButtonRepeatBehaviorModifier<Library>.self,
+            MenuIndicatorModifier<Library>.self,
+            TextSelectionModifier<Library>.self,
+            ListItemTintModifier<Library>.self,
+            PresentationBackgroundModifier<Library>.self,
+            // Simple modifiers
+            SubmitScopeModifier<Library>.self,
+            GeometryGroupModifier<Library>.self,
+            AllowedDynamicRangeModifier<Library>.self,
+            FileDialogMessageModifier<Library>.self,
+            FileDialogCustomizationIDModifier<Library>.self,
+            FileDialogConfirmationLabelModifier<Library>.self,
+            FileDialogDefaultDirectoryModifier<Library>.self,
+            FileDialogImportsUnresolvedAliasesModifier<Library>.self,
+            FileExporterFilenameLabelModifier<Library>.self,
+            NavigationSplitViewColumnWidthModifier<Library>.self,
+            InspectorColumnWidthModifier<Library>.self,
+            // Container shape modifier
+            ContainerShapeModifier<Library>.self,
+            // Matched geometry effect modifier
+            MatchedGeometryEffectModifier<Library>.self,
+            // Geometry and transform effect modifiers
+            ProjectionEffectModifier<Library>.self,
+            // Content modifiers
+            InvalidatableContentModifier<Library>.self,
+            // List action modifiers
+            OnMoveModifier<Library>.self,
+            OnDeleteModifier<Library>.self,
+            // Alignment guide modifier
+            AlignmentGuideModifier<Library>.self,
+            // File exporter modifier (stub - always throws, not fully implemented)
+            FileExporterModifier<Library>.self,
+            // File importer modifier
+            FileImporterModifier<Library>.self,
+            // File mover modifier
+            FileMoverModifier<Library>.self,
+            // Environment modifier
+            EnvironmentModifier<Library>.self,
+            // User activity modifier (Handoff, Siri, Spotlight)
+            UserActivityModifier<Library>.self,
+            // User activity continuation modifier (Handoff, Universal Links)
+            OnContinueUserActivityModifier<Library>.self,
+            // Equatable modifier
+            EquatableModifier<Library>.self,
         ] + Self.platformSpecificTypes
     }
-    
+
     static var platformSpecificTypes: [any RuntimeViewModifier<Library>.Type] {
         var types: [any RuntimeViewModifier<Library>.Type] = []
 
         #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
         types.append(NavigationBarTitleDisplayModeModifier<Library>.self)
+        types.append(IndexViewStyleModifier<Library>.self)
+        types.append(ActionSheetModifier<Library>.self)
+        #endif
+
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        types.append(AutocapitalizationModifier<Library>.self)
+        #endif
+
+        #if os(iOS)
+        types.append(StatusBarHiddenModifier<Library>.self)
+        #endif
+
+        #if os(iOS) || os(visionOS)
+        types.append(StatusBarModifier<Library>.self)
         #endif
 
         #if os(iOS) || os(macOS)
@@ -223,9 +358,27 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         types.append(DropDestinationModifier<Library>.self)
         #endif
 
+        #if os(macOS)
+        if #available(macOS 13.0, *) {
+            types.append(CopyableModifier<Library>.self)
+            types.append(CuttableModifier<Library>.self)
+            types.append(PasteDestinationModifier<Library>.self)
+        }
+        #endif
+
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             types.append(ScrollTargetBehaviorModifier<Library>.self)
+            // ScrollTransitionModifier is not yet enabled in Package.swift
+            // types.append(ScrollTransitionModifier<Library>.self)
+            types.append(VisualEffectModifier<Library>.self)
         }
+
+        // Inspector modifier (iOS 17+, macOS 14+)
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            types.append(InspectorModifier<Library>.self)
+        }
+        #endif
 
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         if #available(iOS 17.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
@@ -238,9 +391,382 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         types.append(PrefersDefaultFocusModifier<Library>.self)
         #endif
 
+        #if os(macOS) || os(tvOS)
+        types.append(FocusSectionModifier<Library>.self)
+        #endif
+
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            types.append(FocusEffectDisabledModifier<Library>.self)
+            types.append(ScrollClipDisabledModifier<Library>.self)
+            types.append(SafeAreaPaddingModifier<Library>.self)
+        }
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            types.append(RenameActionModifier<Library>.self)
+            types.append(InteractionActivityTrackingTagModifier<Library>.self)
+            types.append(PersistentSystemOverlaysModifier<Library>.self)
+            types.append(MenuOrderModifier<Library>.self)
+            types.append(BackgroundStyleModifier<Library>.self)
+            types.append(NavigationSplitViewStyleModifier<Library>.self)
+            types.append(OnGeometryChangeModifier<Library>.self)
+        }
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            types.append(ScrollTargetLayoutModifier<Library>.self)
+            types.append(ContainerBackgroundModifier<Library>.self)
+            types.append(DefaultScrollAnchorModifier<Library>.self)
+            types.append(ContentMarginsModifier<Library>.self)
+            types.append(CoordinateSpaceModifier<Library>.self)
+            types.append(ScrollIndicatorsFlashModifier<Library>.self)
+            types.append(ScrollPositionModifier<Library>.self)
+            // Layout modifiers
+            types.append(ContainerRelativeFrameModifier<Library>.self)
+            types.append(LayoutDirectionBehaviorModifier<Library>.self)
+            // Typesetting language modifier
+            types.append(TypesettingLanguageModifier<Library>.self)
+        }
+        if #available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *) {
+            types.append(ScrollBounceBehaviorModifier<Library>.self)
+            types.append(MenuActionDismissBehaviorModifier<Library>.self)
+        }
+        #endif
+
+        // Search scopes modifier (iOS 16+, macOS 13+, tvOS 16.4+)
+        #if os(iOS) || os(macOS) || os(tvOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.4, *) {
+            types.append(SearchScopesModifier<Library>.self)
+        }
+        #endif
+
+        // Search suggestions modifier (iOS 16+, macOS 13+, tvOS 16+, watchOS 9+)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            types.append(SearchSuggestionsModifier<Library>.self)
+        }
+        #endif
+
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        types.append(HoverEffectDisabledModifier<Library>.self)
+        if #available(iOS 13.4, tvOS 16.0, *) {
+            types.append(HoverEffectModifier<Library>.self)
+            types.append(DefaultHoverEffectModifier<Library>.self)
+        }
+        #endif
+
+        #if os(tvOS) || os(visionOS)
+        if #available(tvOS 16.0, *) {
+            types.append(ListRowHoverEffectModifier<Library>.self)
+        }
+        if #available(tvOS 17.0, *) {
+            types.append(ListRowHoverEffectDisabledModifier<Library>.self)
+        }
+        #endif
+
+        // Continuous hover modifier
+        #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, visionOS 1.0, *) {
+            types.append(OnContinuousHoverModifier<Library>.self)
+        }
+        #endif
+
+        // Pointer visibility modifier
+        #if os(macOS) || os(tvOS) || os(visionOS)
+        types.append(PointerVisibilityModifier<Library>.self)
+        #endif
+
+        // List spacing modifiers (not available on macOS)
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        types.append(ListRowSpacingModifier<Library>.self)
+        types.append(ListSectionSpacingModifier<Library>.self)
+        types.append(ListSectionMarginsModifier<Library>.self)
+        #endif
+
+        #if os(macOS)
+        types.append(TouchBarItemPrincipalModifier<Library>.self)
+        types.append(TouchBarItemPresenceModifier<Library>.self)
+        types.append(NavigationSubtitleModifier<Library>.self)
+        types.append(WindowDismissBehaviorModifier<Library>.self)
+        types.append(WindowResizeBehaviorModifier<Library>.self)
+        types.append(WindowFullScreenBehaviorModifier<Library>.self)
+        types.append(WindowMinimizeBehaviorModifier<Library>.self)
+        types.append(WindowToolbarFullScreenVisibilityModifier<Library>.self)
+        types.append(AllowsWindowActivationEventsModifier<Library>.self)
+        types.append(FileDialogBrowserOptionsModifier<Library>.self)
+        types.append(SpringLoadingBehaviorModifier<Library>.self)
+        types.append(HorizontalRadioGroupLayoutModifier<Library>.self)
+        // App termination modifiers (macOS 15.4+)
+        if #available(macOS 15.4, *) {
+            types.append(DialogPreventsAppTerminationModifier<Library>.self)
+            types.append(PresentationPreventsAppTerminationModifier<Library>.self)
+        }
+        // Window resize anchor modifier (macOS 26+)
+        if #available(macOS 26.0, *) {
+            types.append(WindowResizeAnchorModifier<Library>.self)
+        }
+        // Text input completion (macOS only)
+        types.append(TextInputCompletionModifier<Library>.self)
+        // Toolbar item hidden (macOS only)
+        types.append(ToolbarItemHiddenModifier<Library>.self)
+        #endif
+
+        // Material active appearance modifier (macOS 15.0+, iOS 18.0+)
+        #if os(macOS) || os(iOS)
+        if #available(macOS 15.0, iOS 18.0, *) {
+            types.append(MaterialActiveAppearanceModifier<Library>.self)
+        }
+        #endif
+
+        // Symbol effects modifiers
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            types.append(SymbolEffectModifier<Library>.self)
+            types.append(SymbolEffectsRemovedModifier<Library>.self)
+        }
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(SymbolColorRenderingModeModifier<Library>.self)
+        }
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(SymbolVariableValueModeModifier<Library>.self)
+        }
+
+        // Scroll edge effect modifiers (iOS 26+)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+            types.append(ScrollEdgeEffectHiddenModifier<Library>.self)
+        }
+        #endif
+
+        // Background extension effect modifiers (iOS 26+)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(BackgroundExtensionEffectModifier<Library>.self)
+        }
+        #endif
+
+        // Glass effect transition modifiers (iOS 26+)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+            types.append(GlassEffectTransitionModifier<Library>.self)
+            types.append(GlassEffectUnionModifier<Library>.self)
+        }
+        #endif
+
+        // Scroll edge effect style modifiers (iOS 26+)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+            types.append(ScrollEdgeEffectStyleModifier<Library>.self)
+        }
+        #endif
+
+        // Label modifiers (iOS 26+)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(LabelIconToTitleSpacingModifier<Library>.self)
+            types.append(LabelReservedIconWidthModifier<Library>.self)
+        }
+
+        // Labels visibility modifier (iOS 18+)
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
+            types.append(LabelsVisibilityModifier<Library>.self)
+        }
+
+        // Navigation transition modifier (iOS 18+)
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
+            types.append(NavigationTransitionModifier<Library>.self)
+        }
+
+        // Matched transition source modifier (iOS 18+)
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
+            types.append(MatchedTransitionSourceModifier<Library>.self)
+        }
+
+        // Scroll geometry change modifier (iOS 18+)
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
+            types.append(OnScrollGeometryChangeModifier<Library>.self)
+        }
+
+        // Palette selection effect modifier
+        types.append(PaletteSelectionEffectModifier<Library>.self)
+
+        // Text selection affinity modifier
+        types.append(TextSelectionAffinityModifier<Library>.self)
+
+        #if os(iOS) || os(macOS) || os(visionOS)
+        if #available(iOS 18.0, macOS 15.0, visionOS 2.4, *) {
+            types.append(WritingToolsBehaviorModifier<Library>.self)
+        }
+        #endif
+
+        // Dialog modifiers
+        #if os(macOS)
+        types.append(DialogSeverityModifier<Library>.self)
+        if #available(macOS 14.0, *) {
+            types.append(DialogSuppressionToggleModifier<Library>.self)
+        }
+        #endif
+
+        // Selection disabled modifier
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            types.append(SelectionDisabledModifier<Library>.self)
+        }
+        #endif
+
+        // ID and tag modifiers
+        types.append(IdModifier<Library>.self)
+        types.append(TagModifier<Library>.self)
+
+        // Type select equivalent (macOS)
+        #if os(macOS)
+        types.append(TypeSelectEquivalentModifier<Library>.self)
+        #endif
+
+        // Navigation modifiers
+        types.append(NavigationBarBackButtonHiddenModifier<Library>.self)
+
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        types.append(NavigationBarHiddenModifier<Library>.self)
+        types.append(NavigationBarTitleModifier<Library>.self)
+        #endif
+
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        types.append(NavigationBarItemsModifier<Library>.self)
+        #endif
+
+        types.append(NavigationLinkIndicatorVisibilityModifier<Library>.self)
+
+        // Sensory feedback modifier
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            types.append(SensoryFeedbackModifier<Library>.self)
+        }
+
+        // Immersive environment picker (visionOS only)
+        #if os(visionOS)
+        types.append(ImmersiveEnvironmentPickerModifier<Library>.self)
+        #endif
+
+        // Content capture protection (visionOS only)
+        #if os(visionOS)
+        if #available(visionOS 26.0, *) {
+            types.append(ContentCaptureProtectedModifier<Library>.self)
+        }
+        #endif
+
+        // Ornament modifier (visionOS only)
+        #if os(visionOS)
+        types.append(OrnamentModifier<Library>.self)
+        #endif
+
+        // Supported volume viewpoints modifier (visionOS 2.0+)
+        #if os(visionOS)
+        if #available(visionOS 2.0, *) {
+            types.append(SupportedVolumeViewpointsModifier<Library>.self)
+        }
+        #endif
+
+        // Digital Crown modifiers (watchOS only)
+        #if os(watchOS)
+        types.append(DigitalCrownAccessoryModifier<Library>.self)
+        types.append(DigitalCrownRotationModifier<Library>.self)
+        types.append(ListRowPlatterColorModifier<Library>.self)
+        types.append(DefaultWheelPickerItemHeightModifier<Library>.self)
+        #endif
+
+        // Find/replace modifiers (iOS 16+, macOS 26+)
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 26.0, *) {
+            types.append(FindDisabledModifier<Library>.self)
+            types.append(ReplaceDisabledModifier<Library>.self)
+        }
+        #endif
+
+        // Find navigator modifier (iOS 16+, macOS 26+)
+        #if os(iOS) || os(macOS)
+        if #available(iOS 16.0, macOS 26.0, *) {
+            types.append(FindNavigatorModifier<Library>.self)
+        }
+        #endif
+
+        // Autocorrection modifier (deprecated but still available)
+        types.append(DisableAutocorrectionModifier<Library>.self)
+
+        // TabView sidebar modifiers (macOS/iPadOS)
+        types.append(TabViewSidebarHeaderModifier<Library>.self)
+        types.append(TabViewSidebarFooterModifier<Library>.self)
+        types.append(TabViewSidebarBottomBarModifier<Library>.self)
+
+        // TabView bottom accessory (iOS/tvOS/watchOS/visionOS)
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        types.append(TabViewBottomAccessoryModifier<Library>.self)
+        #endif
+
+        // TabView search activation (iOS 26+, macOS 26+)
+        #if os(iOS) || os(macOS)
+        if #available(iOS 26.0, macOS 26.0, *) {
+            types.append(TabViewSearchActivationModifier<Library>.self)
+        }
+        #endif
+
+        // TabView customization (iOS 18+, macOS 15+, tvOS 18+, visionOS 2+, watchOS 11+)
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
+            types.append(TabViewCustomizationModifier<Library>.self)
+        }
+
+        // TabBar minimize behavior (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(TabBarMinimizeBehaviorModifier<Library>.self)
+        }
+
+        // Writing tools affordance visibility (iOS 18.4+, macOS 15.4+)
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 18.4, macOS 15.4, tvOS 18.4, visionOS 2.4, watchOS 11.4, *) {
+            types.append(WritingToolsAffordanceVisibilityModifier<Library>.self)
+        }
+        #endif
+
+        // EdgesIgnoringSafeArea (deprecated but useful for compatibility)
+        types.append(EdgesIgnoringSafeAreaModifier<Library>.self)
+
+        // NavigationViewStyle (deprecated but useful for legacy compatibility)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 7.0, visionOS 1.0, *) {
+            types.append(NavigationViewStyleModifier<Library>.self)
+        }
+        #endif
+
+        // TouchBar customization label (macOS only)
+        #if os(macOS)
+        types.append(TouchBarCustomizationLabelModifier<Library>.self)
+        #endif
+
+        // DefersSystemGestures (iOS only)
+        #if os(iOS)
+        if #available(iOS 16.0, *) {
+            types.append(DefersSystemGesturesModifier<Library>.self)
+        }
+        #endif
+
+        // Slider thumb visibility modifier (iOS 26+)
+        #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 26.0, macOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(SliderThumbVisibilityModifier<Library>.self)
+        }
+        #endif
+
+        // List section index visibility modifier (iOS 26+, visionOS 26+, watchOS 26+)
+        #if os(iOS) || os(visionOS) || os(watchOS)
+        if #available(iOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+            types.append(ListSectionIndexVisibilityModifier<Library>.self)
+        }
+        #endif
+
+        // Key press modifier (iOS 17+, macOS 14+)
+        #if os(iOS) || os(macOS)
+        if #available(iOS 17.0, macOS 14.0, *) {
+            types.append(OnKeyPressModifier<Library>.self)
+        }
+        #endif
+
         return types
     }
-    
+
     /// Text modifier types that can be applied directly to `SwiftUI.Text`.
     static var textModifierTypes: [any RuntimeTextModifier.Type] {
         [

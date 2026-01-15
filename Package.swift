@@ -92,7 +92,7 @@ let includeModifiers = [
     "ModifierParseError",
     
 //    "AccentColorModifier",
-//    "ActionSheetModifier",
+    "ActionSheetModifier",
 "AlertModifier",
 //    "AllowsHitTestingModifier",
 //    "AllowsTighteningModifier",
@@ -131,6 +131,7 @@ let includeModifiers = [
     "CornerRadiusModifier",
     "ScaleEffectModifier",
     "RotationEffectModifier",
+    "Rotation3DEffectModifier",
     "OffsetModifier",
         "ShadowModifier",
     "BlurModifier",
@@ -139,6 +140,7 @@ let includeModifiers = [
     "DisabledModifier",
     "LabelsHiddenModifier",
     "NavigationDestinationModifier",
+    "NavigationTransitionModifier",
     "RefreshableModifier",
     "ScrollContentBackgroundModifier",
     "ScrollDisabledModifier",
@@ -195,7 +197,8 @@ let includeModifiers = [
     
     // Image modifiers
     "ResizableModifier",
-    
+    "LuminanceToAlphaModifier",
+
     // Presentation modifiers
     "SheetModifier",
     "FullScreenCoverModifier",
@@ -210,11 +213,14 @@ let includeModifiers = [
     "SimultaneousGestureModifier",
     "DraggableModifier",
     "DropDestinationModifier",
+    "PasteDestinationModifier",
 
     // Lifecycle modifiers
     "OnAppearModifier",
     "OnDisappearModifier",
-    
+    "OnChangeModifier",
+    "TaskModifier",
+
     // Toolbar modifiers
     "ToolbarModifier",
     "ToolbarBackgroundModifier",
@@ -226,6 +232,7 @@ let includeModifiers = [
     "ToolbarTitleMenuModifier",
     
     // Accessibility modifiers
+    "AccessibilityAdjustableActionModifier",
     "AccessibilityLabelModifier",
     "AccessibilityHintModifier",
     "AccessibilityValueModifier",
@@ -245,6 +252,8 @@ let includeModifiers = [
     "ListRowInsetsModifier",
     "ListRowSeparatorModifier",
     "ListSectionSeparatorModifier",
+    "ListRowHoverEffectModifier",
+    "ListRowHoverEffectDisabledModifier",
     
     // Table styling modifiers
     "TableStyleModifier",
@@ -265,6 +274,13 @@ let includeModifiers = [
     "ToggleStyleModifier",
     "ProgressViewStyleModifier",
     "LabeledContentStyleModifier",
+    "LabelsVisibilityModifier",
+    "LabelIconToTitleSpacingModifier",
+    "LabelReservedIconWidthModifier",
+    "IndexViewStyleModifier",
+    "ControlGroupStyleModifier",
+    "NavigationSplitViewStyleModifier",
+    "NavigationViewStyleModifier",
 
     // Text input modifiers
     "KeyboardShortcutModifier",
@@ -278,6 +294,11 @@ let includeModifiers = [
 
     // Presentation modifiers
     "PresentationDetentsModifier",
+    "PresentationCornerRadiusModifier",
+    "PresentationDragIndicatorModifier",
+    "PresentationCompactAdaptationModifier",
+    "PresentationContentInteractionModifier",
+    "PresentationBackgroundInteractionModifier",
 
     // Focus modifiers
     "FocusableModifier",
@@ -285,6 +306,406 @@ let includeModifiers = [
     "FocusScopeModifier",
     "DefaultFocusModifier",
     "PrefersDefaultFocusModifier",
+    "FocusSectionModifier",
+
+    // Additional simple modifiers
+    "AccentColorModifier",
+    "AllowsHitTestingModifier",
+    "AllowsTighteningModifier",
+    "BadgeProminenceModifier",
+    "BlendModeModifier",
+    "ColorSchemeModifier",
+    "CompositingGroupModifier",
+    "DeleteDisabledModifier",
+    "DrawingGroupModifier",
+    "FixedSizeModifier",
+    "HeaderProminenceModifier",
+    "ImageScaleModifier",
+    "InteractiveDismissDisabledModifier",
+    "LayoutPriorityModifier",
+    "MinimumScaleFactorModifier",
+    "MoveDisabledModifier",
+    "PreferredColorSchemeModifier",
+    "PrivacySensitiveModifier",
+    "RedactedModifier",
+    "SymbolRenderingModeModifier",
+    "SymbolVariantModifier",
+    "TransitionModifier",
+    "TruncationModeModifier",
+    "ZIndexModifier",
+
+    // Layout modifiers
+    "IgnoresSafeAreaModifier",
+    "PositionModifier",
+
+    // UI modifiers
+    "BadgeModifier",
+    "HelpModifier",
+    "StatusBarHiddenModifier",
+    "StatusBarModifier",
+    "TabItemModifier",
+    "UnredactedModifier",
+
+    // Additional layout modifiers
+    "DynamicTypeSizeModifier",
+    "FlipsForRightToLeftLayoutDirectionModifier",
+
+    // Focus modifiers (additional)
+    "FocusEffectDisabledModifier",
+    "ScrollClipDisabledModifier",
+
+    // Speech/Accessibility modifiers
+    "SpeechSpellsOutCharactersModifier",
+    "SpeechAlwaysIncludesPunctuationModifier",
+    "SpeechAdjustedPitchModifier",
+    "SpeechAnnouncementsQueuedModifier",
+
+    // Layout modifiers
+    "ScenePaddingModifier",
+
+    // Transition modifiers
+    "ContentTransitionModifier",
+
+    // Activity tracking
+    "InteractionActivityTrackingTagModifier",
+
+    // Button modifiers
+    "ButtonBorderShapeModifier",
+    "ButtonRepeatBehaviorModifier",
+    "HoverEffectDisabledModifier",
+    "DefaultHoverEffectModifier",
+
+    // System overlay modifiers
+    "PersistentSystemOverlaysModifier",
+    "SafeAreaPaddingModifier",
+
+    // Visibility modifiers
+    "PointerVisibilityModifier",
+    "MenuIndicatorModifier",
+    "MenuOrderModifier",
+
+    // Scroll modifiers
+    "ScrollTargetLayoutModifier",
+    "ScrollIndicatorsFlashModifier",
+    "ScrollEdgeEffectHiddenModifier",
+    "ScrollTransitionModifier",
+
+    // Style modifiers (type-erased)
+    "TextSelectionModifier",
+    "ListItemTintModifier",
+    "BackgroundStyleModifier",
+    "ContainerBackgroundModifier",
+    "PresentationBackgroundModifier",
+
+    // Scroll modifiers
+    "DefaultScrollAnchorModifier",
+    "ContentMarginsModifier",
+    "ScrollBounceBehaviorModifier",
+    "ScrollPositionModifier",
+
+    // Container shape modifier
+    "ContainerShapeModifier",
+
+    // Additional accessibility modifiers
+    "AccessibilityHeadingModifier",
+    "AccessibilityActivationPointModifier",
+    "AccessibilityRespondsToUserInteractionModifier",
+    "AccessibilityTextContentTypeModifier",
+    "AccessibilityDirectTouchModifier",
+
+    // Grid cell modifiers
+    "GridCellColumnsModifier",
+    "GridCellAnchorModifier",
+    "GridCellUnsizedAxesModifier",
+    "GridColumnAlignmentModifier",
+
+    // Transform effect modifiers
+    "TransformEffectModifier",
+
+    // List tint modifiers
+    "ListRowSeparatorTintModifier",
+    "ListSectionSeparatorTintModifier",
+    "ForegroundColorModifier",
+
+    // More accessibility modifiers
+    "AccessibilityDragPointModifier",
+    "AccessibilityDropPointModifier",
+    "AccessibilityChildrenModifier",
+    "AccessibilityRepresentationModifier",
+    "AccessibilityShowsLargeContentViewerModifier",
+    "AccessibilityActionsModifier",
+
+    // Simple modifiers ready to enable
+    "SubmitScopeModifier",
+    "GeometryGroupModifier",
+    "CoordinateSpaceModifier",
+    "AllowedDynamicRangeModifier",
+    "HoverEffectModifier",
+    "TouchBarItemPrincipalModifier",
+    "TouchBarItemPresenceModifier",
+    "FileDialogMessageModifier",
+    "FileDialogCustomizationIDModifier",
+    "FileDialogConfirmationLabelModifier",
+    "FileDialogDefaultDirectoryModifier",
+    "FileDialogImportsUnresolvedAliasesModifier",
+    "FileExporterFilenameLabelModifier",
+    "FileDialogBrowserOptionsModifier",
+    "NavigationSplitViewColumnWidthModifier",
+
+    // Symbol effects
+    "SymbolEffectModifier",
+    "SymbolEffectsRemovedModifier",
+    "SymbolColorRenderingModeModifier",
+    "SymbolVariableValueModeModifier",
+
+    // Navigation modifiers
+    "NavigationSubtitleModifier",
+
+    // Palette selection
+    "PaletteSelectionEffectModifier",
+
+    // Writing tools
+    "WritingToolsBehaviorModifier",
+
+    // Text selection
+    "TextSelectionAffinityModifier",
+
+    // Text input completion modifier
+    "TextInputCompletionModifier",
+
+    // Text input suggestions modifier
+    "TextInputSuggestionsModifier",
+
+    // Text editor style modifier
+    "TextEditorStyleModifier",
+
+    // Window behavior modifiers
+    "WindowDismissBehaviorModifier",
+    "WindowResizeBehaviorModifier",
+    "WindowFullScreenBehaviorModifier",
+    "WindowMinimizeBehaviorModifier",
+    "WindowToolbarFullScreenVisibilityModifier",
+    "AllowsWindowActivationEventsModifier",
+
+    // App termination modifiers
+    "DialogPreventsAppTerminationModifier",
+    "PresentationPreventsAppTerminationModifier",
+
+    // Material appearance modifier
+    "MaterialActiveAppearanceModifier",
+
+    // Dialog modifiers
+    "DialogSeverityModifier",
+    "DialogIconModifier",
+    "DialogSuppressionToggleModifier",
+
+    // Selection modifiers
+    "SelectionDisabledModifier",
+
+    // ID and tag modifiers
+    "IdModifier",
+    "TagModifier",
+
+    // Type select modifier (macOS)
+    "TypeSelectEquivalentModifier",
+
+    // Navigation modifiers
+    "NavigationBarBackButtonHiddenModifier",
+    "NavigationBarHiddenModifier",
+    "NavigationBarTitleModifier",
+    "NavigationLinkIndicatorVisibilityModifier",
+    "NavigationBarItemsModifier",
+
+    // Sensory feedback modifier (iOS 17+)
+    "SensoryFeedbackModifier",
+
+    // Environment modifiers (visionOS only)
+    "ImmersiveEnvironmentPickerModifier",
+
+    // Spring loading modifier (macOS)
+    "SpringLoadingBehaviorModifier",
+
+    // Content capture protection (visionOS)
+    "ContentCaptureProtectedModifier",
+
+    // Ornament modifier (visionOS)
+    "OrnamentModifier",
+
+    // Matched geometry effect modifier
+    "MatchedGeometryEffectModifier",
+
+    // Matched transition source modifier (iOS 18+)
+    "MatchedTransitionSourceModifier",
+
+    // Additional layout modifiers
+    "ContainerRelativeFrameModifier",
+    "HorizontalRadioGroupLayoutModifier",
+    "LayoutDirectionBehaviorModifier",
+
+    // List spacing modifiers
+    "ListRowSpacingModifier",
+    "ListSectionSpacingModifier",
+    "ListSectionMarginsModifier",
+
+    // Hover event modifiers
+    "OnHoverModifier",
+    "OnContinuousHoverModifier",
+
+    // Digital Crown modifiers (watchOS)
+    "DigitalCrownAccessoryModifier",
+    "DigitalCrownRotationModifier",
+
+    // Geometry and transform effect modifiers
+    "ProjectionEffectModifier",
+    "WindowResizeAnchorModifier",
+
+    // Menu modifiers
+    "MenuActionDismissBehaviorModifier",
+
+    // Background effect modifiers (iOS 26+)
+    "BackgroundExtensionEffectModifier",
+
+    // Glass effect modifiers (iOS 26+)
+    "GlassEffectTransitionModifier",
+    "GlassEffectIDModifier",
+    "GlassEffectUnionModifier",
+
+    // Scroll effect modifiers (iOS 26+)
+    "ScrollEdgeEffectStyleModifier",
+
+    // Find/replace modifiers (text editor)
+    "FindDisabledModifier",
+    "ReplaceDisabledModifier",
+    "FindNavigatorModifier",
+
+    // Legacy autocorrection modifier
+    "DisableAutocorrectionModifier",
+
+    // TabView modifiers
+    "TabViewSidebarHeaderModifier",
+    "TabViewSidebarFooterModifier",
+    "TabViewSidebarBottomBarModifier",
+    "TabViewBottomAccessoryModifier",
+    "TabViewSearchActivationModifier",
+    "PageModifier",
+
+    // Additional simple modifiers
+    "ToolbarItemHiddenModifier",
+    "InvalidatableContentModifier",
+    "WritingToolsAffordanceVisibilityModifier",
+
+    // Edge.Set based modifier (deprecated but useful)
+    "EdgesIgnoringSafeAreaModifier",
+
+    // TouchBar modifier (macOS only)
+    "TouchBarCustomizationLabelModifier",
+
+    // Interaction modifiers (iOS only)
+    "DefersSystemGesturesModifier",
+
+    // Slider modifiers (iOS 26+)
+    "SliderThumbVisibilityModifier",
+
+    // Inspector modifiers
+    "InspectorModifier",
+    "InspectorColumnWidthModifier",
+
+    // List row platter color (watchOS only)
+    "ListRowPlatterColorModifier",
+
+    // Wheel picker item height (watchOS only)
+    "DefaultWheelPickerItemHeightModifier",
+
+    // Typesetting language modifier (iOS 17+)
+    "TypesettingLanguageModifier",
+
+    // List section index visibility (iOS 26+)
+    "ListSectionIndexVisibilityModifier",
+
+    // List action modifiers
+    "OnMoveModifier",
+    "OnDeleteModifier",
+
+    // Alignment guide modifier
+    "AlignmentGuideModifier",
+
+    // URL handling modifier
+    "OnOpenURLModifier",
+
+    // File exporter modifier (stub - not fully implemented due to document type requirements)
+    "FileExporterModifier",
+
+    // File importer modifier
+    "FileImporterModifier",
+
+    // File mover modifier
+    "FileMoverModifier",
+
+    // Geometry change modifier (iOS 16+)
+    "OnGeometryChangeModifier",
+
+    // Rename action modifier (iOS 16+, macOS 13+)
+    "RenameActionModifier",
+
+    // Scroll geometry change modifier (iOS 18+)
+    "OnScrollGeometryChangeModifier",
+
+    // Key press modifier (iOS 17+, macOS 14+)
+    "OnKeyPressModifier",
+
+    // Copyable modifier (iOS 16+, macOS 13+)
+    "CopyableModifier",
+
+    // Cuttable modifier (iOS 16+, macOS 13+)
+    "CuttableModifier",
+
+    // Environment modifier
+    "EnvironmentModifier",
+
+    // Visual effect modifier (disabled - closures not supported at runtime)
+    "VisualEffectModifier",
+
+    // User activity modifier (Handoff, Siri, Spotlight)
+    "UserActivityModifier",
+
+    // User activity continuation modifier (Handoff, Universal Links)
+    "OnContinueUserActivityModifier",
+
+    // Equatable modifier
+    "EquatableModifier",
+
+    // Stub modifiers (cannot be supported at runtime, but included for documentation)
+    "OnReceiveModifier",
+
+    // External events modifier (macOS only)
+    "HandlesExternalEventsModifier",
+
+    // Search modifiers
+    "SearchScopesModifier",
+    "SearchSuggestionsModifier",
+    "SearchCompletionModifier",
+
+    // TabView customization modifiers (iOS 18+, visionOS 2+)
+    "TabViewCustomizationModifier",
+    "TabBarMinimizeBehaviorModifier",
+
+    // Section index label modifier (iOS 26+)
+    "SectionIndexLabelModifier",
+
+    // Dismissal confirmation dialog (iOS 18+, macOS 15+)
+    "DismissalConfirmationDialogModifier",
+
+    // Presentation sizing modifier (iOS 18+, macOS 15+, visionOS 2+)
+    "PresentationSizingModifier",
+
+    // Scroll input behavior (iOS 18+, macOS 15+, tvOS 18+, visionOS 2+, watchOS 11+)
+    "ScrollInputBehaviorModifier",
+
+    // Container corner offset modifier (iOS 26+)
+    "ContainerCornerOffsetModifier",
+
+    // Apple Pencil modifier (iOS only)
+    "OnPencilDoubleTapModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {

@@ -31,19 +31,21 @@ extension NavigationBarHiddenModifier: RuntimeViewModifier {
     }
     @ViewBuilder
     public func body(content _content: Content) -> some View {
-        switch self {
         #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        switch self {
         case .navigationBarHidden(let value0Any):
             if #available(iOS 13.0, tvOS 13.0, visionOS 1.0, watchOS 6.0, *) {
                 if let value0 = value0Any as? Swift.Bool {
-        _content.navigationBarHidden(value0)
-    } else {
-        _content
-    }
+                    _content.navigationBarHidden(value0)
+                } else {
+                    _content
+                }
             } else {
                 _content
             }
-        #endif
         }
+        #else
+        _content
+        #endif
     }
 }

@@ -1,3 +1,4 @@
+#if os(macOS) || os(tvOS)
 import SwiftUI
 import SwiftSyntax
 
@@ -28,3 +29,4 @@ extension FocusSectionModifier: RuntimeViewModifier {
         }
     }
 }
+#endif

@@ -1,6 +1,8 @@
 import SwiftUI
 import SwiftSyntax
 
+// MARK: - Glass
+
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension Glass: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
@@ -63,3 +65,23 @@ extension Glass: SyntaxConvertible {
         return nil
     }
 }
+
+// MARK: - GlassEffectTransition
+
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension GlassEffectTransition: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        // Handle simple member access like .identity
+        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self),
+              memberAccess.base == nil else {
+            return nil
+        }
+
+        switch memberAccess.declName.baseName.text {
+        case "identity": self = .identity
+        default: return nil
+        }
+    }
+}
+#endif
