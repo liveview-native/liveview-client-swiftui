@@ -94,6 +94,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             OnChangeModifier<Library>.self,
             TaskModifier<Library>.self,
             OnOpenURLModifier<Library>.self,
+            SearchModifier<Library>.self,
             SearchableModifier<Library>.self,
             NavigationDestinationModifier<Library>.self,
             ScrollContentBackgroundModifier<Library>.self,
@@ -139,7 +140,15 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ToolbarRoleModifier<Library>.self,
             ToolbarColorSchemeModifier<Library>.self,
             ToolbarTitleMenuModifier<Library>.self,
+            ToolbarForegroundStyleModifier<Library>.self,
             // Accessibility modifiers
+            AccessibilityCustomContentModifier<Library>.self,
+            AccessibilityChartDescriptorModifier<Library>.self,
+            AccessibilityAdjustableActionModifier<Library>.self,
+            AccessibilityActionModifier<Library>.self,
+            AccessibilityZoomActionModifier<Library>.self,
+            AccessibilityRotorEntryModifier<Library>.self,
+            AccessibilityScrollActionModifier<Library>.self,
             AccessibilityLabelModifier<Library>.self,
             AccessibilityHintModifier<Library>.self,
             AccessibilityValueModifier<Library>.self,
@@ -168,12 +177,16 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ListSectionSeparatorTintModifier<Library>.self,
             ForegroundColorModifier<Library>.self,
             // More accessibility modifiers
+            AccessibilityModifier<Library>.self,
+            AccessibilityLabeledPairModifier<Library>.self,
             AccessibilityDragPointModifier<Library>.self,
             AccessibilityDropPointModifier<Library>.self,
             AccessibilityChildrenModifier<Library>.self,
             AccessibilityRepresentationModifier<Library>.self,
             AccessibilityShowsLargeContentViewerModifier<Library>.self,
             AccessibilityActionsModifier<Library>.self,
+            AccessibilityRotorModifier<Library>.self,
+            AccessibilityLinkedGroupModifier<Library>.self,
             // List styling modifiers
             AlternatingRowBackgroundsModifier<Library>.self,
             ListStyleModifier<Library>.self,
@@ -347,6 +360,9 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
 
         #if os(iOS)
         types.append(StatusBarHiddenModifier<Library>.self)
+        if #available(iOS 18.1, *) {
+            types.append(DocumentBrowserContextMenuModifier<Library>.self)
+        }
         #endif
 
         #if os(iOS) || os(visionOS)
@@ -356,6 +372,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         #if os(iOS) || os(macOS)
         types.append(DraggableModifier<Library>.self)
         types.append(DropDestinationModifier<Library>.self)
+        types.append(OnDropModifier<Library>.self)
         #endif
 
         #if os(macOS)
@@ -363,6 +380,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             types.append(CopyableModifier<Library>.self)
             types.append(CuttableModifier<Library>.self)
             types.append(PasteDestinationModifier<Library>.self)
+            types.append(ImportableFromServicesModifier<Library>.self)
         }
         #endif
 
@@ -372,6 +390,15 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             // types.append(ScrollTransitionModifier<Library>.self)
             types.append(VisualEffectModifier<Library>.self)
         }
+
+        // Shader effect modifiers (iOS 17+, macOS 14+, tvOS 17+, unavailable on watchOS)
+        #if os(iOS) || os(macOS) || os(tvOS)
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, *) {
+            types.append(LayerEffectModifier<Library>.self)
+            types.append(ColorEffectModifier<Library>.self)
+            types.append(DistortionEffectModifier<Library>.self)
+        }
+        #endif
 
         // Inspector modifier (iOS 17+, macOS 14+)
         #if os(iOS) || os(macOS)
@@ -393,6 +420,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
 
         #if os(macOS) || os(tvOS)
         types.append(FocusSectionModifier<Library>.self)
+        types.append(OnExitCommandModifier<Library>.self)
         #endif
 
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
@@ -409,6 +437,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             types.append(BackgroundStyleModifier<Library>.self)
             types.append(NavigationSplitViewStyleModifier<Library>.self)
             types.append(OnGeometryChangeModifier<Library>.self)
+            types.append(NavigationDocumentModifier<Library>.self)
         }
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             types.append(ScrollTargetLayoutModifier<Library>.self)
@@ -461,6 +490,15 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         }
         #endif
 
+        // tvOS page command modifier
+        #if os(tvOS)
+        if #available(tvOS 14.3, *) {
+            types.append(PageCommandModifier<Library>.self)
+        }
+        types.append(OnPlayPauseCommandModifier<Library>.self)
+        types.append(OnLongTouchGestureModifier<Library>.self)
+        #endif
+
         // Continuous hover modifier
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
         if #available(iOS 16.0, macOS 13.0, tvOS 16.0, visionOS 1.0, *) {
@@ -481,6 +519,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         #endif
 
         #if os(macOS)
+        types.append(TouchBarModifier<Library>.self)
         types.append(TouchBarItemPrincipalModifier<Library>.self)
         types.append(TouchBarItemPresenceModifier<Library>.self)
         types.append(NavigationSubtitleModifier<Library>.self)
@@ -491,6 +530,10 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         types.append(WindowToolbarFullScreenVisibilityModifier<Library>.self)
         types.append(AllowsWindowActivationEventsModifier<Library>.self)
         types.append(FileDialogBrowserOptionsModifier<Library>.self)
+        // File dialog URL enabled modifier (macOS 14+)
+        if #available(macOS 14.0, *) {
+            types.append(FileDialogURLEnabledModifier<Library>.self)
+        }
         types.append(SpringLoadingBehaviorModifier<Library>.self)
         types.append(HorizontalRadioGroupLayoutModifier<Library>.self)
         // App termination modifiers (macOS 15.4+)
@@ -506,6 +549,22 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         types.append(TextInputCompletionModifier<Library>.self)
         // Toolbar item hidden (macOS only)
         types.append(ToolbarItemHiddenModifier<Library>.self)
+        // Command modifiers (macOS only)
+        types.append(OnCommandModifier<Library>.self)
+        types.append(OnCopyCommandModifier<Library>.self)
+        types.append(OnDeleteCommandModifier<Library>.self)
+        // Menu button style (macOS only, deprecated)
+        types.append(MenuButtonStyleModifier<Library>.self)
+        // Modifier keys changed (macOS 15+)
+        if #available(macOS 15.0, *) {
+            types.append(OnModifierKeysChangedModifier<Library>.self)
+        }
+        // Modifier key alternate (macOS 15+)
+        if #available(macOS 15.0, *) {
+            types.append(ModifierKeyAlternateModifier<Library>.self)
+        }
+        // Window toolbar style modifier (macOS only)
+        types.append(PresentedWindowToolbarStyleModifier<Library>.self)
         #endif
 
         // Material active appearance modifier (macOS 15.0+, iOS 18.0+)
@@ -556,10 +615,23 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         }
         #endif
 
+        // Content toolbar modifier (iOS 26+)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+            types.append(ContentToolbarModifier<Library>.self)
+        }
+        #endif
+
         // Label modifiers (iOS 26+)
         if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
             types.append(LabelIconToTitleSpacingModifier<Library>.self)
             types.append(LabelReservedIconWidthModifier<Library>.self)
+        }
+
+        // Accessibility default focus modifier (iOS 26+)
+        // Note: Always throws because AccessibilityFocusState.Binding cannot be created from syntax
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(AccessibilityDefaultFocusModifier<Library>.self)
         }
 
         // Labels visibility modifier (iOS 18+)
@@ -580,6 +652,16 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         // Scroll geometry change modifier (iOS 18+)
         if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
             types.append(OnScrollGeometryChangeModifier<Library>.self)
+        }
+
+        // Scroll target visibility change modifier (iOS 18+)
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
+            types.append(OnScrollTargetVisibilityChangeModifier<Library>.self)
+        }
+
+        // Scroll phase change modifier (iOS 18+)
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
+            types.append(OnScrollPhaseChangeModifier<Library>.self)
         }
 
         // Palette selection effect modifier
@@ -661,12 +743,32 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         }
         #endif
 
+        // Volume viewpoint change modifier (visionOS 2.0+)
+        #if os(visionOS)
+        if #available(visionOS 2.0, *) {
+            types.append(OnVolumeViewpointChangeModifier<Library>.self)
+        }
+        #endif
+
+        // World recenter modifier (visionOS 26.0+)
+        #if os(visionOS)
+        if #available(visionOS 26.0, *) {
+            types.append(OnWorldRecenterModifier<Library>.self)
+        }
+        #endif
+
+        // Hand gesture shortcut modifier (visionOS only)
+        #if os(visionOS)
+        types.append(HandGestureShortcutModifier<Library>.self)
+        #endif
+
         // Digital Crown modifiers (watchOS only)
         #if os(watchOS)
         types.append(DigitalCrownAccessoryModifier<Library>.self)
         types.append(DigitalCrownRotationModifier<Library>.self)
         types.append(ListRowPlatterColorModifier<Library>.self)
         types.append(DefaultWheelPickerItemHeightModifier<Library>.self)
+        types.append(AccessibilityQuickActionModifier<Library>.self)
         #endif
 
         // Find/replace modifiers (iOS 16+, macOS 26+)
@@ -708,6 +810,13 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
             types.append(TabViewCustomizationModifier<Library>.self)
         }
+
+        // Default adaptable tab bar placement (iOS 18+, macOS 15+, tvOS 18+, visionOS 2+)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, *) {
+            types.append(DefaultAdaptableTabBarPlacementModifier<Library>.self)
+        }
+        #endif
 
         // TabBar minimize behavior (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
         if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
@@ -761,6 +870,65 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         #if os(iOS) || os(macOS)
         if #available(iOS 17.0, macOS 14.0, *) {
             types.append(OnKeyPressModifier<Library>.self)
+        }
+        #endif
+
+        // Search selection modifier (iOS 26+, macOS 26+, visionOS 26+)
+        // Note: This modifier always throws since TextSelection cannot be serialized
+        #if os(iOS) || os(macOS) || os(visionOS)
+        if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
+            types.append(SearchSelectionModifier<Library>.self)
+        }
+        #endif
+
+        // Search toolbar behavior modifier (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(SearchToolbarBehaviorModifier<Library>.self)
+        }
+        #endif
+
+        // Interactive resize change modifier (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(OnInteractiveResizeChangeModifier<Library>.self)
+        }
+
+        // Assistive access navigation icon modifier (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(AssistiveAccessNavigationIconModifier<Library>.self)
+        }
+        #endif
+
+        // Apple Pencil modifiers (iOS only)
+        #if os(iOS)
+        types.append(OnPencilDoubleTapModifier<Library>.self)
+        types.append(OnPencilSqueezeModifier<Library>.self)
+        #endif
+
+        // Writing direction modifier (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(WritingDirectionModifier<Library>.self)
+        }
+        #endif
+
+        // Presented window style modifier (macOS 13+, visionOS 1+)
+        #if os(macOS) || os(visionOS)
+        if #available(macOS 13.0, visionOS 1.0, *) {
+            types.append(PresentedWindowStyleModifier<Library>.self)
+        }
+        #endif
+
+        // Button sizing modifier (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(ButtonSizingModifier<Library>.self)
+        }
+
+        // Search focused modifier (iOS 18+, macOS 15+, visionOS 2+)
+        #if os(iOS) || os(macOS) || os(visionOS)
+        if #available(iOS 18.0, macOS 15.0, visionOS 2.0, *) {
+            types.append(SearchFocusedModifier<Library>.self)
         }
         #endif
 

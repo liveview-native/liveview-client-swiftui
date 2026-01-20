@@ -213,6 +213,7 @@ let includeModifiers = [
     "SimultaneousGestureModifier",
     "DraggableModifier",
     "DropDestinationModifier",
+    "OnDropModifier",
     "PasteDestinationModifier",
 
     // Lifecycle modifiers
@@ -230,8 +231,15 @@ let includeModifiers = [
     "ToolbarRoleModifier",
     "ToolbarColorSchemeModifier",
     "ToolbarTitleMenuModifier",
-    
+    "ToolbarForegroundStyleModifier",
+
     // Accessibility modifiers
+    "AccessibilityZoomActionModifier",
+    "AccessibilityRotorEntryModifier",
+    "AccessibilityQuickActionModifier",
+    "AccessibilityActionModifier",
+    "AccessibilityCustomContentModifier",
+    "AccessibilityDefaultFocusModifier",
     "AccessibilityAdjustableActionModifier",
     "AccessibilityLabelModifier",
     "AccessibilityHintModifier",
@@ -412,6 +420,7 @@ let includeModifiers = [
     "AccessibilityRespondsToUserInteractionModifier",
     "AccessibilityTextContentTypeModifier",
     "AccessibilityDirectTouchModifier",
+    "AccessibilityScrollStatusModifier",
 
     // Grid cell modifiers
     "GridCellColumnsModifier",
@@ -428,12 +437,15 @@ let includeModifiers = [
     "ForegroundColorModifier",
 
     // More accessibility modifiers
+    "AccessibilityModifier",
+    "AccessibilityLabeledPairModifier",
     "AccessibilityDragPointModifier",
     "AccessibilityDropPointModifier",
     "AccessibilityChildrenModifier",
     "AccessibilityRepresentationModifier",
     "AccessibilityShowsLargeContentViewerModifier",
     "AccessibilityActionsModifier",
+    "AccessibilityLinkedGroupModifier",
 
     // Simple modifiers ready to enable
     "SubmitScopeModifier",
@@ -450,6 +462,7 @@ let includeModifiers = [
     "FileDialogImportsUnresolvedAliasesModifier",
     "FileExporterFilenameLabelModifier",
     "FileDialogBrowserOptionsModifier",
+    "FileDialogURLEnabledModifier",
     "NavigationSplitViewColumnWidthModifier",
 
     // Symbol effects
@@ -531,6 +544,12 @@ let includeModifiers = [
     // Ornament modifier (visionOS)
     "OrnamentModifier",
 
+    // Supported volume viewpoints modifier (visionOS 2+)
+    "SupportedVolumeViewpointsModifier",
+
+    // Volume viewpoint change modifier (visionOS 2+)
+    "OnVolumeViewpointChangeModifier",
+
     // Matched geometry effect modifier
     "MatchedGeometryEffectModifier",
 
@@ -605,6 +624,9 @@ let includeModifiers = [
 
     // Slider modifiers (iOS 26+)
     "SliderThumbVisibilityModifier",
+
+    // Safe area bar modifier (iOS 26+)
+    "SafeAreaBarModifier",
 
     // Inspector modifiers
     "InspectorModifier",
@@ -681,9 +703,11 @@ let includeModifiers = [
     "HandlesExternalEventsModifier",
 
     // Search modifiers
+    "SearchModifier",
     "SearchScopesModifier",
     "SearchSuggestionsModifier",
     "SearchCompletionModifier",
+    "SearchFocusedModifier",
 
     // TabView customization modifiers (iOS 18+, visionOS 2+)
     "TabViewCustomizationModifier",
@@ -706,6 +730,92 @@ let includeModifiers = [
 
     // Apple Pencil modifier (iOS only)
     "OnPencilDoubleTapModifier",
+    "OnPencilSqueezeModifier",
+
+    // visionOS modifiers
+    "OnWorldRecenterModifier",
+
+    // Window toolbar style modifier (macOS only)
+    "PresentedWindowToolbarStyleModifier",
+
+    // Insert modifier (DynamicViewContent)
+    "OnInsertModifier",
+
+    // Content toolbar modifier (iOS 26+, macOS 26+)
+    "ContentToolbarModifier",
+
+    // Search selection modifier (iOS 26+, macOS 26+, visionOS 26+)
+    "SearchSelectionModifier",
+
+    // Search toolbar behavior modifier (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
+    "SearchToolbarBehaviorModifier",
+
+    // Search presentation toolbar behavior modifier (iOS 17.1+, macOS 14.1+, tvOS 17.1+, watchOS 10.1+)
+    "SearchPresentationToolbarBehaviorModifier",
+
+    // Window style modifier (macOS/visionOS only)
+    "PresentedWindowStyleModifier",
+
+    // Services modifiers (macOS only)
+    "ImportableFromServicesModifier",
+
+    // Shader effect modifiers (iOS 17+, macOS 14+)
+    "DistortionEffectModifier",
+
+    // Hand gesture shortcut modifier (visionOS only)
+    "HandGestureShortcutModifier",
+
+    // TabView placement modifier (iOS 18+, macOS 15+, tvOS 18+, visionOS 2+)
+    "DefaultAdaptableTabBarPlacementModifier",
+
+    // Document browser context menu modifier (iOS 18.1+)
+    "DocumentBrowserContextMenuModifier",
+
+    // Generic command modifier (macOS only)
+    "OnCommandModifier",
+
+    // Delete command modifier (macOS only)
+    "OnDeleteCommandModifier",
+
+    // Writing direction modifier (iOS 26+, macOS 26+)
+    "WritingDirectionModifier",
+
+    // Menu button style modifier (macOS only, deprecated)
+    "MenuButtonStyleModifier",
+
+    // Section actions modifier (iOS 18+, macOS 15+, tvOS 18+, watchOS 11+, visionOS 2+)
+    "SectionActionsModifier",
+
+    // Exit command modifier (macOS/tvOS only)
+    "OnExitCommandModifier",
+
+    // Modifier key alternate (macOS only)
+    "ModifierKeyAlternateModifier",
+
+    // Assistive access navigation icon modifier (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
+    "AssistiveAccessNavigationIconModifier",
+
+    // Accessibility rotor modifier
+    "AccessibilityRotorModifier",
+
+    // Button sizing modifier (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
+    "ButtonSizingModifier",
+
+    // Scroll visibility modifier (iOS 18+, macOS 15+, tvOS 18+, visionOS 2+, watchOS 11+)
+    "OnScrollTargetVisibilityChangeModifier",
+
+    // Shader effect modifiers (iOS 17+, macOS 14+, tvOS 17+)
+    "LayerEffectModifier",
+
+    // tvOS command modifier
+    "OnPlayPauseCommandModifier",
+    
+    "AccessibilityChartDescriptorModifier",
+    "AccessibilityScrollActionModifier",
+    "ColorEffectModifier",
+    "NavigationDocumentModifier",
+    "OnScrollPhaseChangeModifier",
+    "OnInteractiveResizeChangeModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {

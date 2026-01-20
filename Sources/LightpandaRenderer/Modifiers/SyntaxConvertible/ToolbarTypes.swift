@@ -113,6 +113,27 @@ extension Visibility: SyntaxConvertible {
     }
 }
 
+// MARK: - ContentToolbarPlacement
+
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension ContentToolbarPlacement: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        if let memberAccess = syntax.as(MemberAccessExprSyntax.self) {
+            let name = memberAccess.declName.baseName.text
+            switch name {
+            case "tabViewSidebar":
+                self = .tabViewSidebar
+            default:
+                return nil
+            }
+            return
+        }
+        return nil
+    }
+}
+#endif
+
 // MARK: - ColorScheme
 
 extension ColorScheme: SyntaxConvertible {

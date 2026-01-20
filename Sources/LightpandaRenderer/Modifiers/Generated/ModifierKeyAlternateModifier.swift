@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftUI
 import SwiftSyntax
 
@@ -34,3 +35,4 @@ extension ModifierKeyAlternateModifier: RuntimeViewModifier {
         }
     }
 }
+#endif

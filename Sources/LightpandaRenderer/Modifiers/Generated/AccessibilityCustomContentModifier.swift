@@ -23,9 +23,6 @@ public enum AccessibilityCustomContentModifier<Library: ElementLibrary>: @unchec
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
     case accessibilityCustomContentWithFoundationLocalizedStringResourceStringAccessibilityAXCustomContentImportance(Any, Any, importance: Any)
     #endif
-    #if !os(*)
-    case accessibilityCustomContentWithStringStringAccessibilityAXCustomContentImportance(String, String, importance: Accessibility.AXCustomContent.Importance)
-    #endif
 }
 
 extension AccessibilityCustomContentModifier: RuntimeViewModifier {
@@ -190,21 +187,6 @@ extension AccessibilityCustomContentModifier: RuntimeViewModifier {
             }
         }
         #endif
-        #if !os(*)
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ String(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "label")
-            }
-            guard let value1 = (syntax.arguments.count > 1 ? syntax.arguments[1] : nil).flatMap({ String(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "AccessibilityCustomContentModifier", argument: "value")
-            }
-            let importance: Accessibility.AXCustomContent.Importance = syntax.argument(named: "importance").flatMap({ Accessibility.AXCustomContent.Importance(syntax: $0.expression) }) ?? .default
-            self = .accessibilityCustomContentWithStringStringAccessibilityAXCustomContentImportance(value0, value1, importance: importance)
-            return
-        } catch {
-            errors.append(error)
-        }
-        #endif
         throw ModifierParseError.noMatchingVariant(modifier: "AccessibilityCustomContentModifier", errors: errors)
     }
     @ViewBuilder
@@ -271,10 +253,6 @@ extension AccessibilityCustomContentModifier: RuntimeViewModifier {
             } else {
                 _content
             }
-        #endif
-        #if !os(*)
-        case .accessibilityCustomContentWithStringStringAccessibilityAXCustomContentImportance(let value0, let value1, importance: let importance):
-            _content.accessibilityCustomContent(value0, value1, importance: importance)
         #endif
         }
     }

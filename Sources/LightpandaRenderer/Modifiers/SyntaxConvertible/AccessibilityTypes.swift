@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftSyntax
+import Accessibility
 
 // MARK: - AccessibilityTraits
 
@@ -178,6 +179,85 @@ extension AccessibilityActionCategory: SyntaxConvertible {
         switch name {
         case "default": self = .default
         case "edit": self = .edit
+        default: return nil
+        }
+    }
+}
+
+// MARK: - AccessibilitySystemRotor
+
+extension AccessibilitySystemRotor: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self) else {
+            return nil
+        }
+
+        let name = memberAccess.declName.baseName.text
+
+        switch name {
+        case "links": self = .links
+        case "headings": self = .headings
+        case "boldText": self = .boldText
+        case "italicText": self = .italicText
+        case "underlineText": self = .underlineText
+        case "misspelledWords": self = .misspelledWords
+        case "images": self = .images
+        case "textFields": self = .textFields
+        case "tables": self = .tables
+        case "lists": self = .lists
+        case "landmarks": self = .landmarks
+        default: return nil
+        }
+    }
+}
+
+// MARK: - AccessibilityCustomContentKey
+
+extension AccessibilityCustomContentKey: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        // Handle AccessibilityCustomContentKey("label") constructor
+        if let functionCall = syntax.as(FunctionCallExprSyntax.self) {
+            // Check if it's a constructor call like AccessibilityCustomContentKey("...")
+            if let memberAccess = functionCall.calledExpression.as(MemberAccessExprSyntax.self),
+               memberAccess.declName.baseName.text == "AccessibilityCustomContentKey",
+               let firstArg = functionCall.arguments.first,
+               let stringValue = String(syntax: firstArg.expression) {
+                self.init(LocalizedStringKey(stringValue))
+                return
+            }
+            // Direct call like AccessibilityCustomContentKey("...")
+            if let declRef = functionCall.calledExpression.as(DeclReferenceExprSyntax.self),
+               declRef.baseName.text == "AccessibilityCustomContentKey",
+               let firstArg = functionCall.arguments.first,
+               let stringValue = String(syntax: firstArg.expression) {
+                self.init(LocalizedStringKey(stringValue))
+                return
+            }
+        }
+
+        // Handle string literal directly as a convenience
+        if let stringValue = String(syntax: syntax) {
+            self.init(LocalizedStringKey(stringValue))
+            return
+        }
+
+        return nil
+    }
+}
+
+// MARK: - AXCustomContent.Importance
+
+extension AXCustomContent.Importance: SyntaxConvertible {
+    public init?(syntax: some SyntaxProtocol) {
+        guard let memberAccess = syntax.as(MemberAccessExprSyntax.self) else {
+            return nil
+        }
+
+        let name = memberAccess.declName.baseName.text
+
+        switch name {
+        case "default": self = .default
+        case "high": self = .high
         default: return nil
         }
     }

@@ -9,6 +9,7 @@ public enum ModifierParseError: Error, CustomStringConvertible {
     case missingRequiredArgument(modifier: String, argument: String)
     case closureNotSupported(modifier: String, suggestion: String)
     case publisherNotSupported(modifier: String, suggestion: String)
+    case protocolTypeNotSupported(modifier: String, protocolName: String, suggestion: String)
     case invalidArgumentValue(modifier: String, argument: String, reason: String)
     case unsupportedEnvironmentKey(modifier: String, key: String)
 
@@ -28,6 +29,8 @@ public enum ModifierParseError: Error, CustomStringConvertible {
             return "\(modifier): closures cannot be parsed from syntax at runtime. \(suggestion)"
         case .publisherNotSupported(let modifier, let suggestion):
             return "\(modifier): Combine Publisher types cannot be instantiated from syntax at runtime. \(suggestion)"
+        case .protocolTypeNotSupported(let modifier, let protocolName, let suggestion):
+            return "\(modifier): Types conforming to '\(protocolName)' cannot be instantiated from syntax at runtime. \(suggestion)"
         case .invalidArgumentValue(let modifier, let argument, let reason):
             return "\(modifier): invalid value for argument '\(argument)'. \(reason)"
         case .unsupportedEnvironmentKey(let modifier, let key):
