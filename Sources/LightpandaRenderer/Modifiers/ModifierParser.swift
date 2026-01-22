@@ -128,6 +128,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             HiddenModifier<Library>.self,
             DisabledModifier<Library>.self,
             AlertModifier<Library>.self,
+            AnchorPreferenceModifier<Library>.self,
             SheetModifier<Library>.self,
             FullScreenCoverModifier<Library>.self,
             PopoverModifier<Library>.self,
@@ -260,6 +261,8 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             // Focus modifiers
             FocusableModifier<Library>.self,
             FocusedModifier<Library>.self,
+            FocusedValueModifier<Library>.self,
+            FocusedSceneObjectModifier<Library>.self,
             // Additional simple modifiers
             AccentColorModifier<Library>.self,
             AllowsHitTestingModifier<Library>.self,
@@ -323,6 +326,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             ProjectionEffectModifier<Library>.self,
             // Content modifiers
             InvalidatableContentModifier<Library>.self,
+            InvalidateTimelineContentModifier<Library>.self,
             // List action modifiers
             OnMoveModifier<Library>.self,
             OnDeleteModifier<Library>.self,
@@ -342,6 +346,14 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             OnContinueUserActivityModifier<Library>.self,
             // Equatable modifier
             EquatableModifier<Library>.self,
+            // Preference modifiers (stub - always throws, require compile-time PreferenceKey types)
+            PreferenceModifier<Library>.self,
+            TransformPreferenceModifier<Library>.self,
+            TransformAnchorPreferenceModifier<Library>.self,
+            OverlayPreferenceValueModifier<Library>.self,
+            BackgroundPreferenceValueModifier<Library>.self,
+            // App storage modifier
+            DefaultAppStorageModifier<Library>.self,
         ] + Self.platformSpecificTypes
     }
 
@@ -373,6 +385,22 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         types.append(DraggableModifier<Library>.self)
         types.append(DropDestinationModifier<Library>.self)
         types.append(OnDropModifier<Library>.self)
+        types.append(OnDragModifier<Library>.self)
+        types.append(ItemProviderModifier<Library>.self)
+        #endif
+
+        // macOS 26+ drag/drop modifiers (DragConfiguration, DragContainerSelection, session updates, preview formations)
+        #if os(macOS)
+        if #available(macOS 26.0, *) {
+            types.append(DragConfigurationModifier<Library>.self)
+            types.append(DragContainerSelectionModifier<Library>.self)
+            types.append(OnDragSessionUpdatedModifier<Library>.self)
+            types.append(OnDropSessionUpdatedModifier<Library>.self)
+            // DragContainerModifier is a stub - always throws since it requires generic types and closures
+            types.append(DragContainerModifier<Library>.self)
+            types.append(DragPreviewsFormationModifier<Library>.self)
+            types.append(DropPreviewsFormationModifier<Library>.self)
+        }
         #endif
 
         #if os(macOS)
@@ -381,6 +409,10 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             types.append(CuttableModifier<Library>.self)
             types.append(PasteDestinationModifier<Library>.self)
             types.append(ImportableFromServicesModifier<Library>.self)
+            types.append(ExportableToServicesModifier<Library>.self)
+        }
+        if #available(macOS 11.0, *) {
+            types.append(OnPasteCommandModifier<Library>.self)
         }
         #endif
 
@@ -389,6 +421,8 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             // ScrollTransitionModifier is not yet enabled in Package.swift
             // types.append(ScrollTransitionModifier<Library>.self)
             types.append(VisualEffectModifier<Library>.self)
+            // Keyframe animator modifier (stub - always throws since closures cannot be parsed)
+            types.append(KeyframeAnimatorModifier<Library>.self)
         }
 
         // Shader effect modifiers (iOS 17+, macOS 14+, tvOS 17+, unavailable on watchOS)
@@ -421,6 +455,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         #if os(macOS) || os(tvOS)
         types.append(FocusSectionModifier<Library>.self)
         types.append(OnExitCommandModifier<Library>.self)
+        types.append(OnMoveCommandModifier<Library>.self)
         #endif
 
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
@@ -438,6 +473,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             types.append(NavigationSplitViewStyleModifier<Library>.self)
             types.append(OnGeometryChangeModifier<Library>.self)
             types.append(NavigationDocumentModifier<Library>.self)
+            types.append(LayoutValueModifier<Library>.self)
         }
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             types.append(ScrollTargetLayoutModifier<Library>.self)
@@ -552,6 +588,7 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         // Command modifiers (macOS only)
         types.append(OnCommandModifier<Library>.self)
         types.append(OnCopyCommandModifier<Library>.self)
+        types.append(OnCutCommandModifier<Library>.self)
         types.append(OnDeleteCommandModifier<Library>.self)
         // Menu button style (macOS only, deprecated)
         types.append(MenuButtonStyleModifier<Library>.self)
@@ -615,9 +652,9 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         }
         #endif
 
-        // Content toolbar modifier (iOS 26+)
-        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+        // Content toolbar modifier (iOS 26+) - not available on macOS
+        #if os(iOS) || os(tvOS) || os(watchOS)
+        if #available(iOS 26.0, tvOS 26.0, watchOS 26.0, *) {
             types.append(ContentToolbarModifier<Library>.self)
         }
         #endif
@@ -662,6 +699,21 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         // Scroll phase change modifier (iOS 18+)
         if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
             types.append(OnScrollPhaseChangeModifier<Library>.self)
+        }
+
+        // Scroll visibility change modifier (iOS 18+)
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
+            types.append(OnScrollVisibilityChangeModifier<Library>.self)
+        }
+
+        // Text renderer modifier (iOS 18+) - stub, always throws since TextRenderer protocol cannot be parsed
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
+            types.append(TextRendererModifier<Library>.self)
+        }
+
+        // Container value modifier (iOS 18+) - stub, always throws since WritableKeyPath<ContainerValues, V> cannot be parsed
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
+            types.append(ContainerValueModifier<Library>.self)
         }
 
         // Palette selection effect modifier
@@ -750,6 +802,13 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         }
         #endif
 
+        // Hover effect group modifier (visionOS 2.0+)
+        #if os(visionOS)
+        if #available(visionOS 2.0, *) {
+            types.append(HoverEffectGroupModifier<Library>.self)
+        }
+        #endif
+
         // World recenter modifier (visionOS 26.0+)
         #if os(visionOS)
         if #available(visionOS 26.0, *) {
@@ -811,9 +870,9 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             types.append(TabViewCustomizationModifier<Library>.self)
         }
 
-        // Default adaptable tab bar placement (iOS 18+, macOS 15+, tvOS 18+, visionOS 2+)
-        #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
-        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, *) {
+        // Default adaptable tab bar placement (iOS 18+, tvOS 18+, visionOS 2+) - not available on macOS
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        if #available(iOS 18.0, tvOS 18.0, visionOS 2.0, *) {
             types.append(DefaultAdaptableTabBarPlacementModifier<Library>.self)
         }
         #endif
@@ -931,6 +990,27 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             types.append(SearchFocusedModifier<Library>.self)
         }
         #endif
+
+        // Note: OnDragSessionUpdatedModifier and OnDropSessionUpdatedModifier are registered
+        // in the macOS 26+ drag/drop section above
+
+        // Note: Drag/drop preview formation modifiers (macOS 26+ only) are registered earlier in the function
+
+        // Exports item providers modifier (iOS 15+, macOS 12+) - stub, closures cannot be parsed
+        #if os(iOS) || os(macOS)
+        if #available(iOS 15.0, macOS 12.0, *) {
+            types.append(ExportsItemProvidersModifier<Library>.self)
+        }
+        #endif
+
+        // AttributedText formatting definition modifier (iOS 26+, macOS 26+, tvOS 26+, watchOS 26+, visionOS 26+)
+        // Note: This modifier always throws since AttributedTextFormattingDefinition protocol cannot be instantiated from syntax
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+            types.append(AttributedTextFormattingDefinitionModifier<Library>.self)
+        }
+
+        // DefaultGestureMask modifier (stub - always throws, requires private _ScrollViewProxy type)
+        types.append(DefaultGestureMaskModifier<Library>.self)
 
         return types
     }

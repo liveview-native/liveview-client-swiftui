@@ -29,11 +29,43 @@ extension OnCommandModifier: RuntimeViewModifier {
 
     public init(syntax: FunctionCallExprSyntax) throws {
         guard let selectorArg = (syntax.arguments.count > 0 ? syntax.arguments[syntax.arguments.startIndex] : nil),
-              let selector = ObjectiveC.Selector(syntax: selectorArg.expression) else {
+              let selector = Self.parseSelector(from: selectorArg.expression) else {
             throw ModifierParseError.missingRequiredArgument(modifier: "OnCommandModifier", argument: "selector")
         }
         let perform = syntax.argument(named: "perform").flatMap({ $0.expression.as(DeclReferenceExprSyntax.self)?.baseName.text }) ?? "command"
         self = .onCommand(selector: selector, perform: perform)
+    }
+
+    /// Parse a Selector from syntax like #selector(NSResponder.selectAll(_:)) or a string literal "selectAll:"
+    private static func parseSelector(from syntax: some SyntaxProtocol) -> Selector? {
+        // Handle #selector(...) macro expression
+        if let macroExpr = syntax.as(MacroExpansionExprSyntax.self),
+           macroExpr.macroName.text == "selector" {
+            // Extract the selector string from the macro arguments
+            // e.g., #selector(NSResponder.selectAll(_:)) -> "selectAll:"
+            if let argument = macroExpr.arguments.first {
+                // Try to extract the method name from the expression
+                let fullText = argument.expression.description.trimmingCharacters(in: .whitespaces)
+                // Find the method name (last component after the last dot)
+                if let lastDot = fullText.lastIndex(of: ".") {
+                    let methodPart = String(fullText[fullText.index(after: lastDot)...])
+                    // Convert e.g., "selectAll(_:)" to "selectAll:"
+                    let selectorString = methodPart
+                        .replacingOccurrences(of: "(_:)", with: ":")
+                        .replacingOccurrences(of: "()", with: "")
+                        .replacingOccurrences(of: "(_:", with: ":")
+                        .replacingOccurrences(of: ":)", with: ":")
+                    return Selector(selectorString)
+                }
+            }
+        }
+
+        // Handle string literal like "selectAll:"
+        if let stringLiteral = String(syntax: syntax) {
+            return Selector(stringLiteral)
+        }
+
+        return nil
     }
 
     @ViewBuilder

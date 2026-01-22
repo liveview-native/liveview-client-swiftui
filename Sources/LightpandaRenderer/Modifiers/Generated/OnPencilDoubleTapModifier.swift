@@ -73,13 +73,15 @@ extension PencilHoverPose: Encodable {
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.location, forKey: .location)
-        try container.encode(self.anchor, forKey: .anchor)
+        // Encode UnitPoint as a dictionary manually since Codable conformance requires macOS 26+
+        try container.encode(["x": self.anchor.x, "y": self.anchor.y], forKey: .anchor)
         try container.encode(self.zDistance, forKey: .zDistance)
-        try container.encode(self.altitude, forKey: .altitude)
-        try container.encode(self.azimuth, forKey: .azimuth)
-        try container.encode(self.roll, forKey: .roll)
+        // Encode Angle values as radians
+        try container.encode(self.altitude.radians, forKey: .altitude)
+        try container.encode(self.azimuth.radians, forKey: .azimuth)
+        try container.encode(self.roll.radians, forKey: .roll)
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case location
         case anchor

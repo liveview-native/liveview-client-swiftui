@@ -13,14 +13,14 @@ import SwiftSyntax
 ///     </toolbaritem>
 /// </navigationstack>
 /// ```
-#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+#if os(iOS) || os(tvOS) || os(watchOS)
+@available(iOS 26.0, tvOS 26.0, watchOS 26.0, *)
 @MainActor
 public enum ContentToolbarModifier<Library: ElementLibrary>: @unchecked Sendable {
     case contentToolbar(for: ContentToolbarPlacement, content: ViewReference<Library>)
 }
 
-@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+@available(iOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension ContentToolbarModifier: RuntimeViewModifier {
     public static var baseName: String { "contentToolbar" }
 

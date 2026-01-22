@@ -227,7 +227,7 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
         let _ = node.attributes[self.attributeName]
         let attributeName = self.attributeName
         let eventName = self.eventName
-        
+
         return Binding(
             get: {
                 Int(node.attributes[attributeName] ?? "") ?? 0
@@ -241,6 +241,47 @@ public struct NodeBinding<Value>: @unchecked Sendable, SyntaxConvertible {
                         function: #"""
                         function() {
                             this.setAttribute("\#(attributeName)", String(\#(jsonValue)));
+                            this.dispatchEvent(new CustomEvent("\#(eventName)", {
+                                bubbles: true,
+                                detail: { value: \#(jsonValue) }
+                            }));
+                        }
+                        """#
+                    )
+                }
+            }
+        )
+    }
+
+    /// Creates a SwiftUI `Binding` for Set<String> values.
+    /// The attribute stores a JSON array of strings, e.g., `["item1", "item2"]`.
+    @MainActor
+    public func binding(node: Node, runtime: LightpandaRuntime) -> Binding<Value> where Value == Set<String> {
+        // Read the attribute here to establish @Observable tracking
+        let _ = node.attributes[self.attributeName]
+        let attributeName = self.attributeName
+        let eventName = self.eventName
+
+        return Binding(
+            get: {
+                // Parse JSON array from attribute, or return empty set
+                guard let jsonString = node.attributes[attributeName],
+                      let data = jsonString.data(using: .utf8),
+                      let array = try? JSONDecoder().decode([String].self, from: data) else {
+                    return Set()
+                }
+                return Set(array)
+            },
+            set: { newValue in
+                // Encode as JSON array and dispatch change event via JS
+                let sortedArray = Array(newValue).sorted()
+                let jsonValue = String(data: try! JSONEncoder().encode(sortedArray), encoding: .utf8)!
+                Task {
+                    try? await node.callFunction(
+                        runtime: runtime,
+                        function: #"""
+                        function() {
+                            this.setAttribute("\#(attributeName)", JSON.stringify(\#(jsonValue)));
                             this.dispatchEvent(new CustomEvent("\#(eventName)", {
                                 bubbles: true,
                                 detail: { value: \#(jsonValue) }

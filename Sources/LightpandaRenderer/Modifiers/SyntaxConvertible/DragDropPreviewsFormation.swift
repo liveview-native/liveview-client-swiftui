@@ -1,8 +1,9 @@
 import SwiftUI
 import SwiftSyntax
 
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, *)
-extension AdaptableTabBarPlacement: SyntaxConvertible {
+#if os(macOS)
+@available(macOS 26.0, *)
+extension DragDropPreviewsFormation: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
         guard let memberAccess = syntax.as(MemberAccessExprSyntax.self) else {
             return nil
@@ -11,12 +12,13 @@ extension AdaptableTabBarPlacement: SyntaxConvertible {
         let name = memberAccess.declName.baseName.text
 
         switch name {
-        case "automatic": self = .automatic
-        #if !os(macOS)
-        case "sidebar": self = .sidebar
-        #endif
-        case "tabBar": self = .tabBar
+        case "default": self = .default
+        case "none": self = .none
+        case "pile": self = .pile
+        case "list": self = .list
+        case "stack": self = .stack
         default: return nil
         }
     }
 }
+#endif

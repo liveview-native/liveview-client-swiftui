@@ -1,8 +1,9 @@
 import SwiftUI
 import SwiftSyntax
 
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, *)
-extension AdaptableTabBarPlacement: SyntaxConvertible {
+#if os(iOS) || os(visionOS)
+@available(iOS 17.0, visionOS 1.0, *)
+extension TextInputDictationBehavior: SyntaxConvertible {
     public init?(syntax: some SyntaxProtocol) {
         guard let memberAccess = syntax.as(MemberAccessExprSyntax.self) else {
             return nil
@@ -12,11 +13,9 @@ extension AdaptableTabBarPlacement: SyntaxConvertible {
 
         switch name {
         case "automatic": self = .automatic
-        #if !os(macOS)
-        case "sidebar": self = .sidebar
-        #endif
-        case "tabBar": self = .tabBar
+        case "inline": self = .inline(activation: .onLook)
         default: return nil
         }
     }
 }
+#endif

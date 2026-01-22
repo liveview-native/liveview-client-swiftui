@@ -30,8 +30,13 @@ extension MenuButtonStyleModifier: RuntimeViewModifier {
     @ViewBuilder
     public func body(content _content: Content) -> some View {
         switch self {
-        case .menuButtonStyle(let value0):
-            _content.menuButtonStyle(value0)
+        case .menuButtonStyle(let style):
+            switch style {
+            case .automatic:
+                _content.menuButtonStyle(DefaultMenuButtonStyle())
+            case .borderlessButton:
+                _content.menuButtonStyle(BorderlessButtonMenuButtonStyle())
+            }
         }
     }
 }

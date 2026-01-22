@@ -15,6 +15,8 @@ extension VerticalPageTabViewStyle.TransitionStyle: SyntaxConvertible {
             self = .identity
         case "automatic":
             self = .automatic
+        case "blur":
+            self = .blur
         default:
             return nil
         }

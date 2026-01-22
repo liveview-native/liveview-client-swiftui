@@ -11,17 +11,10 @@ extension DefaultAppStorageModifier: RuntimeViewModifier {
     public static var baseName: String { "defaultAppStorage" }
 
     public init(syntax: FunctionCallExprSyntax) throws {
-        var errors: [Error] = []
-        do {
-            guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.UserDefaults(syntax: $0.expression) }) else {
-                throw ModifierParseError.missingRequiredArgument(modifier: "DefaultAppStorageModifier", argument: "store")
-            }
-            self = .defaultAppStorage(value0)
-            return
-        } catch {
-            errors.append(error)
+        guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ parseUserDefaults(from: $0.expression) }) else {
+            throw ModifierParseError.missingRequiredArgument(modifier: "DefaultAppStorageModifier", argument: "store")
         }
-        throw ModifierParseError.noMatchingVariant(modifier: "DefaultAppStorageModifier", errors: errors)
+        self = .defaultAppStorage(value0)
     }
     @ViewBuilder
     public func body(content _content: Content) -> some View {

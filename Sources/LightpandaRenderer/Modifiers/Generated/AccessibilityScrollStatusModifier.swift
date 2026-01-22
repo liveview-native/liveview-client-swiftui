@@ -59,15 +59,19 @@ extension AccessibilityScrollStatusModifier: RuntimeViewModifier {
     }
     @ViewBuilder
     public func body(content _content: Content) -> some View {
-        switch self {
-        case .accessibilityScrollStatusWithSwiftUICoreTextSwiftBool(let value0, isEnabled: let isEnabled):
-            _content.accessibilityScrollStatus(value0, isEnabled: isEnabled)
-        case .accessibilityScrollStatusWithSwiftUICoreLocalizedStringKeySwiftBool(let value0, isEnabled: let isEnabled):
-            _content.accessibilityScrollStatus(value0, isEnabled: isEnabled)
-        case .accessibilityScrollStatusWithStringSwiftBool(let value0, isEnabled: let isEnabled):
-            _content.accessibilityScrollStatus(value0, isEnabled: isEnabled)
-        case .accessibilityScrollStatusWithFoundationLocalizedStringResourceSwiftBool(let value0, isEnabled: let isEnabled):
-            _content.accessibilityScrollStatus(value0, isEnabled: isEnabled)
+        if #available(iOS 18.0, macOS 26.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *) {
+            switch self {
+            case .accessibilityScrollStatusWithSwiftUICoreTextSwiftBool(let value0, isEnabled: let isEnabled):
+                _content.accessibilityScrollStatus(value0, isEnabled: isEnabled)
+            case .accessibilityScrollStatusWithSwiftUICoreLocalizedStringKeySwiftBool(let value0, isEnabled: let isEnabled):
+                _content.accessibilityScrollStatus(value0, isEnabled: isEnabled)
+            case .accessibilityScrollStatusWithStringSwiftBool(let value0, isEnabled: let isEnabled):
+                _content.accessibilityScrollStatus(value0, isEnabled: isEnabled)
+            case .accessibilityScrollStatusWithFoundationLocalizedStringResourceSwiftBool(let value0, isEnabled: let isEnabled):
+                _content.accessibilityScrollStatus(value0, isEnabled: isEnabled)
+            }
+        } else {
+            _content
         }
     }
 }

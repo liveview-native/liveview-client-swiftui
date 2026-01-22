@@ -93,7 +93,8 @@ let includeModifiers = [
     
 //    "AccentColorModifier",
     "ActionSheetModifier",
-"AlertModifier",
+    "AlertModifier",
+    "AnchorPreferenceModifier",
 //    "AllowsHitTestingModifier",
 //    "AllowsTighteningModifier",
 //    "AlternatingRowBackgroundsModifier",
@@ -208,13 +209,18 @@ let includeModifiers = [
     // Gesture modifiers
     "OnTapGestureModifier",
     "OnLongPressGestureModifier",
+    "OnLongTouchGestureModifier",
     "GestureModifier",
     "HighPriorityGestureModifier",
     "SimultaneousGestureModifier",
     "DraggableModifier",
+    "DragConfigurationModifier",
     "DropDestinationModifier",
     "OnDropModifier",
+    "OnDragModifier",
+    "OnDropSessionUpdatedModifier",
     "PasteDestinationModifier",
+    "ItemProviderModifier",
 
     // Lifecycle modifiers
     "OnAppearModifier",
@@ -311,10 +317,13 @@ let includeModifiers = [
     // Focus modifiers
     "FocusableModifier",
     "FocusedModifier",
+    "FocusedValueModifier",
+    "FocusedSceneValueModifier",
     "FocusScopeModifier",
     "DefaultFocusModifier",
     "PrefersDefaultFocusModifier",
     "FocusSectionModifier",
+    "FocusedSceneObjectModifier",
 
     // Additional simple modifiers
     "AccentColorModifier",
@@ -331,6 +340,7 @@ let includeModifiers = [
     "ImageScaleModifier",
     "InteractiveDismissDisabledModifier",
     "LayoutPriorityModifier",
+    "LayoutValueModifier",
     "MinimumScaleFactorModifier",
     "MoveDisabledModifier",
     "PreferredColorSchemeModifier",
@@ -611,12 +621,14 @@ let includeModifiers = [
     // Additional simple modifiers
     "ToolbarItemHiddenModifier",
     "InvalidatableContentModifier",
+    "InvalidateTimelineContentModifier",
     "WritingToolsAffordanceVisibilityModifier",
 
     // Edge.Set based modifier (deprecated but useful)
     "EdgesIgnoringSafeAreaModifier",
 
-    // TouchBar modifier (macOS only)
+    // TouchBar modifiers (macOS only)
+    "TouchBarModifier",
     "TouchBarCustomizationLabelModifier",
 
     // Interaction modifiers (iOS only)
@@ -758,6 +770,7 @@ let includeModifiers = [
 
     // Services modifiers (macOS only)
     "ImportableFromServicesModifier",
+    "ExportableToServicesModifier",
 
     // Shader effect modifiers (iOS 17+, macOS 14+)
     "DistortionEffectModifier",
@@ -809,13 +822,83 @@ let includeModifiers = [
 
     // tvOS command modifier
     "OnPlayPauseCommandModifier",
-    
+
+    // Page command modifier (tvOS only)
+    "PageCommandModifier",
+
     "AccessibilityChartDescriptorModifier",
     "AccessibilityScrollActionModifier",
     "ColorEffectModifier",
     "NavigationDocumentModifier",
     "OnScrollPhaseChangeModifier",
     "OnInteractiveResizeChangeModifier",
+
+    // Drag container modifiers (iOS 26+, macOS 26+, visionOS 26+)
+    "DragContainerModifier",
+    "DragContainerSelectionModifier",
+
+    // Preference modifiers (stub - not implemented, require compile-time PreferenceKey types)
+    "PreferenceModifier",
+    "TransformPreferenceModifier",
+    "TransformAnchorPreferenceModifier",
+    "OverlayPreferenceValueModifier",
+    "BackgroundPreferenceValueModifier",
+
+    // Text renderer modifier (iOS 18+) - stub, TextRenderer protocol cannot be instantiated from syntax
+    "TextRendererModifier",
+
+    // Modifier keys changed (macOS 15+)
+    "OnModifierKeysChangedModifier",
+
+    // Copy/Cut/Paste command modifiers (macOS only)
+    "OnCopyCommandModifier",
+    "OnCutCommandModifier",
+    "OnPasteCommandModifier",
+
+    // App storage modifier
+    "DefaultAppStorageModifier",
+
+    // VerticalPage modifier - DISABLED: verticalPage is a TabViewStyle, not a View modifier.
+    // Use tabViewStyle(.verticalPage) or tabViewStyle(.verticalPage(transitionStyle: .identity)) instead.
+    // The verticalPage style is supported via AnyTabViewStyle on watchOS.
+    // "VerticalPageModifier",
+
+    // Move command modifier (macOS/tvOS only)
+    "OnMoveCommandModifier",
+
+    // Hover effect group modifier (visionOS 2+)
+    "HoverEffectGroupModifier",
+
+    // Container value modifier (iOS 18+, macOS 15+) - stub, WritableKeyPath<ContainerValues, V> cannot be parsed from syntax
+    "ContainerValueModifier",
+
+    // Search dictation behavior modifier (iOS 17+, visionOS 1+)
+    "SearchDictationBehaviorModifier",
+
+    // AttributedText formatting definition modifier (iOS 26+)
+    "AttributedTextFormattingDefinitionModifier",
+
+    // Drag session modifier (iOS 26+, macOS 26+)
+    "OnDragSessionUpdatedModifier",
+
+    // Drag/drop preview formation modifiers (iOS 26+, macOS 26+)
+    "DragPreviewsFormationModifier",
+    "DropPreviewsFormationModifier",
+
+    // Item provider modifiers (stub - closures cannot be parsed at runtime)
+    "ExportsItemProvidersModifier",
+
+    // Keyframe animator modifier (stub - not fully implemented due to closure requirements)
+    "KeyframeAnimatorModifier",
+
+    // Gesture mask modifier
+    "DefaultGestureMaskModifier",
+
+    // Scroll visibility change modifier (iOS 18+, macOS 15+, tvOS 18+, visionOS 2+, watchOS 11+)
+    "OnScrollVisibilityChangeModifier",
+
+    // Text input formatting control visibility (iOS 18+, macOS 15+, visionOS 2+)
+    "TextInputFormattingControlVisibilityModifier",
 ]
 
 func findAllSwiftFiles(in directory: String) -> [String] {

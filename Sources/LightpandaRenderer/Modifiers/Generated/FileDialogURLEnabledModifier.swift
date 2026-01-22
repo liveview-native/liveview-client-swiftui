@@ -14,10 +14,13 @@ extension FileDialogURLEnabledModifier: RuntimeViewModifier {
     public static var baseName: String { "fileDialogURLEnabled" }
 
     public init(syntax: FunctionCallExprSyntax) throws {
-        guard let value0 = (syntax.arguments.count > 0 ? syntax.arguments[0] : nil).flatMap({ Foundation.Predicate<Foundation.URL>(syntax: $0.expression) }) else {
-            throw ModifierParseError.missingRequiredArgument(modifier: "FileDialogURLEnabledModifier", argument: "predicate")
-        }
-        self = .fileDialogURLEnabled(value0)
+        // Predicate types cannot be parsed from syntax at runtime.
+        // This modifier requires compile-time predicate expressions which cannot be
+        // constructed dynamically.
+        throw ModifierParseError.closureNotSupported(
+            modifier: "FileDialogURLEnabledModifier",
+            suggestion: "Predicate expressions cannot be parsed from syntax at runtime. Consider using a different approach for URL filtering."
+        )
     }
 
     @ViewBuilder

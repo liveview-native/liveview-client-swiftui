@@ -10,8 +10,10 @@ extension SwiftUI.AccessibilityActionKind: SyntaxConvertible {
                 self = .default
             case "escape":
                 self = .escape
+            #if !os(macOS)
             case "magicTap":
                 self = .magicTap
+            #endif
             default:
                 return nil
             }
@@ -25,8 +27,10 @@ extension SwiftUI.AccessibilityActionKind: SyntaxConvertible {
                 self = .default
             case "escape":
                 self = .escape
+            #if !os(macOS)
             case "magicTap":
                 self = .magicTap
+            #endif
             default:
                 return nil
             }

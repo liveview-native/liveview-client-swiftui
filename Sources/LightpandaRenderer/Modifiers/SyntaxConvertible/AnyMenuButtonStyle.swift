@@ -2,18 +2,12 @@
 import SwiftUI
 import SwiftSyntax
 
-/// A type-erased wrapper for MenuButtonStyle that can be parsed from syntax.
+/// A type-erased wrapper for MenuButtonStyle values that can be parsed from syntax.
 /// Note: MenuButtonStyle is deprecated in macOS 12.3+ but still available for compatibility.
 @available(macOS, deprecated: 12.3, message: "Use Menu with menuStyle instead")
-public struct AnyMenuButtonStyle: MenuButtonStyle, @preconcurrency SyntaxConvertible {
-    enum Style {
-        case `default`
-        case borderlessButton
-        case borderlessPullDown
-        case pullDown
-    }
-
-    let style: Style
+public enum AnyMenuButtonStyle: SyntaxConvertible {
+    case automatic
+    case borderlessButton
 
     public init?(syntax: some SyntaxProtocol) {
         guard let memberAccess = syntax.as(MemberAccessExprSyntax.self),
@@ -21,28 +15,11 @@ public struct AnyMenuButtonStyle: MenuButtonStyle, @preconcurrency SyntaxConvert
 
         switch memberAccess.declName.baseName.text {
         case "automatic", "default":
-            self.style = .default
+            self = .automatic
         case "borderlessButton":
-            self.style = .borderlessButton
-        case "borderlessPullDown":
-            self.style = .borderlessPullDown
-        case "pullDown":
-            self.style = .pullDown
+            self = .borderlessButton
         default:
             return nil
-        }
-    }
-
-    public func makeBody(configuration: Configuration) -> some View {
-        switch style {
-        case .default:
-            DefaultMenuButtonStyle().makeBody(configuration: configuration)
-        case .borderlessButton:
-            BorderlessButtonMenuButtonStyle().makeBody(configuration: configuration)
-        case .borderlessPullDown:
-            BorderlessPullDownMenuButtonStyle().makeBody(configuration: configuration)
-        case .pullDown:
-            PullDownMenuButtonStyle().makeBody(configuration: configuration)
         }
     }
 }

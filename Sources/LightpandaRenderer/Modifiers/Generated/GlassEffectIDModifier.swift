@@ -72,7 +72,11 @@ extension GlassEffectIDModifier: RuntimeViewModifier {
 
     @ViewBuilder
     public func body(content _content: Content) -> some View {
-        GlassEffectIDBody(modifier: self, content: _content)
+        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+            GlassEffectIDBody(modifier: self, content: _content)
+        } else {
+            _content
+        }
     }
 }
 

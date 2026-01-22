@@ -12,6 +12,7 @@ public enum ModifierParseError: Error, CustomStringConvertible {
     case protocolTypeNotSupported(modifier: String, protocolName: String, suggestion: String)
     case invalidArgumentValue(modifier: String, argument: String, reason: String)
     case unsupportedEnvironmentKey(modifier: String, key: String)
+    case keyPathNotSupported(modifier: String, suggestion: String)
 
     public var description: String {
         switch self {
@@ -35,6 +36,8 @@ public enum ModifierParseError: Error, CustomStringConvertible {
             return "\(modifier): invalid value for argument '\(argument)'. \(reason)"
         case .unsupportedEnvironmentKey(let modifier, let key):
             return "\(modifier): unsupported environment key '\(key)'. Supported keys: colorScheme, layoutDirection, isEnabled"
+        case .keyPathNotSupported(let modifier, let suggestion):
+            return "\(modifier): key paths to FocusedValues properties cannot be created at runtime because they require compile-time protocol conformances and type extensions. \(suggestion)"
         }
     }
 }
