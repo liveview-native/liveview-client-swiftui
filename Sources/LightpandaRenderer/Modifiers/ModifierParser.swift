@@ -764,7 +764,9 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
         types.append(NavigationBarItemsModifier<Library>.self)
         #endif
 
-        types.append(NavigationLinkIndicatorVisibilityModifier<Library>.self)
+        // NavigationLinkIndicatorVisibilityModifier - DISABLED
+        // Causes dyld crash on macOS < 15 due to missing symbol at load time.
+        // Cannot be fixed with @available or #if available - the symbol must exist.
 
         // Sensory feedback modifier
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
@@ -1029,6 +1031,9 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
             TrackingModifier<Library>.self,
             MonospacedModifier<Library>.self,
             MonospacedDigitModifier<Library>.self,
+            FontWeightModifier<Library>.self,
+            FontWidthModifier<Library>.self,
+            FontDesignModifier<Library>.self,
         ]
     }
     
@@ -1036,6 +1041,9 @@ struct AnyRuntimeViewModifier<Library: ElementLibrary>: ViewModifier {
     static var imageModifierTypes: [any RuntimeImageModifier.Type] {
         [
             ResizableModifier.self,
+            RenderingModeImageModifier.self,
+            InterpolationImageModifier.self,
+            AntialiasedImageModifier.self,
         ]
     }
     

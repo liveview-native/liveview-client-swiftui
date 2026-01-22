@@ -45,3 +45,19 @@ extension FontDesignModifier: RuntimeViewModifier {
         }
     }
 }
+
+extension FontDesignModifier: RuntimeTextModifier {
+    public func textBody(content: SwiftUI.Text) -> SwiftUI.Text {
+        switch self {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+        case .fontDesign(let value0Any):
+            if #available(iOS 16.1, macOS 13.0, tvOS 16.1, watchOS 9.1, *) {
+                if let value0 = value0Any as? SwiftUICore.Font.Design? {
+                    return content.fontDesign(value0)
+                }
+            }
+        #endif
+        }
+        return content
+    }
+}

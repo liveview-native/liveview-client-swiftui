@@ -198,6 +198,9 @@ let includeModifiers = [
     
     // Image modifiers
     "ResizableModifier",
+    "RenderingModeImageModifier",
+    "InterpolationImageModifier",
+    "AntialiasedImageModifier",
     "LuminanceToAlphaModifier",
 
     // Presentation modifiers
@@ -536,7 +539,7 @@ let includeModifiers = [
     "NavigationBarBackButtonHiddenModifier",
     "NavigationBarHiddenModifier",
     "NavigationBarTitleModifier",
-    "NavigationLinkIndicatorVisibilityModifier",
+    // "NavigationLinkIndicatorVisibilityModifier", // Disabled - causes dyld crash on macOS < 15 due to missing symbol
     "NavigationBarItemsModifier",
 
     // Sensory feedback modifier (iOS 17+)
